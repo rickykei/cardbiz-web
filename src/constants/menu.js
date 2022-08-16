@@ -1,8 +1,43 @@
-import { adminRoot } from './defaultValues';
+import { UserRole,adminRoot } from './defaultValues';
 
 const data = [
   {
     id: 'dashboards',
+    icon: 'iconsminds-dashboard',
+    label: 'menu.dashboards',
+    to: `${adminRoot}/dashboards`,
+     roles: [UserRole.Admin, UserRole.Editor] 
+  },
+  {
+    id: 'clients',
+    icon: 'iconsminds-business-mens',
+    label: 'menu.clients',
+    to: `${adminRoot}/clients/clients-list`,
+     roles: [UserRole.Admin,UserRole.Editor]
+  },
+  {
+    id: 'staffs',
+    icon: 'iconsminds-business-mens',
+    label: 'menu.staffs',
+    to: `${adminRoot}/staffs`,
+    roles: [UserRole.Admin,UserRole.Editor] 
+  },
+  {
+    id: 'admin',
+    icon: 'iconsminds-administrator',
+    label: 'menu.admin',
+    to: `${adminRoot}/admin`,
+     roles: [UserRole.Admin, UserRole.Editor] 
+  },
+  {
+    id: 'help',
+    icon: 'iconsminds-assistant',
+    label: 'menu.help',
+    to: `${adminRoot}/help`, 
+    roles: [UserRole.Admin, UserRole.Editor]
+  },
+  {
+    id: 'dashboards11',
     icon: 'iconsminds-shop-4',
     label: 'menu.dashboards',
     to: `${adminRoot}/dashboards`,

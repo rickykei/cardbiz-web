@@ -19,6 +19,9 @@ const Menu = React.lazy(() => import(/* webpackChunkName: "menu" */ './menu'));
 const BlankPage = React.lazy(() =>
   import(/* webpackChunkName: "blank-page" */ './blank-page')
 );
+const Clients = React.lazy(() => import(/* webpackChunkName: "clients" */ './clients'));
+const Staffs = React.lazy(() => import(/* webpackChunkName: "staffs" */ './staffs'));
+const Admin = React.lazy(() => import(/* webpackChunkName: "admin" */ './admin'));
 
 const App = ({ match }) => {
   return (
@@ -52,6 +55,18 @@ const App = ({ match }) => {
               path={`${match.url}/ui`}
               render={(props) => <Ui {...props} />}
             />
+             <Route
+              path={`${match.url}/clients`}
+              render={(props) => <Clients {...props} />}
+            />
+            <Route
+            path={`${match.url}/staffs`}
+            render={(props) => <Staffs {...props} />}
+          />
+          <Route
+          path={`${match.url}/admin`}
+          render={(props) => <Admin {...props} />}
+        />
             <Route
               path={`${match.url}/menu`}
               render={(props) => <Menu {...props} />}

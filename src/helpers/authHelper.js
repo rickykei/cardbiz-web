@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { isAuthGuardActive } from 'constants/defaultValues';
+import { UserRole,isAuthGuardActive } from 'constants/defaultValues';
 import { getCurrentUser } from './Utils';
 
 const ProtectedRoute = ({
   component: Component,
-  roles = undefined,
+  roles = UserRole,
   ...rest
 }) => {
   const setComponent = (props) => {

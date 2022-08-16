@@ -73,8 +73,6 @@ module.exports = {
   'menu.content': 'Content',
   'menu.pages': 'Pages',
   'menu.clients-list': 'Client Directory',
-  'menu.clients-add': 'Client Directory Add',
-  'menu.clients-edd': 'Client Directory Edit',
   'menu.data-list': 'Data List',
   'menu.thumb-list': 'Thumb List',
   'menu.image-list': 'Image List',
@@ -471,9 +469,6 @@ module.exports = {
   'dropdowns.sizing': 'Sizing',
   'dropdowns.split-button': 'Split Button Dropdowns',
   'dropdowns.dropup': 'Dropup',
-  'dropdowns.profile': 'Profile',
-  'dropdowns.edit': 'Edit',
-  'dropdowns.delete': 'Delete',
 
   /* 07.09.Editors */
   'editors.draftjs': 'Draft.js',
@@ -481,12 +476,6 @@ module.exports = {
   'editors.quill-bubble': 'Quill Bubble',
 
   /* 07.10.Forms */
-  'forms.client-name': 'Company Name',
-  'forms.client-code': 'Company Code',
-  'forms.client-no_of_license': 'No Of Liscense',
-  'forms.client-no_of_admin': 'No Of Admin',
-  'forms.client-status': 'Status',
-
   'forms.basic': 'Basic',
   'forms.email': 'E-mail',
   'forms.email-muted': "We'll never share your email with anyone else.",

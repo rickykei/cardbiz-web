@@ -1,11 +1,10 @@
 import enLang from './entries/en-US';
-import esLang from './entries/es-ES';
-import enRtlLang from './entries/en-US-rtl';
-
+import zhLang from './entries/zh-TW';
+ 
 const AppLocale = {
   en: enLang,
-  es: esLang,
-  enrtl: enRtlLang,
+  zh: zhLang,
+
 };
 
 export default AppLocale;

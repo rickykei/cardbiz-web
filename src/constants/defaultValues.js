@@ -13,8 +13,8 @@ export const subHiddenBreakpoint = 1440;
 export const menuHiddenBreakpoint = 768;
 export const defaultLocale = 'en';
 export const localeOptions = [
-  { id: 'en', name: 'English - LTR', direction: 'ltr' },
-  { id: 'ch', name: '中文', direction: 'ltr' } 
+  { id: 'en', name: 'English', direction: 'ltr' },
+  { id: 'zh', name: '中文', direction: 'ltr' } 
  ,
 ];
 
@@ -38,7 +38,8 @@ export const currentUser = {
 export const adminRoot = '/app';
 export const buyUrl = ' ';
 export const searchPath = `${adminRoot}/pages/miscellaneous/search`;
-export const servicePath = 'https://api.coloredstrategies.com';
+
+export const servicePath = 'http://cardbiz.rossfoundry.com:8080/api';
 
 export const themeColorStorageKey = '__theme_selected_color';
 export const isMultiColorActive = true;
