@@ -39,8 +39,8 @@ export const adminRoot = '/app';
 export const buyUrl = ' ';
 export const searchPath = `${adminRoot}/pages/miscellaneous/search`;
 
-export const servicePath = 'http://cardbiz.rossfoundry.com:8080/api';
-
+export const servicePath2 = 'http://cardbiz.rossfoundry.com:8080/api';
+export const servicePath = 'https://api.coloredstrategies.com';
 export const themeColorStorageKey = '__theme_selected_color';
 export const isMultiColorActive = true;
 export const defaultColor = 'light.purplemonster';

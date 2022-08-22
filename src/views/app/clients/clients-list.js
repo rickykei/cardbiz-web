@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
-import { servicePath } from 'constants/defaultValues';
+import { servicePath2 } from 'constants/defaultValues';
 
 import ListPageHeading from 'containers/clients/ListPageHeading';
 
@@ -18,7 +18,7 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const apiUrl = `${servicePath}/companies`;
+const apiUrl = `${servicePath2}/companies`;
 
 const orderOptions = [
   { column: 'name', label: 'Company Name' },

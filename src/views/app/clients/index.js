@@ -4,10 +4,12 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 const ClientsList = React.lazy(() =>
   import(/* webpackChunkName: "ui-forms" */ './clients-list')
 );
-const ClientsAdd = React.lazy(() =>
-import(/* webpackChunkName: "ui-forms" */ './clients-add')
+const ClientAdd = React.lazy(() =>
+import(/* webpackChunkName: "ui-forms" */ './client-add')
 );
-
+const ClientDel = React.lazy(() =>
+import(/* webpackChunkName: "ui-forms" */ './client-del')
+);
 const Clients = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -16,9 +18,12 @@ const Clients = ({ match }) => (
         path={`${match.url}/clients-list`}
         render={(props) => <ClientsList {...props} />}
       /><Route
-      path={`${match.url}/clients-add`}
-      render={(props) => <ClientsAdd {...props} />}
-    />
+      path={`${match.url}/client-add`}
+      render={(props) => <ClientAdd {...props} />}
+    /><Route
+  path={`${match.url}/client-del/:id`}
+  render={(props) => <ClientDel {...props} />}
+/>
        <Redirect to="/error" />
     </Switch>
   </Suspense>
