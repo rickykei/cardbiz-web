@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState , useEffect} from 'react';
+
 import { injectIntl } from 'react-intl';
-import {   CustomInput,Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, } from 'reactstrap';
+import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, } from 'reactstrap';
 import 'react-tagsinput/react-tagsinput.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'rc-switch/assets/index.css';
@@ -12,14 +12,14 @@ import IntlMessages from 'helpers/IntlMessages';
 
 import Breadcrumb from 'containers/navs/Breadcrumb';
 
-import { addClientItem } from 'redux/actions';
-import { useHistory } from "react-router-dom";
+import ClientDataService from 'services/ClientsService';
+
+import { useParams,useHistory } from "react-router-dom";
 
 
-const AddNewClientModal = ({
+const EditClientModal = ({ intl, match, }) => {
 
-  addClientItemAction, intl, match,
-}) => {
+  const { id } = useParams();
   const initialState = {
     id: null,
     name: "",
@@ -30,22 +30,36 @@ const AddNewClientModal = ({
   };
   const [state, setState] = useState(initialState);
   const history = useHistory();
+  const [message, setMessage] = useState("");
 
-  const addNetItem = () => {
-    const newItem = {
-      name: state.name,
-      code: state.code,
-      no_of_license: state.no_of_license,
-      no_of_admin: state.no_of_admin,
-      status: state.status,
-    };
-    console.log(newItem);
-    addClientItemAction(newItem);
-
-    history.push("/app/clients/clients-list");
-
-    setState(initialState);
+  const getClient = (aa) => {
+    ClientDataService.get(aa)
+      .then(response => {
+        setState(response.data);
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
+  
+  useEffect(() => {
+    if (id)
+    getClient(id);
+  }, [id]);
+
+  const updateClient = () => {
+    ClientDataService.update(state.id, state)
+      .then(response => {
+        console.log(response.data);
+        setMessage("The client was updated successfully!");
+        history.push("/app/clients/clients-list");
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+  
   const { messages } = intl;
   return (
 
@@ -53,7 +67,7 @@ const AddNewClientModal = ({
 
       <Row>
         <Colxx xxs="12">
-          <Breadcrumb heading="menu.clients-add" match={match} />
+          <Breadcrumb heading="menu.clients-edit" match={match} />
           <Separator className="mb-5" />
         </Colxx>
       </Row>
@@ -122,8 +136,8 @@ const AddNewClientModal = ({
                 <FormGroup>
                   <Label>
                     <IntlMessages id="forms.client-status" />
-                  </Label> 
-                   <CustomInput
+                  </Label>
+                  <CustomInput
                     type="radio"
                     id="exCustomRadio2"
                     name="customRadio2"
@@ -149,12 +163,13 @@ const AddNewClientModal = ({
                       })
                     }
                   />
-                
-                  
+
+
                 </FormGroup>
-                <Button color="primary" className="mt-4" onClick={() => addNetItem()}>
+                <Button color="primary" className="mt-4" onClick={updateClient}>
                   <IntlMessages id="forms.submit" />
                 </Button>
+                <p>{message}</p>
               </Form>
 
 
@@ -167,12 +182,5 @@ const AddNewClientModal = ({
     </>
   );
 };
-const mapStateToProps = ({ clientListApp }) => {
-  const { statuses } = clientListApp;
-  return {
-    statuses
-  };
-};
-export default injectIntl(connect(mapStateToProps, {
-  addClientItemAction: addClientItem,
-})(AddNewClientModal));
+ 
+export default injectIntl(EditClientModal);

@@ -14,6 +14,13 @@ const data = [
     label: 'menu.clients',
     to: `${adminRoot}/clients/clients-list`,
      roles: [UserRole.Admin,UserRole.Editor]
+  },  
+  {
+    id: 'users',
+    icon: 'iconsminds-business-mens',
+    label: 'menu.users',
+    to: `${adminRoot}/users/users-list`,
+     roles: [UserRole.Admin,UserRole.Editor]
   },
   {
     id: 'staffs',
