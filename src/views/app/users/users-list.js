@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
-
 import axios from 'axios';
-
 import { servicePath2 } from 'constants/defaultValues';
-
-import ListPageHeading from 'containers/clients/ListPageHeading';
-
-import ListPageListing from 'containers/clients/ListPageListing';
+import ListPageHeading from 'containers/users/ListPageHeading';
+import ListPageListing from 'containers/users/ListPageListing';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {
@@ -18,11 +14,11 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const apiUrl = `${servicePath2}/companies`;
+const apiUrl = `${servicePath2}/users`;
 
 const orderOptions = [
-  { column: 'name', label: 'Company Name' },
-  { column: 'code', label: 'Company Code' },
+  { column: 'username', label: 'Username' },
+  { column: 'roles', label: 'Roles' },
   { column: 'status', label: 'Status' },
 ];
 const pageSizes = [5, 10, 15, 20];
@@ -34,8 +30,8 @@ const DataListPages = ({ match }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(5);
   const [selectedOrderOption, setSelectedOrderOption] = useState({
-    column: 'name',
-    label: 'Company Name',
+    column: 'username',
+    label: 'Username',
   });
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -58,7 +54,7 @@ const DataListPages = ({ match }) => {
         setTotalPage(data.totalPage);
         setItems(
           data.data.map((x) => {
-            return { ...x, code: x.code.replace('img/', 'img/products/') };
+            return { ...x, username: x.username.replace('img/', 'img/products/') };
           })
         );
         setSelectedItems([]);
@@ -162,7 +158,7 @@ const DataListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="menu.clients-list"
+          heading="menu.users-list"
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
