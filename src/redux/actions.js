@@ -76,3 +76,9 @@ export {
   getClientListWithOrder,
   selectedClientItemsChange,
 } from './clientList/actions';
+export {
+  addUserItem,
+  addUserItemError,
+  addUserItemSuccess,
+  selectedUserItemsChange,
+} from './userList/actions';

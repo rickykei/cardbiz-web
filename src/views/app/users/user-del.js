@@ -6,7 +6,7 @@ import { servicePath2 } from 'constants/defaultValues';
  
 const DeleteClientModal = () => {
   const { id }= useParams();
-  const apiUrl = `${servicePath2}/companies/${id}`;
+  const apiUrl = `${servicePath2}/users/${id}`;
   const history = useHistory();
   const [status, setStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -18,7 +18,7 @@ const DeleteClientModal = () => {
         if (res){
           setStatus( 'Delete successful' );
         }
-        history.push("/app/clients/clients-list");
+        history.push("/app/users/users-list");
         
       }).catch(error => {
         setErrorMessage(error.message);

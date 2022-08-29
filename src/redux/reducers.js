@@ -8,6 +8,8 @@ import chatApp from './chat/reducer';
 import surveyListApp from './surveyList/reducer';
 import surveyDetailApp from './surveyDetail/reducer';
 import clientListApp from './clientList/reducer';
+import userListApp from './userList/reducer';
+
 
 const reducers = combineReducers({
   menu,
@@ -18,6 +20,7 @@ const reducers = combineReducers({
   surveyListApp,
   surveyDetailApp,
   clientListApp,
+  userListApp,
  
 });
 

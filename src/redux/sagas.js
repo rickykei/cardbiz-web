@@ -5,6 +5,7 @@ import chatSagas from './chat/saga';
 import surveyListSagas from './surveyList/saga';
 import surveyDetailSagas from './surveyDetail/saga';
 import clientListSagas from './clientList/saga';
+import userListSagas from './userList/saga';
 
 export default function* rootSaga() {
   yield all([
@@ -14,5 +15,6 @@ export default function* rootSaga() {
     surveyListSagas(),
     surveyDetailSagas(),
     clientListSagas(),
+    userListSagas(),
   ]);
 }
