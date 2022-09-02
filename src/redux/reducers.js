@@ -9,6 +9,7 @@ import surveyListApp from './surveyList/reducer';
 import surveyDetailApp from './surveyDetail/reducer';
 import clientListApp from './clientList/reducer';
 import userListApp from './userList/reducer';
+import staffListApp from './staffList/reducer';
 
 
 const reducers = combineReducers({
@@ -21,7 +22,7 @@ const reducers = combineReducers({
   surveyDetailApp,
   clientListApp,
   userListApp,
- 
+  staffListApp,
 });
 
 export default reducers;

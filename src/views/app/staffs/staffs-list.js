@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
-
 import axios from 'axios';
-
-import { servicePath } from 'constants/defaultValues';
-
-import ListPageHeading from 'containers/pages/ListPageHeading';
-import AddNewModal from 'containers/pages/AddNewModal';
-import ListPageListing from 'containers/pages/ListPageListing';
+import { servicePath2 } from 'constants/defaultValues';
+import ListPageHeading from 'containers/staffs/ListPageHeading';
+import ListPageListing from 'containers/staffs/ListPageListing';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {
@@ -18,29 +14,24 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const apiUrl = `${servicePath}/cakes/paging`;
+const apiUrl = `${servicePath2}/staffs`;
 
 const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
+  { column: 'company_id', label: 'Company Code' },
+  { column: 'fname', label: 'First Name' },
   { column: 'status', label: 'Status' },
 ];
-const pageSizes = [4, 8, 12, 20];
+const pageSizes = [5, 10, 15, 20];
 
-const categories = [
-  { label: 'Cakes', value: 'Cakes', key: 0 },
-  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
-  { label: 'Desserts', value: 'Desserts', key: 2 },
-];
 
 const DataListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('list');
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedPageSize, setSelectedPageSize] = useState(8);
+  const [selectedPageSize, setSelectedPageSize] = useState(5);
   const [selectedOrderOption, setSelectedOrderOption] = useState({
-    column: 'title',
-    label: 'Product Name',
+    column: '',
+    label: '',
   });
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -51,31 +42,39 @@ const DataListPages = ({ match }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
 
+  async function fetchData() {
+    axios
+      .get(
+        `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
+      )
+      .then((res) => {
+        return res.data;
+      })
+      .then((data) => {
+        setTotalPage(data.totalPage);
+        setItems(
+          data.data.map((x) => {
+            return x;
+          })
+        );
+        setSelectedItems([]);
+        setTotalItemCount(data.totalItem);
+        setIsLoaded(true);
+      });
+  }
+  
   useEffect(() => {
+    fetchData();
+  }, []);
+  
+  useEffect(() => {
+    fetchData();
     setCurrentPage(1);
+
   }, [selectedPageSize, selectedOrderOption]);
 
   useEffect(() => {
-    async function fetchData() {
-      axios
-        .get(
-          `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
-        )
-        .then((res) => {
-          return res.data;
-        })
-        .then((data) => {
-          setTotalPage(data.totalPage);
-          setItems(
-            data.data.map((x) => {
-              return { ...x, img: x.img.replace('img/', 'img/products/') };
-            })
-          );
-          setSelectedItems([]);
-          setTotalItemCount(data.totalItem);
-          setIsLoaded(true);
-        });
-    }
+    
     fetchData();
   }, [selectedPageSize, currentPage, selectedOrderOption, search]);
 
@@ -159,7 +158,7 @@ const DataListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="menu.clients-list"
+          heading="menu.users-list"
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
@@ -186,11 +185,7 @@ const DataListPages = ({ match }) => {
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
         />
-        <AddNewModal
-          modalOpen={modalOpen}
-          toggleModal={() => setModalOpen(!modalOpen)}
-          categories={categories}
-        />
+        
         <ListPageListing
           items={items}
           displayMode={displayMode}

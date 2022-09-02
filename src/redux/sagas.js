@@ -6,6 +6,7 @@ import surveyListSagas from './surveyList/saga';
 import surveyDetailSagas from './surveyDetail/saga';
 import clientListSagas from './clientList/saga';
 import userListSagas from './userList/saga';
+import staffListSagas from './staffList/saga';
 
 export default function* rootSaga() {
   yield all([
@@ -16,5 +17,6 @@ export default function* rootSaga() {
     surveyDetailSagas(),
     clientListSagas(),
     userListSagas(),
+    staffListSagas(),
   ]);
 }

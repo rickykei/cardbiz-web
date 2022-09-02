@@ -64,8 +64,7 @@ const App = ({ match }) => {
             /> <Route
             path={`${match.url}/users`}
             render={(props) => <Users {...props} />}
-          />
-            <Route
+          /><Route
             path={`${match.url}/staffs`}
             render={(props) => <Staffs {...props} />}
           />

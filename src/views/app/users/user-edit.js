@@ -12,12 +12,16 @@ import IntlMessages from 'helpers/IntlMessages';
 
 import Breadcrumb from 'containers/navs/Breadcrumb';
 
-import ClientDataService from 'services/ClientsService';
-
+import UserDataService from 'services/UsersService';
+import axios from 'axios';
+import { servicePath2 } from 'constants/defaultValues';
 import { useParams,useHistory } from "react-router-dom";
+import Select from 'react-select';
+import CustomSelectInput from 'components/common/CustomSelectInput';
 
+const apiUrl = `${servicePath2}/companies/codelist`;
 
-const EditClientModal = ({ intl, match, }) => {
+const EditUserModal = ({ intl, match, }) => {
 
   const { id } = useParams();
   const initialState = {
@@ -26,14 +30,16 @@ const EditClientModal = ({ intl, match, }) => {
     code: "",
     no_of_license: "",
     no_of_admin: "",
+    password: "",
     status: true,
   };
   const [state, setState] = useState(initialState);
   const history = useHistory();
   const [message, setMessage] = useState("");
-
-  const getClient = (aa) => {
-    ClientDataService.get(aa)
+  const [selectedOptionLO, setSelectedOptionLO] = useState('');
+  const [options, setOptions] = useState([]);
+  const getUser = (aa) => {
+    UserDataService.get(aa)
       .then(response => {
         setState(response.data);
         console.log(response.data);
@@ -45,21 +51,50 @@ const EditClientModal = ({ intl, match, }) => {
   
   useEffect(() => {
     if (id)
-    getClient(id);
+    getUser(id);
   }, [id]);
 
-  const updateClient = () => {
-    ClientDataService.update(state.id, state)
+  
+
+
+  async function fetchData() {
+    axios.get(`${apiUrl}`)
+      .then((res) => {
+        return res.data;
+      })
+      .then((data) => {
+      
+        setOptions(
+          data.data.map((x) => {
+            return { ...x, code: x.code.replace('img/', 'img/products/') };
+          })
+        );
+        })
+        .catch(error => {
+         
+          console.error('There was an error!', error);
+      })
+        
+       
+  }
+  const updateUser = () => {
+    state.company_id=selectedOptionLO.value;
+    UserDataService.update(state.id, state)
       .then(response => {
         console.log(response.data);
-        setMessage("The client was updated successfully!");
-        history.push("/app/clients/clients-list");
+        setMessage("The user was updated successfully!");
+        history.push("/app/users/users-list");
       })
       .catch(e => {
         console.log(e);
       });
   };
-  
+  useEffect(() => {
+   
+    fetchData();
+  },[]);
+     
+
   const { messages } = intl;
   return (
 
@@ -67,7 +102,7 @@ const EditClientModal = ({ intl, match, }) => {
 
       <Row>
         <Colxx xxs="12">
-          <Breadcrumb heading="menu.clients-edit" match={match} />
+          <Breadcrumb heading="menu.user-edit" match={match} />
           <Separator className="mb-5" />
         </Colxx>
       </Row>
@@ -78,64 +113,70 @@ const EditClientModal = ({ intl, match, }) => {
             <CardBody>
 
               <Form>
-                <FormGroup>
-                  <Label for="clientName">
-                    <IntlMessages id="forms.client-name" />
+              <FormGroup>
+                  <Label for="username">
+                    <IntlMessages id="forms.user-username" />
                   </Label>
                   <Input
                     type="text"
-                    value={state.name || ''}
-                    onChange={(val) => setState({ ...state, name: val.target.value })}
-                    placeholder={messages['forms.client-name']}
+                    value={state.username || ''}
+                    onChange={(val) => setState({ ...state, username: val.target.value })}
+                    placeholder={messages['forms.user-username']}
 
                   />
                   <FormText color="muted">
-                    <IntlMessages id="forms.email-muted" />
+                    <IntlMessages id="forms.user-username-muted" />
                   </FormText>
                 </FormGroup>
 
                 <FormGroup>
-                  <Label for="clientCode">
-                    <IntlMessages id="forms.client-code" />
+                  <Label for="email">
+                    <IntlMessages id="forms.user-email" />
                   </Label>
                   <Input
-                    type="text"
-                    value={state.code || ''}
-                    onChange={(val) => setState({ ...state, code: val.target.value })}
-                    placeholder={messages['forms.client-code']}
+                    type="email"
+                    value={state.email || ''}
+                    onChange={(val) => setState({ ...state, email: val.target.value })}
+                    placeholder={messages['forms.user-email']}
+                  />
+                  <FormText color="muted">
+                    <IntlMessages id="forms.user-email-muted" />
+                  </FormText>
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="password">
+                    <IntlMessages id="forms.user-password" />
+                  </Label>
+                  <Input
+                    type="password"
+                    value={state.password || ''}
+                    onChange={(val) => setState({ ...state, password: val.target.value })}
+                    placeholder={messages['forms.user-password']}
 
                   />
                 </FormGroup>
 
                 <FormGroup>
-                  <Label for="clientNoOfLiscense">
-                    <IntlMessages id="forms.client-no_of_license" />
+                  <Label className="mt-4">
+                    <IntlMessages id="forms.user-company" />
                   </Label>
-                  <Input
-                    type="text"
-                    value={state.no_of_license || ''}
-                    onChange={(val) => setState({ ...state, no_of_license: val.target.value })}
-                    placeholder={messages['forms.client-no_of_license']}
-
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    name="form-field-name"
+                    options={options}
+                    value={selectedOptionLO}
+                    onChange={(val) => setSelectedOptionLO(val)}
                   />
+                
                 </FormGroup>
 
-                <FormGroup>
-                  <Label for="clientNoOfAdmin">
-                    <IntlMessages id="forms.client-no_of_admin" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.no_of_admin || ''}
-                    onChange={(val) => setState({ ...state, no_of_admin: val.target.value })}
-                    placeholder={messages['forms.client-no_of_admin']}
-
-                  />
-                </FormGroup>
 
                 <FormGroup>
                   <Label>
-                    <IntlMessages id="forms.client-status" />
+                    <IntlMessages id="forms.user-status" />
                   </Label>
                   <CustomInput
                     type="radio"
@@ -146,10 +187,12 @@ const EditClientModal = ({ intl, match, }) => {
                     onChange={(event) =>
                       setState({
                         ...state,
-                        status: event.target.value === 'on' ,
+                        status: event.target.value === 'on',
                       })
                     }
                   />
+
+
                   <CustomInput
                     type="radio"
                     id="exCustomRadio"
@@ -159,14 +202,14 @@ const EditClientModal = ({ intl, match, }) => {
                     onChange={(event) =>
                       setState({
                         ...state,
-                        status: event.target.value !== 'on' ,
+                        status: event.target.value !== 'on',
                       })
                     }
                   />
 
 
                 </FormGroup>
-                <Button color="primary" className="mt-4" onClick={updateClient}>
+                <Button color="primary" className="mt-4" onClick={updateUser}>
                   <IntlMessages id="forms.submit" />
                 </Button>
                 <p>{message}</p>
@@ -183,4 +226,4 @@ const EditClientModal = ({ intl, match, }) => {
   );
 };
  
-export default injectIntl(EditClientModal);
+export default injectIntl(EditUserModal);
