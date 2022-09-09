@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import {   CustomInput,Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, } from 'reactstrap';
+import {   CustomInput,Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, InputGroup,InputGroupAddon } from 'reactstrap';
 import 'react-tagsinput/react-tagsinput.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'rc-switch/assets/index.css';
@@ -26,6 +26,7 @@ const AddNewClientModal = ({
     code: "",
     no_of_license: "",
     no_of_admin: "",
+    smartcard_uid: "",
     status: true,
   };
   const [state, setState] = useState(initialState);
@@ -37,6 +38,7 @@ const AddNewClientModal = ({
       code: state.code,
       no_of_license: state.no_of_license,
       no_of_admin: state.no_of_admin,
+      smartcard_uid: state.smartcard_uid,
       status: state.status,
     };
     console.log(newItem);
@@ -118,6 +120,13 @@ const AddNewClientModal = ({
 
                   />
                 </FormGroup>
+
+                <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                smartcard.uid[,]
+                </InputGroupAddon>
+                <Input type="textarea" name="smartcard_uid" onChange={(val) => setState({ ...state, smartcard_uid: val.target.value })}/>
+              </InputGroup>
 
                 <FormGroup>
                   <Label>

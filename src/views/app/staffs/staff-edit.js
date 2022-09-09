@@ -19,12 +19,15 @@ import StaffDataService from 'services/StaffsService';
 import DropzoneExample from 'containers/forms/DropzoneExample';
 import { useParams,useHistory } from "react-router-dom";
 import { servicePath2 } from 'constants/defaultValues';
-
+ 
 
 
 
 const EditClientModal = ({ intl, match, }) => {
 
+
+
+  
   const { id } = useParams();
   const initialState = {
     id: null,
@@ -33,6 +36,7 @@ const EditClientModal = ({ intl, match, }) => {
     no_of_license: "",
     no_of_admin: "",
     status: true,
+  
   };
   const apiUrl = `${servicePath2}/companies/codelist`;
 
@@ -41,9 +45,10 @@ const EditClientModal = ({ intl, match, }) => {
   const history = useHistory();
   const [message, setMessage] = useState("");
   const [selectedOptionLO, setSelectedOptionLO] = useState('');
+ 
 
-  const dropzone = useRef();
-
+  
+   
 
   const getStaff = (aa) => {
     StaffDataService.get(aa)
@@ -62,6 +67,7 @@ const EditClientModal = ({ intl, match, }) => {
   }, [id]);
 
   const updateStaff = () => {
+    
     state.company_id=selectedOptionLO.value;
     StaffDataService.update(state.id, state)
       .then(response => {
@@ -100,6 +106,11 @@ const EditClientModal = ({ intl, match, }) => {
   }, []);
 
   const { messages } = intl;
+ 
+ const dropzone=useRef();
+ 
+ 
+
   return (
 
     <>
@@ -147,7 +158,7 @@ const EditClientModal = ({ intl, match, }) => {
                     </InputGroup>
                   </CardBody>
                 </Card>
-
+               
                 <Row className="mb-4">
                   <Colxx xxs="12">
                     <Card>
@@ -155,7 +166,7 @@ const EditClientModal = ({ intl, match, }) => {
                         <CardTitle>
                           <IntlMessages id="form-staff-headshot" />
                         </CardTitle>
-                        <DropzoneExample ref={dropzone} />
+                        <DropzoneExample ref={dropzone}   />
                       </CardBody>
                     </Card>
                   </Colxx>

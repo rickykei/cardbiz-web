@@ -69,6 +69,7 @@ export default class DropzoneExample extends Component {
             this.myDropzone = dropzone;
           },
         }}
+        
       />
     );
   }

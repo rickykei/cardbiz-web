@@ -18,21 +18,28 @@ const data = [
   {
     id: 'users',
     icon: 'iconsminds-business-mens',
-    label: 'menu.users',
+    label: 'menu.hr.users',
+    to: `${adminRoot}/users/users-list`,
+     roles: [UserRole.Admin,UserRole.Editor]
+  }, 
+  {
+    id: 'smartcard',
+    icon: 'iconsminds-business-mens',
+    label: 'menu.smartcard.list',
     to: `${adminRoot}/users/users-list`,
      roles: [UserRole.Admin,UserRole.Editor]
   },
   {
     id: 'staffs',
     icon: 'iconsminds-business-mens',
-    label: 'menu.staffs',
+    label: 'menu.staffs.profile',
     to: `${adminRoot}/staffs`,
     roles: [UserRole.Admin,UserRole.Editor] 
   },
   {
     id: 'admin',
     icon: 'iconsminds-administrator',
-    label: 'menu.admin',
+    label: 'menu.hr.admin',
     to: `${adminRoot}/admin`,
      roles: [UserRole.Admin, UserRole.Editor] 
   },

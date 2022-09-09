@@ -1,7 +1,7 @@
 import React, { useState , useEffect} from 'react';
 
 import { injectIntl } from 'react-intl';
-import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, } from 'reactstrap';
+import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form,  InputGroup,InputGroupAddon} from 'reactstrap';
 import 'react-tagsinput/react-tagsinput.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'rc-switch/assets/index.css';
@@ -26,6 +26,7 @@ const EditClientModal = ({ intl, match, }) => {
     code: "",
     no_of_license: "",
     no_of_admin: "",
+    smartcard_uid: "",
     status: true,
   };
   const [state, setState] = useState(initialState);
@@ -132,6 +133,14 @@ const EditClientModal = ({ intl, match, }) => {
 
                   />
                 </FormGroup>
+
+                <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                smartcard.uid[,]
+                </InputGroupAddon>
+                <Input type="textarea" name="smartcard_uid" value={state.smartcard_uid || ''} onChange={(val) => setState({ ...state, smartcard_uid: val.target.value })}/>
+              </InputGroup>
+
 
                 <FormGroup>
                   <Label>

@@ -150,7 +150,7 @@ const EditUserModal = ({ intl, match, }) => {
                   </Label>
                   <Input
                     type="password"
-                    value={state.password || ''}
+                   
                     onChange={(val) => setState({ ...state, password: val.target.value })}
                     placeholder={messages['forms.user-password']}
 
