@@ -1,9 +1,11 @@
-
-import React, { useState , useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,
+import {
+  CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,
   InputGroup,
-  InputGroupAddon,} from 'reactstrap';
+  InputGroupAddon,
+} from 'reactstrap';
 import 'react-tagsinput/react-tagsinput.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'rc-switch/assets/index.css';
@@ -11,121 +13,152 @@ import 'rc-slider/assets/index.css';
 import 'react-rater/lib/react-rater.css';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
-import axios from 'axios';
 import Breadcrumb from 'containers/navs/Breadcrumb';
+import { addStaffItem } from 'redux/actions';
+import { useHistory } from "react-router-dom";
 import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
-import StaffDataService from 'services/StaffsService';
-import DropzoneExample from 'containers/forms/DropzoneExample';
-import { useParams,useHistory } from "react-router-dom";
 import { servicePath2 } from 'constants/defaultValues';
- 
+import axios from 'axios';
+import DropzoneExample from 'containers/forms/DropzoneExample';
 
 
+const apiUrl = `${servicePath2}/companies/codelist`;
 
-const EditClientModal = ({ intl, match, }) => {
+const AddNewStaffModal = ({
+  addStaffItemAction, intl, match
+}) => {
 
 
+  const dropzone = useRef();
 
-  
-  const { id } = useParams();
   const initialState = {
     id: null,
-    name: "",
-    code: "",
-    no_of_license: "",
-    no_of_admin: "",
+    fname: "",
+    lname: "",
+    company_id: 0,
+    companies: [],
+    headshot: "",
+    work_email: "",
+    home_email: "",
+    other_email: "",
+    position: "",
+    work_tel: "",
+    work_tel2: "",
+    mobile: "",
+    mobile2: "",
+    home_tel: "",
+    fax: "",
+    web_link: "",
+    web_link2: "",
+    web_link3: "",
+    web_link4: "",
+    web_link5: "",
+    web_link6: "",
+    address: "",
+    address2: "",
+    division: "",
+    department: "",
+    country: "",
+    bio:"",
+    company_website_url: "",
+    more_info_tab_url: "",
+    facebook_url: "",
+    instagram_url: "",
+    whatsapp_url: "",
+    linkedin_url: "",
+    youtube_url: "",
+    twitter_url: "",
+    wechat_id: "",
+    smartcard_uid: "",
+    bizcard_option: true,
+    updated_by: "630cf0461fa3f166eb3dee01",
+    created_by: "630cf0461fa3f166eb3dee01",
     status: true,
-    company_id: ""
-  };
-  const apiUrl = `${servicePath2}/companies/codelist`;
-
-  const [state, setState] = useState(initialState);
-
- /* eslint-disable no-unused-vars */
-
- const [options, setOptions] = useState([]); 
-  const history = useHistory();
-  const [message, setMessage] = useState("");
-  const [selectedOptionLO, setSelectedOptionLO] = useState('');
-  
-  const getStaff = (aa) => {
-    StaffDataService.get(aa)
-      .then(response => {
-        setState(response.data);
-        
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
-  
-  useEffect(() => {
-    if (id)
-    getStaff(id);
-  }, [id]);
-
-  const updateStaff = () => {
     
-    state.company_id=selectedOptionLO.value;
-    StaffDataService.update(state.id, state)
-      .then(response => {
-        console.log(response.data);
-        setMessage("The Staff was updated successfully!");
-        history.push("/app/staffs/staffs-list");
-      })
-      .catch(e => {
-        console.log(e);
-      });
   };
+  const [state, setState] = useState(initialState);
+  const history = useHistory();
+  const [selectedOptionLO, setSelectedOptionLO] = useState('');
+  const [options, setOptions] = useState([]);
+  const addNetItem = () => {
+    const newItem = {
+      fname: state.fname,
+      lname: state.lname,
+      company_id: selectedOptionLO.value,
+      headshot: state.headshot,
+      work_email: state.work_email,
+      home_email: state.home_email,
+      other_email: state.other_email,
+      position: state.position,
+      work_tel: state.work_tel,
+      work_tel2: state.work_tel2,
+      mobile: state.mobile,
+      mobile2: state.mobile2,
+      home_tel: state.home_tel,
+      fax: state.fax,
+      web_link: state.web_link,
+      web_link2: state.web_link2,
+      web_link3: state.web_link3,
+      web_link4: state.web_link4,
+      web_link5: state.web_link5,
+      web_link6: state.web_link6,
+      address: state.address,
+      address2: state.address2,
+      division: state.division,
+      department: state.department,
+      country: state.country,
+      bio: state.bio,
+      company_website_url: state.company_website_url,
+      more_info_tab_url: state.more_info_tab_url,
+      facebook_url: state.facebook_url,
+      instagram_url: state.instagram_url,
+      whatsapp_url: state.whatsapp_url,
+      linkedin_url: state.linkedin_url,
+      youtube_url: state.youtube_url,
+      twitter_url: state.twitter_url,
+      wechat_id: state.wechat_id,
+      smartcard_uid: state.smartcard_uid,
+      bizcard_option: state.bizcard_option,
+      updated_by: state.updated_by,
+      created_by: state.created_by,
+      status: state.status,
+     
+     };
+
+    addStaffItemAction(newItem);
+
+    history.push("/app/staffs/staffs-list");
+
+    setState(initialState);
+  };
+  const { messages } = intl;
 
   async function fetchData() {
     axios.get(`${apiUrl}`)
-      .then(({data}) => {
-        const option = data.map((item)=>({
-          "value" : item.value,
-          "label" : item.label,
-      }))
-        setOptions(option);
-          
+      .then((res) => {
+        return res.data;
+      })
+      .then((data) => {
+
+        setOptions(
+          data.data.map((x) => {
+            return { ...x, code: x.code.replace('img/', 'img/products/') };
+          })
+        );
       })
       .catch(error => {
-        console.error('Companies code error!', error);
+
+        console.error('There was an error!', error);
       })
-     
+
 
   }
-  
+
   useEffect(() => {
+
     fetchData();
   }, []);
-
-  const { messages } = intl;
- 
- const dropzone=useRef();
- 
-const options2=[
-  {
-    
-      "label": "APPLE",
-      "value": "631cddf7009b712921e6aaa1"
-  },
-  {
-     
-      "label": "IBM",
-      "value": "63142c0db54bdbb18f556000"
-  },
-  {
-     
-      "label": "NFC",
-      "value": "63142fd5b54bdbb18f556016"
-  },
-  {
-      
-      "label": "CITIC",
-      "value": "63142fe3b54bdbb18f55601e"
-  }
-]; 
 
   return (
 
@@ -133,7 +166,7 @@ const options2=[
 
       <Row>
         <Colxx xxs="12">
-          <Breadcrumb heading="menu.clients-edit" match={match} />
+          <Breadcrumb heading="menu.users-add" match={match} />
           <Separator className="mb-5" />
         </Colxx>
       </Row>
@@ -144,8 +177,8 @@ const options2=[
             <CardBody>
 
               <Form>
-              
-              <Card className="mb-4">
+
+                <Card className="mb-4">
                   <CardBody>
                     <CardTitle>
                       <IntlMessages id="input-groups.multiple-inputs" />
@@ -174,7 +207,7 @@ const options2=[
                     </InputGroup>
                   </CardBody>
                 </Card>
-               
+
                 <Row className="mb-4">
                   <Colxx xxs="12">
                     <Card>
@@ -182,7 +215,7 @@ const options2=[
                         <CardTitle>
                           <IntlMessages id="form-staff-headshot" />
                         </CardTitle>
-                        <DropzoneExample ref={dropzone}   />
+                        <DropzoneExample ref={dropzone} />
                       </CardBody>
                     </Card>
                   </Colxx>
@@ -196,16 +229,13 @@ const options2=[
                     components={{ Input: CustomSelectInput }}
                     className="react-select"
                     classNamePrefix="react-select"
-                    name="form-field-company"
+                    name="form-field-name"
                     options={options}
-                    value={options.find(obj => {
-                      return obj.value === state.company_id;
-                    })}
+                    value={selectedOptionLO}
                     onChange={(val) => setSelectedOptionLO(val)}
-                    
                   />
                 </FormGroup>
-                  
+
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
@@ -463,22 +493,6 @@ const options2=[
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5"> 
                 <FormGroup>
-                  <Label for="web_link4">
-                    <IntlMessages id="forms.staff-web_link4" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.web_link4 || ''}
-                    onChange={(val) => setState({ ...state, web_link4: val.target.value })}
-                    placeholder={messages['forms.staff-web_link4']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-web_link4-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                  <Colxx xxs="12" md="6">
-                <FormGroup>
                   <Label for="web_link5">
                     <IntlMessages id="forms.staff-web_link5" />
                   </Label>
@@ -490,6 +504,22 @@ const options2=[
                   />
                   <FormText color="muted">
                     <IntlMessages id="forms.staff-web_link5-muted" />
+                  </FormText>
+                </FormGroup>
+                </Colxx>
+                  <Colxx xxs="12" md="6">
+                <FormGroup>
+                  <Label for="web_link6">
+                    <IntlMessages id="forms.staff-web_link6" />
+                  </Label>
+                  <Input
+                    type="text"
+                    value={state.web_link6 || ''}
+                    onChange={(val) => setState({ ...state, web_link6: val.target.value })}
+                    placeholder={messages['forms.staff-web_link6']}
+                  />
+                  <FormText color="muted">
+                    <IntlMessages id="forms.staff-web_link6-muted" />
                   </FormText>
                 </FormGroup>
                 </Colxx>
@@ -857,10 +887,9 @@ const options2=[
 
                 </Colxx>
                 </Row>
-                <Button color="primary" className="mt-4" onClick={updateStaff}>
+                <Button color="primary" className="mt-4" onClick={() => addNetItem()}>
                   <IntlMessages id="forms.submit" />
                 </Button>
-                <p>{message}</p>
               </Form>
 
 
@@ -873,5 +902,12 @@ const options2=[
     </>
   );
 };
- 
-export default injectIntl(EditClientModal);
+const mapStateToProps = ({ staffListApp }) => {
+  const { companies } = staffListApp;
+  return {
+    companies
+  };
+};
+export default injectIntl(connect(mapStateToProps, {
+  addStaffItemAction: addStaffItem,
+})(AddNewStaffModal));

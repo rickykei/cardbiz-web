@@ -1,32 +1,26 @@
 import { UserRole,adminRoot } from './defaultValues';
 
 const data = [
-  {
-    id: 'dashboards',
-    icon: 'iconsminds-dashboard',
-    label: 'menu.dashboards',
-    to: `${adminRoot}/dashboards`,
-     roles: [UserRole.Admin, UserRole.Editor] 
-  },
+ 
   {
     id: 'clients',
-    icon: 'iconsminds-business-mens',
+    icon: 'iconsminds-office',
     label: 'menu.clients',
     to: `${adminRoot}/clients/clients-list`,
      roles: [UserRole.Admin,UserRole.Editor]
   },  
   {
     id: 'users',
-    icon: 'iconsminds-business-mens',
+    icon: 'iconsminds-administrator',
     label: 'menu.hr.users',
     to: `${adminRoot}/users/users-list`,
      roles: [UserRole.Admin,UserRole.Editor]
   }, 
   {
     id: 'smartcard',
-    icon: 'iconsminds-business-mens',
+    icon: 'iconsminds-id-card',
     label: 'menu.smartcard.list',
-    to: `${adminRoot}/users/users-list`,
+    to: `${adminRoot}/cards/cards-list`,
      roles: [UserRole.Admin,UserRole.Editor]
   },
   {
@@ -41,6 +35,12 @@ const data = [
     icon: 'iconsminds-administrator',
     label: 'menu.hr.admin',
     to: `${adminRoot}/admin`,
+     roles: [UserRole.Admin, UserRole.Editor] 
+  }, {
+    id: 'dashboards',
+    icon: 'iconsminds-dashboard',
+    label: 'menu.dashboards',
+    to: `${adminRoot}/dashboards`,
      roles: [UserRole.Admin, UserRole.Editor] 
   },
   {

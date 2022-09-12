@@ -1,5 +1,5 @@
-
 import React, { useState , useEffect, useRef} from 'react';
+
 import { injectIntl } from 'react-intl';
 import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,
   InputGroup,
@@ -36,24 +36,25 @@ const EditClientModal = ({ intl, match, }) => {
     no_of_license: "",
     no_of_admin: "",
     status: true,
-    company_id: ""
+  
   };
   const apiUrl = `${servicePath2}/companies/codelist`;
 
   const [state, setState] = useState(initialState);
-
- /* eslint-disable no-unused-vars */
-
- const [options, setOptions] = useState([]); 
+  const [options, setOptions] = useState([]);
   const history = useHistory();
   const [message, setMessage] = useState("");
   const [selectedOptionLO, setSelectedOptionLO] = useState('');
+ 
+
   
+   
+
   const getStaff = (aa) => {
     StaffDataService.get(aa)
       .then(response => {
         setState(response.data);
-        
+        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
@@ -78,25 +79,29 @@ const EditClientModal = ({ intl, match, }) => {
         console.log(e);
       });
   };
-
   async function fetchData() {
     axios.get(`${apiUrl}`)
-      .then(({data}) => {
-        const option = data.map((item)=>({
-          "value" : item.value,
-          "label" : item.label,
-      }))
-        setOptions(option);
-          
+      .then((res) => {
+        return res.data;
+      })
+      .then((data) => {
+
+        setOptions(
+          data.data.map((x) => {
+            return { ...x, code: x.code.replace('img/', 'img/products/') };
+          })
+        );
       })
       .catch(error => {
-        console.error('Companies code error!', error);
+
+        console.error('There was an error!', error);
       })
-     
+
 
   }
   
   useEffect(() => {
+
     fetchData();
   }, []);
 
@@ -104,28 +109,7 @@ const EditClientModal = ({ intl, match, }) => {
  
  const dropzone=useRef();
  
-const options2=[
-  {
-    
-      "label": "APPLE",
-      "value": "631cddf7009b712921e6aaa1"
-  },
-  {
-     
-      "label": "IBM",
-      "value": "63142c0db54bdbb18f556000"
-  },
-  {
-     
-      "label": "NFC",
-      "value": "63142fd5b54bdbb18f556016"
-  },
-  {
-      
-      "label": "CITIC",
-      "value": "63142fe3b54bdbb18f55601e"
-  }
-]; 
+ 
 
   return (
 
@@ -196,16 +180,13 @@ const options2=[
                     components={{ Input: CustomSelectInput }}
                     className="react-select"
                     classNamePrefix="react-select"
-                    name="form-field-company"
+                    name="form-field-name"
                     options={options}
-                    value={options.find(obj => {
-                      return obj.value === state.company_id;
-                    })}
+                    value={selectedOptionLO}
                     onChange={(val) => setSelectedOptionLO(val)}
-                    
                   />
                 </FormGroup>
-                  
+
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
@@ -463,22 +444,6 @@ const options2=[
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5"> 
                 <FormGroup>
-                  <Label for="web_link4">
-                    <IntlMessages id="forms.staff-web_link4" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.web_link4 || ''}
-                    onChange={(val) => setState({ ...state, web_link4: val.target.value })}
-                    placeholder={messages['forms.staff-web_link4']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-web_link4-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                  <Colxx xxs="12" md="6">
-                <FormGroup>
                   <Label for="web_link5">
                     <IntlMessages id="forms.staff-web_link5" />
                   </Label>
@@ -490,6 +455,22 @@ const options2=[
                   />
                   <FormText color="muted">
                     <IntlMessages id="forms.staff-web_link5-muted" />
+                  </FormText>
+                </FormGroup>
+                </Colxx>
+                  <Colxx xxs="12" md="6">
+                <FormGroup>
+                  <Label for="web_link6">
+                    <IntlMessages id="forms.staff-web_link6" />
+                  </Label>
+                  <Input
+                    type="text"
+                    value={state.web_link6 || ''}
+                    onChange={(val) => setState({ ...state, web_link6: val.target.value })}
+                    placeholder={messages['forms.staff-web_link6']}
+                  />
+                  <FormText color="muted">
+                    <IntlMessages id="forms.staff-web_link6-muted" />
                   </FormText>
                 </FormGroup>
                 </Colxx>

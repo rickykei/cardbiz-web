@@ -23,6 +23,7 @@ const Admin = React.lazy(() => import(/* webpackChunkName: "admin" */ './admin')
 const Clients = React.lazy(() => import(/* webpackChunkName: "clients" */ './clients'));
 const Users = React.lazy(() => import(/* webpackChunkName: "admin" */ './users'));
 const Staffs = React.lazy(() => import(/* webpackChunkName: "staffs" */ './staffs'));
+const Cards = React.lazy(() => import(/* webpackChunkName: "cards" */ './cards'));
 
 
 
@@ -67,7 +68,10 @@ const App = ({ match }) => {
           /><Route
             path={`${match.url}/staffs`}
             render={(props) => <Staffs {...props} />}
-          />
+          /><Route
+          path={`${match.url}/cards`}
+          render={(props) => <Cards {...props} />}
+        />
           <Route
           path={`${match.url}/admin`}
           render={(props) => <Admin {...props} />}
