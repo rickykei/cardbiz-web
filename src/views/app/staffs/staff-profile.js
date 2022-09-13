@@ -9,7 +9,7 @@ import Breadcrumb from 'containers/navs/Breadcrumb';
 import { useParams } from "react-router-dom";
 import SingleLightbox from 'components/pages/SingleLightbox';
 import WebsiteVisitsChartCard from 'containers/dashboards/WebsiteVisitsChartCard';
-import { servicePath3 } from 'constants/defaultValues';
+import { servicePath3 ,servicePath2} from 'constants/defaultValues';
 import ThumbnailLetters from 'components/cards/ThumbnailLetters';
 import PerfectScrollbar from 'react-perfect-scrollbar';
  
@@ -51,6 +51,7 @@ const StaffProfileModal = ({ intl, match, }) => {
   const profilePageURL = `${servicePath3}/?sig=${state.smartcard_uid}`;
   const qrcodeURL = `${servicePath3}/Touchless/QR/${state.smartcard_uid}.png`;
   const username = `${state.fname} ${state.lname}`;
+  const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
 
   return (
 
@@ -80,8 +81,8 @@ const StaffProfileModal = ({ intl, match, }) => {
                 </Colxx>
                 <Colxx xxs="12" lg="5" xl="4" className="col-left">
                   <SingleLightbox
-                    thumb="/assets/img/profiles/l-1.jpg"
-                    large="/assets/img/profiles/1.jpg"
+                    thumb={hsImgUrl}
+                    large={hsImgUrl}
                     className="img-thumbnail card-img social-profile-img"
                   />
 

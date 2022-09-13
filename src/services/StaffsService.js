@@ -1,3 +1,4 @@
+
 import http from "http-common";
 
 const getAll = () => {
@@ -13,7 +14,7 @@ const create = data => {
 };
 
 const update = (id, data) => {
-  return http.put(`/staffs/${id}`, data);
+  return http.post(`/staffs/${id}`, data);
 };
 
 const remove = id => {

@@ -14,7 +14,7 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const apiUrl = `${servicePath2}/cards`;
+const apiUrl = `${servicePath2}/smartcards`;
 
 const orderOptions = [
   { column: 'company_id', label: 'Company Code' },
@@ -68,14 +68,14 @@ const DataListPages = ({ match }) => {
   }, []);
   
   useEffect(() => {
-    fetchData();
+    
     setCurrentPage(1);
 
   }, [selectedPageSize, selectedOrderOption]);
 
   useEffect(() => {
     
-    fetchData();
+   
   }, [selectedPageSize, currentPage, selectedOrderOption, search]);
 
   const onCheckItem = (event, id) => {
@@ -158,7 +158,7 @@ const DataListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="menu.users-list"
+          heading="menu.smartcards-list"
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}

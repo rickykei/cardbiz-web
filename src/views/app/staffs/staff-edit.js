@@ -1,9 +1,7 @@
-
-import React, { useState , useEffect, useRef} from 'react';
+/* eslint-disable import/no-extraneous-dependencies */
+import React, { useState , useEffect} from 'react';
 import { injectIntl } from 'react-intl';
-import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,
-  InputGroup,
-  InputGroupAddon,} from 'reactstrap';
+import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,  InputGroup,  InputGroupAddon,} from 'reactstrap';
 import 'react-tagsinput/react-tagsinput.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'rc-switch/assets/index.css';
@@ -16,18 +14,72 @@ import Breadcrumb from 'containers/navs/Breadcrumb';
 import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import StaffDataService from 'services/StaffsService';
-import DropzoneExample from 'containers/forms/DropzoneExample';
+
 import { useParams,useHistory } from "react-router-dom";
 import { servicePath2 } from 'constants/defaultValues';
+import DropzoneComponent from 'react-dropzone-component';
+import 'dropzone/dist/min/dropzone.min.css';
+
+const ReactDOMServer = require('react-dom/server');
+
+const dropzoneComponentConfig = {
+  postUrl: 'no-url',
  
+};
+const dropzoneConfig = {
+  autoProcessQueue: false,
+  thumbnailHeight: 160,
+  maxFilesize:10,
+  maxFiles: 1,
+  acceptedFiles: ".jpeg,.jpg,.png,.gif",
+  uploadMultiple: false,
+  previewTemplate: ReactDOMServer.renderToStaticMarkup(
+    <div className="dz-preview dz-file-preview mb-3">
+      <div className="d-flex flex-row ">
+        <div className="p-0 w-30 position-relative">
+          <div className="dz-error-mark">
+            <span>
+              <i />{' '}
+            </span>
+          </div>
+          <div className="dz-success-mark">
+            <span>
+              <i />
+            </span>
+          </div>
+          <div className="preview-container">
+            {/*  eslint-disable-next-line jsx-a11y/alt-text */}
+            <img data-dz-thumbnail className="img-thumbnail border-0" />
+            <i className="simple-icon-doc preview-icon" />
+          </div>
+        </div>
+        <div className="pl-3 pt-2 pr-2 pb-1 w-70 dz-details position-relative">
+          <div>
+            {' '}
+            <span data-dz-name />{' '}
+          </div>
+          <div className="text-primary text-extra-small" data-dz-size />
+          <div className="dz-progress">
+            <span className="dz-upload" data-dz-uploadprogress />
+          </div>
+          <div className="dz-error-message">
+            <span data-dz-errormessage />
+          </div>
+        </div>
+      </div>
+      <a href="#/" className="remove" data-dz-remove>
+        {' '}
+        <i className="glyph-icon simple-icon-trash" />{' '}
+      </a>
+    </div>
+  ),
+  headers: { 'My-Awesome-Header': 'header value' },
+};
 
 
 
 const EditClientModal = ({ intl, match, }) => {
-
-
-
-  
+ 
   const { id } = useParams();
   const initialState = {
     id: null,
@@ -36,7 +88,8 @@ const EditClientModal = ({ intl, match, }) => {
     no_of_license: "",
     no_of_admin: "",
     status: true,
-    company_id: ""
+    company_id: "",
+     
   };
   const apiUrl = `${servicePath2}/companies/codelist`;
 
@@ -44,16 +97,19 @@ const EditClientModal = ({ intl, match, }) => {
 
  /* eslint-disable no-unused-vars */
 
- const [options, setOptions] = useState([]); 
+  const [options, setOptions] = useState([]); 
   const history = useHistory();
   const [message, setMessage] = useState("");
   const [selectedOptionLO, setSelectedOptionLO] = useState('');
-  
+  const[file2,setFile]=useState(null);
+  const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
+
+
   const getStaff = (aa) => {
     StaffDataService.get(aa)
       .then(response => {
         setState(response.data);
-        
+         
       })
       .catch(e => {
         console.log(e);
@@ -67,8 +123,21 @@ const EditClientModal = ({ intl, match, }) => {
 
   const updateStaff = () => {
     
+    console.log(state.company_id);
+     
+    if(state.company_id === undefined)
     state.company_id=selectedOptionLO.value;
-    StaffDataService.update(state.id, state)
+    console.log(state.company_id);
+    const data = new FormData() 
+  
+    if(file2 !== null)
+    data.append("file",file2);
+     /* eslint-disable no-restricted-syntax */
+
+    for (const [key, val] of Object.entries(state)) {
+      data.append(key, val);
+    }
+    StaffDataService.update(state.id, data)
       .then(response => {
         console.log(response.data);
         setMessage("The Staff was updated successfully!");
@@ -101,31 +170,14 @@ const EditClientModal = ({ intl, match, }) => {
   }, []);
 
   const { messages } = intl;
- 
- const dropzone=useRef();
- 
-const options2=[
-  {
-    
-      "label": "APPLE",
-      "value": "631cddf7009b712921e6aaa1"
-  },
-  {
-     
-      "label": "IBM",
-      "value": "63142c0db54bdbb18f556000"
-  },
-  {
-     
-      "label": "NFC",
-      "value": "63142fd5b54bdbb18f556016"
-  },
-  {
-      
-      "label": "CITIC",
-      "value": "63142fe3b54bdbb18f55601e"
+  
+  const eventHandlers = {
+    addedfile: (file) => {
+     setFile(file);
+    }
   }
-]; 
+
+  
 
   return (
 
@@ -182,7 +234,12 @@ const options2=[
                         <CardTitle>
                           <IntlMessages id="form-staff-headshot" />
                         </CardTitle>
-                        <DropzoneExample ref={dropzone}   />
+                       
+                        <DropzoneComponent
+                        config={dropzoneComponentConfig}
+                        djsConfig={dropzoneConfig}
+                        eventHandlers ={eventHandlers} multiple={false}/>
+                        <img src={hsImgUrl} alt="headshotImage" height="150" weight="150"/>
                       </CardBody>
                     </Card>
                   </Colxx>
@@ -201,7 +258,7 @@ const options2=[
                     value={options.find(obj => {
                       return obj.value === state.company_id;
                     })}
-                    onChange={(val) => setSelectedOptionLO(val)}
+                    onChange={(val) => setState({ ...state, company_id: val.value })}
                     
                   />
                 </FormGroup>

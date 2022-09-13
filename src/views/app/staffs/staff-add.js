@@ -142,9 +142,7 @@ const AddNewStaffModal = ({
       .then((data) => {
 
         setOptions(
-          data.data.map((x) => {
-            return { ...x, code: x.code.replace('img/', 'img/products/') };
-          })
+          data
         );
       })
       .catch(error => {

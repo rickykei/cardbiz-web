@@ -32,11 +32,11 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
               <NavLink to={`?p=${product.id}`} className="w-10 w-sm-100">
                 <p className="list-item-heading mb-1 truncate">
-                  {product.fname}
+                  {product.uid}
                 </p>
               </NavLink>
               <p className="mb-1 text-small w-10 w-sm-100 ">
-                {product.company_id.map((r) => (r.code))}
+                { product.company_id.code }
               </p>
               <p className="mb-1 text-muted text-small w-10 w-sm-100">
                 {product.updatedAt}
@@ -53,13 +53,11 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
                 </Button>
                 <DropdownToggle caret outline color="info" />
                 <DropdownMenu>
-                  <DropdownItem href={`staff-profile/${product.id}`}>
-                    <IntlMessages id="dropdowns.profile" />
-                  </DropdownItem>
-                  <DropdownItem href={`staff-edit/${product.id}`}>
+                  
+                  <DropdownItem href={`card-edit/${product.id}`}>
                     <IntlMessages id="dropdowns.edit" />
                   </DropdownItem>
-                  <DropdownItem href={`staff-del/${product.id}`}>
+                  <DropdownItem href={`card-del/${product.id}`}>
                     <IntlMessages id="dropdowns.delete" />
                   </DropdownItem>
 
