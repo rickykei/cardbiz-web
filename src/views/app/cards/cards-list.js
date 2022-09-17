@@ -18,7 +18,7 @@ const apiUrl = `${servicePath2}/smartcards`;
 
 const orderOptions = [
   { column: 'company_id', label: 'Company Code' },
-  { column: 'fname', label: 'First Name' },
+  { column: 'uid', label: 'uid' },
   { column: 'status', label: 'Status' },
 ];
 const pageSizes = [5, 10, 15, 20];
@@ -64,18 +64,18 @@ const DataListPages = ({ match }) => {
   }
   
   useEffect(() => {
-    fetchData();
+    
   }, []);
   
   useEffect(() => {
-    
+  
     setCurrentPage(1);
-
+  
   }, [selectedPageSize, selectedOrderOption]);
 
   useEffect(() => {
+    fetchData();
     
-   
   }, [selectedPageSize, currentPage, selectedOrderOption, search]);
 
   const onCheckItem = (event, id) => {

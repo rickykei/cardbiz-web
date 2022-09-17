@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+/* eslint-disable import/no-extraneous-dependencies */
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import {
@@ -7,10 +8,10 @@ import {
   InputGroupAddon,
 } from 'reactstrap';
 import 'react-tagsinput/react-tagsinput.css';
-import 'react-datepicker/dist/react-datepicker.css';
 import 'rc-switch/assets/index.css';
 import 'rc-slider/assets/index.css';
 import 'react-rater/lib/react-rater.css';
+import 'dropzone/dist/min/dropzone.min.css';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import Breadcrumb from 'containers/navs/Breadcrumb';
@@ -20,17 +21,74 @@ import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import { servicePath2 } from 'constants/defaultValues';
 import axios from 'axios';
-import DropzoneExample from 'containers/forms/DropzoneExample';
+import DropzoneComponent from 'react-dropzone-component';
+
 
 
 const apiUrl = `${servicePath2}/companies/codelist`;
 
+
+const ReactDOMServer = require('react-dom/server');
+
+const dropzoneComponentConfig = {
+  postUrl: 'no-url',
+ 
+};
+const dropzoneConfig = {
+  autoProcessQueue: false,
+  thumbnailHeight: 160,
+  maxFilesize:10,
+  maxFiles: 1,
+  acceptedFiles: ".jpeg,.jpg,.png,.gif",
+  uploadMultiple: false,
+  previewTemplate: ReactDOMServer.renderToStaticMarkup(
+    <div className="dz-preview dz-file-preview mb-3">
+      <div className="d-flex flex-row ">
+        <div className="p-0 w-30 position-relative">
+          <div className="dz-error-mark">
+            <span>
+              <i />{' '}
+            </span>
+          </div>
+          <div className="dz-success-mark">
+            <span>
+              <i />
+            </span>
+          </div>
+          <div className="preview-container">
+            {/*  eslint-disable-next-line jsx-a11y/alt-text */}
+            <img data-dz-thumbnail className="img-thumbnail border-0" />
+            <i className="simple-icon-doc preview-icon" />
+          </div>
+        </div>
+        <div className="pl-3 pt-2 pr-2 pb-1 w-70 dz-details position-relative">
+          <div>
+            {' '}
+            <span data-dz-name />{' '}
+          </div>
+          <div className="text-primary text-extra-small" data-dz-size />
+          <div className="dz-progress">
+            <span className="dz-upload" data-dz-uploadprogress />
+          </div>
+          <div className="dz-error-message">
+            <span data-dz-errormessage />
+          </div>
+        </div>
+      </div>
+      <a href="#/" className="remove" data-dz-remove>
+        {' '}
+        <i className="glyph-icon simple-icon-trash" />{' '}
+      </a>
+    </div>
+  ),
+  headers: { 'My-Awesome-Header': 'header value' },
+};
+
+
+
 const AddNewStaffModal = ({
   addStaffItemAction, intl, match
 }) => {
-
-
-  const dropzone = useRef();
 
   const initialState = {
     id: null,
@@ -81,6 +139,7 @@ const AddNewStaffModal = ({
   const history = useHistory();
   const [selectedOptionLO, setSelectedOptionLO] = useState('');
   const [options, setOptions] = useState([]);
+  const[file2,setFile]=useState(null);
   const addNetItem = () => {
     const newItem = {
       fname: state.fname,
@@ -125,8 +184,19 @@ const AddNewStaffModal = ({
       status: state.status,
      
      };
+     const data = new FormData() 
+  
+     if(file2 !== null)
+     data.append("file",file2);
 
-    addStaffItemAction(newItem);
+     /* eslint-disable no-restricted-syntax */
+
+    for (const [key, val] of Object.entries(newItem)) {
+      data.append(key, val);
+    }
+
+
+    addStaffItemAction(data);
 
     history.push("/app/staffs/staffs-list");
 
@@ -157,6 +227,14 @@ const AddNewStaffModal = ({
 
     fetchData();
   }, []);
+
+  const eventHandlers = {
+    addedfile: (file) => {
+     setFile(file);
+    }
+  }
+
+
 
   return (
 
@@ -213,7 +291,11 @@ const AddNewStaffModal = ({
                         <CardTitle>
                           <IntlMessages id="form-staff-headshot" />
                         </CardTitle>
-                        <DropzoneExample ref={dropzone} />
+                        <DropzoneComponent
+                        config={dropzoneComponentConfig}
+                        djsConfig={dropzoneConfig}
+                        eventHandlers ={eventHandlers} multiple={false}/>
+                       
                       </CardBody>
                     </Card>
                   </Colxx>

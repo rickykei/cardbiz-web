@@ -45,7 +45,7 @@ const ListPageHeading = ({
           </h1>
 
           <div className="text-zero top-right-button-container">
-          <Link to="staff-add"><Button
+          <Link to="card-add"><Button
               color="primary"
               size="lg"
               className="top-right-button"
