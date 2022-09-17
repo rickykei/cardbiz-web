@@ -32,11 +32,12 @@ const EditUserModal = ({ intl, match, }) => {
     no_of_admin: "",
     password: "",
     status: true,
+    company_id: "",
   };
   const [state, setState] = useState(initialState);
   const history = useHistory();
   const [message, setMessage] = useState("");
-  const [selectedOptionLO, setSelectedOptionLO] = useState('');
+  
   const [options, setOptions] = useState([]);
   const getUser = (aa) => {
     UserDataService.get(aa)
@@ -54,31 +55,24 @@ const EditUserModal = ({ intl, match, }) => {
     getUser(id);
   }, [id]);
 
-  
-
-
+   
   async function fetchData() {
     axios.get(`${apiUrl}`)
-      .then((res) => {
-        return res.data;
+      .then(({data}) => {
+        const option = data.map((item)=>({
+          "value" : item.value,
+          "label" : item.label,
+      }))
+        setOptions(option);
+          
       })
-      .then((data) => {
-      
-        setOptions(
-          data.data.map((x) => {
-            return { ...x, code: x.code.replace('img/', 'img/products/') };
-          })
-        );
-        })
-        .catch(error => {
-         
-          console.error('There was an error!', error);
+      .catch(error => {
+        console.error('Companies code error!', error);
       })
-        
-       
   }
+
   const updateUser = () => {
-    state.company_id=selectedOptionLO.value;
+     
     UserDataService.update(state.id, state)
       .then(response => {
         console.log(response.data);
@@ -161,16 +155,18 @@ const EditUserModal = ({ intl, match, }) => {
                   <Label className="mt-4">
                     <IntlMessages id="forms.user-company" />
                   </Label>
-                  <Select
+                 <Select
                     components={{ Input: CustomSelectInput }}
                     className="react-select"
                     classNamePrefix="react-select"
-                    name="form-field-name"
+                    name="form-field-company"
                     options={options}
-                    value={selectedOptionLO}
-                    onChange={(val) => setSelectedOptionLO(val)}
+                    value={options.find(obj => {
+                      return obj.value === state.company_id;
+                    })}
+                    onChange={(val) => setState({ ...state, company_id: val.value })}
+                    
                   />
-                
                 </FormGroup>
 
 

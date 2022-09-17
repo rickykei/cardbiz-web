@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
 import { injectIntl } from 'react-intl';
-import {  Row, Card, CardBody, Badge, CardTitle, CardSubtitle, CardText,} from 'reactstrap';
+import { Row, Card, CardBody, Badge, CardTitle, CardSubtitle, CardText,Button, } from 'reactstrap';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import StaffDataService from 'services/StaffsService';
@@ -9,11 +9,11 @@ import Breadcrumb from 'containers/navs/Breadcrumb';
 import { useParams } from "react-router-dom";
 import SingleLightbox from 'components/pages/SingleLightbox';
 import WebsiteVisitsChartCard from 'containers/dashboards/WebsiteVisitsChartCard';
-import { servicePath3 ,servicePath2} from 'constants/defaultValues';
+import { servicePath3, servicePath2 } from 'constants/defaultValues';
 import ThumbnailLetters from 'components/cards/ThumbnailLetters';
 import PerfectScrollbar from 'react-perfect-scrollbar';
- 
- 
+
+
 import data from 'data/logs';
 
 
@@ -28,8 +28,16 @@ const StaffProfileModal = ({ intl, match, }) => {
   };
   const [state, setState] = useState(initialState);
   const { messages } = intl;
-
+  const [copyProfileSuccess, setCopyProfileSuccess] = useState('');
+  const [copyVcfSuccess, setCopyVcfSuccess] = useState('');
+  
   const { id } = useParams();
+  const profilePageURL = `${servicePath3}/Touchless/Profile.php?sig=${state.id}`;
+  const vcfDLURL = `${servicePath3}/genvcf.php?sig=${state.id}`;
+  const qrcodeURL = `${servicePath3}/Touchless/genvcf2png.php?sig=${state.id}`;
+  const username = `${state.fname} ${state.lname}`;
+  const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
+
 
   const getStaff = (aa) => {
     StaffDataService.get(aa)
@@ -46,12 +54,50 @@ const StaffProfileModal = ({ intl, match, }) => {
     if (id)
       getStaff(id);
   }, [id]);
-
-
-  const profilePageURL = `${servicePath3}/?sig=${state.smartcard_uid}`;
-  const qrcodeURL = `${servicePath3}/Touchless/QR/${state.smartcard_uid}.png`;
-  const username = `${state.fname} ${state.lname}`;
-  const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
+ 
+  const updateClipboard = (newClip) => {
+    navigator.clipboard.writeText(newClip).then(
+      () => {
+        if(newClip===vcfDLURL)
+        setCopyVcfSuccess("Copied!");
+        else
+        setCopyProfileSuccess("Copied!");
+      },
+      () => {
+        if(newClip===vcfDLURL)
+        setCopyVcfSuccess("Copy failed!");
+        else
+        setCopyProfileSuccess("Copy failed!");
+      }
+    );
+  }
+  const copyLink = () => {
+ 
+    navigator.permissions
+      .query({ name: "clipboard-write" })
+      .then((result) => {
+        if (result.state === "granted" || result.state === "prompt") {
+          updateClipboard(profilePageURL);
+        }
+      }) .catch((error) => {
+        // couldn't query the permission
+        console.error(error);
+      });
+  }
+  const copyLink2 = () => {
+ 
+    navigator.permissions
+      .query({ name: "clipboard-write" })
+      .then((result) => {
+        if (result.state === "granted" || result.state === "prompt") {
+          updateClipboard(vcfDLURL);
+        }
+      })
+      .catch((error) => {
+        // couldn't query the permission
+        console.error(error);
+      });
+  }
 
   return (
 
@@ -91,44 +137,47 @@ const StaffProfileModal = ({ intl, match, }) => {
                       <div className="text-center pt-4">
                         <p className="list-item-heading pt-2">{state.fname} {state.lname}</p>
                       </div>
-                      <p className="mb-3">{messages['forms.staff-firstname']}
+                      <p className="mb-3">{messages['forms.staff-firstname']}  </p>
 
-                        I’m a web developer. I spend my whole day, practically
 
-                      </p>
-                      <p className="text-muted text-small mb-2">
-                        <IntlMessages id="pages.address" />
-                      </p>
-                      <p className="mb-3">{state.address} </p>
+                      <p className="text-muted text-small mb-2"> <IntlMessages id="pages.address" /> </p>
+                      {state.address !== undefined && state.address !== "" &&
+                        <p className="mb-3">{state.address} </p>
+                      }
 
 
                       <p className="text-muted text-small mb-2">
                         <IntlMessages id="pages.position" />
                       </p>
-                      <p className="mb-3">{state.position} </p>
-
+                      {state.position !== undefined && state.position !== "" &&
+                        <p className="mb-3">{state.position} </p>
+                      }
 
                       <p className="text-muted text-small mb-2">
                         <IntlMessages id="pages.Website" />
                       </p>
-                      <p className="mb-3">{state.web_link} </p>
-
+                      {state.web_link !== undefined && state.web_link !== "" &&
+                        <p className="mb-3">{state.web_link} </p>
+                      }
 
                       <p className="text-muted text-small mb-2">
                         <IntlMessages id="pages.work_tel" />
                       </p>
-                      <p className="mb-3">{state.work_tel} </p>
-
+                      {state.work_tel !== undefined && state.work_tel !== "" &&
+                        <p className="mb-3">{state.work_tel} </p>
+                      }
                       <p className="text-muted text-small mb-2">
                         <IntlMessages id="pages.mobile" />
                       </p>
-                      <p className="mb-3">{state.mobile} </p>
-
+                      {state.mobile !== undefined && state.mobile !== "" &&
+                        <p className="mb-3">{state.mobile} </p>
+                      }
                       <p className="text-muted text-small mb-2">
                         <IntlMessages id="pages.work_email" />
                       </p>
-                      <p className="mb-3">{state.work_email} </p>
-
+                      {state.work_email !== undefined && state.work_email !== "" &&
+                        <p className="mb-3">{state.work_email} </p>
+                      }
                       <p className="text-muted text-small mb-2">
                         <IntlMessages id="pages.additionalInfo" />
                       </p>
@@ -139,29 +188,30 @@ const StaffProfileModal = ({ intl, match, }) => {
                       >
                         More Information
                       </Badge>
-                      <p className="mb-3">23423 </p>
+                      <p className="mb-3">  </p>
 
 
 
                       <p className="text-muted text-small mb-2">
-                        <IntlMessages id="menu.webprofilepage" />
-                      </p>
+                        <IntlMessages id="menu.webprofilepage" />  
+                      </p> 
+                 
                       <p className="mb-3"><Badge
                         color="outline-secondary"
                         className="mb-1 mr-1"
                         pill
-                      ><a href={profilePageURL} target="_blank" rel="noreferrer">{profilePageURL}</a> </Badge></p>
+                      ><a href={profilePageURL} target="_blank" rel="noreferrer"  >{profilePageURL}</a> </Badge>  <Button onClick={copyLink} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyProfileSuccess}</p>
 
                       <p className="text-muted text-small mb-2">
-                        <IntlMessages id="menu.downloadVCFContent" />
+                        <IntlMessages id="menu.downloadVCFContent" />  
                       </p>
                       <p className="mb-3"> <Badge
                         color="outline-secondary"
                         className="mb-1 mr-1"
                         pill
                       >
-                        <a href={profilePageURL}> Download VCF</a>
-                      </Badge></p>
+                        <a href={vcfDLURL}> Download VCF</a></Badge>
+                        <Button onClick={copyLink2} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyVcfSuccess}</p>
 
 
                       <p className="text-muted text-small mb-2">
@@ -172,7 +222,7 @@ const StaffProfileModal = ({ intl, match, }) => {
                       <div className="social-icons">
                         <ul className="list-unstyled list-inline">
 
-                          {state.facebook_url !== undefined &&
+                          {state.facebook_url !== undefined && state.facebook_url !== "" &&
                             <li className="list-inline-item">
                               <a href={state.facebook_url}>
                                 <i className="simple-icon-social-facebook" />
@@ -180,7 +230,7 @@ const StaffProfileModal = ({ intl, match, }) => {
                             </li>
                           }
 
-                          {state.instagram_url !== undefined &&
+                          {state.instagram_url !== undefined && state.instagram_url !== "" &&
                             <li className="list-inline-item">
                               <a href={state.instagram_url}>
                                 <i className="simple-icon-social-instagram" />
@@ -188,7 +238,7 @@ const StaffProfileModal = ({ intl, match, }) => {
                             </li>
                           }
 
-                          {state.twitter_url !== undefined &&
+                          {state.twitter_url !== undefined && state.twitter_url !== "" &&
                             <li className="list-inline-item">
                               <a href={state.twitter_url}>
                                 <i className="simple-icon-social-twitter" />
@@ -196,7 +246,7 @@ const StaffProfileModal = ({ intl, match, }) => {
                             </li>
                           }
 
-                          {state.linkedin_url !== undefined &&
+                          {state.linkedin_url !== undefined && state.linkedin_url !== "" &&
                             <li className="list-inline-item">
                               <a href={state.linkedin_url}>
                                 <i className="simple-icon-social-linkedin" />
@@ -205,21 +255,21 @@ const StaffProfileModal = ({ intl, match, }) => {
                           }
 
 
-                          {state.youtube_url !== undefined &&
+                          {state.youtube_url !== undefined && state.youtube_url !== "" &&
                             <li className="list-inline-item">
                               <a href={state.youtube_url}>
                                 <i className="simple-icon-social-youtube" />
                               </a>
                             </li>
                           }
-                          {state.whatsapp_url !== undefined &&
+                          {state.whatsapp_url !== undefined && state.whatsapp_url !== "" &&
                             <li className="list-inline-item">
                               <a href={state.whatsapp_url}>
-                                <i className="simple-icon-social-youtube" />
+                                <i className="iconsminds-speach-bubble-11" />
                               </a>
                             </li>
                           }
-                          {state.wechat_id !== undefined &&
+                          {state.wechat_id !== undefined && state.wechat_id !== "" &&
                             <li className="list-inline-item">
                               <a href={state.wechat_id}>
                                 <i className="simple-icon-social-youtube" />
@@ -270,7 +320,7 @@ const StaffProfileModal = ({ intl, match, }) => {
                           <CardText className="text-muted text-small mb-2">
                             <p> {state.position}</p>
                             <p> Uid : {state.smartcard_uid}</p>
-                            <p> udid : {state.udid}</p>
+                             
 
                           </CardText>
                         </div>

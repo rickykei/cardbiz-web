@@ -48,13 +48,13 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
                 isOpen={dropdownSplitOpen}
                 toggle={() => setDropdownSplitOpen(!dropdownSplitOpen)}
               >
-                <Button outline color="info">
-                  <IntlMessages id="dropdowns.action" />
+                <Button outline color="info" href={`staff-profile/${product.id}`}>
+                  <IntlMessages id="dropdowns.profile"  />
                 </Button>
                 <DropdownToggle caret outline color="info" />
                 <DropdownMenu>
                   <DropdownItem href={`staff-profile/${product.id}`}>
-                    <IntlMessages id="dropdowns.profile" />
+                    <IntlMessages id="dropdowns.action" />
                   </DropdownItem>
                   <DropdownItem href={`staff-edit/${product.id}`}>
                     <IntlMessages id="dropdowns.edit" />

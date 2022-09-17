@@ -21,7 +21,7 @@ const BlankPage = React.lazy(() =>
 );
 const Admin = React.lazy(() => import(/* webpackChunkName: "admin" */ './admin'));
 const Clients = React.lazy(() => import(/* webpackChunkName: "clients" */ './clients'));
-const Users = React.lazy(() => import(/* webpackChunkName: "admin" */ './users'));
+const Users = React.lazy(() => import(/* webpackChunkName: "users" */ './users'));
 const Staffs = React.lazy(() => import(/* webpackChunkName: "staffs" */ './staffs'));
 const Cards = React.lazy(() => import(/* webpackChunkName: "cards" */ './cards'));
 

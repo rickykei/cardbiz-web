@@ -2,19 +2,19 @@ import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 const UsersList = React.lazy(() =>
-  import(/* webpackChunkName: "ui-forms" */ './users-list')
+  import(/* webpackChunkName: "user-list" */ './users-list')
 );
 const UserAdd = React.lazy(() =>
-  import(/* webpackChunkName: "ui-forms" */ './user-add')
+  import(/* webpackChunkName: "user-add" */ './user-add')
 );
 const UserDel = React.lazy(() =>
-  import(/* webpackChunkName: "ui-forms" */ './user-del')
+  import(/* webpackChunkName: "user-del" */ './user-del')
 );
 const UserEdit = React.lazy(() =>
-import(/* webpackChunkName: "ui-forms" */ './user-edit')
+import(/* webpackChunkName: "user-edit" */ './user-edit')
 );
 const UserProfile = React.lazy(() =>
-import(/* webpackChunkName: "ui-forms" */ './user-profile')
+import(/* webpackChunkName: "user-profile" */ './user-profile')
 );
 
 const Users = ({ match }) => (
