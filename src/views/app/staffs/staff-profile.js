@@ -1,7 +1,8 @@
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { injectIntl } from 'react-intl';
-import { Row, Card, CardBody, Badge, CardTitle, CardSubtitle, CardText,Button, } from 'reactstrap';
+import { Row, Card, CardBody, Badge, CardTitle, CardSubtitle, CardText, Button, } from 'reactstrap';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import StaffDataService from 'services/StaffsService';
@@ -25,25 +26,27 @@ const StaffProfileModal = ({ intl, match, }) => {
     no_of_license: "",
     no_of_admin: "",
     status: true,
+    company_id: [],
   };
   const [state, setState] = useState(initialState);
   const { messages } = intl;
   const [copyProfileSuccess, setCopyProfileSuccess] = useState('');
   const [copyVcfSuccess, setCopyVcfSuccess] = useState('');
-  
+
   const { id } = useParams();
   const profilePageURL = `${servicePath3}/Touchless/Profile.php?sig=${state.id}`;
   const vcfDLURL = `${servicePath3}/genvcf.php?sig=${state.id}`;
   const qrcodeURL = `${servicePath3}/Touchless/genvcf2png.php?sig=${state.id}`;
   const username = `${state.fname} ${state.lname}`;
   const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
-
+  const bannerImgUrl = "/assets/img/social/header.jpg";
+  const bannerImgUrl2 = `${servicePath2}/files/${state.company_id.banner}`;
 
   const getStaff = (aa) => {
     StaffDataService.get(aa)
       .then(response => {
         setState(response.data);
-        console.log(response.data);
+
       })
       .catch(e => {
         console.log(e);
@@ -54,38 +57,38 @@ const StaffProfileModal = ({ intl, match, }) => {
     if (id)
       getStaff(id);
   }, [id]);
- 
+
   const updateClipboard = (newClip) => {
     navigator.clipboard.writeText(newClip).then(
       () => {
-        if(newClip===vcfDLURL)
-        setCopyVcfSuccess("Copied!");
+        if (newClip === vcfDLURL)
+          setCopyVcfSuccess("Copied!");
         else
-        setCopyProfileSuccess("Copied!");
+          setCopyProfileSuccess("Copied!");
       },
       () => {
-        if(newClip===vcfDLURL)
-        setCopyVcfSuccess("Copy failed!");
+        if (newClip === vcfDLURL)
+          setCopyVcfSuccess("Copy failed!");
         else
-        setCopyProfileSuccess("Copy failed!");
+          setCopyProfileSuccess("Copy failed!");
       }
     );
   }
   const copyLink = () => {
- 
+
     navigator.permissions
       .query({ name: "clipboard-write" })
       .then((result) => {
         if (result.state === "granted" || result.state === "prompt") {
           updateClipboard(profilePageURL);
         }
-      }) .catch((error) => {
+      }).catch((error) => {
         // couldn't query the permission
         console.error(error);
       });
   }
   const copyLink2 = () => {
- 
+
     navigator.permissions
       .query({ name: "clipboard-write" })
       .then((result) => {
@@ -118,19 +121,26 @@ const StaffProfileModal = ({ intl, match, }) => {
               <Row>
                 <Colxx xxs="12" className="mb-5">
                   <Card>
-                    <SingleLightbox
-                      thumb="/assets/img/social/header.jpg"
-                      large="/assets/img/social/header.jpg"
-                      className="social-header card-img"
-                    />
+                    {state.company_id.banner !== undefined &&
+                      <SingleLightbox thumb={bannerImgUrl2} large={bannerImgUrl2} className="social-header card-img" />}
+
+                    {state.company_id.banner === undefined &&
+                      <SingleLightbox thumb={bannerImgUrl} large={bannerImgUrl} className="social-header card-img" />}
                   </Card>
                 </Colxx>
                 <Colxx xxs="12" lg="5" xl="4" className="col-left">
+                {state.headshot !== undefined && state.headshot !== "" &&
                   <SingleLightbox
                     thumb={hsImgUrl}
                     large={hsImgUrl}
                     className="img-thumbnail card-img social-profile-img"
-                  />
+                  />}
+                  {state.headshot === "" &&
+                  <SingleLightbox
+                    thumb="/assets/img/profiles/1.jpg"
+                    large="/assets/img/profiles/1.jpg"
+                    className="img-thumbnail card-img social-profile-img"
+                  />}
 
                   <Card className="mb-4">
                     <CardBody>
@@ -193,9 +203,9 @@ const StaffProfileModal = ({ intl, match, }) => {
 
 
                       <p className="text-muted text-small mb-2">
-                        <IntlMessages id="menu.webprofilepage" />  
-                      </p> 
-                 
+                        <IntlMessages id="menu.webprofilepage" />
+                      </p>
+
                       <p className="mb-3"><Badge
                         color="outline-secondary"
                         className="mb-1 mr-1"
@@ -203,7 +213,7 @@ const StaffProfileModal = ({ intl, match, }) => {
                       ><a href={profilePageURL} target="_blank" rel="noreferrer"  >{profilePageURL}</a> </Badge>  <Button onClick={copyLink} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyProfileSuccess}</p>
 
                       <p className="text-muted text-small mb-2">
-                        <IntlMessages id="menu.downloadVCFContent" />  
+                        <IntlMessages id="menu.downloadVCFContent" />
                       </p>
                       <p className="mb-3"> <Badge
                         color="outline-secondary"
@@ -320,7 +330,7 @@ const StaffProfileModal = ({ intl, match, }) => {
                           <CardText className="text-muted text-small mb-2">
                             <p> {state.position}</p>
                             <p> Uid : {state.smartcard_uid}</p>
-                             
+
 
                           </CardText>
                         </div>

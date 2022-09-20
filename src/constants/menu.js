@@ -31,10 +31,10 @@ const data = [
     roles: [UserRole.Admin,UserRole.Editor] 
   },
   {
-    id: 'admin',
+    id: 'admins',
     icon: 'iconsminds-administrator',
     label: 'menu.hr.admin',
-    to: `${adminRoot}/admin`,
+    to: `${adminRoot}/admins/admin-edit/63142fe3b54bdbb18f55601e`,
      roles: [UserRole.Admin, UserRole.Editor] 
   }, {
     id: 'dashboards',

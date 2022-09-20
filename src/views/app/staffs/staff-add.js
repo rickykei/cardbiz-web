@@ -2,11 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import {
-  CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,
-  InputGroup,
-  InputGroupAddon,
-} from 'reactstrap';
+import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,  InputGroup,  InputGroupAddon,} from 'reactstrap';
 import 'react-tagsinput/react-tagsinput.css';
 import 'rc-switch/assets/index.css';
 import 'rc-slider/assets/index.css';
@@ -501,23 +497,7 @@ const AddNewStaffModal = ({
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                <FormGroup>
-                  <Label for="fax">
-                    <IntlMessages id="forms.staff-fax" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.fax || ''}
-                    onChange={(val) => setState({ ...state, fax: val.target.value })}
-                    placeholder={messages['forms.staff-fax']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-fax-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                  <Colxx xxs="12" md="6">
-                <FormGroup>
+                  <FormGroup>
                   <Label for="web_link">
                     <IntlMessages id="forms.staff-web_link" />
                   </Label>
@@ -532,12 +512,8 @@ const AddNewStaffModal = ({
                   </FormText>
                 </FormGroup>
                 </Colxx>
-                </Row>
-
-                
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
-                <FormGroup>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
                   <Label for="web_link2">
                     <IntlMessages id="forms.staff-web_link2" />
                   </Label>
@@ -552,8 +528,12 @@ const AddNewStaffModal = ({
                   </FormText>
                 </FormGroup>
                 </Colxx>
-                  <Colxx xxs="12" md="6">
-                <FormGroup>
+                </Row>
+
+                
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5"> 
+                  <FormGroup>
                   <Label for="web_link3">
                     <IntlMessages id="forms.staff-web_link3" />
                   </Label>
@@ -565,6 +545,22 @@ const AddNewStaffModal = ({
                   />
                   <FormText color="muted">
                     <IntlMessages id="forms.staff-web_link3-muted" />
+                  </FormText>
+                </FormGroup>
+                </Colxx>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
+                  <Label for="web_link4">
+                    <IntlMessages id="forms.staff-web_link4" />
+                  </Label>
+                  <Input
+                    type="text"
+                    value={state.web_link4 || ''}
+                    onChange={(val) => setState({ ...state, web_link4: val.target.value })}
+                    placeholder={messages['forms.staff-web_link4']}
+                  />
+                  <FormText color="muted">
+                    <IntlMessages id="forms.staff-web_link4-muted" />
                   </FormText>
                 </FormGroup>
                 </Colxx>

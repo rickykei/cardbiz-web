@@ -227,23 +227,26 @@ const EditClientModal = ({ intl, match, }) => {
                   </CardBody>
                 </Card>
                
-                <Row className="mb-4">
-                  <Colxx xxs="12">
-                    <Card>
+                
+                
+                    <Card className="mb-4">
                       <CardBody>
                         <CardTitle>
                           <IntlMessages id="form-staff-headshot" />
-                        </CardTitle>
-                       
-                        <DropzoneComponent
+                        </CardTitle> 
+                        <Row>
+                        <Colxx xxs="12" md="2" className="mb-5">
+                        <img src={hsImgUrl} alt="headshotImage"  width="150"/>
+                        </Colxx> 
+                        <Colxx xxs="12" md="10">  <DropzoneComponent
                         config={dropzoneComponentConfig}
                         djsConfig={dropzoneConfig}
-                        eventHandlers ={eventHandlers} multiple={false}/>
-                        <img src={hsImgUrl} alt="headshotImage" height="150" weight="150"/>
-                      </CardBody>
+                        eventHandlers ={eventHandlers} multiple={false}/> 
+                        </Colxx>
+                        </Row>
+                        </CardBody>
                     </Card>
-                  </Colxx>
-                </Row>
+              
 
                 <FormGroup>
                   <Label className="mt-4">
@@ -448,23 +451,7 @@ const EditClientModal = ({ intl, match, }) => {
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                <FormGroup>
-                  <Label for="fax">
-                    <IntlMessages id="forms.staff-fax" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.fax || ''}
-                    onChange={(val) => setState({ ...state, fax: val.target.value })}
-                    placeholder={messages['forms.staff-fax']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-fax-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                  <Colxx xxs="12" md="6">
-                <FormGroup>
+                  <FormGroup>
                   <Label for="web_link">
                     <IntlMessages id="forms.staff-web_link" />
                   </Label>
@@ -479,12 +466,8 @@ const EditClientModal = ({ intl, match, }) => {
                   </FormText>
                 </FormGroup>
                 </Colxx>
-                </Row>
-
-                
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
-                <FormGroup>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
                   <Label for="web_link2">
                     <IntlMessages id="forms.staff-web_link2" />
                   </Label>
@@ -499,8 +482,12 @@ const EditClientModal = ({ intl, match, }) => {
                   </FormText>
                 </FormGroup>
                 </Colxx>
-                  <Colxx xxs="12" md="6">
-                <FormGroup>
+                </Row>
+
+                
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5"> 
+                  <FormGroup>
                   <Label for="web_link3">
                     <IntlMessages id="forms.staff-web_link3" />
                   </Label>
@@ -515,10 +502,7 @@ const EditClientModal = ({ intl, match, }) => {
                   </FormText>
                 </FormGroup>
                 </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
+                  <Colxx xxs="12" md="6">
                 <FormGroup>
                   <Label for="web_link4">
                     <IntlMessages id="forms.staff-web_link4" />
@@ -534,8 +518,11 @@ const EditClientModal = ({ intl, match, }) => {
                   </FormText>
                 </FormGroup>
                 </Colxx>
-                  <Colxx xxs="12" md="6">
-                <FormGroup>
+                </Row>
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5"> 
+                  <FormGroup>
                   <Label for="web_link5">
                     <IntlMessages id="forms.staff-web_link5" />
                   </Label>
@@ -547,6 +534,22 @@ const EditClientModal = ({ intl, match, }) => {
                   />
                   <FormText color="muted">
                     <IntlMessages id="forms.staff-web_link5-muted" />
+                  </FormText>
+                </FormGroup>
+                </Colxx>
+                  <Colxx xxs="12" md="6">
+                <FormGroup>
+                  <Label for="web_link6">
+                    <IntlMessages id="forms.staff-web_link6" />
+                  </Label>
+                  <Input
+                    type="text"
+                    value={state.web_link6 || ''}
+                    onChange={(val) => setState({ ...state, web_link6: val.target.value })}
+                    placeholder={messages['forms.staff-web_link6']}
+                  />
+                  <FormText color="muted">
+                    <IntlMessages id="forms.staff-web_link6-muted" />
                   </FormText>
                 </FormGroup>
                 </Colxx>

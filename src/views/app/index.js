@@ -19,7 +19,7 @@ const Menu = React.lazy(() => import(/* webpackChunkName: "menu" */ './menu'));
 const BlankPage = React.lazy(() =>
   import(/* webpackChunkName: "blank-page" */ './blank-page')
 );
-const Admin = React.lazy(() => import(/* webpackChunkName: "admin" */ './admin'));
+const Admins = React.lazy(() => import(/* webpackChunkName: "admins" */ './admins'));
 const Clients = React.lazy(() => import(/* webpackChunkName: "clients" */ './clients'));
 const Users = React.lazy(() => import(/* webpackChunkName: "users" */ './users'));
 const Staffs = React.lazy(() => import(/* webpackChunkName: "staffs" */ './staffs'));
@@ -73,8 +73,8 @@ const App = ({ match }) => {
           render={(props) => <Cards {...props} />}
         />
           <Route
-          path={`${match.url}/admin`}
-          render={(props) => <Admin {...props} />}
+          path={`${match.url}/admins`}
+          render={(props) => <Admins {...props} />}
         />
             <Route
               path={`${match.url}/menu`}
