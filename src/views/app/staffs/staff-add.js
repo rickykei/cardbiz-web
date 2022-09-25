@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,  InputGroup,  InputGroupAddon,} from 'reactstrap';
+import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,  } from 'reactstrap';
 import 'react-tagsinput/react-tagsinput.css';
 import 'rc-switch/assets/index.css';
 import 'rc-slider/assets/index.css';
@@ -250,33 +250,19 @@ const AddNewStaffModal = ({
 
               <Form>
 
-                <Card className="mb-4">
+              <Card className="mb-4">
                   <CardBody>
                     <CardTitle>
                       <IntlMessages id="input-groups.multiple-inputs" />
                     </CardTitle>
-
-                    <InputGroup>
-                      <InputGroupAddon addonType="prepend">
-                        <span className="input-group-text">
-                          <IntlMessages id="input-groups.first-and-last-name" />
-                        </span>
-                      </InputGroupAddon>
-                      <Input
+                    <Input
                         type="text"
                         value={state.fname || ''}
                         onChange={(val) => setState({ ...state, fname: val.target.value })}
                         placeholder={messages['forms.staff-firstname']}
 
                       />
-                      <Input
-                        type="text"
-                        value={state.lname || ''}
-                        onChange={(val) => setState({ ...state, lname: val.target.value })}
-                        placeholder={messages['forms.staff-lastname']}
-
-                      />
-                    </InputGroup>
+                    
                   </CardBody>
                 </Card>
 

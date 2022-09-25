@@ -38,10 +38,10 @@ export const polarAreaChartData = {
 };
 
 export const areaChartData = {
-  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  labels: ['2022/09/24', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
   datasets: [
     {
-      label: '',
+      label: 'sdfsd',
       data: [54, 63, 60, 65, 60, 68, 60],
       borderColor: colors.themeColor1,
       pointBackgroundColor: colors.foregroundColor,

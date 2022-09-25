@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState , useEffect} from 'react';
 import { injectIntl } from 'react-intl';
-import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,  InputGroup,  InputGroupAddon,} from 'reactstrap';
+import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,  } from 'reactstrap';
 import 'react-tagsinput/react-tagsinput.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'rc-switch/assets/index.css';
@@ -122,12 +122,12 @@ const EditClientModal = ({ intl, match, }) => {
   }, [id]);
 
   const updateStaff = () => {
-    
-    console.log(state.company_id);
+    console.log('state.company_id');
      
-    if(state.company_id === undefined)
-    state.company_id=selectedOptionLO.value;
-    console.log(state.company_id);
+    console.log(state);
+     
+   
+     
     const data = new FormData() 
   
     if(file2 !== null)
@@ -135,7 +135,13 @@ const EditClientModal = ({ intl, match, }) => {
      /* eslint-disable no-restricted-syntax */
 
     for (const [key, val] of Object.entries(state)) {
+      if (key !=='company_id')
       data.append(key, val);
+      else if(typeof(val) === 'string')
+      data.append(key, val);
+      else
+      console.log('companycd');
+      
     }
     StaffDataService.update(state.id, data)
       .then(response => {
@@ -202,28 +208,14 @@ const EditClientModal = ({ intl, match, }) => {
                     <CardTitle>
                       <IntlMessages id="input-groups.multiple-inputs" />
                     </CardTitle>
-
-                    <InputGroup>
-                      <InputGroupAddon addonType="prepend">
-                        <span className="input-group-text">
-                          <IntlMessages id="input-groups.first-and-last-name" />
-                        </span>
-                      </InputGroupAddon>
-                      <Input
+                    <Input
                         type="text"
                         value={state.fname || ''}
                         onChange={(val) => setState({ ...state, fname: val.target.value })}
                         placeholder={messages['forms.staff-firstname']}
 
                       />
-                      <Input
-                        type="text"
-                        value={state.lname || ''}
-                        onChange={(val) => setState({ ...state, lname: val.target.value })}
-                        placeholder={messages['forms.staff-lastname']}
-
-                      />
-                    </InputGroup>
+                    
                   </CardBody>
                 </Card>
                

@@ -9,7 +9,7 @@ import {
   DropdownItem,
   DropdownToggle,
   DropdownMenu,
-  Input,
+ 
 } from 'reactstrap';
 
 import { NavLink } from 'react-router-dom';
@@ -17,7 +17,7 @@ import { connect } from 'react-redux';
 
  
 import {
-  menuHiddenBreakpoint,
+  
   searchPath,
   localeOptions,
   isDarkSwitchActive,
@@ -33,12 +33,11 @@ import {
   changeLocale,
 } from 'redux/actions';
 
-import TopnavEasyAccess from './Topnav.EasyAccess';
-import TopnavNotifications from './Topnav.Notifications';
+ 
 import TopnavDarkSwitch from './Topnav.DarkSwitch';
 
 const TopNav = ({
-  intl,
+ 
   history,
   containerClassnames,
   menuClickCount,
@@ -80,32 +79,7 @@ const TopNav = ({
     );
   };
 
-  const handleSearchIconClick = (e) => {
-    if (window.innerWidth < menuHiddenBreakpoint) {
-      let elem = e.target;
-      if (!e.target.classList.contains('search')) {
-        if (e.target.parentElement.classList.contains('search')) {
-          elem = e.target.parentElement;
-        } else if (
-          e.target.parentElement.parentElement.classList.contains('search')
-        ) {
-          elem = e.target.parentElement.parentElement;
-        }
-      }
-
-      if (elem.classList.contains('mobile-view')) {
-        search();
-        elem.classList.remove('mobile-view');
-        removeEventsSearch();
-      } else {
-        elem.classList.add('mobile-view');
-        addEventsSearch();
-      }
-    } else {
-      search();
-    }
-    e.stopPropagation();
-  };
+ 
 
   const handleDocumentClickSearch = (e) => {
     let isSearchClick = false;
@@ -139,15 +113,9 @@ const TopNav = ({
     document.removeEventListener('click', handleDocumentClickSearch, true);
   };
 
-  const addEventsSearch = () => {
-    document.addEventListener('click', handleDocumentClickSearch, true);
-  };
+ 
 
-  const handleSearchInputKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      search();
-    }
-  };
+ 
 
   const toggleFullScreen = () => {
     const isFS = isInFullScreenFn();
@@ -199,7 +167,7 @@ const TopNav = ({
     clickOnMobileMenuAction(_containerClassnames);
   };
 
-  const { messages } = intl;
+ 
   return (
     <nav className="navbar fixed-top">
       <div className="d-flex align-items-center navbar-left">
@@ -222,22 +190,7 @@ const TopNav = ({
           <MobileMenuIcon />
         </NavLink>
 
-        <div className="search">
-          <Input
-            name="searchKeyword"
-            id="searchKeyword"
-            placeholder={messages['menu.search']}
-            value={searchKeyword}
-            onChange={(e) => setSearchKeyword(e.target.value)}
-            onKeyPress={(e) => handleSearchInputKeyPress(e)}
-          />
-          <span
-            className="search-icon"
-            onClick={(e) => handleSearchIconClick(e)}
-          >
-            <i className="simple-icon-magnifier" />
-          </span>
-        </div>
+       
 
         <div className="d-inline-block">
           <UncontrolledDropdown className="ml-2">
@@ -273,8 +226,7 @@ const TopNav = ({
       <div className="navbar-right">
         {isDarkSwitchActive && <TopnavDarkSwitch />}
         <div className="header-icons d-inline-block align-middle">
-          <TopnavEasyAccess />
-          <TopnavNotifications />
+       
           <button
             className="header-icon btn btn-empty d-none d-sm-inline-block"
             type="button"

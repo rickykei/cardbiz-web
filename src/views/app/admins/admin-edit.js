@@ -25,8 +25,8 @@ const dropzoneConfigLogo = {
   thumbnailHeight: 160,
   maxFilesize: 1,
   maxFiles: 1,
-  resizeWidth: 300,
-  resizeHeight: 300,
+  resizeWidth: 150,
+  resizeHeight: 150,
   acceptedFiles: ".jpeg,.jpg,.png,.gif",
   uploadMultiple: false,
   previewTemplate: ReactDOMServer.renderToStaticMarkup(
@@ -148,9 +148,7 @@ const AdminPage = ({ intl, match }) => {
   const { messages } = intl;
   const eventHandlers = { addedfile: (file) => { setBannerFile(file); } }
   const eventHandlers2 = { addedfile: (file) => { setLogoFile(file); } }
-  const optionCountry = [{ label: "Hong Kong", value: "HK" }, { label: "China", value: "CN" }, { label: "Japan", value: "JP" }, { label: "U.K.", value: "UK" }];
-  const optionDepartment = [{ label: "Marketing", value: "Marketing" }, { label: "Finance", value: "Finance" }, { label: "Engineering", value: "Engineering" }, { label: "Purchase", value: "Purchase" }];
-  const history = useHistory();
+   const history = useHistory();
 
 
   const updateCompany = () => {
@@ -162,16 +160,18 @@ const AdminPage = ({ intl, match }) => {
     console.log(state.company_id);
     const data = new FormData()
 
-    if (bannerfile !== null)
-      data.append("banner", bannerfile);
-      if (logofile !== null)
-      data.append("logo", logofile);
+    
     /* eslint-disable no-restricted-syntax */
 
 
     for (const [key, val] of Object.entries(state)) {
+      if (key!=='banner' && key!=='logo')
       data.append(key, val);
     }
+    if (bannerfile !== null)
+      data.append("banner", bannerfile);
+      if (logofile !== null)
+      data.append("logo", logofile);
     CompanyDataService.update(state.id, data)
       .then(response => {
         console.log(response.data);
@@ -191,8 +191,7 @@ const AdminPage = ({ intl, match }) => {
     console.log(state.company_id);
     const data = new FormData()
 
-    if (bannerfile !== null)
-      data.append("file_banner", bannerfile);
+   
     /* eslint-disable no-restricted-syntax */
 
     for (const [key, val] of Object.entries(state)) {
@@ -377,39 +376,24 @@ const AdminPage = ({ intl, match }) => {
 
 
                     <FormGroup>
-                      <Label for="company-name">
-                        <IntlMessages id="forms.company-name" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.company_name || ''}
-                        onChange={(val) => setState({ ...state, company_name: val.target.value })}
-                        placeholder={messages['forms.staff-company_name']}
+                  <Label className="mt-4">
+                    <IntlMessages id="forms.user-company" />
+                  </Label>
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    name="form-field-company"
+                    options={options}
+                    value={options.find(obj => {
+                      return obj.value === state.company_id;
+                    })}
+                    onChange={(val) => setState({ ...state, company_id: val.value })}
+                    
+                  />
+                </FormGroup>
 
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-company_name-muted" />
-                      </FormText>
-                    </FormGroup>
-
-                    <FormGroup>
-                      <Label className="mt-4">
-                        <IntlMessages id="forms.user-company" />
-                      </Label>
-                      <Select
-                        components={{ Input: CustomSelectInput }}
-                        className="react-select"
-                        classNamePrefix="react-select"
-                        name="form-field-company"
-                        options={options}
-                        value={options.find(obj => {
-                          return obj.value === state.company_id;
-                        })}
-                        onChange={(val) => setState({ ...state, company_id: val.value })}
-
-                      />
-                    </FormGroup>
-
+                   
                     <Row>
                       <Colxx xxs="12" md="6" className="mb-5">
                         <FormGroup>
@@ -434,16 +418,11 @@ const AdminPage = ({ intl, match }) => {
                           <Label for="company-country">
                             <IntlMessages id="forms.company-country" />
                           </Label>
-                          <Select
-                            components={{ Input: CustomSelectInput }}
-                            className="react-select"
-                            classNamePrefix="react-select"
-                            name="form-field-country"
-                            options={optionCountry}
-                            value={optionCountry.find(obj => {
-                              return obj.value === state.country_cd;
-                            })}
-                            onChange={(val) => setState({ ...state, country_cd: val.value })}
+                          <Input
+                            type="text"
+                            value={state.country || ''}
+                            onChange={(val) => setState({ ...state, country: val.target.value })}
+                            placeholder={messages['forms.company.country']}
 
                           />
                           <FormText color="muted">
@@ -517,7 +496,7 @@ const AdminPage = ({ intl, match }) => {
                           </Label>
                           <Input
                             type="text"
-                            value={state.position || ''}
+                            value={state.mobile || ''}
                             onChange={(val) => setState({ ...state, mobile: val.target.value })}
                             placeholder={messages['forms.company-mobile']}
 
@@ -550,16 +529,11 @@ const AdminPage = ({ intl, match }) => {
                           <Label for="company-sub-division">
                             <IntlMessages id="forms.company-sub-division" />
                           </Label>
-                          <Select
-                            components={{ Input: CustomSelectInput }}
-                            className="react-select"
-                            classNamePrefix="react-select"
-                            name="form-field-sub_division"
-                            options={optionCountry}
-                            value={optionCountry.find(obj => {
-                              return obj.value === state.sub_division;
-                            })}
-                            onChange={(val) => setState({ ...state, sub_division: val.value })}
+                          <Input
+                            type="text"
+                            value={state.sub_division || ''}
+                            onChange={(val) => setState({ ...state, sub_division: val.target.value })}
+                            placeholder={messages['forms.company.sub_division']}
 
                           />
                           <FormText color="muted">
@@ -573,16 +547,11 @@ const AdminPage = ({ intl, match }) => {
                           <Label for="company-department">
                             <IntlMessages id="forms.company-department" />
                           </Label>
-                          <Select
-                            components={{ Input: CustomSelectInput }}
-                            className="react-select"
-                            classNamePrefix="react-select"
-                            name="form-field-country"
-                            options={optionDepartment}
-                            value={optionDepartment.find(obj => {
-                              return obj.value === state.department;
-                            })}
-                            onChange={(val) => setState({ ...state, department: val.value })}
+                          <Input
+                            type="text"
+                            value={state.department || ''}
+                            onChange={(val) => setState({ ...state, department: val.target.value })}
+                            placeholder={messages['forms.company.department']}
 
                           />
                           <FormText color="muted">
