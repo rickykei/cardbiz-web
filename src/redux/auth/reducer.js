@@ -17,7 +17,7 @@ import {
 } from '../contants';
 
 const INIT_STATE = {
-  currentUser: isAuthGuardActive ? currentUser : getCurrentUser(),
+  currentUser: isAuthGuardActive ? getCurrentUser() : currentUser,
   forgotUserMail: '',
   newPassword: '',
   resetPasswordCode: '',

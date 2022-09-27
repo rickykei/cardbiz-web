@@ -3,8 +3,7 @@ import axios from 'axios';
 import { servicePath2 } from 'constants/defaultValues';
 import ListPageHeading from 'containers/users/ListPageHeading';
 import ListPageListing from 'containers/users/ListPageListing';
-import useMousetrap from 'hooks/use-mousetrap';
-
+ 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -42,7 +41,7 @@ const DataListPages = ({ match }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
 
-  async function fetchData() {
+   function fetchData() {
     axios
       .get(
         `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
@@ -69,13 +68,13 @@ const DataListPages = ({ match }) => {
   
   useEffect(() => {
     fetchData();
-    setCurrentPage(1);
-
+    
   }, [selectedPageSize, selectedOrderOption]);
 
   useEffect(() => {
     
-    fetchData();
+    fetchData();setCurrentPage(1);
+
   }, [selectedPageSize, currentPage, selectedOrderOption, search]);
 
   const onCheckItem = (event, id) => {
@@ -140,14 +139,7 @@ const DataListPages = ({ match }) => {
     return true;
   };
 
-  useMousetrap(['ctrl+a', 'command+a'], () => {
-    handleChangeSelectAll(false);
-  });
-
-  useMousetrap(['ctrl+d', 'command+d'], () => {
-    setSelectedItems([]);
-    return false;
-  });
+ 
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
@@ -158,7 +150,7 @@ const DataListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="menu.users-list"
+          heading="menu.admin-list-header"
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}

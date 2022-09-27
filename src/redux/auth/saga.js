@@ -1,7 +1,11 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-unused-vars */
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import { auth } from 'helpers/Firebase';
 import { adminRoot, currentUser } from 'constants/defaultValues';
 import { setCurrentUser } from 'helpers/Utils';
+import authService from 'services/auth.service';
+import { auth } from 'helpers/Firebase'; 
+ 
 import {
   LOGIN_USER,
   REGISTER_USER,
@@ -21,6 +25,9 @@ import {
   resetPasswordError,
 } from './actions';
 
+ 
+
+
 export function* watchLoginUser() {
   // eslint-disable-next-line no-use-before-define
   yield takeEvery(LOGIN_USER, loginWithEmailPassword);
@@ -28,8 +35,7 @@ export function* watchLoginUser() {
 
 const loginWithEmailPasswordAsync = async (email, password) =>
   // eslint-disable-next-line no-return-await
-  await auth
-    .signInWithEmailAndPassword(email, password)
+  await authService.login(email, password)
     .then((user) => user)
     .catch((error) => error);
 
@@ -39,7 +45,7 @@ function* loginWithEmailPassword({ payload }) {
   try {
     const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
     if (!loginUser.message) {
-      const item = { uid: loginUser.user.uid, ...currentUser };
+      const item = { uid: loginUser.id, role: loginUser.role, ...currentUser };
       setCurrentUser(item);
       yield put(loginUserSuccess(item));
       history.push(adminRoot);

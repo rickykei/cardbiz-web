@@ -7,14 +7,14 @@ const data = [
     icon: 'iconsminds-office',
     label: 'menu.clients',
     to: `${adminRoot}/clients/clients-list`,
-     roles: [UserRole.Admin,UserRole.Editor]
+     roles: [UserRole.Admin]
   },  
   {
     id: 'users',
     icon: 'iconsminds-administrator',
     label: 'menu.hr.users',
     to: `${adminRoot}/users/users-list`,
-     roles: [UserRole.Admin,UserRole.Editor]
+     roles: [UserRole.Admin]
   }, 
   {
     id: 'smartcard',
@@ -41,21 +41,21 @@ const data = [
     icon: 'iconsminds-dashboard',
     label: 'menu.dashboards',
     to: `${adminRoot}/dashboards`,
-     roles: [UserRole.Admin, UserRole.Editor] 
+     roles: [UserRole.Admin ] 
   },
   {
     id: 'help',
     icon: 'iconsminds-assistant',
     label: 'menu.help',
     to: `${adminRoot}/help`, 
-    roles: [UserRole.Admin, UserRole.Editor]
+    roles: [UserRole.Admin]
   },
   {
     id: 'dashboards11',
     icon: 'iconsminds-shop-4',
     label: 'menu.dashboards',
     to: `${adminRoot}/dashboards`,
-    // roles: [UserRole.Admin, UserRole.Editor],
+    roles: [UserRole.Admin],
     subs: [
       {
         icon: 'simple-icon-briefcase',
@@ -88,6 +88,7 @@ const data = [
     icon: 'iconsminds-digital-drawing',
     label: 'menu.pages',
     to: `${adminRoot}/pages`,
+    roles: [UserRole.Admin],
     subs: [
       {
         id: 'pages-authorization',
@@ -124,6 +125,7 @@ const data = [
         id: 'pages-product',
         label: 'menu.product',
         to: `${adminRoot}/pages/product`,
+        roles: [UserRole.Admin],
         subs: [
           {
             icon: 'simple-icon-credit-card',
@@ -156,6 +158,7 @@ const data = [
         id: 'pages-profile',
         label: 'menu.profile',
         to: `${adminRoot}/pages/profile`,
+        roles: [UserRole.Admin],
         subs: [
           {
             icon: 'simple-icon-share',
@@ -173,6 +176,7 @@ const data = [
         id: 'pages-blog',
         label: 'menu.blog',
         to: `${adminRoot}/pages/blog`,
+        roles: [UserRole.Admin],
         subs: [
           {
             icon: 'simple-icon-share',
@@ -190,6 +194,7 @@ const data = [
         id: 'pages-miscellaneous',
         label: 'menu.miscellaneous',
         to: `${adminRoot}/pages/miscellaneous`,
+        roles: [UserRole.Admin],
         subs: [
           {
             icon: 'simple-icon-question',
@@ -238,6 +243,7 @@ const data = [
     icon: 'iconsminds-air-balloon-1',
     label: 'menu.applications',
     to: `${adminRoot}/applications`,
+    roles: [UserRole.Admin],
     subs: [
       {
         icon: 'simple-icon-check',
@@ -261,6 +267,7 @@ const data = [
     icon: 'iconsminds-pantone',
     label: 'menu.ui',
     to: `${adminRoot}/ui`,
+    roles: [UserRole.Admin],
     subs: [
       {
         id: 'ui-forms',
@@ -293,6 +300,7 @@ const data = [
         id: 'ui-components',
         label: 'menu.components',
         to: `${adminRoot}/ui/components`,
+        roles: [UserRole.Admin],
         subs: [
           {
             icon: 'simple-icon-bell',
@@ -394,6 +402,7 @@ const data = [
     icon: 'iconsminds-three-arrow-fork',
     label: 'menu.menu',
     to: `${adminRoot}/menu`,
+    roles: [UserRole.Admin],
     subs: [
       {
         icon: 'simple-icon-logout',
@@ -429,6 +438,7 @@ const data = [
     icon: 'iconsminds-bucket',
     label: 'menu.blank-page',
     to: `${adminRoot}/blank-page`,
+    roles: [UserRole.Admin],
   },
   {
     id: 'docs',
@@ -436,6 +446,7 @@ const data = [
     label: 'menu.docs',
     to: 'https://gogo-react-docs.coloredstrategies.com/',
     newWindow: true,
+    roles: [UserRole.Admin],
   },
 ];
 export default data;

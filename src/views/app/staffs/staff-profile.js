@@ -38,7 +38,7 @@ const StaffProfileModal = ({ intl, match, }) => {
 
   const { id } = useParams();
   const profilePageURL = `${servicePath3}/Touchless/Profile.php?sig=${state.id}`;
-  const vcfDLURL = `${servicePath3}/genvcf.php?sig=${state.id}`;
+  const vcfDLURL = `${servicePath3}/genvcf.php?sig=${id}`;
   const moreInfoURL = `${servicePath3}/?sig=${state.id}`;
   const qrcodeURL = `${servicePath3}/Touchless/genvcf2png.php?sig=${state.id}`;
   const username = `${state.fname} ${state.lname}`;

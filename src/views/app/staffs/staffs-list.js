@@ -158,7 +158,7 @@ const DataListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="menu.users-list"
+          heading="menu.staffs-list-header"
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}

@@ -38,7 +38,7 @@ export const polarAreaChartData = {
 };
 
 export const areaChartData = {
-  labels: ['2022/09/24', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
   datasets: [
     {
       label: 'sdfsd',

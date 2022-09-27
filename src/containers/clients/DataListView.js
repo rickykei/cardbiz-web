@@ -35,14 +35,15 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
                 </p>
               </NavLink>
               <p className="mb-1 text-muted text-small w-10 w-sm-100">
-                {product.code}
-              </p>
-              <p className="mb-1 text-muted text-small w-10 w-sm-100">
-                {product.updatedAt}
+                {product.no_of_license}
               </p>
               <p  className="w-15 w-sm-100">
                  {product.status?"Active":"DeActive"}
               </p>
+              <p className="mb-1 text-muted text-small w-10 w-sm-100">
+                {product.updatedAt}
+              </p>
+             
                <ButtonDropdown
                       isOpen={dropdownSplitOpen}
                       toggle={() => setDropdownSplitOpen(!dropdownSplitOpen)}
@@ -52,9 +53,7 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
                       </Button>
                       <DropdownToggle caret outline color="info" />
                       <DropdownMenu>
-                        <DropdownItem href={`client-profile/${product.id}`}>
-                          <IntlMessages id="dropdowns.profile" />
-                        </DropdownItem>
+                        
                         <DropdownItem href={`client-edit/${product.id}`}>
                           <IntlMessages id="dropdowns.edit" />
                         </DropdownItem>

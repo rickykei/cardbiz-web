@@ -3,6 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { UserRole,isAuthGuardActive } from 'constants/defaultValues';
 import { getCurrentUser } from './Utils';
 
+ 
 const ProtectedRoute = ({
   component: Component,
   roles = UserRole,
@@ -43,4 +44,4 @@ const ProtectedRoute = ({
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export { ProtectedRoute };
+export { ProtectedRoute ,UserRole};

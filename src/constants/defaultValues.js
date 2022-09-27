@@ -5,7 +5,7 @@ export const UserRole = {
 
 /* 
 Menu Types:
-"menu-default", "menu-sub-hidden", "menu-hidden"
+"menu-default", "menu-sub-hidden", "menu-hidden" role: UserRole.Editor
 */
 export const defaultMenuType = 'menu-default';
 
@@ -27,13 +27,17 @@ export const firebaseConfig = {
   messagingSenderId: '216495999563',
 };
 
+
 export const currentUser = {
+  master:766,
   id: 1,
   title: 'Tester',
   img: '/assets/img/profiles/l-1.jpg',
   date: 'Last seen today 15:24',
-  role: UserRole.Admin,
+  roledefault: UserRole.Editor
+  
 };
+
 
 export const adminRoot = '/app';
 export const buyUrl = ' ';
@@ -49,7 +53,7 @@ export const defaultColor = 'light.purplemonster';
 export const isDarkSwitchActive = true;
 export const defaultDirection = 'ltr';
 export const themeRadiusStorageKey = '__theme_radius';
-export const isAuthGuardActive = false;
+export const isAuthGuardActive = true;
 export const colors = [
   'bluenavy',
   'blueyale',

@@ -1,19 +1,76 @@
-import React from 'react';
-import {
-  Card,
-  CardBody,
-  UncontrolledDropdown,
-  DropdownItem,
-  DropdownToggle,
-  DropdownMenu,
-} from 'reactstrap';
-
+/* eslint-disable import/no-extraneous-dependencies */
+import React, {useState,useEffect} from 'react';
+import {  Card,  CardBody,  UncontrolledDropdown,  DropdownItem,  DropdownToggle,  DropdownMenu,} from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { AreaChart } from 'components/charts';
+import { ThemeColors } from 'helpers/ThemeColors';
+import { servicePath2 } from 'constants/defaultValues';
+import axios from 'axios';
+import { useParams, } from "react-router-dom";
 
-import { areaChartData } from 'data/charts';
+ 
+let apiUrl ="";
+const colors = ThemeColors();
 
 const WebsiteVisitsChartCard = ({ className = '', controls = true }) => {
+
+  
+  const { id } = useParams();
+  console.log("id".concat(id));
+  const [options, setOptions] = useState([]);
+  let areaChartData = {};
+  apiUrl=`${servicePath2}/profile_counter/getProfileCountByStaffId?staff_id=` ;
+  apiUrl=apiUrl.concat(id);
+
+  console.log(apiUrl);
+
+  async function fetchData() {
+  
+    axios.get(`${apiUrl}`)
+    
+      .then((data) => {
+          
+          areaChartData = {
+            labels: data.data.labels,
+            datasets: [
+              {
+                label: '',
+                data: data.data.count ,
+                borderColor: colors.themeColor1,
+                pointBackgroundColor: colors.foregroundColor,
+                pointBorderColor: colors.themeColor1,
+                pointHoverBackgroundColor: colors.themeColor1,
+                pointHoverBorderColor: colors.foregroundColor,
+                pointRadius: 4,
+                pointBorderWidth: 2,
+                pointHoverRadius: 2,
+                fill: true,
+                borderWidth: 2,
+                backgroundColor: colors.themeColor1_10,
+              },
+            ],
+          };
+          setOptions(areaChartData);
+          
+      })
+      .catch(error => {
+  
+        console.error('There was an error to get VcfCountbyStaffid!', error);
+      })
+  
+  
+  }
+  
+
+ 
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+     
+ 
+
+
   return (
     <Card className={`${className} dashboard-filled-line-chart`}>
       <CardBody>
@@ -47,7 +104,7 @@ const WebsiteVisitsChartCard = ({ className = '', controls = true }) => {
       </CardBody>
 
       <div className="chart card-body pt-0">
-        <AreaChart shadow data={areaChartData} />
+        <AreaChart shadow data={options} />
       </div>
     </Card>
   );

@@ -20,19 +20,11 @@ const validatePassword = (value) => {
   return error;
 };
 
-const validateEmail = (value) => {
-  let error;
-  if (!value) {
-    error = 'Please enter your email address';
-  } else if (!/^[A-Z0-9._%+-]/i.test(value)) {
-    error = 'Invalid email address';
-  }
-  return error;
-};
+ 
 
 const Login = ({ history, loading, error, loginUserAction }) => {
-  const [email] = useState('demo@gogo.com');
-  const [password] = useState('gogo123');
+  const [email] = useState('ricky');
+  const [password] = useState('abcd1234');
 
   useEffect(() => {
     if (error) {
@@ -84,7 +76,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                     <Field
                       className="form-control"
                       name="email"
-                      validate={validateEmail}
+                       
                     />
                     {errors.email && touched.email && (
                       <div className="invalid-feedback d-block">
