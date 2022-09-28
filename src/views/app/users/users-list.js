@@ -62,15 +62,7 @@ const DataListPages = ({ match }) => {
       });
   }
   
-  useEffect(() => {
-    fetchData();
-  }, []);
-  
-  useEffect(() => {
-    fetchData();
-    
-  }, [selectedPageSize, selectedOrderOption]);
-
+ 
   useEffect(() => {
     
     fetchData();setCurrentPage(1);
