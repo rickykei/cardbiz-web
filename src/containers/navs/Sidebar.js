@@ -17,7 +17,7 @@ import {
 } from 'redux/actions';
 
 import menuItems from 'constants/menu';
-
+ 
 class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -363,6 +363,7 @@ class Sidebar extends Component {
               <Nav vertical className="list-unstyled">
                 {menuItems &&
                   this.filteredList(menuItems).map((item) => {
+                    
                     return (
                       <NavItem
                         key={item.id}
@@ -375,7 +376,7 @@ class Sidebar extends Component {
                       >
                         {item.newWindow ? (
                           <a
-                            href={item.to}
+                            href={item.to} 
                             rel="noopener noreferrer"
                             target="_blank"
                           >

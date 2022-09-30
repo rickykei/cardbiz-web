@@ -4,6 +4,7 @@ import { servicePath2 } from 'constants/defaultValues';
 import ListPageHeading from 'containers/cards/ListPageHeading';
 import ListPageListing from 'containers/cards/ListPageListing';
 import useMousetrap from 'hooks/use-mousetrap';
+import { connect } from 'react-redux';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -14,7 +15,7 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const apiUrl = `${servicePath2}/smartcards`;
+const apiUrl = `${servicePath2}/smartcards/findByCompanyId`;
 
 const orderOptions = [
   { column: 'company_id', label: 'Company Code' },
@@ -24,11 +25,11 @@ const orderOptions = [
 const pageSizes = [5, 10, 15, 20];
 
 
-const DataListPages = ({ match }) => {
+const DataListPages = ({ match, currentUser }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('list');
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedPageSize, setSelectedPageSize] = useState(5);
+  const [selectedPageSize, setSelectedPageSize] = useState(10);
   const [selectedOrderOption, setSelectedOrderOption] = useState({
     column: '',
     label: '',
@@ -45,7 +46,7 @@ const DataListPages = ({ match }) => {
   async function fetchData() {
     axios
       .get(
-        `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
+        `${apiUrl}?companyId=${currentUser.companyId}&pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
       )
       .then((res) => {
         return res.data;
@@ -62,20 +63,20 @@ const DataListPages = ({ match }) => {
         setIsLoaded(true);
       });
   }
-  
+
   useEffect(() => {
-    
+
   }, []);
-  
+
   useEffect(() => {
-  
+
     setCurrentPage(1);
-  
+
   }, [selectedPageSize, selectedOrderOption]);
 
   useEffect(() => {
     fetchData();
-    
+
   }, [selectedPageSize, currentPage, selectedOrderOption, search]);
 
   const onCheckItem = (event, id) => {
@@ -185,7 +186,7 @@ const DataListPages = ({ match }) => {
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
         />
-        
+
         <ListPageListing
           items={items}
           displayMode={displayMode}
@@ -201,5 +202,16 @@ const DataListPages = ({ match }) => {
     </>
   );
 };
-
-export default DataListPages;
+const mapStateToProps = ({ menu, authUser, settings }) => {
+  const { containerClassnames, menuClickCount, selectedMenuHasSubItems } = menu;
+  const { locale } = settings;
+  const { currentUser } = authUser;
+  return {
+    containerClassnames,
+    menuClickCount,
+    selectedMenuHasSubItems,
+    locale,
+    currentUser,
+  };
+};
+export default connect(mapStateToProps)(DataListPages);

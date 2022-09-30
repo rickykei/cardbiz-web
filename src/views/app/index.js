@@ -3,7 +3,7 @@ import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import AppLayout from 'layout/AppLayout';
-  import { ProtectedRoute, UserRole } from 'helpers/authHelper';
+// import { ProtectedRoute, UserRole } from 'helpers/authHelper';
 
 const Dashboards = React.lazy(() =>
   import(/* webpackChunkName: "dashboards" */ './dashboards')
@@ -16,15 +16,13 @@ const Applications = React.lazy(() =>
 );
 const Ui = React.lazy(() => import(/* webpackChunkName: "ui" */ './ui'));
 const Menu = React.lazy(() => import(/* webpackChunkName: "menu" */ './menu'));
-const BlankPage = React.lazy(() =>
-  import(/* webpackChunkName: "blank-page" */ './blank-page')
-);
+const BlankPage = React.lazy(() => import(/* webpackChunkName: "blank-page" */ './blank-page'));
 const Admins = React.lazy(() => import(/* webpackChunkName: "admins" */ './admins'));
 const Clients = React.lazy(() => import(/* webpackChunkName: "clients" */ './clients'));
 const Users = React.lazy(() => import(/* webpackChunkName: "users" */ './users'));
 const Staffs = React.lazy(() => import(/* webpackChunkName: "staffs" */ './staffs'));
 const Cards = React.lazy(() => import(/* webpackChunkName: "cards" */ './cards'));
-
+const CardsAdmin = React.lazy(() => import(/* webpackChunkName: "cardsadmin" */ './cardsadmin'));
 
 
 const App = ({ match }) => {
@@ -42,15 +40,15 @@ const App = ({ match }) => {
               path={`${match.url}/dashboards`}
               render={(props) => <Dashboards {...props} />}
             />
-            {/* <Route
+            <Route
               path={`${match.url}/applications`}
               render={(props) => <Applications {...props} />}
-  /> */}
-              <ProtectedRoute
+            />
+            {/* <ProtectedRoute
                     path={`${match.url}/applications`}
                     component={Applications}
-                    roles={[UserRole.Editor]}
-            />  
+                    roles={[UserRole.Admin]}
+            /> */}
             <Route
               path={`${match.url}/pages`}
               render={(props) => <Pages {...props} />}
@@ -59,23 +57,26 @@ const App = ({ match }) => {
               path={`${match.url}/ui`}
               render={(props) => <Ui {...props} />}
             />
-             <Route
+            <Route
               path={`${match.url}/clients`}
               render={(props) => <Clients {...props} />}
             /> <Route
-            path={`${match.url}/users`}
-            render={(props) => <Users {...props} />}
-          /><Route
-            path={`${match.url}/staffs`}
-            render={(props) => <Staffs {...props} />}
-          /><Route
-          path={`${match.url}/cards`}
-          render={(props) => <Cards {...props} />}
-        />
-          <Route
-          path={`${match.url}/admins`}
-          render={(props) => <Admins {...props} />}
-        />
+              path={`${match.url}/users`}
+              render={(props) => <Users {...props} />}
+            /><Route
+              path={`${match.url}/staffs`}
+              render={(props) => <Staffs {...props} />}
+            /><Route
+              path={`${match.url}/cards`}
+              render={(props) => <Cards {...props} />}
+            /><Route
+              path={`${match.url}/cardsadmin`}
+              render={(props) => <CardsAdmin {...props} />}
+            />
+            <Route
+              path={`${match.url}/admins`}
+              render={(props) => <Admins {...props} />}
+            />
             <Route
               path={`${match.url}/menu`}
               render={(props) => <Menu {...props} />}

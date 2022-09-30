@@ -1,10 +1,14 @@
+ 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { servicePath2 } from 'constants/defaultValues';
+import {  servicePath2 } from 'constants/defaultValues';
 import ListPageHeading from 'containers/staffs/ListPageHeading';
 import ListPageListing from 'containers/staffs/ListPageListing';
 import useMousetrap from 'hooks/use-mousetrap';
+import { connect } from 'react-redux';
 
+
+ 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -14,7 +18,6 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const apiUrl = `${servicePath2}/staffs`;
 
 const orderOptions = [
   { column: 'company_id', label: 'Company Code' },
@@ -24,7 +27,7 @@ const orderOptions = [
 const pageSizes = [5, 10, 15, 20];
 
 
-const DataListPages = ({ match }) => {
+const DataListPages = ({ match ,currentUser }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('list');
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,14 +41,22 @@ const DataListPages = ({ match }) => {
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
   const [search, setSearch] = useState('');
+ 
   const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
+ 
+  let apiUrl ="";
+if(currentUser.role===0)
+ apiUrl = `${servicePath2}/staffs`;
+else
+apiUrl = `${servicePath2}/staffs/findByCompanyId`;
+console.log(currentUser);
 
   async function fetchData() {
     axios
       .get(
-        `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
+        `${apiUrl}?companyId=${currentUser.companyId}&pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
       )
       .then((res) => {
         return res.data;
@@ -64,19 +75,13 @@ const DataListPages = ({ match }) => {
   }
   
   useEffect(() => {
-    fetchData();
-  }, []);
-  
-  useEffect(() => {
-    fetchData();
     setCurrentPage(1);
-
   }, [selectedPageSize, selectedOrderOption]);
 
   useEffect(() => {
-    
+ 
     fetchData();
-  }, [selectedPageSize, currentPage, selectedOrderOption, search]);
+  }, [selectedPageSize, currentPage, selectedOrderOption, search ]);
 
   const onCheckItem = (event, id) => {
     if (
@@ -202,4 +207,16 @@ const DataListPages = ({ match }) => {
   );
 };
 
-export default DataListPages;
+const mapStateToProps = ({ menu,authUser, settings }) => {
+  const { containerClassnames, menuClickCount, selectedMenuHasSubItems } = menu;
+  const { locale } = settings;
+  const { currentUser } = authUser;
+  return {
+    containerClassnames,
+    menuClickCount,
+    selectedMenuHasSubItems,
+    locale,
+    currentUser,
+  };
+};
+export default  connect(mapStateToProps) (DataListPages);

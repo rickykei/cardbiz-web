@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
+import { connect } from 'react-redux';
 
 import Breadcrumb from 'containers/navs/Breadcrumb';
 import Select from 'react-select';
@@ -123,7 +124,7 @@ const dropzoneConfigBanner = {
   headers: { 'My-Awesome-Header': 'header value' },
 };
 
-const AdminPage = ({ intl, match }) => {
+const AdminPage = ({ intl, match,currentUser }) => {
   const initialState = {
     id: null,
     username: "",
@@ -208,22 +209,10 @@ const AdminPage = ({ intl, match }) => {
       });
   };
 
-  async function fetchRecord() {
-    axios.get(`${apiUrl}`)
-      .then(({ data }) => {
-        const option = data.map((item) => ({
-          "value": item.value,
-          "label": item.label,
-        }))
-        setOptions(option);
-
-      })
-      .catch(error => {
-        console.error('Companies code error!', error);
-      }) 
-  }
-  const fetchCompanyRecord = (aa) => {
-    CompanyDataService.get(aa)
+ 
+  const fetchCompanyRecord = ( ) => {
+    console.log(currentUser.companyId);
+    CompanyDataService.get(currentUser.companyId)
       .then(response => {
         setState(response.data);
          
@@ -233,15 +222,10 @@ const AdminPage = ({ intl, match }) => {
       });
   };
   useEffect(() => {
-    
-    fetchRecord();
-  }, []);
-  useEffect(() => {
-    if (id)
-    fetchCompanyRecord(id);
+    fetchCompanyRecord();
      
-  }, [id]);
-
+  }, []);
+  
   return (
     <>
 
@@ -375,23 +359,7 @@ const AdminPage = ({ intl, match }) => {
                     </FormGroup>
 
 
-                    <FormGroup>
-                  <Label className="mt-4">
-                    <IntlMessages id="forms.user-company" />
-                  </Label>
-                  <Select
-                    components={{ Input: CustomSelectInput }}
-                    className="react-select"
-                    classNamePrefix="react-select"
-                    name="form-field-company"
-                    options={options}
-                    value={options.find(obj => {
-                      return obj.value === state.company_id;
-                    })}
-                    onChange={(val) => setState({ ...state, company_id: val.value })}
-                    
-                  />
-                </FormGroup>
+                     
 
                    
                     <Row>
@@ -577,6 +545,18 @@ const AdminPage = ({ intl, match }) => {
   );
 };
 
-export default injectIntl(AdminPage);
+const mapStateToProps = ({ menu,authUser, settings }) => {
+  const { containerClassnames, menuClickCount, selectedMenuHasSubItems } = menu;
+  const { locale } = settings;
+  const { currentUser } = authUser;
+  return {
+    containerClassnames,
+    menuClickCount,
+    selectedMenuHasSubItems,
+    locale,
+    currentUser,
+  };
+};
+export default injectIntl(connect(mapStateToProps)(AdminPage));
 
 

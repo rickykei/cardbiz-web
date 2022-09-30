@@ -17,11 +17,18 @@ const data = [
      roles: [UserRole.Admin]
   }, 
   {
+    id: 'smartcardadmin',
+    icon: 'iconsminds-id-card',
+    label: 'menu.smartcard.list.admin',
+    to: `${adminRoot}/cardsadmin/cards-list`,
+     roles: [UserRole.Admin]
+  },
+  {
     id: 'smartcard',
     icon: 'iconsminds-id-card',
     label: 'menu.smartcard.list',
     to: `${adminRoot}/cards/cards-list`,
-     roles: [UserRole.Admin,UserRole.Editor]
+     roles: [UserRole.Editor]
   },
   {
     id: 'staffs',
@@ -34,7 +41,7 @@ const data = [
     id: 'admins',
     icon: 'iconsminds-administrator',
     label: 'menu.hr.admin',
-    to: `${adminRoot}/admins/admin-edit/63142fe3b54bdbb18f55601e`,
+    to: `${adminRoot}/admins`,
      roles: [UserRole.Admin, UserRole.Editor] 
   }, {
     id: 'dashboards',

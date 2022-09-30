@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
- 
+import { Link} from 'react-router-dom';
 import React, { useState } from 'react';
 import {
   Row,
@@ -44,7 +44,18 @@ const ListPageHeading = ({
             <IntlMessages id={heading} />
           </h1>
 
-           
+          <div className="text-zero top-right-button-container">
+          <Link to="card-add"><Button
+              color="primary"
+              size="lg"
+              className="top-right-button"
+             >
+              <IntlMessages id="pages.add-new" />
+            </Button>
+            </Link>
+            {'  '}
+            
+          </div>
           <Breadcrumb match={match} />
         </div>
 

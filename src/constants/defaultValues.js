@@ -34,7 +34,6 @@ export const currentUser = {
   title: 'Tester',
   img: '/assets/img/profiles/l-1.jpg',
   date: 'Last seen today 15:24',
-  roledefault: UserRole.Editor
   
 };
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { servicePath2 } from 'constants/defaultValues';
-import ListPageHeading from 'containers/users/ListPageHeading';
-import ListPageListing from 'containers/users/ListPageListing';
- 
+import ListPageHeading from 'containers/cardsadmin/ListPageHeading';
+import ListPageListing from 'containers/cardsadmin/ListPageListing';
+import useMousetrap from 'hooks/use-mousetrap';
+
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -13,11 +14,11 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const apiUrl = `${servicePath2}/users`;
+const apiUrl = `${servicePath2}/smartcards`;
 
 const orderOptions = [
-  { column: 'username', label: 'Username' },
-  { column: 'roles', label: 'Roles' },
+  { column: 'company_id', label: 'Company Code' },
+  { column: 'uid', label: 'uid' },
   { column: 'status', label: 'Status' },
 ];
 const pageSizes = [5, 10, 15, 20];
@@ -29,8 +30,8 @@ const DataListPages = ({ match }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(5);
   const [selectedOrderOption, setSelectedOrderOption] = useState({
-    column: 'username',
-    label: 'Username',
+    column: '',
+    label: '',
   });
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -41,7 +42,7 @@ const DataListPages = ({ match }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
 
-   function fetchData() {
+  async function fetchData() {
     axios
       .get(
         `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
@@ -53,7 +54,7 @@ const DataListPages = ({ match }) => {
         setTotalPage(data.totalPage);
         setItems(
           data.data.map((x) => {
-            return { ...x, username: x.username.replace('img/', 'img/products/') };
+            return x;
           })
         );
         setSelectedItems([]);
@@ -63,11 +64,18 @@ const DataListPages = ({ match }) => {
   }
   
   useEffect(() => {
+    
+  }, []);
+  
+  useEffect(() => {
+  
     setCurrentPage(1);
+  
   }, [selectedPageSize, selectedOrderOption]);
 
   useEffect(() => {
-    fetchData(); 
+    fetchData();
+    
   }, [selectedPageSize, currentPage, selectedOrderOption, search]);
 
   const onCheckItem = (event, id) => {
@@ -132,7 +140,14 @@ const DataListPages = ({ match }) => {
     return true;
   };
 
- 
+  useMousetrap(['ctrl+a', 'command+a'], () => {
+    handleChangeSelectAll(false);
+  });
+
+  useMousetrap(['ctrl+d', 'command+d'], () => {
+    setSelectedItems([]);
+    return false;
+  });
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
@@ -143,7 +158,7 @@ const DataListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="menu.admin-list-header"
+          heading="menu.smartcards-list"
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}

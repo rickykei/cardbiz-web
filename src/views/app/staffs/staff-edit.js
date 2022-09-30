@@ -191,7 +191,7 @@ const EditClientModal = ({ intl, match, }) => {
 
       <Row>
         <Colxx xxs="12">
-          <Breadcrumb heading="menu.clients-edit" match={match} />
+          <Breadcrumb heading="menu.staff-edit-title" match={match} />
           <Separator className="mb-5" />
         </Colxx>
       </Row>

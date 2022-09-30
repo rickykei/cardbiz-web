@@ -1,16 +1,22 @@
-import React  from 'react';
+import React, { useState } from 'react';
 
 import {
   Card,
- 
+  DropdownToggle,
+  DropdownItem,
+  DropdownMenu,
+  ButtonDropdown,
+  Button,
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
- 
+import IntlMessages from 'helpers/IntlMessages';
+
 const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
- 
+  const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
+
 
 
   return (
@@ -38,7 +44,26 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
               <p className="w-15 w-sm-100">
                 {product.status ? "Active" : "DeActive"}
               </p>
-             
+              <ButtonDropdown
+                isOpen={dropdownSplitOpen}
+                toggle={() => setDropdownSplitOpen(!dropdownSplitOpen)}
+              >
+                <Button outline color="info">
+                  <IntlMessages id="dropdowns.action" />
+                </Button>
+                <DropdownToggle caret outline color="info" />
+                <DropdownMenu>
+                  
+                  <DropdownItem href={`card-edit/${product.id}`}>
+                    <IntlMessages id="dropdowns.edit" />
+                  </DropdownItem>
+                  <DropdownItem href={`card-del/${product.id}`}>
+                    <IntlMessages id="dropdowns.delete" />
+                  </DropdownItem>
+
+                </DropdownMenu>
+              </ButtonDropdown>
+
 
             </div>
 
