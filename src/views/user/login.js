@@ -23,7 +23,7 @@ const validatePassword = (value) => {
  
 
 const Login = ({ history, loading, error, loginUserAction }) => {
-  const [email] = useState('ricky');
+  const [email] = useState('ricky.user');
   const [password] = useState('abcd1234');
 
   useEffect(() => {

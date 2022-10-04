@@ -14,7 +14,7 @@ import Breadcrumb from 'containers/navs/Breadcrumb';
 import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import StaffDataService from 'services/StaffsService';
-
+import { connect } from 'react-redux';
 import { useParams,useHistory } from "react-router-dom";
 import { servicePath2 } from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
@@ -78,7 +78,7 @@ const dropzoneConfig = {
 
 
 
-const EditClientModal = ({ intl, match, }) => {
+const EditClientModal = ({ intl, match, currentUser}) => {
  
   const { id } = useParams();
   const initialState = {
@@ -122,12 +122,7 @@ const EditClientModal = ({ intl, match, }) => {
   }, [id]);
 
   const updateStaff = () => {
-    console.log('state.company_id');
-     
-    console.log(state);
-     
    
-     
     const data = new FormData() 
   
     if(file2 !== null)
@@ -239,7 +234,7 @@ const EditClientModal = ({ intl, match, }) => {
                         </CardBody>
                     </Card>
               
-
+                    {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
                 <FormGroup>
                   <Label className="mt-4">
                     <IntlMessages id="forms.user-company" />
@@ -257,7 +252,7 @@ const EditClientModal = ({ intl, match, }) => {
                     
                   />
                 </FormGroup>
-                  
+                }
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
@@ -842,7 +837,7 @@ const EditClientModal = ({ intl, match, }) => {
                     type="radio"
                     id="exCustomRadio2"
                     name="customRadio2"
-                    label="eprofile"
+                    label={messages['forms.label.eprofile']}
                     checked={state.bizcard_option === true}
                     onChange={(event) =>
                       setState({
@@ -857,7 +852,7 @@ const EditClientModal = ({ intl, match, }) => {
                     type="radio"
                     id="exCustomRadio"
                     name="customRadio"
-                    label="vcf"
+                    label={messages['forms.label.vcf']}
                     checked={state.bizcard_option === false}
                     onChange={(event) =>
                       setState({
@@ -925,5 +920,12 @@ const EditClientModal = ({ intl, match, }) => {
     </>
   );
 };
- 
-export default injectIntl(EditClientModal);
+const mapStateToProps = ({ staffListApp, authUser }) => {
+  const { companies } = staffListApp;
+  const { currentUser } = authUser;
+  return {
+    companies,
+    currentUser
+  };
+};
+export default injectIntl(connect(mapStateToProps)  (EditClientModal));

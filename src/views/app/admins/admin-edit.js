@@ -14,6 +14,7 @@ import axios from 'axios';
 import { servicePath2 } from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
 import CompanyDataService from 'services/CompanyService';
+import AuthService from 'services/auth.service';
 import { useParams, useHistory } from "react-router-dom";
 import 'dropzone/dist/min/dropzone.min.css';
 
@@ -142,6 +143,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
   const [options, setOptions] = useState([]);
   const [selectedOptionLO, setSelectedOptionLO] = useState('');
   const [message, setMessage] = useState("");
+  const [messagePassword, setMessagePassword] = useState("");
   const apiUrl = `${servicePath2}/companies/codelist`;
  
   const CompanyBannerImgUrl = `${servicePath2}/files/${state.banner}`;
@@ -186,33 +188,24 @@ const AdminPage = ({ intl, match,currentUser }) => {
   const updateAdminPassword = () => {
 
     console.log(state.company_id);
-
-    if (state.company_id === undefined)
-      state.company_id = selectedOptionLO.value;
-    console.log(state.company_id);
-    const data = new FormData()
-
-   
-    /* eslint-disable no-restricted-syntax */
-
-    for (const [key, val] of Object.entries(state)) {
-      data.append(key, val);
-    }
-    CompanyDataService.update(state.id, data)
-      .then(response => {
-        console.log(response.data);
-        setMessage("The Staff was updated successfully!");
-        history.push("/app/staffs/staffs-list");
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    console.log(currentUser.uid);
+    if (state.password!==state.repassword)
+    setMessagePassword("Password not match!!");
+    
+    AuthService.changePassword(currentUser.uid,state.password)
+    .then(response=>{
+      setMessagePassword("Password Changed");
+    })
+    .catch(e => {
+      console.log(e);
+    });
   };
 
  
-  const fetchCompanyRecord = ( ) => {
+  const fetchCompanyRecord = () => {
     console.log(currentUser.companyId);
-    CompanyDataService.get(currentUser.companyId)
+    console.log(id);
+    CompanyDataService.get(id!==undefined?id:currentUser.companyId)
       .then(response => {
         setState(response.data);
          
@@ -221,9 +214,27 @@ const AdminPage = ({ intl, match,currentUser }) => {
         console.log(e);
       });
   };
+
+  async function fetchCompanyCode() {
+    axios.get(`${apiUrl}`)
+      .then(({data}) => {
+        const option = data.map((item)=>({
+          "value" : item.value,
+          "label" : item.label,
+      }))
+        setOptions(option);
+          
+      })
+      .catch(error => {
+        console.error('Companies code error!', error);
+      })
+     
+
+  }
+  
   useEffect(() => {
     fetchCompanyRecord();
-     
+    fetchCompanyCode()
   }, []);
   
   return (
@@ -278,6 +289,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                 <Button color="primary" className="mt-4" onClick={() => updateAdminPassword()}>
                   <IntlMessages id="forms.submit" />
                 </Button>
+                <p>{messagePassword}</p>
               </CardBody>
             </Card>
 
@@ -358,7 +370,25 @@ const AdminPage = ({ intl, match,currentUser }) => {
 
                     </FormGroup>
 
-
+                    {currentUser.companyId === '63142fd5b54bdbb18f556016' &&
+                <FormGroup>
+                  <Label className="mt-4">
+                    <IntlMessages id="forms.user-company" />
+                  </Label>
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    name="form-field-company"
+                    options={options}
+                    value={options.find(obj => {
+                      return obj.value === state.company_id;
+                    })}
+                    onChange={(val) => setState({ ...state, company_id: val.value })}
+                    
+                  />
+                </FormGroup>
+                }
                      
 
                    

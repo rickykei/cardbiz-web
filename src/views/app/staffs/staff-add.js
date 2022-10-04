@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,  } from 'reactstrap';
+import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle, } from 'reactstrap';
 import 'react-tagsinput/react-tagsinput.css';
 import 'rc-switch/assets/index.css';
 import 'rc-slider/assets/index.css';
@@ -28,12 +28,12 @@ const ReactDOMServer = require('react-dom/server');
 
 const dropzoneComponentConfig = {
   postUrl: 'no-url',
- 
+
 };
 const dropzoneConfig = {
   autoProcessQueue: false,
   thumbnailHeight: 160,
-  maxFilesize:10,
+  maxFilesize: 10,
   maxFiles: 1,
   acceptedFiles: ".jpeg,.jpg,.png,.gif",
   uploadMultiple: false,
@@ -83,7 +83,7 @@ const dropzoneConfig = {
 
 
 const AddNewStaffModal = ({
-  addStaffItemAction, intl, match
+  addStaffItemAction, intl, match, currentUser
 }) => {
 
   const initialState = {
@@ -114,7 +114,7 @@ const AddNewStaffModal = ({
     division: "",
     department: "",
     country: "",
-    bio:"",
+    bio: "",
     company_website_url: "",
     more_info_tab_url: "",
     facebook_url: "",
@@ -129,13 +129,16 @@ const AddNewStaffModal = ({
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",
     status: true,
-    
+
   };
   const [state, setState] = useState(initialState);
   const history = useHistory();
   const [selectedOptionLO, setSelectedOptionLO] = useState('');
   const [options, setOptions] = useState([]);
-  const[file2,setFile]=useState(null);
+  const [file2, setFile] = useState(null);
+  const { messages } = intl;
+
+
   const addNetItem = () => {
     const newItem = {
       fname: state.fname,
@@ -178,17 +181,26 @@ const AddNewStaffModal = ({
       updated_by: state.updated_by,
       created_by: state.created_by,
       status: state.status,
-     
-     };
-     const data = new FormData() 
-  
-     if(file2 !== null)
-     data.append("file",file2);
 
-     /* eslint-disable no-restricted-syntax */
+    };
+    const data = new FormData()
+
+    if (file2 !== null)
+      data.append("file", file2);
+
+    /* eslint-disable no-restricted-syntax */
 
     for (const [key, val] of Object.entries(newItem)) {
-      data.append(key, val);
+      
+      if (key === "company_id") {
+        if (val === undefined) {
+          data.append(key, currentUser.companyId);
+        }  else {
+          data.append(key, val);
+        }
+      } else {
+        data.append(key, val);
+      }
     }
 
 
@@ -198,7 +210,6 @@ const AddNewStaffModal = ({
 
     setState(initialState);
   };
-  const { messages } = intl;
 
   async function fetchData() {
     axios.get(`${apiUrl}`)
@@ -226,7 +237,7 @@ const AddNewStaffModal = ({
 
   const eventHandlers = {
     addedfile: (file) => {
-     setFile(file);
+      setFile(file);
     }
   }
 
@@ -250,19 +261,19 @@ const AddNewStaffModal = ({
 
               <Form>
 
-              <Card className="mb-4">
+                <Card className="mb-4">
                   <CardBody>
                     <CardTitle>
                       <IntlMessages id="input-groups.multiple-inputs" />
                     </CardTitle>
                     <Input
-                        type="text"
-                        value={state.fname || ''}
-                        onChange={(val) => setState({ ...state, fname: val.target.value })}
-                        placeholder={messages['forms.staff-firstname']}
+                      type="text"
+                      value={state.fname || ''}
+                      onChange={(val) => setState({ ...state, fname: val.target.value })}
+                      placeholder={messages['forms.staff-firstname']}
 
-                      />
-                    
+                    />
+
                   </CardBody>
                 </Card>
 
@@ -274,30 +285,31 @@ const AddNewStaffModal = ({
                           <IntlMessages id="form-staff-headshot" />
                         </CardTitle>
                         <DropzoneComponent
-                        config={dropzoneComponentConfig}
-                        djsConfig={dropzoneConfig}
-                        eventHandlers ={eventHandlers} multiple={false}/>
-                       
+                          config={dropzoneComponentConfig}
+                          djsConfig={dropzoneConfig}
+                          eventHandlers={eventHandlers} multiple={false} />
+
                       </CardBody>
                     </Card>
                   </Colxx>
-                </Row>
+                </Row>  
+                {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
+                  <FormGroup>
+                    <Label className="mt-4">
+                      <IntlMessages id="forms.user-company" />  {currentUser.companyId}
+                    </Label>
 
-                <FormGroup>
-                  <Label className="mt-4">
-                    <IntlMessages id="forms.user-company" />
-                  </Label>
-                  <Select
-                    components={{ Input: CustomSelectInput }}
-                    className="react-select"
-                    classNamePrefix="react-select"
-                    name="form-field-name"
-                    options={options}
-                    value={selectedOptionLO}
-                    onChange={(val) => setSelectedOptionLO(val)}
-                  />
-                </FormGroup>
-
+                    <Select
+                      components={{ Input: CustomSelectInput }}
+                      className="react-select"
+                      classNamePrefix="react-select"
+                      name="form-field-name"
+                      options={options}
+                      value={selectedOptionLO}
+                      onChange={(val) => setSelectedOptionLO(val)}
+                    />
+                  </FormGroup>
+                }
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
@@ -428,7 +440,7 @@ const AddNewStaffModal = ({
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                   <FormGroup>
+                    <FormGroup>
                       <Label for="mobile2">
                         <IntlMessages id="forms.staff-mobile2" />
                       </Label>
@@ -447,507 +459,507 @@ const AddNewStaffModal = ({
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                <FormGroup>
-                  <Label for="home_tel">
-                    <IntlMessages id="forms.staff-home_tel" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.home_tel || ''}
-                    onChange={(val) => setState({ ...state, home_tel: val.target.value })}
-                    placeholder={messages['forms.staff-home_tel']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-home_tel-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
+                    <FormGroup>
+                      <Label for="home_tel">
+                        <IntlMessages id="forms.staff-home_tel" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.home_tel || ''}
+                        onChange={(val) => setState({ ...state, home_tel: val.target.value })}
+                        placeholder={messages['forms.staff-home_tel']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-home_tel-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
                   <Colxx xxs="12" md="6">
 
-                <FormGroup>
-                  <Label for="fax">
-                    <IntlMessages id="forms.staff-fax" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.fax || ''}
-                    onChange={(val) => setState({ ...state, fax: val.target.value })}
-                    placeholder={messages['forms.staff-fax']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-fax-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
+                    <FormGroup>
+                      <Label for="fax">
+                        <IntlMessages id="forms.staff-fax" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.fax || ''}
+                        onChange={(val) => setState({ ...state, fax: val.target.value })}
+                        placeholder={messages['forms.staff-fax']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-fax-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
                 </Row>
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
-                  <Label for="web_link">
-                    <IntlMessages id="forms.staff-web_link" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.web_link || ''}
-                    onChange={(val) => setState({ ...state, web_link: val.target.value })}
-                    placeholder={messages['forms.staff-web_link']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-web_link-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
+                    <FormGroup>
+                      <Label for="web_link">
+                        <IntlMessages id="forms.staff-web_link" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.web_link || ''}
+                        onChange={(val) => setState({ ...state, web_link: val.target.value })}
+                        placeholder={messages['forms.staff-web_link']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-web_link-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
-                  <Label for="web_link2">
-                    <IntlMessages id="forms.staff-web_link2" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.web_link2 || ''}
-                    onChange={(val) => setState({ ...state, web_link2: val.target.value })}
-                    placeholder={messages['forms.staff-web_link2']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-web_link2-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                </Row>
-
-                
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
-                  <FormGroup>
-                  <Label for="web_link3">
-                    <IntlMessages id="forms.staff-web_link3" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.web_link3 || ''}
-                    onChange={(val) => setState({ ...state, web_link3: val.target.value })}
-                    placeholder={messages['forms.staff-web_link3']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-web_link3-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                  <Colxx xxs="12" md="6">
-                  <FormGroup>
-                  <Label for="web_link4">
-                    <IntlMessages id="forms.staff-web_link4" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.web_link4 || ''}
-                    onChange={(val) => setState({ ...state, web_link4: val.target.value })}
-                    placeholder={messages['forms.staff-web_link4']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-web_link4-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
-                <FormGroup>
-                  <Label for="web_link5">
-                    <IntlMessages id="forms.staff-web_link5" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.web_link5 || ''}
-                    onChange={(val) => setState({ ...state, web_link5: val.target.value })}
-                    placeholder={messages['forms.staff-web_link5']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-web_link5-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                  <Colxx xxs="12" md="6">
-                <FormGroup>
-                  <Label for="web_link6">
-                    <IntlMessages id="forms.staff-web_link6" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.web_link6 || ''}
-                    onChange={(val) => setState({ ...state, web_link6: val.target.value })}
-                    placeholder={messages['forms.staff-web_link6']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-web_link6-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
-                <FormGroup>
-                  <Label for="address">
-                    <IntlMessages id="forms.staff-address" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.address || ''}
-                    onChange={(val) => setState({ ...state, address: val.target.value })}
-                    placeholder={messages['forms.staff-address']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-address-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                  <Colxx xxs="12" md="6">
-                <FormGroup>
-                  <Label for="address2">
-                    <IntlMessages id="forms.staff-address2" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.address2 || ''}
-                    onChange={(val) => setState({ ...state, address2: val.target.value })}
-                    placeholder={messages['forms.staff-address2']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-address2-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
-                <FormGroup>
-                  <Label for="division">
-                    <IntlMessages id="forms.staff-division" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.division || ''}
-                    onChange={(val) => setState({ ...state, division: val.target.value })}
-                    placeholder={messages['forms.staff-division']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-division-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                  <Colxx xxs="12" md="6">
-                <FormGroup>
-                  <Label for="department">
-                    <IntlMessages id="forms.staff-department" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.department || ''}
-                    onChange={(val) => setState({ ...state, department: val.target.value })}
-                    placeholder={messages['forms.staff-department']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-department-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
-                <FormGroup>
-                  <Label for="country">
-                    <IntlMessages id="forms.staff-country" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.country || ''}
-                    onChange={(val) => setState({ ...state, country: val.target.value })}
-                    placeholder={messages['forms.staff-country']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-country-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                  <Colxx xxs="12" md="6">
-                <FormGroup>
-                  <Label for="bio">
-                    <IntlMessages id="forms.staff-bio" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.bio || ''}
-                    onChange={(val) => setState({ ...state, bio: val.target.value })}
-                    placeholder={messages['forms.staff-bio']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-bio-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
-                <FormGroup>
-                  <Label for="company_website_url">
-                    <IntlMessages id="forms.staff-company_website_url" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.company_website_url || ''}
-                    onChange={(val) => setState({ ...state, company_website_url: val.target.value })}
-                    placeholder={messages['forms.staff-company_website_url']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-company_website_url-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                  <Colxx xxs="12" md="6">
-
-                <FormGroup>
-                  <Label for="more_info_tab_url">
-                    <IntlMessages id="forms.staff-more_info_tab_url" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.more_info_tab_url || ''}
-                    onChange={(val) => setState({ ...state, more_info_tab_url: val.target.value })}
-                    placeholder={messages['forms.staff-more_info_tab_url']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-more_info_tab_url-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
-                <FormGroup>
-                  <Label for="facebook_url">
-                    <IntlMessages id="forms.staff-facebook_url" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.facebook_url || ''}
-                    onChange={(val) => setState({ ...state, facebook_url: val.target.value })}
-                    placeholder={messages['forms.staff-facebook_url']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-facebook_url-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                  <Colxx xxs="12" md="6">
-                <FormGroup>
-                  <Label for="instagram_url">
-                    <IntlMessages id="forms.staff-instagram_url" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.instagram_url || ''}
-                    onChange={(val) => setState({ ...state, instagram_url: val.target.value })}
-                    placeholder={messages['forms.staff-instagram_url']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-instagram_url-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
-                <FormGroup>
-                  <Label for="twitter_url">
-                    <IntlMessages id="forms.staff-twitter_url" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.twitter_url || ''}
-                    onChange={(val) => setState({ ...state, twitter_url: val.target.value })}
-                    placeholder={messages['forms.staff-twitter_url']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-twitter_url-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
-                  <Colxx xxs="12" md="6">
-                  <FormGroup>
-                  <Label for="whatsapp_url">
-                    <IntlMessages id="forms.staff-whatsapp_url" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.whatsapp_url || ''}
-                    onChange={(val) => setState({ ...state, whatsapp_url: val.target.value })}
-                    placeholder={messages['forms.staff-whatsapp_url']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-whatsapp_url-muted" />
-                  </FormText>
-                </FormGroup>
-
-                </Colxx>
+                    <FormGroup>
+                      <Label for="web_link2">
+                        <IntlMessages id="forms.staff-web_link2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.web_link2 || ''}
+                        onChange={(val) => setState({ ...state, web_link2: val.target.value })}
+                        placeholder={messages['forms.staff-web_link2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-web_link2-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
                 </Row>
 
 
                 <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
-                <FormGroup>
-                  <Label for="linkedin_url">
-                    <IntlMessages id="forms.staff-linkedin_url" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.linkedin_url || ''}
-                    onChange={(val) => setState({ ...state, linkedin_url: val.target.value })}
-                    placeholder={messages['forms.staff-linkedin_url']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-linkedin_url-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="web_link3">
+                        <IntlMessages id="forms.staff-web_link3" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.web_link3 || ''}
+                        onChange={(val) => setState({ ...state, web_link3: val.target.value })}
+                        placeholder={messages['forms.staff-web_link3']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-web_link3-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
-                  <Label for="youtube_url">
-                    <IntlMessages id="forms.staff-youtube_url" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.youtube_url || ''}
-                    onChange={(val) => setState({ ...state, youtube_url: val.target.value })}
-                    placeholder={messages['forms.staff-youtube_url']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-youtube_url-muted" />
-                  </FormText>
-                </FormGroup>
+                    <FormGroup>
+                      <Label for="web_link4">
+                        <IntlMessages id="forms.staff-web_link4" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.web_link4 || ''}
+                        onChange={(val) => setState({ ...state, web_link4: val.target.value })}
+                        placeholder={messages['forms.staff-web_link4']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-web_link4-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
-                </Colxx>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="web_link5">
+                        <IntlMessages id="forms.staff-web_link5" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.web_link5 || ''}
+                        onChange={(val) => setState({ ...state, web_link5: val.target.value })}
+                        placeholder={messages['forms.staff-web_link5']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-web_link5-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="web_link6">
+                        <IntlMessages id="forms.staff-web_link6" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.web_link6 || ''}
+                        onChange={(val) => setState({ ...state, web_link6: val.target.value })}
+                        placeholder={messages['forms.staff-web_link6']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-web_link6-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="address">
+                        <IntlMessages id="forms.staff-address" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.address || ''}
+                        onChange={(val) => setState({ ...state, address: val.target.value })}
+                        placeholder={messages['forms.staff-address']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-address-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="address2">
+                        <IntlMessages id="forms.staff-address2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.address2 || ''}
+                        onChange={(val) => setState({ ...state, address2: val.target.value })}
+                        placeholder={messages['forms.staff-address2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-address2-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="division">
+                        <IntlMessages id="forms.staff-division" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.division || ''}
+                        onChange={(val) => setState({ ...state, division: val.target.value })}
+                        placeholder={messages['forms.staff-division']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-division-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="department">
+                        <IntlMessages id="forms.staff-department" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.department || ''}
+                        onChange={(val) => setState({ ...state, department: val.target.value })}
+                        placeholder={messages['forms.staff-department']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-department-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="country">
+                        <IntlMessages id="forms.staff-country" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.country || ''}
+                        onChange={(val) => setState({ ...state, country: val.target.value })}
+                        placeholder={messages['forms.staff-country']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-country-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="bio">
+                        <IntlMessages id="forms.staff-bio" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.bio || ''}
+                        onChange={(val) => setState({ ...state, bio: val.target.value })}
+                        placeholder={messages['forms.staff-bio']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-bio-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="company_website_url">
+                        <IntlMessages id="forms.staff-company_website_url" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.company_website_url || ''}
+                        onChange={(val) => setState({ ...state, company_website_url: val.target.value })}
+                        placeholder={messages['forms.staff-company_website_url']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-company_website_url-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+
+                    <FormGroup>
+                      <Label for="more_info_tab_url">
+                        <IntlMessages id="forms.staff-more_info_tab_url" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.more_info_tab_url || ''}
+                        onChange={(val) => setState({ ...state, more_info_tab_url: val.target.value })}
+                        placeholder={messages['forms.staff-more_info_tab_url']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-more_info_tab_url-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="facebook_url">
+                        <IntlMessages id="forms.staff-facebook_url" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.facebook_url || ''}
+                        onChange={(val) => setState({ ...state, facebook_url: val.target.value })}
+                        placeholder={messages['forms.staff-facebook_url']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-facebook_url-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="instagram_url">
+                        <IntlMessages id="forms.staff-instagram_url" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.instagram_url || ''}
+                        onChange={(val) => setState({ ...state, instagram_url: val.target.value })}
+                        placeholder={messages['forms.staff-instagram_url']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-instagram_url-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="twitter_url">
+                        <IntlMessages id="forms.staff-twitter_url" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.twitter_url || ''}
+                        onChange={(val) => setState({ ...state, twitter_url: val.target.value })}
+                        placeholder={messages['forms.staff-twitter_url']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-twitter_url-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="whatsapp_url">
+                        <IntlMessages id="forms.staff-whatsapp_url" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.whatsapp_url || ''}
+                        onChange={(val) => setState({ ...state, whatsapp_url: val.target.value })}
+                        placeholder={messages['forms.staff-whatsapp_url']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-whatsapp_url-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
                 </Row>
 
 
                 <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
-                <FormGroup>
-                  <Label for="wechat_id">
-                    <IntlMessages id="forms.staff-wechat_id" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.wechat_id || ''}
-                    onChange={(val) => setState({ ...state, wechat_id: val.target.value })}
-                    placeholder={messages['forms.staff-wechat_id']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-wechat_id-muted" />
-                  </FormText>
-                </FormGroup>
-                </Colxx>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="linkedin_url">
+                        <IntlMessages id="forms.staff-linkedin_url" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.linkedin_url || ''}
+                        onChange={(val) => setState({ ...state, linkedin_url: val.target.value })}
+                        placeholder={messages['forms.staff-linkedin_url']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-linkedin_url-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
-                  <Label for="smartcard_uid">
-                    <IntlMessages id="forms.staff-smartcard_uid" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.smartcard_uid || ''}
-                    onChange={(val) => setState({ ...state, smartcard_uid: val.target.value })}
-                    placeholder={messages['forms.staff-smartcard_uid']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-smartcard_uid-muted" />
-                  </FormText>
-                </FormGroup>
+                    <FormGroup>
+                      <Label for="youtube_url">
+                        <IntlMessages id="forms.staff-youtube_url" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.youtube_url || ''}
+                        onChange={(val) => setState({ ...state, youtube_url: val.target.value })}
+                        placeholder={messages['forms.staff-youtube_url']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-youtube_url-muted" />
+                      </FormText>
+                    </FormGroup>
 
-                </Colxx>
+                  </Colxx>
+                </Row>
+
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="wechat_id">
+                        <IntlMessages id="forms.staff-wechat_id" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.wechat_id || ''}
+                        onChange={(val) => setState({ ...state, wechat_id: val.target.value })}
+                        placeholder={messages['forms.staff-wechat_id']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-wechat_id-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="smartcard_uid">
+                        <IntlMessages id="forms.staff-smartcard_uid" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.smartcard_uid || ''}
+                        onChange={(val) => setState({ ...state, smartcard_uid: val.target.value })}
+                        placeholder={messages['forms.staff-smartcard_uid']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-smartcard_uid-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
                 </Row>
                 <Row>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
-                <FormGroup>
-                  <Label>
-                    <IntlMessages id="forms.staff-bizcard_option" />
-                  </Label>
-                  <CustomInput
-                    type="radio"
-                    id="exCustomRadio2"
-                    name="customRadio2"
-                    label="eprofile"
-                    checked={state.bizcard_option === true}
-                    onChange={(event) =>
-                      setState({
-                        ...state,
-                        bizcard_option: event.target.value === 'on',
-                      })
-                    }
-                  />
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label>
+                        <IntlMessages id="forms.staff-bizcard_option" />
+                      </Label>
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio2"
+                        name="customRadio2"
+                        label="eprofile"
+                        checked={state.bizcard_option === true}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            bizcard_option: event.target.value === 'on',
+                          })
+                        }
+                      />
 
 
-                  <CustomInput
-                    type="radio"
-                    id="exCustomRadio"
-                    name="customRadio"
-                    label="vcf"
-                    checked={state.bizcard_option === false}
-                    onChange={(event) =>
-                      setState({
-                        ...state,
-                        bizcard_option: event.target.value !== 'on',
-                      })
-                    }
-                  />
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio"
+                        name="customRadio"
+                        label="vcf"
+                        checked={state.bizcard_option === false}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            bizcard_option: event.target.value !== 'on',
+                          })
+                        }
+                      />
 
 
-                </FormGroup>
-                </Colxx>
+                    </FormGroup>
+                  </Colxx>
                   <Colxx xxs="12" md="6">
-                <FormGroup>
-                  <Label>
-                    <IntlMessages id="forms.staff-status" />
-                  </Label>
-                  <CustomInput
-                    type="radio"
-                    id="exCustomRadio3"
-                    name="customRadio3"
-                    label="Active"
-                    checked={state.status === true}
-                    onChange={(event) =>
-                      setState({
-                        ...state,
-                        status: event.target.value === 'on',
-                      })
-                    }
-                  />
+                    <FormGroup>
+                      <Label>
+                        <IntlMessages id="forms.staff-status" />
+                      </Label>
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio3"
+                        name="customRadio3"
+                        label="Active"
+                        checked={state.status === true}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            status: event.target.value === 'on',
+                          })
+                        }
+                      />
 
 
-                  <CustomInput
-                    type="radio"
-                    id="exCustomRadio4"
-                    name="customRadio4"
-                    label="Disable"
-                    checked={state.status === false}
-                    onChange={(event) =>
-                      setState({
-                        ...state,
-                        status: event.target.value !== 'on',
-                      })
-                    }
-                  />
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio4"
+                        name="customRadio4"
+                        label="Disable"
+                        checked={state.status === false}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            status: event.target.value !== 'on',
+                          })
+                        }
+                      />
 
 
-                </FormGroup>
+                    </FormGroup>
 
-                </Colxx>
+                  </Colxx>
                 </Row>
                 <Button color="primary" className="mt-4" onClick={() => addNetItem()}>
                   <IntlMessages id="forms.submit" />
@@ -964,10 +976,12 @@ const AddNewStaffModal = ({
     </>
   );
 };
-const mapStateToProps = ({ staffListApp }) => {
+const mapStateToProps = ({ staffListApp, authUser }) => {
   const { companies } = staffListApp;
+  const { currentUser } = authUser;
   return {
-    companies
+    companies,
+    currentUser
   };
 };
 export default injectIntl(connect(mapStateToProps, {

@@ -81,10 +81,10 @@ export const areaChartOptions = {
         },
         ticks: {
           beginAtZero: true,
-          stepSize: 10,
+          stepSize: 20,
           min: 0,
-          max: 30,
-          padding: 20,
+          max: 120,
+          padding: 10,
         },
       },
     ],

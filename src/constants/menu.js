@@ -38,6 +38,13 @@ const data = [
     roles: [UserRole.Admin,UserRole.Editor] 
   },
   {
+    id: 'batchupload',
+    icon: 'iconsminds-business-mens',
+    label: 'menu.batchupload',
+    to: `${adminRoot}/batchupload`,
+    roles: [UserRole.Admin,UserRole.Editor] 
+  },
+  {
     id: 'admins',
     icon: 'iconsminds-administrator',
     label: 'menu.hr.admin',

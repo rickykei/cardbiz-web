@@ -735,7 +735,8 @@ module.exports = {
      'menu.users-add':'添加員工',
     'menu.staff-add':'添加',
             'menu.staff-edit-title':'編輯員工資料',
-    
+            'forms.label.eprofile': 'e-Profile ',
+            'forms.label.vcf': '聯繫人資料下載 ',
   /* 07.12.Icons */
   'icons.simplelineicons': 'Simple Line Icons',
   'icons.iconsmind': 'Iconsmind Icons',

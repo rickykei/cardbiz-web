@@ -5,15 +5,9 @@ import { connect } from 'react-redux';
 import AppLayout from 'layout/AppLayout';
 // import { ProtectedRoute, UserRole } from 'helpers/authHelper';
 
-const Dashboards = React.lazy(() =>
-  import(/* webpackChunkName: "dashboards" */ './dashboards')
-);
-const Pages = React.lazy(() =>
-  import(/* webpackChunkName: "pages" */ './pages')
-);
-const Applications = React.lazy(() =>
-  import(/* webpackChunkName: "applications" */ './applications')
-);
+const Dashboards = React.lazy(() =>   import(/* webpackChunkName: "dashboards" */ './dashboards'));
+const Pages = React.lazy(() =>   import(/* webpackChunkName: "pages" */ './pages'));
+const Applications = React.lazy(() =>   import(/* webpackChunkName: "applications" */ './applications'));
 const Ui = React.lazy(() => import(/* webpackChunkName: "ui" */ './ui'));
 const Menu = React.lazy(() => import(/* webpackChunkName: "menu" */ './menu'));
 const BlankPage = React.lazy(() => import(/* webpackChunkName: "blank-page" */ './blank-page'));
@@ -23,7 +17,7 @@ const Users = React.lazy(() => import(/* webpackChunkName: "users" */ './users')
 const Staffs = React.lazy(() => import(/* webpackChunkName: "staffs" */ './staffs'));
 const Cards = React.lazy(() => import(/* webpackChunkName: "cards" */ './cards'));
 const CardsAdmin = React.lazy(() => import(/* webpackChunkName: "cardsadmin" */ './cardsadmin'));
-
+const BatchUpload = React.lazy(() => import(/* webpackChunkName: "batchupload" */ './batchupload'));
 
 const App = ({ match }) => {
   return (
@@ -34,7 +28,7 @@ const App = ({ match }) => {
             <Redirect
               exact
               from={`${match.url}/`}
-              to={`${match.url}/dashboards`}
+              to={`${match.url}/staffs`}
             />
             <Route
               path={`${match.url}/dashboards`}
@@ -67,6 +61,9 @@ const App = ({ match }) => {
               path={`${match.url}/staffs`}
               render={(props) => <Staffs {...props} />}
             /><Route
+            path={`${match.url}/batchupload`}
+            render={(props) => <BatchUpload {...props} />}
+          /><Route
               path={`${match.url}/cards`}
               render={(props) => <Cards {...props} />}
             /><Route

@@ -36,8 +36,9 @@ Table of Contents
 */
 
 module.exports = {
+  
   /* 01.General */
-  'general.copyright': 'e-Profile.digital © 2022 All Rights Reserved',
+  'general.copyright': 'NFC © 2022 All Rights Reserved',
 
   'unauthorized.title': 'Unauthorized Access Attempt',
   'unauthorized.detail':
@@ -738,8 +739,9 @@ module.exports = {
     'menu.users-add':'Add Staff',
     'menu.staff-add':'Add',
         'menu.staff-edit-title':'Edit Staff Info',
-    
-    
+        'forms.label.eprofile': 'e-Profile',
+        'forms.label.vcf': 'Download Contact',
+    'menu.smartcard.list.admin': 'smartcard admin',
   /* 07.12.Icons */
   'icons.simplelineicons': 'Simple Line Icons',
   'icons.iconsmind': 'Iconsmind Icons',

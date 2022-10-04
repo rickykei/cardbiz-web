@@ -25,11 +25,9 @@ const ListPageHeading = ({
   match,
   startIndex,
   endIndex,
-
   onSearchKey,
   orderOptions,
   pageSizes,
- 
   heading,
 }) => {
   

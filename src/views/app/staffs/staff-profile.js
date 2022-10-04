@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
-  
+import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { injectIntl } from 'react-intl';
 import { Row, Card, CardBody, Badge, CardTitle, CardSubtitle, CardText, Button, } from 'reactstrap';
@@ -8,7 +8,7 @@ import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import StaffDataService from 'services/StaffsService';
 import Breadcrumb from 'containers/navs/Breadcrumb';
-import { useParams,Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import SingleLightbox from 'components/pages/SingleLightbox';
 import VcfVisitsChartCard from 'containers/dashboards/VcfVisitsChartCard';
 import ProfileVisitsChartCard from 'containers/dashboards/ProfileVisitsChartCard';
@@ -20,7 +20,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import data from 'data/logs';
 
 
-const StaffProfileModal = ({ intl, match, }) => {
+const StaffProfileModal = ({ intl, match,currentUser }) => {
   const initialState = {
     id: null,
     name: "",
@@ -71,7 +71,7 @@ const StaffProfileModal = ({ intl, match, }) => {
           setCopyVcfSuccess("Copied!");
         else if (newClip === moreInfoURL)
           setCopyMoreInfoSuccess("Copied!");
-         else
+        else
           setCopyProfileSuccess("Copied!");
       },
       () => {
@@ -79,8 +79,8 @@ const StaffProfileModal = ({ intl, match, }) => {
           setCopyVcfSuccess("Copy failed!");
         else if (newClip === moreInfoURL)
           setCopyProfileSuccess("Copy failed!");
-         else
-         setCopyMoreInfoSuccess("Copy failed!"); 
+        else
+          setCopyMoreInfoSuccess("Copy failed!");
       }
     );
   }
@@ -132,20 +132,20 @@ const StaffProfileModal = ({ intl, match, }) => {
       <Row>
         <Colxx xxs="12">
           <Breadcrumb heading="menu.staffs-profile" match={match} /> <div className="text-zero top-right-button-container">
-          <Link to={staffEditUrl}><Button
+            <Link to={staffEditUrl}><Button
               color="primary"
               size="lg"
               className="top-right-button"
-             >
+            >
               <IntlMessages id="profile.button.edit" />
             </Button>
             </Link>
             {'  '}
-            
+
           </div>
           <Separator className="mb-5" />
 
-         
+
         </Colxx>
       </Row>
       <Row className="mb-4">
@@ -165,18 +165,18 @@ const StaffProfileModal = ({ intl, match, }) => {
                   </Card>
                 </Colxx>
                 <Colxx xxs="12" lg="5" xl="4" className="col-left">
-                {state.headshot !== undefined && state.headshot !== "" &&
-                  <SingleLightbox
-                    thumb={hsImgUrl}
-                    large={hsImgUrl}
-                    className="img-thumbnail card-img social-profile-img"
-                  />}
+                  {state.headshot !== undefined && state.headshot !== "" &&
+                    <SingleLightbox
+                      thumb={hsImgUrl}
+                      large={hsImgUrl}
+                      className="img-thumbnail card-img social-profile-img"
+                    />}
                   {state.headshot === "" &&
-                  <SingleLightbox
-                    thumb="/assets/img/profiles/1.jpg"
-                    large="/assets/img/profiles/1.jpg"
-                    className="img-thumbnail card-img social-profile-img"
-                  />}
+                    <SingleLightbox
+                      thumb="/assets/img/profiles/1.jpg"
+                      large="/assets/img/profiles/1.jpg"
+                      className="img-thumbnail card-img social-profile-img"
+                    />}
 
                   <Card className="mb-4">
                     <CardBody>
@@ -185,61 +185,53 @@ const StaffProfileModal = ({ intl, match, }) => {
                       </div>
                       <p className="mb-3">{messages['forms.staff-firstname']}  </p>
 
+                      {state.address ? (
+                        <><p className="text-muted text-small mb-2"> <IntlMessages id="pages.address" /> </p>
+                          <p className="mb-3">{state.address || 'N/A'} </p></>
+                      ) : ''}
 
-                      <p className="text-muted text-small mb-2"> <IntlMessages id="pages.address" /> </p>
-                      {state.address !== undefined && state.address !== "" &&
-                        <p className="mb-3">{state.address} </p>
-                      }
+                      {state.position ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="profile.label.position" />
+                        </p><p className="mb-3">{state.position} </p></>
+                      ) : ''}
 
+                      {state.division ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="profile.label.division" />
+                        </p> <p className="mb-3">{state.division || 'N/A'} </p></>
+                      ) : ''}
 
-                      <p className="text-muted text-small mb-2">
-                        <IntlMessages id="profile.label.position" />
-                      </p>
-                      {state.position !== undefined && state.position !== "" &&
-                        <p className="mb-3">{state.position} </p>
-                      }
-
-                      <p className="text-muted text-small mb-2">
-                        <IntlMessages id="profile.label.division" />
-                      </p>
-                      {state.division !== undefined && state.division !== "" &&
-                        <p className="mb-3">{state.division} </p>
-                      }
-
-                      <p className="text-muted text-small mb-2">
-                        <IntlMessages id="profile.label.country" />
-                      </p>
-                      {state.country !== undefined && state.country !== "" &&
-                        <p className="mb-3">{state.country} </p>
-                      }
+                      {state.country ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="profile.label.country" />
+                        </p> <p className="mb-3">{state.country} </p></>
+                      ) : ''}
 
 
-                    <p className="text-muted text-small mb-2">
-                        <IntlMessages id="pages.department" />
-                      </p>
-                      {state.department !== undefined && state.department !== "" &&
-                        <p className="mb-3">{state.department} </p>
-                      }
+                      {state.department ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.department" />
+                        </p> <p className="mb-3">{state.department} </p></>
+                      ) : ''}
 
+                      {state.work_tel ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.work_tel" />
+                        </p> <p className="mb-3">{state.work_tel} </p></>
+                      ) : ''}
 
-                      <p className="text-muted text-small mb-2">
-                        <IntlMessages id="pages.work_tel" />
-                      </p>
-                      {state.work_tel !== undefined && state.work_tel !== "" &&
-                        <p className="mb-3">{state.work_tel} </p>
-                      }
-                      <p className="text-muted text-small mb-2">
-                        <IntlMessages id="pages.mobile" />
-                      </p>
-                      {state.mobile !== undefined && state.mobile !== "" &&
-                        <p className="mb-3">{state.mobile} </p>
-                      }
-                      <p className="text-muted text-small mb-2">
-                        <IntlMessages id="pages.work_email" />
-                      </p>
-                      {state.work_email !== undefined && state.work_email !== "" &&
-                        <p className="mb-3">{state.work_email} </p>
-                      }
+                      {state.mobile ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.mobile" />
+                        </p><p className="mb-3">{state.mobile} </p></>
+                      ) : ''}
+
+                      {state.work_email ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.work_email" />
+                        </p><p className="mb-3">{state.work_email} </p></>
+                      ) : ''}
 
 
                       <p className="text-muted text-small mb-2">
@@ -250,13 +242,13 @@ const StaffProfileModal = ({ intl, match, }) => {
                         className="mb-1 mr-1"
                         pill
                       >
-                       <a href={moreInfoURL} target="_blank" rel="noreferrer"  ><IntlMessages id="profile.button.moreInfo" /> </a>
-                       </Badge>
-                         <Button onClick={copyLink3} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyMoreInfoSuccess}</p>
+                        <a href={moreInfoURL} target="_blank" rel="noreferrer"  ><IntlMessages id="profile.button.moreInfo" /> </a>
+                      </Badge>
+                        <Button onClick={copyLink3} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyMoreInfoSuccess}</p>
 
-
-
-                      <p className="text-muted text-small mb-2">
+                         
+                          {currentUser.companyId ? (''):(
+                     <> <p className="text-muted text-small mb-2">
                         <IntlMessages id="menu.webprofilepage" />
                       </p>
 
@@ -264,9 +256,10 @@ const StaffProfileModal = ({ intl, match, }) => {
                         color="outline-secondary"
                         className="mb-1 mr-1"
                         pill
-                      ><a href={profilePageURL} target="_blank" rel="noreferrer"  > <IntlMessages id="profile.button.goProfile" /> </a> 
-                      </Badge> 
-                       <Button onClick={copyLink} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyProfileSuccess}</p>
+                      ><a href={profilePageURL} target="_blank" rel="noreferrer"  > <IntlMessages id="profile.button.goProfile" /> </a>
+                      </Badge>
+                        <Button onClick={copyLink} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyProfileSuccess}</p>
+                       
 
                       <p className="text-muted text-small mb-2">
                         <IntlMessages id="menu.downloadVCFContent" />
@@ -278,7 +271,8 @@ const StaffProfileModal = ({ intl, match, }) => {
                       >
                         <a href={vcfDLURL}> <IntlMessages id="profile.button.downloadVcf" /></a></Badge>
                         <Button onClick={copyLink2} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyVcfSuccess}</p>
-
+                        </>
+                      )}
 
                       <p className="text-muted text-small mb-2">
                         <IntlMessages id="menu.socialMedia" />
@@ -335,7 +329,7 @@ const StaffProfileModal = ({ intl, match, }) => {
                               </a>
                             </li>
                           }
-                        
+
 
                         </ul>
                       </div>
@@ -441,5 +435,12 @@ const StaffProfileModal = ({ intl, match, }) => {
     </>
   );
 };
-
-export default injectIntl((StaffProfileModal));
+const mapStateToProps = ({  authUser }) => {
+   
+  const { currentUser } = authUser;
+  return {
+    
+    currentUser
+  };
+};
+export default injectIntl(connect(mapStateToProps)(StaffProfileModal));

@@ -66,7 +66,7 @@ const EditClientModal = ({ intl, match, }) => {
       .then(response => {
         console.log(response.data);
        
-        history.push("/app/cards/cards-list");
+        history.push("/app/cardsadmin/cards-list");
       })
       .catch(e => {
         console.log(e);

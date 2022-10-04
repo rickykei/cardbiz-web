@@ -30,8 +30,8 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
         >
           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-              <NavLink to={`?p=${product.id}`} className="w-10 w-sm-100">
-                <p className="list-item-heading mb-1 truncate">
+              <NavLink to={`?p=${product.id}`} className="w-20 w-sm-100">
+                <p className="list-item-heading mb-1 ">
                   {product.fname}
                 </p>
               </NavLink>
@@ -48,15 +48,12 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
                 isOpen={dropdownSplitOpen}
                 toggle={() => setDropdownSplitOpen(!dropdownSplitOpen)}
               >
-                <Button outline color="info" >
-                  <IntlMessages id="dropdowns.action"  />
+                <Button outline color="info" href={`./staff-profile/${product.id}`} >
+                  <IntlMessages id="dropdowns.profile"  />
                 </Button>
                 <DropdownToggle caret outline color="info" />
                 <DropdownMenu>
-                
-                  <DropdownItem href={`./staff-profile/${product.id}`}>
-                     <IntlMessages id="dropdowns.profile" />
-                  </DropdownItem>
+                 
                    
                   <DropdownItem href={`staff-edit/${product.id}`}>
                     <IntlMessages id="dropdowns.edit" />

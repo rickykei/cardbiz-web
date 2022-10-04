@@ -21,7 +21,7 @@ const getIndex = (value, arr, prop) => {
 
 const orderOptions = [
   { column: 'company_id', label: 'Company Code' },
-  { column: 'fname', label: 'First Name' },
+  { column: 'fname', label: 'Name' },
   { column: 'status', label: 'Status' },
 ];
 const pageSizes = [5, 10, 15, 20];
@@ -51,8 +51,7 @@ if(currentUser.role===0)
  apiUrl = `${servicePath2}/staffs`;
 else
 apiUrl = `${servicePath2}/staffs/findByCompanyId`;
-console.log(currentUser);
-
+ 
   async function fetchData() {
     axios
       .get(

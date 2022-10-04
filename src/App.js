@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { Suspense, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect,useSelector } from 'react-redux';
 import {
   BrowserRouter as Router,
   Route,
@@ -40,6 +41,7 @@ const ViewUnauthorized = React.lazy(() =>
 const App = ({ locale }) => {
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
+  const currentUser  = useSelector(state => state.auth);
   useEffect(() => {
     if (direction.isRtl) {
       document.body.classList.add('rtl');
@@ -57,6 +59,7 @@ const App = ({ locale }) => {
         messages={currentAppLocale.messages}
       >
         <>
+       
           <NotificationContainer />
           {isMultiColorActive && <ColorSwitcher />}
           <Suspense fallback={<div className="loading" />}>
@@ -95,7 +98,7 @@ const App = ({ locale }) => {
           </Suspense>
         </>
       </IntlProvider>
-    </div>
+     </div> 
   );
 };
 

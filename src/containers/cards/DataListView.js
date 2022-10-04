@@ -4,7 +4,7 @@ import {
   Card,
  
 } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
+ 
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
@@ -24,11 +24,11 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
         >
           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-              <NavLink to={`?p=${product.id}`} className="w-10 w-sm-100">
-                <p className="list-item-heading mb-1 truncate">
+              
+                <p className="list-item-heading mb-1 ">
                   {product.uid}
                 </p>
-              </NavLink>
+              
               <p className="mb-1 text-small w-10 w-sm-100 ">
                 { product.company_id.code }
               </p>
