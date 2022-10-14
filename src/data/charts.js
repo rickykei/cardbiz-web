@@ -3,11 +3,11 @@ import { ThemeColors } from 'helpers/ThemeColors';
 const colors = ThemeColors();
 
 export const lineChartData = {
-  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  labels:["2022-10-03","2022-10-04","2022-10-05","2022-10-06","2022-10-07","2022-10-08","2022-10-10","2022-10-11"],
   datasets: [
     {
       label: '',
-      data: [54, 63, 60, 65, 60, 68, 60],
+      data: [55,60,70,60,55,70,55,22],
       borderColor: colors.themeColor1,
       pointBackgroundColor: colors.foregroundColor,
       pointBorderColor: colors.themeColor1,
@@ -38,11 +38,11 @@ export const polarAreaChartData = {
 };
 
 export const areaChartData = {
-  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  labels:["2022-10-03","2022-10-04","2022-10-05","2022-10-06","2022-10-07","2022-10-08","2022-10-10","2022-10-10"],
   datasets: [
     {
       label: 'sdfsd',
-      data: [54, 63, 60, 65, 60, 68, 60],
+      data: [54, 63, 60, 65, 60, 68, 60, 60],
       borderColor: colors.themeColor1,
       pointBackgroundColor: colors.foregroundColor,
       pointBorderColor: colors.themeColor1,

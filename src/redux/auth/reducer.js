@@ -1,5 +1,5 @@
 import { getCurrentUser } from 'helpers/Utils';
-import { isAuthGuardActive, currentUser } from 'constants/defaultValues';
+import { isAuthGuardActive } from 'constants/defaultValues';
 import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
@@ -17,7 +17,7 @@ import {
 } from '../contants';
 
 const INIT_STATE = {
-  currentUser: isAuthGuardActive ? getCurrentUser() : currentUser,
+  currentUser: isAuthGuardActive ? getCurrentUser() :  getCurrentUser() ,
   forgotUserMail: '',
   newPassword: '',
   resetPasswordCode: '',

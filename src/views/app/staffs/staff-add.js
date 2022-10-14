@@ -178,8 +178,8 @@ const AddNewStaffModal = ({
       wechat_id: state.wechat_id,
       smartcard_uid: state.smartcard_uid,
       bizcard_option: state.bizcard_option,
-      updated_by: state.updated_by,
-      created_by: state.created_by,
+      updatedBy:  currentUser.uid,
+      createdBy:  currentUser.uid,
       status: state.status,
 
     };

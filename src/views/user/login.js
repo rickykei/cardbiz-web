@@ -23,8 +23,8 @@ const validatePassword = (value) => {
  
 
 const Login = ({ history, loading, error, loginUserAction }) => {
-  const [email] = useState('ricky.user');
-  const [password] = useState('abcd1234');
+  const [email] = useState('');
+  const [password] = useState('');
 
   useEffect(() => {
     if (error) {
@@ -47,15 +47,11 @@ const Login = ({ history, loading, error, loginUserAction }) => {
       <Colxx xxs="12" md="10" className="mx-auto my-auto">
         <Card className="auth-card">
           <div className="position-relative image-side ">
-            <p className="text-white h2">MAGIC IS IN THE DETAILS</p>
+            <p className="text-white h2">THE BUSINESS CARD OF TOMORROW IS HERE</p>
             <p className="white mb-0">
               Please use your credentials to login.
               <br />
-              If you are not a member, please{' '}
-              <NavLink to="/user/register" className="white">
-                register
-              </NavLink>
-              .
+              If you are not a member, please contact us for registration..
             </p>
           </div>
           <div className="form-side">
@@ -71,7 +67,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                 <Form className="av-tooltip tooltip-label-bottom">
                   <FormGroup className="form-group has-float-label">
                     <Label>
-                      <IntlMessages id="user.email" />
+                      <IntlMessages id="user.username" />
                     </Label>
                     <Field
                       className="form-control"

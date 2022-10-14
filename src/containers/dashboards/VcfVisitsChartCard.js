@@ -1,73 +1,66 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, {useState,useEffect} from 'react';
-import {  Card,  CardBody,  UncontrolledDropdown,  DropdownItem,  DropdownToggle,  DropdownMenu,} from 'reactstrap';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
+import { Card, CardBody, UncontrolledDropdown, DropdownItem, DropdownToggle, DropdownMenu, } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
-import { AreaChart } from 'components/charts';
+
 import { ThemeColors } from 'helpers/ThemeColors';
 import { servicePath2 } from 'constants/defaultValues';
 import axios from 'axios';
 import { useParams, } from "react-router-dom";
+import { AreaChart } from 'components/charts';
+import { areaChartData } from 'data/charts';
 
-let apiUrl ="";
-const colors = ThemeColors();
 
-const WebsiteVisitsChartCard = ({ className = '', controls = true }) => {
 
+
+const VcfVisitsChartCard = ({ className = '', controls = true }) => {
+  let apiUrl;
   const { id } = useParams();
-  console.log("id".concat(id));
+  apiUrl = `${servicePath2}/vcf_counter/getVcfCountByStaffId?staff_id=`;
+  apiUrl = apiUrl.concat(id);
+  let areaChartData2;
   const [options, setOptions] = useState([]);
-  let areaChartData = {};
-  apiUrl=`${servicePath2}/vcf_counter/getVcfCountByStaffId?staff_id=` ;
-  apiUrl=apiUrl.concat(id);
+  const colors = ThemeColors();
 
-  console.log(apiUrl);
-
-  async function fetchData() {
-  
-    axios.get(`${apiUrl}`)
-    
-      .then((data) => {
-          
-          areaChartData = {
-            labels: data.data.labels,
-            datasets: [
-              {
-                label: '',
-                data: data.data.count ,
-                borderColor: colors.themeColor1,
-                pointBackgroundColor: colors.foregroundColor,
-                pointBorderColor: colors.themeColor1,
-                pointHoverBackgroundColor: colors.themeColor1,
-                pointHoverBorderColor: colors.foregroundColor,
-                pointRadius: 4,
-                pointBorderWidth: 2,
-                pointHoverRadius: 2,
-                fill: true,
-                borderWidth: 2,
-                backgroundColor: colors.themeColor1_10,
-              },
-            ],
-          };
-          setOptions(areaChartData);
-          
-      })
-      .catch(error => {
-  
-        console.error('There was an error to get VcfCountbyStaffid!', error);
-      })
-  
-  
-  }
-  
-
- 
 
   useEffect(() => {
-    fetchData();
-  }, []);
-     
+  const expensesListResp = async () => {
+      await axios.get(`${apiUrl}`)
+        .then(
+          response => setOptions(response.data))
+    }
+    expensesListResp();
+  }, [])
+
+  if (options.count !== undefined) {
+    areaChartData2 = {
+      labels: (options.labels ? options.labels : ''),
+      datasets: [
+        {
+          label: '',
+          data: (options.count ? options.count : ''),
+          borderColor: colors.themeColor1,
+          pointBackgroundColor: colors.foregroundColor,
+          pointBorderColor: colors.themeColor1,
+          pointHoverBackgroundColor: colors.themeColor1,
+          pointHoverBorderColor: colors.foregroundColor,
+          pointRadius: 4,
+          pointBorderWidth: 2,
+          pointHoverRadius: 5,
+          fill: true,
+          borderWidth: 2,
+          backgroundColor: colors.themeColor1_10,
+        },
+      ],
+    };
+
+  }
+
  
+
   return (
+    
     <Card className={`${className} dashboard-filled-line-chart`}>
       <CardBody>
         <div className="float-left float-none-xs">
@@ -98,12 +91,12 @@ const WebsiteVisitsChartCard = ({ className = '', controls = true }) => {
           </div>
         )}
       </CardBody>
-
-      <div className="chart card-body pt-0">
-        <AreaChart shadow data={options} /> 
-      </div>
+      {areaChartData2!==null && areaChartData2!==undefined && ( 
+     <div className="chart card-body pt-0">
+        <AreaChart shadow data={areaChartData2} />
+      </div>)}
     </Card>
   );
 };
 
-export default WebsiteVisitsChartCard;
+export default VcfVisitsChartCard;

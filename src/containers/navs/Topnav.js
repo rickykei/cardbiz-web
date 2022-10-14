@@ -3,7 +3,7 @@
 /* eslint-disable no-use-before-define */
 import React, { useState } from 'react';
 import { injectIntl } from 'react-intl';
-
+ 
 import {
   UncontrolledDropdown,
   DropdownItem,
@@ -21,7 +21,7 @@ import {
   searchPath,
   localeOptions,
   isDarkSwitchActive,
- 
+ servicePath2 ,
   adminRoot,
 } from 'constants/defaultValues';
 import { MobileMenuIcon, MenuIcon } from 'components/svg';
@@ -51,7 +51,8 @@ const TopNav = ({
 }) => {
   const [isInFullScreen, setIsInFullScreen] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
-
+  let CompanyLogoImgUrl='/assets/img/profiles/l-1.jpg';
+ 
   const search = () => {
     history.push(`${searchPath}?key=${searchKeyword}`);
     setSearchKeyword('');
@@ -167,8 +168,10 @@ const TopNav = ({
     e.preventDefault();
     clickOnMobileMenuAction(_containerClassnames);
   };
-
- 
+  
+if (currentUser.logo!==undefined)
+CompanyLogoImgUrl = `${servicePath2}/files/${currentUser.logo}`;
+console.log("topnav");
   return (
     <nav className="navbar fixed-top">
       <div className="d-flex align-items-center navbar-left">
@@ -244,9 +247,13 @@ const TopNav = ({
         <div className="user d-inline-block">
           <UncontrolledDropdown className="dropdown-menu-right">
             <DropdownToggle className="p-0" color="empty">
-              <span className="name mr-1">Hi! {currentUser.username }</span>
+              
+              <span className="name mr-1">Hi! {currentUser.username?(currentUser.username): ('User')}</span>
               <span>
-                <img alt="Profile" src="/assets/img/profiles/l-1.jpg" />
+                
+                <img alt="Profile" src={CompanyLogoImgUrl} />  
+                
+                 
               </span>
             </DropdownToggle>
             <DropdownMenu className="mt-3" right>

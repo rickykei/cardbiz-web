@@ -15,12 +15,12 @@ import ProfileVisitsChartCard from 'containers/dashboards/ProfileVisitsChartCard
 import { servicePath3, servicePath2 } from 'constants/defaultValues';
 import ThumbnailLetters from 'components/cards/ThumbnailLetters';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-
-
-import data from 'data/logs';
-
+import ActionLogDataService from 'services/ActionLogDataService';
+ 
+import  data from 'data/logs';
 
 const StaffProfileModal = ({ intl, match,currentUser }) => {
+  console.log("staffprofile");
   const initialState = {
     id: null,
     name: "",
@@ -32,13 +32,11 @@ const StaffProfileModal = ({ intl, match,currentUser }) => {
   };
   const [state, setState] = useState(initialState);
   const { messages } = intl;
-  const [copyProfileSuccess, setCopyProfileSuccess] = useState('');
-  const [copyVcfSuccess, setCopyVcfSuccess] = useState('');
+   
   const [copyMoreInfoSuccess, setCopyMoreInfoSuccess] = useState('');
 
   const { id } = useParams();
-  const profilePageURL = `${servicePath3}/Touchless/Profile.php?sig=${state.id}`;
-  const vcfDLURL = `${servicePath3}/genvcf.php?sig=${id}`;
+
   const moreInfoURL = `${servicePath3}/?sig=${state.id}`;
   const qrcodeURL = `${servicePath3}/Touchless/genvcf2png.php?sig=${state.id}`;
   const username = `${state.fname} ${state.lname}`;
@@ -46,6 +44,22 @@ const StaffProfileModal = ({ intl, match,currentUser }) => {
   const bannerImgUrl = "/assets/img/social/header.jpg";
   const bannerImgUrl2 = `${servicePath2}/files/${state.company_id.banner}`;
   const staffEditUrl = `../staff-edit/${state.id}`;
+  const [adminLogData, setStaffLogData] = useState([]);
+
+
+
+
+  const getStaffLog = (aa) => {
+    
+    ActionLogDataService.getByStaffId(aa)
+      .then(response => {
+        setStaffLogData(response.data);
+        console.log(adminLogData);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
 
 
   const getStaff = (aa) => {
@@ -60,57 +74,28 @@ const StaffProfileModal = ({ intl, match,currentUser }) => {
   };
 
   useEffect(() => {
-    if (id)
+    if (id){
       getStaff(id);
+      getStaffLog(id);
+    }
   }, [id]);
 
   const updateClipboard = (newClip) => {
     navigator.clipboard.writeText(newClip).then(
       () => {
-        if (newClip === vcfDLURL)
-          setCopyVcfSuccess("Copied!");
-        else if (newClip === moreInfoURL)
+     
+   
           setCopyMoreInfoSuccess("Copied!");
-        else
-          setCopyProfileSuccess("Copied!");
+       
       },
       () => {
-        if (newClip === vcfDLURL)
-          setCopyVcfSuccess("Copy failed!");
-        else if (newClip === moreInfoURL)
-          setCopyProfileSuccess("Copy failed!");
-        else
+     
+      
           setCopyMoreInfoSuccess("Copy failed!");
       }
     );
   }
-  const copyLink = () => {
-
-    navigator.permissions
-      .query({ name: "clipboard-write" })
-      .then((result) => {
-        if (result.state === "granted" || result.state === "prompt") {
-          updateClipboard(profilePageURL);
-        }
-      }).catch((error) => {
-        // couldn't query the permission
-        console.error(error);
-      });
-  }
-  const copyLink2 = () => {
-
-    navigator.permissions
-      .query({ name: "clipboard-write" })
-      .then((result) => {
-        if (result.state === "granted" || result.state === "prompt") {
-          updateClipboard(vcfDLURL);
-        }
-      })
-      .catch((error) => {
-        // couldn't query the permission
-        console.error(error);
-      });
-  }
+ 
   const copyLink3 = () => {
 
     navigator.permissions
@@ -247,32 +232,7 @@ const StaffProfileModal = ({ intl, match,currentUser }) => {
                         <Button onClick={copyLink3} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyMoreInfoSuccess}</p>
 
                          
-                          {currentUser.companyId ? (''):(
-                     <> <p className="text-muted text-small mb-2">
-                        <IntlMessages id="menu.webprofilepage" />
-                      </p>
-
-                      <p className="mb-3"><Badge
-                        color="outline-secondary"
-                        className="mb-1 mr-1"
-                        pill
-                      ><a href={profilePageURL} target="_blank" rel="noreferrer"  > <IntlMessages id="profile.button.goProfile" /> </a>
-                      </Badge>
-                        <Button onClick={copyLink} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyProfileSuccess}</p>
-                       
-
-                      <p className="text-muted text-small mb-2">
-                        <IntlMessages id="menu.downloadVCFContent" />
-                      </p>
-                      <p className="mb-3"> <Badge
-                        color="outline-secondary"
-                        className="mb-1 mr-1"
-                        pill
-                      >
-                        <a href={vcfDLURL}> <IntlMessages id="profile.button.downloadVcf" /></a></Badge>
-                        <Button onClick={copyLink2} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyVcfSuccess}</p>
-                        </>
-                      )}
+                   
 
                       <p className="text-muted text-small mb-2">
                         <IntlMessages id="menu.socialMedia" />
@@ -341,18 +301,17 @@ const StaffProfileModal = ({ intl, match,currentUser }) => {
                       <CardTitle>
                         <IntlMessages id="pages.QRcode" />
                       </CardTitle>
-                      <img alt="qrcode" src={qrcodeURL} width="200" />
+                      <img alt="qrcode" src={qrcodeURL}  />
                     </CardBody>
                   </Card>
 
                 </Colxx>
                 <Colxx xxs="12" lg="7" xl="8" className="col-right">
 
-                  <p><ProfileVisitsChartCard />  </p>
+                <p><ProfileVisitsChartCard  />   </p>
 
-
-                  <p><VcfVisitsChartCard />  </p>
-
+                    <p><VcfVisitsChartCard  />   </p>
+                  
 
                   <Card className="d-flex flex-row mb-4">
 
@@ -374,9 +333,7 @@ const StaffProfileModal = ({ intl, match,currentUser }) => {
                           <CardText className="text-muted text-small mb-2">
                             <p> {state.position}</p>
                             <p> Uid : {state.smartcard_uid}</p>
-
-
-                          </CardText>
+                       </CardText>
                         </div>
                       </CardBody>
                     </div>
@@ -394,7 +351,7 @@ const StaffProfileModal = ({ intl, match,currentUser }) => {
                           >
                             <table className="table table-sm table-borderless">
                               <tbody>
-                                {data.map((log, index) => {
+                                {adminLogData.map((log, index) => {
                                   return (
                                     <tr key={index}>
                                       <td>

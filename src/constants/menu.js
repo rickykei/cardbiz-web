@@ -39,7 +39,7 @@ const data = [
   },
   {
     id: 'batchupload',
-    icon: 'iconsminds-business-mens',
+    icon: 'iconsminds-upload-1',
     label: 'menu.batchupload',
     to: `${adminRoot}/batchupload`,
     roles: [UserRole.Admin,UserRole.Editor] 
