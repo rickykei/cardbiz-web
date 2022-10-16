@@ -83,7 +83,7 @@ export const areaChartOptions = {
           beginAtZero: true,
           stepSize: 20,
           min: 0,
-          max: 100,
+        
           padding: 5,
         },
       },

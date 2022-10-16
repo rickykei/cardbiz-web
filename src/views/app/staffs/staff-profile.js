@@ -17,9 +17,8 @@ import ThumbnailLetters from 'components/cards/ThumbnailLetters';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ActionLogDataService from 'services/ActionLogDataService';
  
-import  data from 'data/logs';
-
-const StaffProfileModal = ({ intl, match,currentUser }) => {
+ 
+const StaffProfileModal = ({ intl, match}) => {
   console.log("staffprofile");
   const initialState = {
     id: null,
@@ -308,9 +307,9 @@ const StaffProfileModal = ({ intl, match,currentUser }) => {
                 </Colxx>
                 <Colxx xxs="12" lg="7" xl="8" className="col-right">
 
-                <p><ProfileVisitsChartCard  />   </p>
+                  <ProfileVisitsChartCard/>   
 
-                    <p><VcfVisitsChartCard  />   </p>
+                  <VcfVisitsChartCard/>
                   
 
                   <Card className="d-flex flex-row mb-4">

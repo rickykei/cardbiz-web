@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-unused-vars */
 import React, {useState,useEffect} from 'react';
 import {  Card,  CardBody,  UncontrolledDropdown,  DropdownItem,  DropdownToggle,  DropdownMenu,} from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
@@ -11,14 +12,16 @@ import { useParams, } from "react-router-dom";
   
 const ProfileVisitsChartCard = ({ className = '', controls = true }) => {
 
-  let apiUrl ="";
+  
 const colors = ThemeColors();
   const { id } = useParams();
   console.log("id".concat(id));
   const [options, setOptions] = useState([]);
    
-  apiUrl=`${servicePath2}/profile_counter/getProfileCountByStaffId?staff_id=` ;
+  let apiUrl=`${servicePath2}/profile_counter/getProfileCountByStaffId?staff_id=` ;
+  let apiUrlMonthly=`${servicePath2}/profile_counter/getProfileCountMonthlyByStaffId?staff_id=` ;
   apiUrl=apiUrl.concat(id);
+  apiUrlMonthly=apiUrlMonthly.concat(id);
   let areaChartData2;
   
   if (options.count !== undefined) {
@@ -46,16 +49,33 @@ const colors = ThemeColors();
   }
   
 
- 
-  useEffect(() => {
+  const copyLink3 = () => {
     const expensesListResp = async () => {
         await axios.get(`${apiUrl}`)
           .then(
             response => setOptions(response.data))
       }
       expensesListResp();
+      console.log("cp3");
+    } 
+    const copyLink4 = () => {
+      const expensesListResp = async () => {
+          await axios.get(`${apiUrlMonthly}`)
+            .then(
+              response => setOptions(response.data))
+        }
+        expensesListResp();
+        console.log("cp4");
+      } 
+      
+  useEffect(() => {
+    
+      copyLink3();
+      
     }, [])
 
+
+  
 
   return (
     <Card className={`${className} dashboard-filled-line-chart`}>
@@ -74,14 +94,14 @@ const colors = ThemeColors();
           <div className="btn-group float-right float-none-xs mt-2">
             <UncontrolledDropdown>
               <DropdownToggle caret color="primary" className="btn-xs" outline>
-                <IntlMessages id="dashboards.this-week" />
+                <IntlMessages id="dashboards.this-daily-or-monthly" />
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>
-                  <IntlMessages id="dashboards.last-week" />
+                <DropdownItem onClick={copyLink3}>
+                  <IntlMessages id="dashboards.this-daily" />
                 </DropdownItem>
-                <DropdownItem>
-                  <IntlMessages id="dashboards.this-month" />
+                <DropdownItem onClick={copyLink4}>
+                  <IntlMessages id="dashboards.this-monthly" />
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

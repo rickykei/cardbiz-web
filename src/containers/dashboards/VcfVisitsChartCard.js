@@ -9,29 +9,22 @@ import { servicePath2 } from 'constants/defaultValues';
 import axios from 'axios';
 import { useParams, } from "react-router-dom";
 import { AreaChart } from 'components/charts';
-import { areaChartData } from 'data/charts';
-
-
+ 
 
 
 const VcfVisitsChartCard = ({ className = '', controls = true }) => {
-  let apiUrl;
+  
   const { id } = useParams();
-  apiUrl = `${servicePath2}/vcf_counter/getVcfCountByStaffId?staff_id=`;
+ let apiUrl = `${servicePath2}/vcf_counter/getVcfCountByStaffId?staff_id=`;
+ let apiUrlMonthly = `${servicePath2}/vcf_counter/getVcfCountMonthlyByStaffId?staff_id=`;
   apiUrl = apiUrl.concat(id);
+  apiUrlMonthly=apiUrlMonthly.concat(id);
   let areaChartData2;
   const [options, setOptions] = useState([]);
   const colors = ThemeColors();
 
 
-  useEffect(() => {
-  const expensesListResp = async () => {
-      await axios.get(`${apiUrl}`)
-        .then(
-          response => setOptions(response.data))
-    }
-    expensesListResp();
-  }, [])
+
 
   if (options.count !== undefined) {
     areaChartData2 = {
@@ -57,8 +50,31 @@ const VcfVisitsChartCard = ({ className = '', controls = true }) => {
 
   }
 
- 
 
+  const copyLink3 = () => {
+    const expensesListResp = async () => {
+        await axios.get(`${apiUrl}`)
+          .then(
+            response => setOptions(response.data))
+      }
+      expensesListResp();
+      console.log("cp4");
+    } 
+
+  const copyLink4 = () => {
+    const expensesListResp = async () => {
+        await axios.get(`${apiUrlMonthly}`)
+          .then(
+            response => setOptions(response.data))
+      }
+      expensesListResp();
+      console.log("cp4");
+    } 
+
+
+    useEffect(() => {
+      copyLink3();
+      }, [])
   return (
     
     <Card className={`${className} dashboard-filled-line-chart`}>
@@ -77,14 +93,14 @@ const VcfVisitsChartCard = ({ className = '', controls = true }) => {
           <div className="btn-group float-right float-none-xs mt-2">
             <UncontrolledDropdown>
               <DropdownToggle caret color="primary" className="btn-xs" outline>
-                <IntlMessages id="dashboards.this-week" />
+                <IntlMessages id="dashboards.this-daily-or-monthly" />
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>
-                  <IntlMessages id="dashboards.last-week" />
+                <DropdownItem onClick={copyLink3}>
+                  <IntlMessages id="dashboards.this-daily" />
                 </DropdownItem>
-                <DropdownItem>
-                  <IntlMessages id="dashboards.this-month" />
+                <DropdownItem onClick={copyLink4}>
+                  <IntlMessages id="dashboards.this-monthly" />
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
