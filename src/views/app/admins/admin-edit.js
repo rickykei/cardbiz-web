@@ -14,7 +14,6 @@ import axios from 'axios';
 import { servicePath2 } from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
 import CompanyDataService from 'services/CompanyService';
-import AuthService from 'services/auth.service';
 import { useParams, useHistory } from "react-router-dom";
 import 'dropzone/dist/min/dropzone.min.css';
 
@@ -143,7 +142,6 @@ const AdminPage = ({ intl, match,currentUser }) => {
   const [options, setOptions] = useState([]);
   const [selectedOptionLO, setSelectedOptionLO] = useState('');
   const [message, setMessage] = useState("");
-  const [messagePassword, setMessagePassword] = useState("");
   const apiUrl = `${servicePath2}/companies/codelist`;
  
   const CompanyBannerImgUrl = `${servicePath2}/files/${state.banner}`;
@@ -188,17 +186,27 @@ const AdminPage = ({ intl, match,currentUser }) => {
   const updateAdminPassword = () => {
 
     console.log(state.company_id);
-    console.log(currentUser.uid);
-    if (state.password!==state.repassword)
-    setMessagePassword("Password not match!!");
-    
-    AuthService.changePassword(currentUser.uid,state.password)
-    .then(response=>{
-      setMessagePassword("Password Changed");
-    })
-    .catch(e => {
-      console.log(e);
-    });
+
+    if (state.company_id === undefined)
+      state.company_id = selectedOptionLO.value;
+    console.log(state.company_id);
+    const data = new FormData()
+
+   
+    /* eslint-disable no-restricted-syntax */
+
+    for (const [key, val] of Object.entries(state)) {
+      data.append(key, val);
+    }
+    CompanyDataService.update(state.id, data)
+      .then(response => {
+        console.log(response.data);
+        setMessage("The Staff was updated successfully!");
+        history.push("/app/staffs/staffs-list");
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
 
  
@@ -267,7 +275,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                     placeholder={messages['forms.admin-update-password']}
                   />
                   <FormText color="muted">
-                    <IntlMessages id="forms.staff-work_tel-muted" />
+                    <IntlMessages id="forms.admin-password-muted" />
                   </FormText>
                 </FormGroup>
 
@@ -282,14 +290,13 @@ const AdminPage = ({ intl, match,currentUser }) => {
                     placeholder={messages['forms.admin-update-password']}
                   />
                   <FormText color="muted">
-                    <IntlMessages id="forms.staff-work_tel-muted" />
+                    <IntlMessages id="forms.admin-password-muted" />
                   </FormText>
                 </FormGroup>
 
                 <Button color="primary" className="mt-4" onClick={() => updateAdminPassword()}>
                   <IntlMessages id="forms.submit" />
                 </Button>
-                <p>{messagePassword}</p>
               </CardBody>
             </Card>
 
@@ -406,7 +413,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
 
                           />
                           <FormText color="muted">
-                            <IntlMessages id="forms.staff-work_email-muted" />
+                            <IntlMessages id="forms.hr-work_email-muted" />
                           </FormText>
                         </FormGroup>
 
