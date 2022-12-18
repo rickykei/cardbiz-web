@@ -4,6 +4,7 @@ import axios from 'axios';
 import {  servicePath2 } from 'constants/defaultValues';
 import ListPageHeading from 'containers/staffs/ListPageHeading';
 import ListPageListing from 'containers/staffs/ListPageListing';
+import AddNewModal from 'containers/pages/AddNewModal';
 import useMousetrap from 'hooks/use-mousetrap';
 import { connect } from 'react-redux';
 
@@ -21,11 +22,16 @@ const getIndex = (value, arr, prop) => {
 
 const orderOptions = [
   { column: 'company_id', label: 'Company Code' },
-  { column: 'fname', label: 'Name' },
+  { column: 'name_eng', label: 'Name' },
   { column: 'status', label: 'Status' },
 ];
 const pageSizes = [5, 10, 15, 20];
 
+const categories = [
+  { label: 'Cakes', value: 'Cakes', key: 0 },
+  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
+  { label: 'Desserts', value: 'Desserts', key: 2 },
+];
 
 const DataListPages = ({ match ,currentUser }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -41,8 +47,7 @@ const DataListPages = ({ match ,currentUser }) => {
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
   const [search, setSearch] = useState('');
- 
-  const [selectedItems, setSelectedItems] = useState([]);
+   const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
  
@@ -189,7 +194,11 @@ apiUrl = `${servicePath2}/staffs/findByCompanyId`;
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
         />
-        
+         <AddNewModal
+          modalOpen={modalOpen}
+          toggleModal={() => setModalOpen(!modalOpen)}
+          categories={categories}
+        />
         <ListPageListing
           items={items}
           displayMode={displayMode}

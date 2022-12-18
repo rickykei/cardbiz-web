@@ -22,7 +22,8 @@ const EditClientModal = ({ intl, match, }) => {
   const { id } = useParams();
   const initialState = {
     id: null,
-    name: "",
+    company_name_eng: "",
+    company_name_chi: "",
     code: "",
     no_of_license: "",
     no_of_admin: "",
@@ -81,20 +82,34 @@ const EditClientModal = ({ intl, match, }) => {
               <Form>
                 <FormGroup>
                   <Label for="clientName">
-                    <IntlMessages id="forms.client-name" />
+                    <IntlMessages id="forms.client-company_name_eng" />
                   </Label>
                   <Input
                     type="text"
-                    value={state.name || ''}
-                    onChange={(val) => setState({ ...state, name: val.target.value })}
-                    placeholder={messages['forms.client-name']}
+                    value={state.company_name_eng || ''}
+                    onChange={(val) => setState({ ...state, company_name_eng: val.target.value })}
+                    placeholder={messages['forms.client-company_name_eng']}
 
                   />
                   <FormText color="muted">
-                    <IntlMessages id="forms.email-muted" />
+                    <IntlMessages id="forms.company_name_eng-muted" />
                   </FormText>
                 </FormGroup>
+                <FormGroup>
+                  <Label for="clientName">
+                    <IntlMessages id="forms.client-company_name_chi" />
+                  </Label>
+                  <Input
+                    type="text"
+                    value={state.company_name_chi || ''}
+                    onChange={(val) => setState({ ...state, company_name_chi: val.target.value })}
+                    placeholder={messages['forms.client-company_name_chi']}
 
+                  />
+                  <FormText color="muted">
+                    <IntlMessages id="forms.company_name_chi-muted" />
+                  </FormText>
+                </FormGroup>
                 <FormGroup>
                   <Label for="clientCode">
                     <IntlMessages id="forms.client-code" />

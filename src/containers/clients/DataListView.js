@@ -31,9 +31,12 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
               <NavLink to={`?p=${product.id}`} className="w-20 w-sm-100">
                 <p className="list-item-heading mb-1 ">
-                  {product.name}
+                  {product.company_name_eng}
                 </p>
               </NavLink>
+              <p className="list-item-heading mb-1 ">
+                  {product.company_name_chi}
+                </p>
               <p className="mb-1 text-muted text-small w-10 w-sm-100">
                 {product.no_of_license}
               </p>

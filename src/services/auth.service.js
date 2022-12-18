@@ -1,8 +1,10 @@
 import axios from "axios";
+import { servicePath2 } from 'constants/defaultValues';
 
-const SIGNUP_API_URL = "https://e-profile.digital/api/auth/signup";
-const SIGNIN_API_URL = "https://e-profile.digital/api/auth/signin";
-const CHANGEPASSWORD_API_URL = "https://e-profile.digital/api/auth/changePassword";
+
+const SIGNUP_API_URL = `${servicePath2}/auth/signup`;
+const SIGNIN_API_URL = `${servicePath2}/auth/signin`;
+const CHANGEPASSWORD_API_URL = `${servicePath2}/auth/changePassword`;
 
 const register = (username, email, password, roles) => {
   return axios.post(SIGNUP_API_URL , {

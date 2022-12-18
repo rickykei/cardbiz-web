@@ -6,7 +6,7 @@ import {
   DropdownItem,
   DropdownMenu,
   ButtonDropdown,
-  Button,
+  Button,CustomInput,
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
@@ -32,7 +32,7 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
               <NavLink to={`?p=${product.id}`} className="w-20 w-sm-100">
                 <p className="list-item-heading mb-1 ">
-                  {product.fname}
+                  {product.name_eng}
                 </p>
               </NavLink>
               <p className="mb-1 text-small w-10 w-sm-100 ">
@@ -67,7 +67,16 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
 
 
             </div>
-
+            <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
+              <CustomInput
+                className="item-check mb-0"
+                type="checkbox"
+                id={`check_${product.id}`}
+                checked={isSelect}
+                onChange={() => {}}
+                label=""
+              />
+            </div>
           </div>
         </Card>
       </ContextMenuTrigger>

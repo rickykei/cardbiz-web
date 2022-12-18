@@ -201,7 +201,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
     CompanyDataService.update(state.id, data)
       .then(response => {
         console.log(response.data);
-        setMessage("The Staff was updated successfully!");
+        setMessage("The admin setting was updated successfully!");
         history.push("/app/staffs/staffs-list");
       })
       .catch(e => {
@@ -397,7 +397,43 @@ const AdminPage = ({ intl, match,currentUser }) => {
                 </FormGroup>
                 }
                      
+                     <Row>
+                      <Colxx xxs="12" md="6" className="mb-5">
+                        <FormGroup>
+                          <Label for="company_name_eng">
+                            <IntlMessages id="forms.staff-company_name_eng" />
+                          </Label>
+                          <Input
+                            type="text"
+                            value={state.company_name_eng || ''}
+                            onChange={(val) => setState({ ...state, company_name_eng: val.target.value })}
+                            placeholder={messages['forms.staff-company_name_eng']}
 
+                          />
+                          <FormText color="muted">
+                            <IntlMessages id="forms.hr-company_name_eng-muted" />
+                          </FormText>
+                        </FormGroup>
+
+                      </Colxx>
+                      <Colxx xxs="12" md="6">
+                        <FormGroup>
+                          <Label for="company_name_chi">
+                            <IntlMessages id="forms.company_name_chi" />
+                          </Label>
+                          <Input
+                            type="text"
+                            value={state.company_name_chi || ''}
+                            onChange={(val) => setState({ ...state, company_name_chi: val.target.value })}
+                            placeholder={messages['forms.company_name_chi']}
+
+                          />
+                          <FormText color="muted">
+                            <IntlMessages id="forms.admin-company_name_chi-muted" />
+                          </FormText>
+                        </FormGroup>
+                      </Colxx>
+                    </Row>
                    
                     <Row>
                       <Colxx xxs="12" md="6" className="mb-5">

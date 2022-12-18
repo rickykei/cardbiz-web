@@ -165,50 +165,59 @@ const StaffProfileModal = ({ intl, match}) => {
                   <Card className="mb-4">
                     <CardBody>
                       <div className="text-center pt-4">
-                        <p className="list-item-heading pt-2">{state.fname} </p>
+                        <p className="list-item-heading pt-2">{state.name_eng} {state.name_chi}</p>
                       </div>
-                      <p className="mb-3">{messages['forms.staff-firstname']}  </p>
-
-                      {state.address ? (
-                        <><p className="text-muted text-small mb-2"> <IntlMessages id="pages.address" /> </p>
-                          <p className="mb-3">{state.address || 'N/A'} </p></>
-                      ) : ''}
-
-                      {state.position ? (
+                      <p className="mb-3">{messages['forms.staff-name_eng']}  </p>
+                      {state.rc_no ? (
                         <><p className="text-muted text-small mb-2">
-                          <IntlMessages id="profile.label.position" />
-                        </p><p className="mb-3">{state.position} </p></>
+                          <IntlMessages id="profile.label.rc_no" />
+                        </p><p className="mb-3">{state.rc_no} </p></>
                       ) : ''}
-
-                      {state.division ? (
+                      {state.staff_no ? (
                         <><p className="text-muted text-small mb-2">
-                          <IntlMessages id="profile.label.division" />
-                        </p> <p className="mb-3">{state.division || 'N/A'} </p></>
+                          <IntlMessages id="profile.label.staff_no" />
+                        </p><p className="mb-3">{state.staff_no} </p></>
                       ) : ''}
-
-                      {state.country ? (
+                      {state.title_eng ? (
                         <><p className="text-muted text-small mb-2">
-                          <IntlMessages id="profile.label.country" />
-                        </p> <p className="mb-3">{state.country} </p></>
+                          <IntlMessages id="profile.label.title_eng" />
+                        </p><p className="mb-3">{state.title_eng} </p></>
                       ) : ''}
-
-
-                      {state.department ? (
+                      {state.title_chi ? (
                         <><p className="text-muted text-small mb-2">
-                          <IntlMessages id="pages.department" />
-                        </p> <p className="mb-3">{state.department} </p></>
+                          <IntlMessages id="profile.label.title_chi" />
+                        </p><p className="mb-3">{state.title_chi} </p></>
                       ) : ''}
+                       
+                      {state.address_eng ? (
+                        <><p className="text-muted text-small mb-2"> <IntlMessages id="pages.address_eng" /> </p>
+                          <p className="mb-3">{state.address_eng || 'N/A'} </p></>
+                      ) : ''}
+
+                     
+
+                      {state.subsidiary_eng ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="profile.label.subsidiary_eng" />
+                        </p> <p className="mb-3">{state.subsidiary_eng || 'N/A'} </p></>
+                      ) : ''}
+
+                      
 
                       {state.work_tel ? (
                         <><p className="text-muted text-small mb-2">
                           <IntlMessages id="pages.work_tel" />
                         </p> <p className="mb-3">{state.work_tel} </p></>
                       ) : ''}
-
-                      {state.mobile ? (
+                      {state.direct_tel ? (
                         <><p className="text-muted text-small mb-2">
-                          <IntlMessages id="pages.mobile" />
-                        </p><p className="mb-3">{state.mobile} </p></>
+                          <IntlMessages id="pages.direct_tel" />
+                        </p> <p className="mb-3">{state.direct_tel} </p></>
+                      ) : ''} 
+                      {state.mobile_tel ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.mobile_tel" />
+                        </p><p className="mb-3">{state.mobile_tel} </p></>
                       ) : ''}
 
                       {state.work_email ? (
@@ -231,67 +240,8 @@ const StaffProfileModal = ({ intl, match}) => {
                         <Button onClick={copyLink3} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyMoreInfoSuccess}</p>
 
                          
-                   
-
-                      <p className="text-muted text-small mb-2">
-                        <IntlMessages id="menu.socialMedia" />
-                      </p>
-
-
-                      <div className="social-icons">
-                        <ul className="list-unstyled list-inline">
-
-                          {state.facebook_url !== undefined && state.facebook_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.facebook_url}>
-                                <i className="simple-icon-social-facebook" />
-                              </a>
-                            </li>
-                          }
-
-                          {state.instagram_url !== undefined && state.instagram_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.instagram_url}>
-                                <i className="simple-icon-social-instagram" />
-                              </a>
-                            </li>
-                          }
-
-                          {state.twitter_url !== undefined && state.twitter_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.twitter_url}>
-                                <i className="simple-icon-social-twitter" />
-                              </a>
-                            </li>
-                          }
-
-                          {state.linkedin_url !== undefined && state.linkedin_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.linkedin_url}>
-                                <i className="simple-icon-social-linkedin" />
-                              </a>
-                            </li>
-                          }
-
-
-                          {state.youtube_url !== undefined && state.youtube_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.youtube_url}>
-                                <i className="simple-icon-social-youtube" />
-                              </a>
-                            </li>
-                          }
-                          {state.whatsapp_url !== undefined && state.whatsapp_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.whatsapp_url}>
-                                <i className="iconsminds-speach-bubble-11" />
-                              </a>
-                            </li>
-                          }
-
-
-                        </ul>
-                      </div>
+                    
+                      
                     </CardBody>
                   </Card>
 
@@ -300,7 +250,7 @@ const StaffProfileModal = ({ intl, match}) => {
                       <CardTitle>
                         <IntlMessages id="pages.QRcode" />
                       </CardTitle>
-                      <img alt="qrcode" src={qrcodeURL}  />
+                      <img alt="qrcode" src={qrcodeURL} width="300" />
                     </CardBody>
                   </Card>
 
