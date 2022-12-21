@@ -85,7 +85,7 @@ const ListPageHeading = ({
                 className="dropdown-toggle-split btn-lg"
               />
               <DropdownMenu right>
-                <DropdownItem>
+                <DropdownItem  onClick={() => sentNotificationEmail()}> 
                   <IntlMessages id="pages.sendEmail" />
                 </DropdownItem>
                 

@@ -246,7 +246,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                 </Card>
                
                 
-                
+                {(currentUser.companyId === '123321') &&
                     <Card className="mb-4">
                       <CardBody>
                         <CardTitle>
@@ -264,7 +264,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                         </Row>
                         </CardBody>
                     </Card>
-              
+}
                     {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
                 <FormGroup>
                   <Label className="mt-4">

@@ -158,6 +158,10 @@ apiUrl = `${servicePath2}/staffs/findByCompanyId`;
     return false;
   });
 
+
+  const sentNotificationEmail= ()=>{
+
+  }
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
@@ -171,6 +175,7 @@ apiUrl = `${servicePath2}/staffs/findByCompanyId`;
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
+          sentNotificationEmail={sentNotificationEmail}
           changeOrderBy={(column) => {
             setSelectedOrderOption(
               orderOptions.find((x) => x.column === column)

@@ -14,21 +14,7 @@ const Footer = () => {
             </Colxx>
             <Colxx className="col-sm-6 d-none d-sm-block">
               <ul className="breadcrumb pt-0 pr-0 float-right">
-                <li className="breadcrumb-item mb-0">
-                  <NavLink className="btn-link" to="#" location={{}}>
-                    Review
-                  </NavLink>
-                </li>
-                <li className="breadcrumb-item mb-0">
-                  <NavLink className="btn-link" to="#" location={{}}>
-                    Purchase
-                  </NavLink>
-                </li>
-                <li className="breadcrumb-item mb-0">
-                  <NavLink className="btn-link" to="#" location={{}}>
-                    Docs
-                  </NavLink>
-                </li>
+                 
               </ul>
             </Colxx>
           </Row>

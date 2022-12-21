@@ -284,7 +284,7 @@ const AddNewStaffModal = ({
 
                   </CardBody>
                 </Card>
-
+                {(currentUser.companyId === '123321') &&
                 <Row className="mb-4">
                   <Colxx xxs="12">
                     <Card>
@@ -300,7 +300,7 @@ const AddNewStaffModal = ({
                       </CardBody>
                     </Card>
                   </Colxx>
-                </Row>  
+                </Row>  }
                 {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
                   <FormGroup>
                     <Label className="mt-4">
