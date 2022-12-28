@@ -171,7 +171,7 @@ const TopNav = ({
   
 if (currentUser.logo!==undefined)
 CompanyLogoImgUrl = `${servicePath2}/files/${currentUser.logo}`;
-console.log("topnav");
+
   return (
     <nav className="navbar fixed-top">
       <div className="d-flex align-items-center navbar-left">

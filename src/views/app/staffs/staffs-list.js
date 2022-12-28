@@ -7,7 +7,7 @@ import ListPageListing from 'containers/staffs/ListPageListing';
 import AddNewModal from 'containers/pages/AddNewModal';
 import useMousetrap from 'hooks/use-mousetrap';
 import { connect } from 'react-redux';
-
+import StaffDataService from 'services/StaffsService';
 
  
 const getIndex = (value, arr, prop) => {
@@ -42,7 +42,7 @@ const DataListPages = ({ match ,currentUser }) => {
     column: '',
     label: '',
   });
-
+ 
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
@@ -51,6 +51,7 @@ const DataListPages = ({ match ,currentUser }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
  
+  
   let apiUrl ="";
 if(currentUser.role===0)
  apiUrl = `${servicePath2}/staffs`;
@@ -88,6 +89,7 @@ apiUrl = `${servicePath2}/staffs/findByCompanyId`;
   }, [selectedPageSize, currentPage, selectedOrderOption, search ]);
 
   const onCheckItem = (event, id) => {
+      
     if (
       event.target.tagName === 'A' ||
       (event.target.parentElement && event.target.parentElement.tagName === 'A')
@@ -97,16 +99,19 @@ apiUrl = `${servicePath2}/staffs/findByCompanyId`;
     if (lastChecked === null) {
       setLastChecked(id);
     }
-
+ 
     let selectedList = [...selectedItems];
     if (selectedList.includes(id)) {
       selectedList = selectedList.filter((x) => x !== id);
+     
     } else {
       selectedList.push(id);
+    
     }
     setSelectedItems(selectedList);
 
     if (event.shiftKey) {
+      console.log('e');
       let newItems = [...items];
       const start = getIndex(id, newItems, 'id');
       const end = getIndex(lastChecked, newItems, 'id');
@@ -119,7 +124,9 @@ apiUrl = `${servicePath2}/staffs/findByCompanyId`;
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
     }
+   
     document.activeElement.blur();
+    
     return false;
   };
 
@@ -130,6 +137,7 @@ apiUrl = `${servicePath2}/staffs/findByCompanyId`;
       }
     } else {
       setSelectedItems(items.map((x) => x.id));
+     
     }
     document.activeElement.blur();
     return false;
@@ -159,9 +167,52 @@ apiUrl = `${servicePath2}/staffs/findByCompanyId`;
   });
 
 
-  const sentNotificationEmail= ()=>{
-
+  const sentNotificationEmail= (event)=>{
+    
+    
+    const data = {}; 
+    data.staffDocId=selectedItems;
+    data.uid=currentUser.uid;
+    data.companyId=currentUser.companyId;
+    console.log(data);
+    StaffDataService.sendNotification(data)
+      .then(response => {
+        console.log(response.data.message);
+         alert(response.data.message);
+         
+      })
+      .catch(e => {
+        console.log(e);
+      });
+     
+    return false;
   }
+
+  const sentNotificationEmailSingle= (event, id) =>{
+    
+ 
+    //alert('staffdocid='+id);
+    //alert('user doc id='+currentUser.uid);
+    //alert('user company id='+currentUser.companyId);
+    const data = {}; 
+    data.staffDocId=[id];
+    data.uid=currentUser.uid;
+    data.companyId=currentUser.companyId;
+    console.log(data);
+    StaffDataService.sendNotification(data)
+      .then(response => {
+        console.log(response.data.message);
+         alert(response.data.message);
+         
+      })
+      .catch(e => {
+        console.log(e);
+      });
+     
+    return false;
+  }
+
+
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
@@ -209,6 +260,7 @@ apiUrl = `${servicePath2}/staffs/findByCompanyId`;
           displayMode={displayMode}
           selectedItems={selectedItems}
           onCheckItem={onCheckItem}
+          sentNotificationEmailSingle={sentNotificationEmailSingle}
           currentPage={currentPage}
           totalPage={totalPage}
           onContextMenuClick={onContextMenuClick}

@@ -33,6 +33,7 @@ const ListPageHeading = ({
   selectedItemsLength,
   itemsLength,
   heading,
+  sentNotificationEmail,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);

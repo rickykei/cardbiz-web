@@ -29,6 +29,10 @@ const findByName = name => {
   return http.get(`/staffs?name=${name}`);
 };
 
+const sendNotification = data =>{
+  return http.post("/staffs/sendNotification", data);
+}
+
 const StaffsService = {
   getAll,
   get,
@@ -36,7 +40,8 @@ const StaffsService = {
   update,
   remove,
   removeAll,
-  findByName
+  findByName,
+  sendNotification
 };
 
 export default StaffsService;

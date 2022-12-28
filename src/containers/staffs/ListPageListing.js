@@ -15,7 +15,7 @@ const ListPageListing = ({
   onCheckItem,
   currentPage,
   totalPage,
- 
+  sentNotificationEmailSingle,
   onChangePage,
 }) => {
   return (
@@ -28,6 +28,7 @@ const ListPageListing = ({
             product={product}
             isSelect={selectedItems.includes(product.id)}
             onCheckItem={onCheckItem}
+            sentNotificationEmailSingle={sentNotificationEmailSingle}
             collect={collect}
           />
         );

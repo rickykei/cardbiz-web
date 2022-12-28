@@ -149,25 +149,23 @@ const StaffProfileModal = ({ intl, match}) => {
                   </Card>
                 </Colxx>
                 <Colxx xxs="12" lg="5" xl="4" className="col-left">
-                  {state.headshot !== undefined && state.headshot !== "" &&
-                    <SingleLightbox
-                      thumb={hsImgUrl}
-                      large={hsImgUrl}
-                      className="img-thumbnail card-img social-profile-img"
-                    />}
-                  {state.headshot === "" &&
-                    <SingleLightbox
-                      thumb="/assets/img/profiles/1.jpg"
-                      large="/assets/img/profiles/1.jpg"
-                      className="img-thumbnail card-img social-profile-img"
-                    />}
-
+              
                   <Card className="mb-4">
                     <CardBody>
                       <div className="text-center pt-4">
                         <p className="list-item-heading pt-2">{state.name_eng} {state.name_chi}</p>
                       </div>
-                      <p className="mb-3">{messages['forms.staff-name_eng']}  </p>
+                       
+                      {state.company_name_eng ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="profile.label.company_name_eng" />
+                        </p><p className="mb-3">{state.company_name_eng} </p></>
+                      ) : ''}
+                        {state.company_name_chi ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="profile.label.company_name_chi" />
+                        </p><p className="mb-3">{state.company_name_chi} </p></>
+                      ) : ''}
                       {state.rc_no ? (
                         <><p className="text-muted text-small mb-2">
                           <IntlMessages id="profile.label.rc_no" />
@@ -219,7 +217,11 @@ const StaffProfileModal = ({ intl, match}) => {
                           <IntlMessages id="pages.mobile_tel" />
                         </p><p className="mb-3">{state.mobile_tel} </p></>
                       ) : ''}
-
+                     {state.mobile_tel2 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.mobile_tel2" />
+                        </p><p className="mb-3">{state.mobile_tel2} </p></>
+                      ) : ''}
                       {state.work_email ? (
                         <><p className="text-muted text-small mb-2">
                           <IntlMessages id="pages.work_email" />

@@ -14,6 +14,7 @@ import axios from 'axios';
 import { servicePath2 } from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
 import CompanyDataService from 'services/CompanyService';
+import UserDataService from 'services/UsersService';
 import { useParams, useHistory } from "react-router-dom";
 import 'dropzone/dist/min/dropzone.min.css';
 
@@ -142,11 +143,13 @@ const AdminPage = ({ intl, match,currentUser }) => {
   const [options, setOptions] = useState([]);
   const [selectedOptionLO, setSelectedOptionLO] = useState('');
   const [message, setMessage] = useState("");
+  const [message_password, setMessagePassword] = useState("");
   const apiUrl = `${servicePath2}/companies/codelist`;
  
   const CompanyBannerImgUrl = `${servicePath2}/files/${state.banner}`;
   const CompanyLogoImgUrl = `${servicePath2}/files/${state.logo}`;
   const { messages } = intl;
+  
   const eventHandlers = { addedfile: (file) => { setBannerFile(file); } }
   const eventHandlers2 = { addedfile: (file) => { setLogoFile(file); } }
    const history = useHistory();
@@ -187,26 +190,31 @@ const AdminPage = ({ intl, match,currentUser }) => {
 
     console.log(state.company_id);
 
-    if (state.company_id === undefined)
-      state.company_id = selectedOptionLO.value;
-    console.log(state.company_id);
-    const data = new FormData()
+    if (state.password === "" || state.repassword===""|| state.password.length<=3 ||state.repassword.length<=3)
+     setMessagePassword("Please enter password correctly");
+    else if(state.password != state.repassword)
+     setMessagePassword("Two password is not match");
+    else{
 
-   
-    /* eslint-disable no-restricted-syntax */
+        if (state.company_id === undefined)
+          state.company_id = selectedOptionLO.value;
+        console.log(state.company_id);
+        const data = new FormData()
+        /* eslint-disable no-restricted-syntax */
 
-    for (const [key, val] of Object.entries(state)) {
-      data.append(key, val);
-    }
-    CompanyDataService.update(state.id, data)
-      .then(response => {
-        console.log(response.data);
-        setMessage("The admin setting was updated successfully!");
-        history.push("/app/staffs/staffs-list");
-      })
-      .catch(e => {
-        console.log(e);
-      });
+        for (const [key, val] of Object.entries(state)) {
+          data.append(key, val);
+        }
+        UserDataService.update(currentUser.uid, state)
+          .then(response => {
+            console.log(response.data);
+            setMessagePassword("Password was updated successfully!");
+             
+          })
+          .catch(e => {
+            console.log(e);
+          });
+        }
   };
 
  
@@ -297,6 +305,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                 <Button color="primary" className="mt-4" onClick={() => updateAdminPassword()}>
                   <IntlMessages id="forms.submit" />
                 </Button>
+                <p>{message_password}</p>
               </CardBody>
             </Card>
 

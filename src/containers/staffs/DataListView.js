@@ -14,7 +14,7 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 
-const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
+const DataListView = ({ product, isSelect, collect, onCheckItem ,sentNotificationEmailSingle}) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
 
 
@@ -36,14 +36,17 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
                 </p>
               </NavLink>
               <p className="mb-1 text-small w-10 w-sm-100 ">
-                {product.company_id.code}
+                {product.rc_no}
               </p>
               <p className="mb-1 text-muted text-small w-10 w-sm-100">
-                {product.updatedAt}
+                {product.staff_no}
+              </p>  <p className="mb-1 text-muted text-small w-10 w-sm-100">
+                {product.title_eng}
               </p>
-              <p className="w-15 w-sm-100">
-                {product.status ? "Active" : "DeActive"}
+              <p className="mb-1 text-muted text-small w-10 w-sm-100">
+                {product.subsidiary_eng}
               </p>
+               
               <ButtonDropdown
                 isOpen={dropdownSplitOpen}
                 toggle={() => setDropdownSplitOpen(!dropdownSplitOpen)}
@@ -61,7 +64,9 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
                   <DropdownItem href={`staff-del/${product.id}`}>
                     <IntlMessages id="dropdowns.delete" />
                   </DropdownItem>
-
+                  <DropdownItem  onClick={(event) => sentNotificationEmailSingle(event, product.id)}>
+                    <IntlMessages id="dropdowns.sendEmail" />
+                  </DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
 
