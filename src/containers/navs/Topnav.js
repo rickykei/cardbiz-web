@@ -169,6 +169,7 @@ const TopNav = ({
     clickOnMobileMenuAction(_containerClassnames);
   };
   
+  console.log("cuser="+JSON.stringify(currentUser));
 if (currentUser.logo!==undefined)
 CompanyLogoImgUrl = `${servicePath2}/files/${currentUser.logo}`;
 
@@ -251,7 +252,7 @@ CompanyLogoImgUrl = `${servicePath2}/files/${currentUser.logo}`;
               <span className="name mr-1">Hi! {currentUser.username?(currentUser.username): ('User')}</span>
               <span>
                 
-                <img alt="Profile" src={CompanyLogoImgUrl} />  
+                <img alt="Profile" src="/assets/img/profiles/l-1.jpg" />  
                 
                  
               </span>

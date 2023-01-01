@@ -80,6 +80,7 @@ const StaffProfileModal = ({ intl, match}) => {
   }, [id]);
 
   const updateClipboard = (newClip) => {
+ 
     navigator.clipboard.writeText(newClip).then(
       () => {
      
@@ -96,11 +97,12 @@ const StaffProfileModal = ({ intl, match}) => {
   }
  
   const copyLink3 = () => {
-
+ 
     navigator.permissions
       .query({ name: "clipboard-write" })
       .then((result) => {
         if (result.state === "granted" || result.state === "prompt") {
+          console.log('cp4');
           updateClipboard(moreInfoURL);
         }
       })
@@ -207,10 +209,30 @@ const StaffProfileModal = ({ intl, match}) => {
                           <IntlMessages id="pages.work_tel" />
                         </p> <p className="mb-3">{state.work_tel} </p></>
                       ) : ''}
+                         {state.work_tel2 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.work_tel2" />
+                        </p> <p className="mb-3">{state.work_tel2} </p></>
+                      ) : ''}
+                         {state.work_tel3 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.work_tel3" />
+                        </p> <p className="mb-3">{state.work_tel3} </p></>
+                      ) : ''}
                       {state.direct_tel ? (
                         <><p className="text-muted text-small mb-2">
                           <IntlMessages id="pages.direct_tel" />
                         </p> <p className="mb-3">{state.direct_tel} </p></>
+                      ) : ''} 
+                      {state.direct_tel2 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.direct_tel2" />
+                        </p> <p className="mb-3">{state.direct_tel2} </p></>
+                      ) : ''} 
+                      {state.direct_tel3 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.direct_tel3" />
+                        </p> <p className="mb-3">{state.direct_tel3} </p></>
                       ) : ''} 
                       {state.mobile_tel ? (
                         <><p className="text-muted text-small mb-2">
@@ -221,6 +243,21 @@ const StaffProfileModal = ({ intl, match}) => {
                         <><p className="text-muted text-small mb-2">
                           <IntlMessages id="pages.mobile_tel2" />
                         </p><p className="mb-3">{state.mobile_tel2} </p></>
+                      ) : ''}
+                      {state.mobile_tel3 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.mobile_tel3" />
+                        </p><p className="mb-3">{state.mobile_tel3} </p></>
+                      ) : ''}
+                      {state.mobile_tel4 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.mobile_tel4" />
+                        </p><p className="mb-3">{state.mobile_tel4} </p></>
+                      ) : ''}
+                      {state.mobile_tel5 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.mobile_tel5" />
+                        </p><p className="mb-3">{state.mobile_tel5} </p></>
                       ) : ''}
                       {state.work_email ? (
                         <><p className="text-muted text-small mb-2">

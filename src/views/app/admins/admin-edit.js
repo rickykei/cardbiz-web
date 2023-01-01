@@ -152,8 +152,11 @@ const AdminPage = ({ intl, match,currentUser }) => {
   
   const eventHandlers = { addedfile: (file) => { setBannerFile(file); } }
   const eventHandlers2 = { addedfile: (file) => { setLogoFile(file); } }
-   const history = useHistory();
+  const history = useHistory();
 
+  const downloadStaffLogExcel = `${servicePath2}/staff_logs/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
+  const downloadStaffProfileExcel =`${servicePath2}/profile_counter/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
+  const downloadStaffVcfExcel =`${servicePath2}/profile_counter/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
 
   const updateCompany = () => {
 
@@ -313,6 +316,64 @@ const AdminPage = ({ intl, match,currentUser }) => {
 
         </Colxx>
       </Row>
+
+      <Row className="mb-4">
+        <Colxx xxs="12">
+ 
+            <Card className="mb-4">
+              <CardBody>
+                <CardTitle>
+                  <IntlMessages id="input-groups.download_staff_log_excel" />
+                </CardTitle>
+                <a href={downloadStaffLogExcel}><Button color="primary" className="mt-4" >
+                  <IntlMessages id="forms.download_staff_log_excel" />
+                </Button></a>
+             
+              </CardBody>
+            </Card>
+ 
+
+        </Colxx>
+      </Row>
+
+
+      <Row className="mb-4">
+        <Colxx xxs="12">
+ 
+            <Card className="mb-4">
+              <CardBody>
+                <CardTitle>
+                  <IntlMessages id="input-groups.download_staff_profile_excel" />
+                </CardTitle>
+                <a href={downloadStaffProfileExcel}><Button color="primary" className="mt-4" >
+                  <IntlMessages id="forms.download_staff_profile_excel" />
+                </Button></a>
+             
+              </CardBody>
+            </Card>
+ 
+
+        </Colxx>
+      </Row>
+      <Row className="mb-4">
+        <Colxx xxs="12">
+ 
+            <Card className="mb-4">
+              <CardBody>
+                <CardTitle>
+                  <IntlMessages id="input-groups.download_staff_vcf_excel" />
+                </CardTitle>
+                <a href={downloadStaffVcfExcel}><Button color="primary" className="mt-4" >
+                  <IntlMessages id="forms.download_staff_vcf_excel" />
+                </Button></a>
+             
+              </CardBody>
+            </Card>
+ 
+
+        </Colxx>
+      </Row>
+
       <Row className="mb-4">
         <Colxx xxs="12">
           <Card>
