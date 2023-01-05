@@ -156,7 +156,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
 
   const downloadStaffLogExcel = `${servicePath2}/staff_logs/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
   const downloadStaffProfileExcel =`${servicePath2}/profile_counter/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
-  const downloadStaffVcfExcel =`${servicePath2}/profile_counter/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
+  const downloadStaffVcfExcel =`${servicePath2}/vcf_counter/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
 
   const updateCompany = () => {
 
