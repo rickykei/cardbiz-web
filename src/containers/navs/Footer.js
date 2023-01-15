@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+
 import { Row } from 'reactstrap';
 import { Colxx } from 'components/common/CustomBootstrap';
 
@@ -14,7 +14,7 @@ const Footer = () => {
             </Colxx>
             <Colxx className="col-sm-6 d-none d-sm-block">
               <ul className="breadcrumb pt-0 pr-0 float-right">
-                 
+                  { }
               </ul>
             </Colxx>
           </Row>

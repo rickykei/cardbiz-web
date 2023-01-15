@@ -143,7 +143,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
   const [options, setOptions] = useState([]);
   const [selectedOptionLO, setSelectedOptionLO] = useState('');
   const [message, setMessage] = useState("");
-  const [message_password, setMessagePassword] = useState("");
+  const [messagePassword, setMessagePassword] = useState("");
   const apiUrl = `${servicePath2}/companies/codelist`;
  
   const CompanyBannerImgUrl = `${servicePath2}/files/${state.banner}`;
@@ -195,7 +195,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
 
     if (state.password === "" || state.repassword===""|| state.password.length<=3 ||state.repassword.length<=3)
      setMessagePassword("Please enter password correctly");
-    else if(state.password != state.repassword)
+    else if(state.password !== state.repassword)
      setMessagePassword("Two password is not match");
     else{
 
@@ -308,7 +308,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                 <Button color="primary" className="mt-4" onClick={() => updateAdminPassword()}>
                   <IntlMessages id="forms.submit" />
                 </Button>
-                <p>{message_password}</p>
+                <p>{messagePassword}</p>
               </CardBody>
             </Card>
 

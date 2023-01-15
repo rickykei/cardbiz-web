@@ -21,7 +21,7 @@ import {
   searchPath,
   localeOptions,
   isDarkSwitchActive,
- servicePath2 ,
+ 
   adminRoot,
 } from 'constants/defaultValues';
 import { MobileMenuIcon, MenuIcon } from 'components/svg';
@@ -51,7 +51,6 @@ const TopNav = ({
 }) => {
   const [isInFullScreen, setIsInFullScreen] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
-  let CompanyLogoImgUrl='/assets/img/profiles/l-1.jpg';
  
   const search = () => {
     history.push(`${searchPath}?key=${searchKeyword}`);
@@ -169,10 +168,7 @@ const TopNav = ({
     clickOnMobileMenuAction(_containerClassnames);
   };
   
-  console.log("cuser="+JSON.stringify(currentUser));
-if (currentUser.logo!==undefined)
-CompanyLogoImgUrl = `${servicePath2}/files/${currentUser.logo}`;
-
+ 
   return (
     <nav className="navbar fixed-top">
       <div className="d-flex align-items-center navbar-left">

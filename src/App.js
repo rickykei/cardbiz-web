@@ -63,7 +63,7 @@ const App = ({ locale }) => {
           <NotificationContainer />
           {isMultiColorActive && <ColorSwitcher />}
           <Suspense fallback={<div className="loading" />}>
-            <Router>
+            <Router >
               <Switch>
                 <ProtectedRoute
                   path={adminRoot}
@@ -90,9 +90,7 @@ const App = ({ locale }) => {
                   render={(props) => <ViewHome {...props} />}
                 /> 
                 
-                <Redirect exact from="/" to="/user" />
-                 
-                <Redirect to="/error" />
+                
               </Switch>
             </Router>
           </Suspense>

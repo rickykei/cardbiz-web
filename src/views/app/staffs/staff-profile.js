@@ -36,8 +36,8 @@ const StaffProfileModal = ({ intl, match}) => {
 
   const { id } = useParams();
 
-  const moreInfoURL = `${servicePath3}/?sig=${state.id}`;
-  const qrcodeURL = `${servicePath3}/Touchless/genvcf2png.php?sig=${state.id}`;
+  const moreInfoURL = `${servicePath3}/profile/?sig=${state.id}`;
+  const qrcodeURL = `${servicePath3}/profile/Touchless/genvcf2png.php?sig=${state.id}`;
   const username = `${state.fname} ${state.lname}`;
   const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
   const bannerImgUrl = "/assets/img/social/header.jpg";

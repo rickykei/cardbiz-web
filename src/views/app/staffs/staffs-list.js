@@ -167,7 +167,7 @@ apiUrl = `${servicePath2}/staffs/findByCompanyId`;
   });
 
 
-  const sentNotificationEmail= (event)=>{
+  const sentNotificationEmail= ()=>{
     
     
     const data = {}; 
@@ -191,9 +191,7 @@ apiUrl = `${servicePath2}/staffs/findByCompanyId`;
   const sentNotificationEmailSingle= (event, id) =>{
     
  
-    //alert('staffdocid='+id);
-    //alert('user doc id='+currentUser.uid);
-    //alert('user company id='+currentUser.companyId);
+   
     const data = {}; 
     data.staffDocId=[id];
     data.uid=currentUser.uid;
