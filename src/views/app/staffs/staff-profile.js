@@ -16,8 +16,16 @@ import { servicePath3, servicePath2 } from 'constants/defaultValues';
 import ThumbnailLetters from 'components/cards/ThumbnailLetters';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ActionLogDataService from 'services/ActionLogDataService';
+import * as CryptoJS from 'crypto-js';
  
- 
+function AES_ENCRYPT(text, secretKey) {
+   const encrypted = CryptoJS.AES.encrypt(text,secretKey ,{
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  }).toString();
+  return encrypted;
+} 
+
 const StaffProfileModal = ({ intl, match}) => {
   console.log("staffprofile");
   const initialState = {
@@ -36,17 +44,17 @@ const StaffProfileModal = ({ intl, match}) => {
 
   const { id } = useParams();
 
-  const moreInfoURL = `${servicePath3}/profile/?sig=${state.id}`;
-  const qrcodeURL = `${servicePath3}/profile/Touchless/genvcf2png.php?sig=${state.id}`;
+  const moreInfoURL2 = `${servicePath3}/profile/?sig=${state.id}`;
+  const qrcodeURL2 = `${servicePath3}/profile/Touchless/genvcf2png.php?sig=${state.id}`;
   const username = `${state.fname} ${state.lname}`;
   const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
   const bannerImgUrl = "/assets/img/social/header.jpg";
   const bannerImgUrl2 = `${servicePath2}/files/${state.company_id.banner}`;
   const staffEditUrl = `../staff-edit/${state.id}`;
   const [adminLogData, setStaffLogData] = useState([]);
-
-
-
+  const [encryptText,setEncryptText] =useState('');
+  const moreInfoURL = `${servicePath3}/profile/?key=${encryptText}`;
+  const qrcodeURL = `${servicePath3}/profile/Touchless/genvcf2png.php?key=${encryptText}`;
 
   const getStaffLog = (aa) => {
     
@@ -65,18 +73,23 @@ const StaffProfileModal = ({ intl, match}) => {
     StaffDataService.get(aa)
       .then(response => {
         setState(response.data);
-
+        setEncryptText(encodeURIComponent(AES_ENCRYPT(response.data.id,"12345678123456781234567812345678")));
       })
       .catch(e => {
         console.log(e);
       });
+  
   };
 
+
+ 
+  
   useEffect(() => {
     if (id){
       getStaff(id);
       getStaffLog(id);
     }
+     
   }, [id]);
 
   const updateClipboard = (newClip) => {
