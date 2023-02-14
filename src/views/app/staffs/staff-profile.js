@@ -12,7 +12,7 @@ import { useParams, Link } from "react-router-dom";
 import SingleLightbox from 'components/pages/SingleLightbox';
 import VcfVisitsChartCard from 'containers/dashboards/VcfVisitsChartCard';
 import ProfileVisitsChartCard from 'containers/dashboards/ProfileVisitsChartCard';
-import { servicePath3, servicePath2 } from 'constants/defaultValues';
+import { servicePath2, servicePath4 } from 'constants/defaultValues';
 import ThumbnailLetters from 'components/cards/ThumbnailLetters';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ActionLogDataService from 'services/ActionLogDataService';
@@ -44,8 +44,8 @@ const StaffProfileModal = ({ intl, match}) => {
 
   const { id } = useParams();
 
-  const moreInfoURL2 = `${servicePath3}/profile/?sig=${state.id}`;
-  const qrcodeURL2 = `${servicePath3}/profile/Touchless/genvcf2png.php?sig=${state.id}`;
+  const moreInfoURL2 = `${servicePath4}/profile/?sig=${state.id}`;
+  const qrcodeURL2 = `${servicePath4}/profile/Touchless/genvcf2png.php?sig=${state.id}`;
   const username = `${state.fname} ${state.lname}`;
   const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
   const bannerImgUrl = "/assets/img/social/header.jpg";
@@ -53,8 +53,8 @@ const StaffProfileModal = ({ intl, match}) => {
   const staffEditUrl = `../staff-edit/${state.id}`;
   const [adminLogData, setStaffLogData] = useState([]);
   const [encryptText,setEncryptText] =useState('');
-  const moreInfoURL = `${servicePath3}/profile/?key=${encryptText}`;
-  const qrcodeURL = `${servicePath3}/profile/Touchless/genvcf2png.php?key=${encryptText}`;
+  const moreInfoURL = `${servicePath4}/profile/?key=${encryptText}`;
+  const qrcodeURL = `${servicePath4}/profile/Touchless/genvcf2png.php?key=${encryptText}`;
 
   const getStaffLog = (aa) => {
     

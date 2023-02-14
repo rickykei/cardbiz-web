@@ -42,8 +42,9 @@ export const adminRoot = '/app';
 export const buyUrl = ' ';
 export const searchPath = `${adminRoot}/pages/miscellaneous/search`;
 
-export const servicePath3 = 'https://whospets.com';
+export const servicePath3 = 'https://admin.namecard.cncbintl.com';
 export const servicePath2 = `${servicePath3}/api`;
+export const servicePath4 = 'https://namecard.cncbintl.com';
 
 export const servicePath = 'https://api.coloredstrategies.com';
 export const themeColorStorageKey = '__theme_selected_color';
