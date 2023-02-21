@@ -4,6 +4,9 @@ import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
+  VERIFY_TOKEN,
+  VERIFY_TOKEN_SUCCESS,
+  VERIFY_TOKEN_ERROR,
   REGISTER_USER,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
@@ -23,6 +26,8 @@ const INIT_STATE = {
   resetPasswordCode: '',
   loading: false,
   error: '',
+  // email: '',
+  // password: '',
 };
 
 export default (state = INIT_STATE, action) => {
@@ -35,6 +40,8 @@ export default (state = INIT_STATE, action) => {
         loading: false,
         currentUser: action.payload,
         error: '',
+        email: action.payload.email,
+        password: action.payload.password,
       };
     case LOGIN_USER_ERROR:
       return {
@@ -43,6 +50,22 @@ export default (state = INIT_STATE, action) => {
         currentUser: null,
         error: action.payload.message,
       };
+      case VERIFY_TOKEN:
+        return { ...state, loading: true, error: '' };
+      case VERIFY_TOKEN_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          currentUser: action.payload,
+          error: '',
+        };
+      case VERIFY_TOKEN_ERROR:
+        return {
+          ...state,
+          loading: false,
+          currentUser: null,
+          error: action.payload.message,
+        };
     case FORGOT_PASSWORD:
       return { ...state, loading: true, error: '' };
     case FORGOT_PASSWORD_SUCCESS:

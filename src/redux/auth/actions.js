@@ -1,10 +1,13 @@
 import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
+  LOGIN_USER_ERROR,
+  VERIFY_TOKEN,
+  VERIFY_TOKEN_SUCCESS,
+  VERIFY_TOKEN_ERROR,
   LOGOUT_USER,
   REGISTER_USER,
   REGISTER_USER_SUCCESS,
-  LOGIN_USER_ERROR,
   REGISTER_USER_ERROR,
   FORGOT_PASSWORD,
   FORGOT_PASSWORD_SUCCESS,
@@ -18,12 +21,29 @@ export const loginUser = (user, history) => ({
   type: LOGIN_USER,
   payload: { user, history },
 });
+
 export const loginUserSuccess = (user) => ({
   type: LOGIN_USER_SUCCESS,
   payload: user,
 });
+
 export const loginUserError = (message) => ({
   type: LOGIN_USER_ERROR,
+  payload: { message },
+});
+ 
+export const verifyToken = (user, history) => ({
+  type: VERIFY_TOKEN,
+  payload: { user, history },
+});
+
+export const verifyTokenSuccess = (user) => ({
+  type: VERIFY_TOKEN_SUCCESS,
+  payload: user,
+});
+
+export const verifyTokenError = (message) => ({
+  type: VERIFY_TOKEN_ERROR,
   payload: { message },
 });
 

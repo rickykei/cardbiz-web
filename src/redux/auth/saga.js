@@ -8,6 +8,7 @@ import { auth } from 'helpers/Firebase';
  
 import {
   LOGIN_USER,
+  VERIFY_TOKEN,
   REGISTER_USER,
   LOGOUT_USER,
   FORGOT_PASSWORD,
@@ -17,6 +18,8 @@ import {
 import {
   loginUserSuccess,
   loginUserError,
+  verifyTokenSuccess,
+  verifyTokenError,
   registerUserSuccess,
   registerUserError,
   forgotPasswordSuccess,
@@ -46,9 +49,10 @@ function* loginWithEmailPassword({ payload }) {
     const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
     if (!loginUser.message) {
       const item = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id,username: loginUser.username, logo: loginUser.logo,...currentUser };
+      const pcitem = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id, email,  password,logo: loginUser.logo,...currentUser };
       setCurrentUser(item);
-      yield put(loginUserSuccess(item));
-      history.push(adminRoot);
+      yield put(loginUserSuccess(pcitem));
+      history.push("/user/verify-token");
     } else {
       yield put(loginUserError(loginUser.message));
     }
@@ -56,6 +60,37 @@ function* loginWithEmailPassword({ payload }) {
     yield put(loginUserError(error));
   }
 }
+
+
+export function* watchVerifyToken() {
+  // eslint-disable-next-line no-use-before-define
+  yield takeEvery(VERIFY_TOKEN, loginWithToken);
+}
+
+const loginWithTokenAsync = async (email, password,token) =>
+  // eslint-disable-next-line no-return-await
+  await authService.loginWithToken(email, password,token)
+    .then((user) => user)
+    .catch((error) => error);
+
+function* loginWithToken({ payload }) {
+  const { email, password, token } = payload.user;
+  const { history } = payload;
+  try {
+    const loginUserWithToken = yield call(loginWithTokenAsync, email, password,token);
+    if (!loginUserWithToken.message) {
+      const item = { uid: loginUserWithToken.id, role: loginUserWithToken.role, companyId: loginUserWithToken.company_id,username: loginUserWithToken.username, logo: loginUserWithToken.logo,...currentUser };
+      setCurrentUser(item);
+      yield put(verifyTokenSuccess(item));
+      history.push("/app");
+    } else { 
+      yield put(verifyTokenError(loginUserWithToken.message));
+    }
+  } catch (error) {
+    yield put(verifyTokenError(error));
+  }
+}
+
 
 export function* watchRegisterUser() {
   // eslint-disable-next-line no-use-before-define
@@ -171,6 +206,7 @@ function* resetPassword({ payload }) {
 export default function* rootSaga() {
   yield all([
     fork(watchLoginUser),
+    fork(watchVerifyToken),
     fork(watchLogoutUser),
     fork(watchRegisterUser),
     fork(watchForgotPassword),

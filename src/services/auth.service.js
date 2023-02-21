@@ -30,6 +30,22 @@ const login = (username, password) => {
     });
 };
 
+const loginWithToken = (username, password,token) => {
+  return axios
+    .post(SIGNIN_API_URL, {
+      username,
+      password,
+      token
+    })
+    .then((response) => {
+      if (response.data.accessToken) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      }
+
+      return response.data;
+    });
+};
+
 const logout = () => {
   localStorage.removeItem("user");
 };
@@ -55,6 +71,7 @@ const authService = {
   login,
   logout,
   changePassword,
+  loginWithToken,
 };
 
 export default authService;
