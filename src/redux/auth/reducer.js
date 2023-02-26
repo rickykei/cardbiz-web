@@ -26,8 +26,7 @@ const INIT_STATE = {
   resetPasswordCode: '',
   loading: false,
   error: '',
-  // email: '',
-  // password: '',
+ 
 };
 
 export default (state = INIT_STATE, action) => {
@@ -40,8 +39,7 @@ export default (state = INIT_STATE, action) => {
         loading: false,
         currentUser: action.payload,
         error: '',
-        email: action.payload.email,
-        password: action.payload.password,
+     
       };
     case LOGIN_USER_ERROR:
       return {
@@ -63,7 +61,7 @@ export default (state = INIT_STATE, action) => {
         return {
           ...state,
           loading: false,
-          currentUser: null,
+          // currentUser: null,
           error: action.payload.message,
         };
     case FORGOT_PASSWORD:

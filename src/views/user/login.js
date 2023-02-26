@@ -25,7 +25,7 @@ const validatePassword = (value) => {
 const Login = ({ history, loading, error, loginUserAction }) => {
     const [email] = useState('');
   const [password] = useState('');
-
+ 
   useEffect(() => {
     if (error) {
       NotificationManager.warning(error, 'Login Error', 3000, null, null, '');
@@ -127,7 +127,8 @@ const Login = ({ history, loading, error, loginUserAction }) => {
   );
 };
 const mapStateToProps = ({ authUser }) => {
-  const { loading, error } = authUser;
+  const { loading,error } = authUser;
+   
   return { loading, error };
 };
 

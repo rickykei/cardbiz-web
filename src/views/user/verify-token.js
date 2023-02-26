@@ -10,20 +10,36 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { verifyToken } from 'redux/actions';
 
-   
-const Verify = ({ history, loading, error, email,password, verifyTokenAction}) => {
+const validateToken= (value) => {
+  let error;
+  if (!value) {
+    error = 'Please enter your token';
+  } else if (value.length < 6) {
+    error = 'Value must be 6 characters';
+  }
+  return error;
+};
+
+ 
+const Verify = ({ history, loading, error,  currentUser,verifyTokenAction}) => {
  
   const [token] = useState('');
- 
+   
+  
+      
+    
   useEffect(() => {
     if (error) {
       NotificationManager.warning(error, 'Token Error', 3000, null, null, '');
-    }
+    } 
   }, [error]);
 
   const onUserLogin = (values) => {
-     
-    const values2 = {...values,email,password };
+    console.log(currentUser.email);
+    console.log(currentUser.password);
+    console.log(currentUser.uid);
+    const userid=currentUser.uid;
+    const values2 = {...values,userid};
     
     if (!loading) {
       if (values2.token !== '' ) {
@@ -65,7 +81,7 @@ const Verify = ({ history, loading, error, email,password, verifyTokenAction}) =
                     <Field
                       className="form-control"
                       name="token"
-                       
+                      validate={validateToken}
                     />
                     {errors.token && touched.token && (
                       <div className="invalid-feedback d-block">
@@ -75,7 +91,7 @@ const Verify = ({ history, loading, error, email,password, verifyTokenAction}) =
                   </FormGroup>
              
                   <div className="d-flex justify-content-between align-items-center">
-                    <NavLink to="/user">
+                    <NavLink  to="/user/login" >
                       <IntlMessages id="user.back-to-login" />
                     </NavLink>
                     <Button
@@ -105,9 +121,9 @@ const Verify = ({ history, loading, error, email,password, verifyTokenAction}) =
   );
 };
 const mapStateToProps = ({ authUser }) => {
-  const { loading, error,email,password } = authUser;
+  const { loading, error,currentUser } = authUser;
 
-  return { loading, error,email,password};
+  return { loading, error,currentUser};
 };
 
 export default connect(mapStateToProps, {

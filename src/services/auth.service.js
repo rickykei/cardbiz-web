@@ -1,9 +1,9 @@
 import axios from "axios";
 import { servicePath2 } from 'constants/defaultValues';
-
-
+ 
 const SIGNUP_API_URL = `${servicePath2}/auth/signup`;
 const SIGNIN_API_URL = `${servicePath2}/auth/signin`;
+const SIGNINWITHTOKEN_API_URL = `${servicePath2}/auth/signinWithToken`;
 const CHANGEPASSWORD_API_URL = `${servicePath2}/auth/changePassword`;
 
 const register = (username, email, password, roles) => {
@@ -30,11 +30,10 @@ const login = (username, password) => {
     });
 };
 
-const loginWithToken = (username, password,token) => {
+const loginWithToken = (userid,token) => {
   return axios
-    .post(SIGNIN_API_URL, {
-      username,
-      password,
+    .post(SIGNINWITHTOKEN_API_URL, {
+      userid,
       token
     })
     .then((response) => {

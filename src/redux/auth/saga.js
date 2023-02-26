@@ -48,10 +48,14 @@ function* loginWithEmailPassword({ payload }) {
   try {
     const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
     if (!loginUser.message) {
+      // const item = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id,username: loginUser.username, logo: loginUser.logo,...currentUser };
       const item = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id,username: loginUser.username, logo: loginUser.logo,...currentUser };
+      
       const pcitem = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id, email,  password,logo: loginUser.logo,...currentUser };
-      setCurrentUser(item);
+     // setCurrentUser(item);
+     
       yield put(loginUserSuccess(pcitem));
+      setCurrentUser();
       history.push("/user/verify-token");
     } else {
       yield put(loginUserError(loginUser.message));
@@ -67,24 +71,24 @@ export function* watchVerifyToken() {
   yield takeEvery(VERIFY_TOKEN, loginWithToken);
 }
 
-const loginWithTokenAsync = async (email, password,token) =>
+const loginWithTokenAsync = async (userid,token) =>
   // eslint-disable-next-line no-return-await
-  await authService.loginWithToken(email, password,token)
-    .then((user) => user)
+  await authService.loginWithToken(userid,token)
+    .then((user) => user) 
     .catch((error) => error);
 
 function* loginWithToken({ payload }) {
-  const { email, password, token } = payload.user;
+  const { userid, token } = payload.user;
   const { history } = payload;
   try {
-    const loginUserWithToken = yield call(loginWithTokenAsync, email, password,token);
-    if (!loginUserWithToken.message) {
-      const item = { uid: loginUserWithToken.id, role: loginUserWithToken.role, companyId: loginUserWithToken.company_id,username: loginUserWithToken.username, logo: loginUserWithToken.logo,...currentUser };
+    const loginUser = yield call(loginWithTokenAsync, userid, token);
+    if (!loginUser.message) {
+      const item = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id,username: loginUser.username, logo: loginUser.logo,...currentUser };
       setCurrentUser(item);
       yield put(verifyTokenSuccess(item));
       history.push("/app");
     } else { 
-      yield put(verifyTokenError(loginUserWithToken.message));
+      yield put(verifyTokenError(loginUser.message));
     }
   } catch (error) {
     yield put(verifyTokenError(error));
@@ -97,12 +101,9 @@ export function* watchRegisterUser() {
   yield takeEvery(REGISTER_USER, registerWithEmailPassword);
 }
 
-const registerWithEmailPasswordAsync = async (email, password) =>
+const registerWithEmailPasswordAsync = async (email, password) => "";
   // eslint-disable-next-line no-return-await
-  await auth
-    .createUserWithEmailAndPassword(email, password)
-    .then((user) => user)
-    .catch((error) => error);
+ // await auth     .createUserWithEmailAndPassword(email, password)    .then((user) => user)    .catch((error) => error);
 
 function* registerWithEmailPassword({ payload }) {
   const { email, password } = payload.user;
@@ -132,10 +133,7 @@ export function* watchLogoutUser() {
 }
 
 const logoutAsync = async (history) => {
-  await auth
-    .signOut()
-    .then((user) => user)
-    .catch((error) => error);
+  // await auth    .signOut()    .then((user) => user)    .catch((error) => error);
   history.push(adminRoot);
 };
 
@@ -152,10 +150,7 @@ export function* watchForgotPassword() {
 
 const forgotPasswordAsync = async (email) => {
   // eslint-disable-next-line no-return-await
-  return await auth
-    .sendPasswordResetEmail(email)
-    .then((user) => user)
-    .catch((error) => error);
+  // return await auth    .sendPasswordResetEmail(email)    .then((user) => user)    .catch((error) => error);
 };
 
 function* forgotPassword({ payload }) {
