@@ -4,24 +4,20 @@ import React, { useState, useEffect } from 'react';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { connect } from 'react-redux';
- 
+
 import Breadcrumb from 'containers/navs/Breadcrumb';
 import Select from 'react-select';
 import { injectIntl } from 'react-intl';
 import CustomSelectInput from 'components/common/CustomSelectInput';
-import {  CardHeader,
-  Nav,
-  NavItem,
-  TabContent,
-  TabPane,Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle, InputGroup, InputGroupAddon, } from 'reactstrap';
+import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle, InputGroup, InputGroupAddon, } from 'reactstrap';
 import axios from 'axios';
 import { servicePath2 } from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
 import CompanyDataService from 'services/CompanyService';
-import { useParams, useHistory,NavLink } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import 'dropzone/dist/min/dropzone.min.css';
 import UserDataService from 'services/UsersService';
-import classnames from 'classnames';
+
 
 const ReactDOMServer = require('react-dom/server');
 
@@ -148,7 +144,6 @@ const AdminPage = ({ intl, match,currentUser }) => {
   const [options, setOptions] = useState([]);
   const [selectedOptionLO, setSelectedOptionLO] = useState('');
   const [message, setMessage] = useState("");
-    const [messagePassword, setMessagePassword] = useState("");
   const apiUrl = `${servicePath2}/companies/codelist`;
  
   const CompanyBannerImgUrl = `${servicePath2}/files/${state.banner}`;
@@ -157,9 +152,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
   const eventHandlers = { addedfile: (file) => { setBannerFile(file); } }
   const eventHandlers2 = { addedfile: (file) => { setLogoFile(file); } }
    const history = useHistory();
-   const [activeFirstTab, setActiveFirstTab] = useState('1');
-   const [activeSecondTab, setActiveSecondTab] = useState('1');
- 
+
 
   const updateCompany = () => {
 
@@ -318,119 +311,6 @@ const AdminPage = ({ intl, match,currentUser }) => {
 
         </Colxx>
       </Row>
-
-
-      <Row>
-      <Colxx xxs="12">
-        <CardTitle className="mb-4">
-          <IntlMessages id="cards.tab-card" />
-        </CardTitle>
-        <Row>
-          <Colxx xxs="12" xs="6" lg="3">
-            <Card className="mb-4">
-              <CardHeader>
-                <Nav tabs className="card-header-tabs ">
-                  <NavItem>
-                    <NavLink
-                      to="#"
-                      location={{}}
-                      className={classnames({
-                        active: activeFirstTab === '1',
-                        'nav-link': true,
-                      })}
-                      onClick={() => {
-                        setActiveFirstTab('1');
-                      }}
-                    >
-                      Tab 1
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      to="#"
-                      location={{}}
-                      className={classnames({
-                        active: activeFirstTab === '2',
-                        'nav-link': true,
-                      })}
-                      onClick={() => {
-                        setActiveFirstTab('2');
-                      }}
-                    >
-                      Tab 2
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      to="#"
-                      location={{}}
-                      className={classnames({
-                        active: activeFirstTab === '3',
-                        'nav-link': true,
-                      })}
-                      onClick={() => {
-                        setActiveFirstTab('3');
-                      }}
-                    >
-                      Tab 3
-                    </NavLink>
-                  </NavItem>
-                </Nav>
-              </CardHeader>
-
-              <TabContent activeTab={activeFirstTab}>
-                <TabPane tabId="1">
-                  <Row>
-                    <Colxx sm="12">
-                      <CardBody>
-                        <CardTitle className="mb-4">
-                          Homemade Cheesecake with Fresh Berries and Mint
-                        </CardTitle>
-                        <Button outline size="sm" color="primary">
-                          Edit
-                        </Button>
-                      </CardBody>
-                    </Colxx>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="2">
-                  <Row>
-                    <Colxx sm="12">
-                      <CardBody>
-                        <CardTitle className="mb-4">
-                          Wedding Cake with Flowers Macarons and Blueberries
-                        </CardTitle>
-                        <Button outline size="sm" color="primary">
-                          Edit
-                        </Button>
-                      </CardBody>
-                    </Colxx>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="3">
-                  <Row>
-                    <Colxx sm="12">
-                      <CardBody>
-                        <CardTitle className="mb-4">
-                          Cheesecake with Chocolate Cookies and Cream Biscuits
-                        </CardTitle>
-                        <Button outline size="sm" color="primary">
-                          Edit
-                        </Button>
-                      </CardBody>
-                    </Colxx>
-                  </Row>
-                </TabPane>
-              </TabContent>
-            </Card>
-          </Colxx>
-
-         
-        </Row>
-      </Colxx>
-    </Row>
-
-      
       <Row className="mb-4">
         <Colxx xxs="12">
           <Card>

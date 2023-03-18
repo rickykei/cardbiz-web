@@ -12,19 +12,13 @@ import { useParams, Link } from "react-router-dom";
 import SingleLightbox from 'components/pages/SingleLightbox';
 import VcfVisitsChartCard from 'containers/dashboards/VcfVisitsChartCard';
 import ProfileVisitsChartCard from 'containers/dashboards/ProfileVisitsChartCard';
-import { servicePath4, servicePath2 } from 'constants/defaultValues';
+import { servicePath2, servicePath4 } from 'constants/defaultValues';
 import ThumbnailLetters from 'components/cards/ThumbnailLetters';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ActionLogDataService from 'services/ActionLogDataService';
-import * as CryptoJS from 'crypto-js';
  
-function AES_ENCRYPT(text, secretKey) {
-  const encrypted = CryptoJS.AES.encrypt(text,secretKey ,{
-   mode: CryptoJS.mode.CBC,
-   padding: CryptoJS.pad.Pkcs7
- }).toString();
- return encrypted;
-} 
+ 
+
 const StaffProfileModal = ({ intl, match}) => {
   console.log("staffprofile");
   const initialState = {
@@ -43,19 +37,17 @@ const StaffProfileModal = ({ intl, match}) => {
 
   const { id } = useParams();
 
+const moreInfoURL = `${servicePath3}/?sig=${state.id}`;
+  const qrcodeURL = `${servicePath3}/Touchless/genvcf2png.php?sig=${state.id}`;
   const username = `${state.fname} ${state.lname}`;
   const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
   const bannerImgUrl = "/assets/img/social/header.jpg";
   const bannerImgUrl2 = `${servicePath2}/files/${state.company_id.banner}`;
   const staffEditUrl = `../staff-edit/${state.id}`;
   const [adminLogData, setStaffLogData] = useState([]);
-
-  const [encryptText,setEncryptText] =useState('');
-  const moreInfoURL = `${servicePath4}/?key=${encryptText}`;
  
-  const qrcodeURL = `${servicePath4}/Touchless/genvcf2png.php?key=${encryptText}`;
-
-
+ 
+  
   const getStaffLog = (aa) => {
     
     ActionLogDataService.getByStaffId(aa)
@@ -73,7 +65,7 @@ const StaffProfileModal = ({ intl, match}) => {
     StaffDataService.get(aa)
       .then(response => {
         setState(response.data);
-        setEncryptText(encodeURIComponent(AES_ENCRYPT(response.data.id,"12345678123456781234567812345678")));
+         
       })
       .catch(e => {
         console.log(e);
@@ -81,14 +73,19 @@ const StaffProfileModal = ({ intl, match}) => {
   
   };
 
+
+ 
+  
   useEffect(() => {
     if (id){
       getStaff(id);
       getStaffLog(id);
     }
+     
   }, [id]);
 
   const updateClipboard = (newClip) => {
+ 
     navigator.clipboard.writeText(newClip).then(
       () => {
      
@@ -105,11 +102,12 @@ const StaffProfileModal = ({ intl, match}) => {
   }
  
   const copyLink3 = () => {
-
+ 
     navigator.permissions
       .query({ name: "clipboard-write" })
       .then((result) => {
         if (result.state === "granted" || result.state === "prompt") {
+          console.log('cp4');
           updateClipboard(moreInfoURL);
         }
       })
@@ -158,68 +156,114 @@ const StaffProfileModal = ({ intl, match}) => {
                   </Card>
                 </Colxx>
                 <Colxx xxs="12" lg="5" xl="4" className="col-left">
-                  {state.headshot !== undefined && state.headshot !== "" &&
-                    <SingleLightbox
-                      thumb={hsImgUrl}
-                      large={hsImgUrl}
-                      className="img-thumbnail card-img social-profile-img"
-                    />}
-                  {state.headshot === "" &&
-                    <SingleLightbox
-                      thumb="/assets/img/profiles/1.jpg"
-                      large="/assets/img/profiles/1.jpg"
-                      className="img-thumbnail card-img social-profile-img"
-                    />}
-
+              
                   <Card className="mb-4">
                     <CardBody>
                       <div className="text-center pt-4">
-                        <p className="list-item-heading pt-2">{state.fname} </p>
+                        <p className="list-item-heading pt-2">{state.name_eng} {state.name_chi}</p>
                       </div>
-                      <p className="mb-3">{messages['forms.staff-firstname']}  </p>
-
-                      {state.address ? (
-                        <><p className="text-muted text-small mb-2"> <IntlMessages id="pages.address" /> </p>
-                          <p className="mb-3">{state.address || 'N/A'} </p></>
-                      ) : ''}
-
-                      {state.position ? (
+                       
+                      {state.company_name_eng ? (
                         <><p className="text-muted text-small mb-2">
-                          <IntlMessages id="profile.label.position" />
-                        </p><p className="mb-3">{state.position} </p></>
+                          <IntlMessages id="profile.label.company_name_eng" />
+                        </p><p className="mb-3">{state.company_name_eng} </p></>
                       ) : ''}
-
-                      {state.division ? (
+                        {state.company_name_chi ? (
                         <><p className="text-muted text-small mb-2">
-                          <IntlMessages id="profile.label.division" />
-                        </p> <p className="mb-3">{state.division || 'N/A'} </p></>
+                          <IntlMessages id="profile.label.company_name_chi" />
+                        </p><p className="mb-3">{state.company_name_chi} </p></>
                       ) : ''}
-
-                      {state.country ? (
+                      {state.rc_no ? (
                         <><p className="text-muted text-small mb-2">
-                          <IntlMessages id="profile.label.country" />
-                        </p> <p className="mb-3">{state.country} </p></>
+                          <IntlMessages id="profile.label.rc_no" />
+                        </p><p className="mb-3">{state.rc_no} </p></>
                       ) : ''}
-
-
-                      {state.department ? (
+                      {state.staff_no ? (
                         <><p className="text-muted text-small mb-2">
-                          <IntlMessages id="pages.department" />
-                        </p> <p className="mb-3">{state.department} </p></>
+                          <IntlMessages id="profile.label.staff_no" />
+                        </p><p className="mb-3">{state.staff_no} </p></>
                       ) : ''}
+                      {state.title_eng ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="profile.label.title_eng" />
+                        </p><p className="mb-3">{state.title_eng} </p></>
+                      ) : ''}
+                      {state.title_chi ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="profile.label.title_chi" />
+                        </p><p className="mb-3">{state.title_chi} </p></>
+                      ) : ''}
+                       
+                      {state.address_eng ? (
+                        <><p className="text-muted text-small mb-2"> <IntlMessages id="pages.address_eng" /> </p>
+                          <p className="mb-3">{state.address_eng || 'N/A'} </p></>
+                      ) : ''}
+
+                     
+
+                      {state.subsidiary_eng ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="profile.label.subsidiary_eng" />
+                        </p> <p className="mb-3">{state.subsidiary_eng || 'N/A'} </p></>
+                      ) : ''}
+
+                      
 
                       {state.work_tel ? (
                         <><p className="text-muted text-small mb-2">
                           <IntlMessages id="pages.work_tel" />
                         </p> <p className="mb-3">{state.work_tel} </p></>
                       ) : ''}
-
-                      {state.mobile ? (
+                         {state.work_tel2 ? (
                         <><p className="text-muted text-small mb-2">
-                          <IntlMessages id="pages.mobile" />
-                        </p><p className="mb-3">{state.mobile} </p></>
+                          <IntlMessages id="pages.work_tel2" />
+                        </p> <p className="mb-3">{state.work_tel2} </p></>
                       ) : ''}
-
+                         {state.work_tel3 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.work_tel3" />
+                        </p> <p className="mb-3">{state.work_tel3} </p></>
+                      ) : ''}
+                      {state.direct_tel ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.direct_tel" />
+                        </p> <p className="mb-3">{state.direct_tel} </p></>
+                      ) : ''} 
+                      {state.direct_tel2 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.direct_tel2" />
+                        </p> <p className="mb-3">{state.direct_tel2} </p></>
+                      ) : ''} 
+                      {state.direct_tel3 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.direct_tel3" />
+                        </p> <p className="mb-3">{state.direct_tel3} </p></>
+                      ) : ''} 
+                      {state.mobile_tel ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.mobile_tel" />
+                        </p><p className="mb-3">{state.mobile_tel} </p></>
+                      ) : ''}
+                     {state.mobile_tel2 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.mobile_tel2" />
+                        </p><p className="mb-3">{state.mobile_tel2} </p></>
+                      ) : ''}
+                      {state.mobile_tel3 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.mobile_tel3" />
+                        </p><p className="mb-3">{state.mobile_tel3} </p></>
+                      ) : ''}
+                      {state.mobile_tel4 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.mobile_tel4" />
+                        </p><p className="mb-3">{state.mobile_tel4} </p></>
+                      ) : ''}
+                      {state.mobile_tel5 ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.mobile_tel5" />
+                        </p><p className="mb-3">{state.mobile_tel5} </p></>
+                      ) : ''}
                       {state.work_email ? (
                         <><p className="text-muted text-small mb-2">
                           <IntlMessages id="pages.work_email" />
@@ -240,67 +284,8 @@ const StaffProfileModal = ({ intl, match}) => {
                         <Button onClick={copyLink3} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyMoreInfoSuccess}</p>
 
                          
-                   
-
-                      <p className="text-muted text-small mb-2">
-                        <IntlMessages id="menu.socialMedia" />
-                      </p>
-
-
-                      <div className="social-icons">
-                        <ul className="list-unstyled list-inline">
-
-                          {state.facebook_url !== undefined && state.facebook_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.facebook_url}>
-                                <i className="simple-icon-social-facebook" />
-                              </a>
-                            </li>
-                          }
-
-                          {state.instagram_url !== undefined && state.instagram_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.instagram_url}>
-                                <i className="simple-icon-social-instagram" />
-                              </a>
-                            </li>
-                          }
-
-                          {state.twitter_url !== undefined && state.twitter_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.twitter_url}>
-                                <i className="simple-icon-social-twitter" />
-                              </a>
-                            </li>
-                          }
-
-                          {state.linkedin_url !== undefined && state.linkedin_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.linkedin_url}>
-                                <i className="simple-icon-social-linkedin" />
-                              </a>
-                            </li>
-                          }
-
-
-                          {state.youtube_url !== undefined && state.youtube_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.youtube_url}>
-                                <i className="simple-icon-social-youtube" />
-                              </a>
-                            </li>
-                          }
-                          {state.whatsapp_url !== undefined && state.whatsapp_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.whatsapp_url}>
-                                <i className="iconsminds-speach-bubble-11" />
-                              </a>
-                            </li>
-                          }
-
-
-                        </ul>
-                      </div>
+                    
+                      
                     </CardBody>
                   </Card>
 
@@ -309,16 +294,16 @@ const StaffProfileModal = ({ intl, match}) => {
                       <CardTitle>
                         <IntlMessages id="pages.QRcode" />
                       </CardTitle>
-                      <img alt="qrcode" src={qrcodeURL}  width="250" />
+                      <img alt="qrcode" src={qrcodeURL} width="300" />
                     </CardBody>
                   </Card>
 
                 </Colxx>
                 <Colxx xxs="12" lg="7" xl="8" className="col-right">
 
-                  <ProfileVisitsChartCard/>   
+                  <ProfileVisitsChartCard className="mb-4"/>   
 
-                  <VcfVisitsChartCard/>
+                  <VcfVisitsChartCard className="mb-4"/>
                   
 
                   <Card className="d-flex flex-row mb-4">
@@ -390,7 +375,7 @@ const StaffProfileModal = ({ intl, match}) => {
 
               </Row>
 
- 
+
             </CardBody>
           </Card>
         </Colxx>
