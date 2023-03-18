@@ -44,6 +44,10 @@ module.exports = {
   'unauthorized.detail':
     'You are not authorized to view the page you are trying to access.',
 
+
+    'user.tokeninput': 'Enter 6-digit code',
+    'user.verify-title': 'Two Factor Authentication',
+    'user.back-to-login' : 'Back to Login',
   /* 02.User Login, Logout, Register */
   'user.login-title': 'Login',
   'user.register': 'Register',
