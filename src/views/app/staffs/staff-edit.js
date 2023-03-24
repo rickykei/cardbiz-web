@@ -104,7 +104,12 @@ const EditClientModal = ({ intl, match, currentUser}) => {
   const[file2,setFile]=useState(null);
   const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
 
-
+  const selectData = [
+    { label: 'Cake', value: 'cake', key: 0 },
+    { label: 'Cupcake', value: 'cupcake', key: 1 },
+    { label: 'Dessert', value: 'dessert', key: 2 },
+  ];
+  
   const getStaff = (aa) => {
     StaffDataService.get(aa)
       .then(response => {
@@ -1393,21 +1398,23 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                   
                   <FormGroup>
-                      <Label for="smartcard_uid">
+                  <Label for="note">
                         <IntlMessages id="forms.staff-smartcard_uid" />
                       </Label>
-                      <Input
-                        type="text"
-                        value={state.smartcard_uid || ''}
-                        onChange={(val) => setState({ ...state, smartcard_uid: val.target.value })}
-                        placeholder={messages['forms.staff-smartcard_uid']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-smartcard_uid-muted" />
-                      </FormText>
-                    </FormGroup>
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    name="form-field-name"
+                    value={selectedOptionLO}
+                    onChange={(val) => setSelectedOptionLO(val)}
+                    options={selectData}
+                    placeholder=""
+                  />
+                 
+                  </FormGroup>
+                  
                   </Colxx>
                 </Row>   
 

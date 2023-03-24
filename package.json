@@ -1,11 +1,10 @@
 {
-  "name": "cardbizreact",
-  "version": "1.0.1",
-  "description": "cardbiz admin page",
+  "name": "gogo-react",
+  "version": "5.3.1",
+  "description": "Gogo - React Bootstrap 4 Admin Dashboard Template",
   "private": true,
   "dependencies": {
     "@glidejs/glide": "^3.4.1",
-    "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.1.9",
@@ -21,6 +20,7 @@
     "prop-types": "^15.7.2",
     "rc-slider": "^9.7.2",
     "rc-switch": "^3.2.2",
+    "crypto-js": "^4.1.1",
     "react": "^17.0.2",
     "react-albus": "^2.0.0",
     "react-autosuggest": "^10.1.0",
@@ -57,7 +57,7 @@
     "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3000&& react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -76,17 +76,11 @@
       "git add"
     ]
   },
-
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "development": [
-    "last 1 chrome version",
-    "last 1 firefox version",
-    "last 1 safari version"
   ],
   "devDependencies": {
     "eslint": "^7.28.0",

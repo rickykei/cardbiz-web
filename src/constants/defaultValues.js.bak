@@ -5,7 +5,7 @@ export const UserRole = {
 
 /* 
 Menu Types:
-"menu-default", "menu-sub-hidden", "menu-hidden"
+"menu-default", "menu-sub-hidden", "menu-hidden" role: UserRole.Editor
 */
 export const defaultMenuType = 'menu-default';
 
@@ -13,8 +13,8 @@ export const subHiddenBreakpoint = 1440;
 export const menuHiddenBreakpoint = 768;
 export const defaultLocale = 'en';
 export const localeOptions = [
-  { id: 'en', name: 'English - LTR', direction: 'ltr' },
-  { id: 'ch', name: '中文', direction: 'ltr' } 
+  { id: 'en', name: 'English', direction: 'ltr' },
+  { id: 'zh', name: '中文', direction: 'ltr' } 
  ,
 ];
 
@@ -27,26 +27,32 @@ export const firebaseConfig = {
   messagingSenderId: '216495999563',
 };
 
+
 export const currentUser = {
+  master:766,
   id: 1,
-  title: 'Sarah Kortney',
+  title: 'Tester',
   img: '/assets/img/profiles/l-1.jpg',
   date: 'Last seen today 15:24',
-  role: UserRole.Admin,
+  
 };
+
 
 export const adminRoot = '/app';
 export const buyUrl = ' ';
 export const searchPath = `${adminRoot}/pages/miscellaneous/search`;
-export const servicePath = 'https://api.coloredstrategies.com';
 
+export const servicePath3 = 'https://e-profile.digital';
+export const servicePath2 = process.env.REACT_APP_API_BASE_URL || `${servicePath3}/api`;
+
+export const servicePath = 'https://api.coloredstrategies.com';
 export const themeColorStorageKey = '__theme_selected_color';
 export const isMultiColorActive = true;
 export const defaultColor = 'light.purplemonster';
 export const isDarkSwitchActive = true;
 export const defaultDirection = 'ltr';
 export const themeRadiusStorageKey = '__theme_radius';
-export const isAuthGuardActive = false;
+export const isAuthGuardActive = true;
 export const colors = [
   'bluenavy',
   'blueyale',

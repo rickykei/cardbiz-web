@@ -7,17 +7,17 @@ const CalendarToolbar = (toolbar) => {
 	
 	const {tb} = toolbar;
   const goToBack = () => {
-    tb.onNavigate('PREV');
+    toolbar.onNavigate('PREV');
   };
   const goToNext = () => {
-    tb.onNavigate('NEXT');
+    toolbar.onNavigate('NEXT');
   };
   const goToCurrent = () => {
-    tb.onNavigate('TODAY');
+    toolbar.onNavigate('TODAY');
   };
 
   const label = () => {
-    const date = moment(tb.date);
+    const date = moment(toolbar.date);
     return (
       <span>
         <span>{date.format('MMMM')} </span>

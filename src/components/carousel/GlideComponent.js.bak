@@ -11,7 +11,7 @@ let mountTimeOut = -1;
 function GlideComponent(props) {
   let carousel;
   let glideCarousel;
-	const propsvar=props;
+	const propsvar=this.props;
 
   const onResize = () => {
     clearTimeout(resizeTimeOut);
