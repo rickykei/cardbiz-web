@@ -15,7 +15,7 @@ import { addStaffItem } from 'redux/actions';
 import { useHistory } from "react-router-dom";
 import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
-import { servicePath2 } from 'constants/defaultValues';
+import { servicePath2,qrcodeSelectData } from 'constants/defaultValues';
 import axios from 'axios';
 import DropzoneComponent from 'react-dropzone-component';
 
@@ -157,13 +157,14 @@ const AddNewStaffModal = ({
 	  snapchat_url: "",
 	  telegram_url: "",
 	  xiaohongshu_url: "",
-	  Note: "",
-    smartcard_uid: "",
+	  note: "",
+    smartcard_uid: null,
     bizcard_option: true,
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",
     status: true,
-
+    qrcode_option: null,
+    note_timestamp: false,
   };
   const [state, setState] = useState(initialState);
   const history = useHistory();
@@ -171,7 +172,8 @@ const AddNewStaffModal = ({
   const [options, setOptions] = useState([]);
   const [file2, setFile] = useState(null);
   const { messages } = intl;
-
+  const [smartIdSelectData,setSmartIdSelectData] = useState([]);
+  const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}`;
 
   const addNetItem = () => {
     const newItem = {
@@ -281,10 +283,6 @@ note:state.note,
 
   }
 
-  useEffect(() => {
-
-    fetchData();
-  }, []);
 
   const eventHandlers = {
     addedfile: (file) => {
@@ -292,7 +290,26 @@ note:state.note,
     }
   }
 
+  async function fetchSmartCardData() {
+    axios.get(`${apiUrlSmartCard}`)
+      .then(({data}) => {
+        const option = data.map((item)=>({
+          "value" : item.value,
+          "label" : item.label,
+      }))
+      setSmartIdSelectData(option);
+          
+      })
+      .catch(error => {
+        console.error('Smart Card Uid Get error!', error);
+      })
+  }
+  
+  useEffect(() => {
 
+    fetchData();
+    fetchSmartCardData();
+  }, []);
 
   return (
 
@@ -1500,26 +1517,95 @@ note:state.note,
                       </FormText>
                     </FormGroup>
                   </Colxx>
-                  <Colxx xxs="12" md="6">
-                    
+                  <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
-                      <Label for="smartcard_uid">
-                        <IntlMessages id="forms.staff-smartcard_uid" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.smartcard_uid || ''}
-                        onChange={(val) => setState({ ...state, smartcard_uid: val.target.value })}
-                        placeholder={messages['forms.staff-smartcard_uid']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-smartcard_uid-muted" />
-                      </FormText>
-                    </FormGroup>
+                  <Label for="note">
+                        <IntlMessages id="forms.staff-note-timestamp" />
+                  </Label>
+                  <CustomInput
+                    type="radio"
+                    id="noteRadioOn"
+                    name="noteRadioOn"
+                    label={messages['forms.label.note-timestamp-on']}
+                    checked={state.note_timestamp === true}
+                    onChange={(event) =>
+                      setState({
+                        ...state,
+                        note_timestamp: event.target.value === 'on',
+                      })
+                    }
+                  />
+
+
+                  <CustomInput
+                    type="radio"
+                    id="noteRadioOff"
+                    name="noteRadioOff"
+                    label={messages['forms.label.note-timestamp-off']}
+                    checked={state.note_timestamp === false}
+                    onChange={(event) =>
+                      setState({
+                        ...state,
+                        note_timestamp: event.target.value !== 'on',
+                      })
+                    }
+                  />
+
+
+                </FormGroup>
                   </Colxx>
                 </Row>   
 
 
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
+                  <Label for="note">
+                        <IntlMessages id="forms.staff-smartcard_uid" />
+                  </Label>
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    name="form-field-smartcard_uid" 
+                    options={smartIdSelectData}
+                     value={smartIdSelectData.find(obj => {
+                      return obj.value === state.smartcard_uid;
+                    })}
+                    onChange={(val) => setState({ ...state, smartcard_uid: val.value })}
+                   
+                  />
+                 
+                  </FormGroup>
+                  </Colxx>
+               
+                </Row>   
+
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
+                  <Label>
+                    <IntlMessages id="forms.staff-qrcode_option" />
+                  </Label>
+                   
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    name="form-field-qrcode_option" 
+                    options={qrcodeSelectData}
+                     value={qrcodeSelectData.find(obj => {
+                      return obj.value === state.qrcode_option;
+                    })}
+                    onChange={(val) => setState({ ...state, qrcode_option: val.value })}
+                   
+                  />
+
+                </FormGroup>
+                  </Colxx>
+                 
+                </Row> 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>

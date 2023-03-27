@@ -17,7 +17,8 @@ export const localeOptions = [
   { id: 'zh', name: '中文', direction: 'ltr' } 
  ,
 ];
-
+export const qrcodeSelectData = [{"label": "Vcard URL QRCode", "value": 1},{"label": "E-profile URL QRCode", "value": 2},{"label": "Generic URL QRCode", "value": 3},{"label": "Vcf content QRCode", "value": 4}];
+  
 export const firebaseConfig = {
   apiKey: 'AIzaSyBBksq-Asxq2M4Ot-75X19IyrEYJqNBPcg',
   authDomain: 'gogo-react-login.firebaseapp.com',

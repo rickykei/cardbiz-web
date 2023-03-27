@@ -614,7 +614,8 @@ module.exports = {
   'forms.staff-telegram_url': 'Telegram',
   'forms.staff-wechat_id': 'Wechat ID',
   'forms.staff-smartcard_uid': 'Smart Business Card ID',
-    
+  'forms.staff-note-timestamp': 'Note Timestamp',
+
   'forms.staff-work_email-muted': 'e.g. abc@gmail.com - Available for e-Profile & vcf & Vcard',
   'forms.staff-home_email-muted': 'e.g. abc@gmail.com - Available to vcf Only',
   'forms.staff-other_email-muted': 'e.g. abc@gmail.com - Available to vcf Only',
@@ -741,6 +742,11 @@ module.exports = {
         'menu.staff-edit-title':'Edit Staff Info',
         'forms.label.eprofile': 'e-Profile',
         'forms.label.vcf': 'vcf',
+
+        'forms.label.note-timestamp-on': 'on',
+        'forms.label.note-timestamp-off': 'off',
+
+
     'menu.smartcard.list.admin': 'Smart Card',
     'menu.cardsadmin': 'Smartcard',
         'menu.batchupload': 'Batch Upload',

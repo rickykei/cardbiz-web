@@ -47,7 +47,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
       <Colxx xxs="12" md="10" className="mx-auto my-auto">
         <Card className="auth-card">
           <div className="position-relative image-side ">
-            <p className="text-white h2">Business Card 2.0 Evolution</p>
+            <p className="text-white h2">Business Card 3.0 Evolution</p>
             <p className="white mb-0">
               Please use your credentials to login.
               <br />

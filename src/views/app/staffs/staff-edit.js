@@ -16,7 +16,7 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 import StaffDataService from 'services/StaffsService';
 import { connect } from 'react-redux';
 import { useParams,useHistory } from "react-router-dom";
-import { servicePath2 } from 'constants/defaultValues';
+import { servicePath2 ,qrcodeSelectData} from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
 import 'dropzone/dist/min/dropzone.min.css';
 
@@ -89,10 +89,11 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     no_of_admin: "",
     status: true,
     company_id: "",
-     
+    smartcard_uid: null, 
+    note_timestamp: false,
   };
   const apiUrl = `${servicePath2}/companies/codelist`;
-
+  const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}&staffId=${id}`;
   const [state, setState] = useState(initialState);
 
  /* eslint-disable no-unused-vars */
@@ -100,31 +101,24 @@ const EditClientModal = ({ intl, match, currentUser}) => {
   const [options, setOptions] = useState([]); 
   const history = useHistory();
   const [message, setMessage] = useState("");
-  const [selectedOptionLO, setSelectedOptionLO] = useState('');
+
   const[file2,setFile]=useState(null);
   const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
+  const [smartIdSelectData,setSmartIdSelectData] = useState([]);
 
-  const selectData = [
-    { label: 'Cake', value: 'cake', key: 0 },
-    { label: 'Cupcake', value: 'cupcake', key: 1 },
-    { label: 'Dessert', value: 'dessert', key: 2 },
-  ];
-  
+
   const getStaff = (aa) => {
     StaffDataService.get(aa)
       .then(response => {
         setState(response.data);
-         
+        console.log(response.data);
+       
       })
       .catch(e => {
         console.log(e);
       });
   };
   
-  useEffect(() => {
-    if (id)
-    getStaff(id);
-  }, [id]);
 
   const updateStaff = () => {
    
@@ -167,13 +161,24 @@ const EditClientModal = ({ intl, match, currentUser}) => {
       .catch(error => {
         console.error('Companies code error!', error);
       })
-     
+  }
 
+  async function fetchSmartCardData() {
+    axios.get(`${apiUrlSmartCard}`)
+      .then(({data}) => {
+        const option = data.map((item)=>({
+          "value" : item.value,
+          "label" : item.label,
+      }))
+      setSmartIdSelectData(option);
+          
+      })
+      .catch(error => {
+        console.error('Smart Card Uid Get error!', error);
+      })
   }
   
-  useEffect(() => {
-    fetchData();
-  }, []);
+
 
   const { messages } = intl;
   
@@ -183,7 +188,18 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     }
   }
 
-  
+  useEffect(() => {
+    if (id){
+      getStaff(id);
+     
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchData();
+    fetchSmartCardData();
+  }, []);
+
 
   return (
 
@@ -310,7 +326,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                     name="form-field-company"
                     options={options}
                     value={options.find(obj => {
-                      return obj.value === state.company_id;
+                      return obj.value === state.company_id.id;
                     })}
                     onChange={(val) => setState({ ...state, company_id: val.value })}
                     
@@ -1397,27 +1413,98 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       </FormText>
                     </FormGroup>
                   </Colxx>
-                  <Colxx xxs="12" md="6">
+                   
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
+                  <Label for="note">
+                        <IntlMessages id="forms.staff-note-timestamp" />
+                  </Label>
+                  <CustomInput
+                    type="radio"
+                    id="noteRadioOn"
+                    name="noteRadioOn"
+                    label={messages['forms.label.note-timestamp-on']}
+                    checked={state.note_timestamp === true}
+                    onChange={(event) =>
+                      setState({
+                        ...state,
+                        note_timestamp: event.target.value === 'on',
+                      })
+                    }
+                  />
+
+
+                  <CustomInput
+                    type="radio"
+                    id="noteRadioOff"
+                    name="noteRadioOff"
+                    label={messages['forms.label.note-timestamp-off']}
+                    checked={state.note_timestamp === false}
+                    onChange={(event) =>
+                      setState({
+                        ...state,
+                        note_timestamp: event.target.value !== 'on',
+                      })
+                    }
+                  />
+
+
+                </FormGroup>
+                  </Colxx>
+                  
+                   
+                </Row>   
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                   <Label for="note">
                         <IntlMessages id="forms.staff-smartcard_uid" />
-                      </Label>
+                  </Label>
                   <Select
                     components={{ Input: CustomSelectInput }}
                     className="react-select"
                     classNamePrefix="react-select"
-                    name="form-field-name"
-                    value={selectedOptionLO}
-                    onChange={(val) => setSelectedOptionLO(val)}
-                    options={selectData}
-                    placeholder=""
+                    name="form-field-smartcard_uid" 
+                    options={smartIdSelectData}
+                     value={smartIdSelectData.find(obj => {
+                      return obj.value === state.smartcard_uid;
+                    })}
+                    onChange={(val) => setState({ ...state, smartcard_uid: val.value })}
+                   
                   />
                  
                   </FormGroup>
-                  
                   </Colxx>
+               
                 </Row>   
 
+
+               
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
+                  <Label>
+                    <IntlMessages id="forms.staff-qrcode_option" />
+                  </Label>
+                   
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    name="form-field-qrcode_option" 
+                    options={qrcodeSelectData}
+                     value={qrcodeSelectData.find(obj => {
+                      return obj.value === state.qrcode_option;
+                    })}
+                    onChange={(val) => setState({ ...state, qrcode_option: val.value })}
+                   
+                  />
+
+                </FormGroup>
+                  </Colxx>
+                 
+                </Row>  
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
@@ -1457,7 +1544,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                 </FormGroup>
                   </Colxx>
                  
-                </Row>   
+                </Row>  
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5"> 
                   <FormGroup>
