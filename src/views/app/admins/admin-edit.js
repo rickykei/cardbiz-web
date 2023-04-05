@@ -326,10 +326,10 @@ const AdminPage = ({ intl, match,currentUser }) => {
       <Row>
       <Colxx xxs="12">
         <CardTitle className="mb-4">
-          <IntlMessages id="cards.tab-card" />
+          <IntlMessages id="cards.tab-admin-log" />
         </CardTitle>
         <Row>
-          <Colxx xxs="12" xs="6" lg="3">
+          <Colxx xxs="12" >
             <Card className="mb-4">
               <CardHeader>
                 <Nav tabs className="card-header-tabs ">
@@ -345,7 +345,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                         setActiveFirstTab('1');
                       }}
                     >
-                      Tab 1
+                     <IntlMessages id="cards.tab-admin-log1" />
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -360,7 +360,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                         setActiveFirstTab('2');
                       }}
                     >
-                      Tab 2
+                       <IntlMessages id="cards.tab-admin-log2" />
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -375,7 +375,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                         setActiveFirstTab('3');
                       }}
                     >
-                      Tab 3
+                       <IntlMessages id="cards.tab-admin-log3" />
                     </NavLink>
                   </NavItem>
                 </Nav>
@@ -441,30 +441,47 @@ const AdminPage = ({ intl, match,currentUser }) => {
                     <CardTitle>
                       <IntlMessages id="input-groups.admin-staff-profile" />
                     </CardTitle>
-
+                  <Row>
+                    <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
-                      <InputGroup>
-                        <InputGroupAddon addonType="prepend">
-                          <span className="input-group-text">
-                            <IntlMessages id="input-groups.first-and-last-name" />
-                          </span>
-                        </InputGroupAddon>
-                        <Input
+                      <Label for="fname">
+                        <IntlMessages id="forms.admin-fname" />
+                      </Label>
+                      <Input
                           type="text"
                           value={state.fname || ''}
                           onChange={(val) => setState({ ...state, fname: val.target.value })}
-                          placeholder={messages['forms.staff-firstname']}
+                          placeholder={messages['forms.admin-firstname']}
 
                         />
-                        <Input
+                      <FormText color="muted">
+                        <IntlMessages id="forms.admin-firstname-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                    
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="fname">
+                        <IntlMessages id="forms.admin-fname" />
+                      </Label>
+                      <Input
                           type="text"
                           value={state.lname || ''}
                           onChange={(val) => setState({ ...state, lname: val.target.value })}
                           placeholder={messages['forms.staff-lastname']}
 
                         />
-                      </InputGroup>
+                      <FormText color="muted">
+                        <IntlMessages id="forms.admin-firstname-muted" />
+                      </FormText>
                     </FormGroup>
+
+                  </Colxx>
+                  </Row>
+                       
+                   
 
                     <FormGroup>
                       <CardTitle>

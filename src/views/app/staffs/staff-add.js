@@ -158,13 +158,14 @@ const AddNewStaffModal = ({
 	  telegram_url: "",
 	  
 	  note: "",
+    note_timestamp: false,
     smartcard_uid: null,
     bizcard_option: true,
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",
     status: true,
     qrcode_option: null,
-    note_timestamp: false,
+   
   };
   const [state, setState] = useState(initialState);
   const history = useHistory();
@@ -351,7 +352,7 @@ note:state.note,
 
 
                     <FormGroup>
-                      <Label for="lastname">
+                      <Label for="lname">
                         <IntlMessages id="forms.staff-lastname" />
                       </Label>
                       <Input
@@ -442,25 +443,7 @@ note:state.note,
               
                 <Row>
                 <Colxx xxs="12" md="6" className="mb-5">
-                 
-                  <FormGroup>
-                    <Label className="mt-4">
-                      <IntlMessages id="forms.staff-staff_no" />   
-                    </Label>
-
-                    <Input
-                        type="text"
-                        value={state.staff_no || ''}
-                        onChange={(val) => setState({ ...state, staff_no: val.target.value })}
-                        placeholder={messages['forms.staff-staff_no']}
-
-                      />
-                  </FormGroup>  </Colxx>
-                  </Row>
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                <FormGroup>
                       <Label for="work_email">
                         <IntlMessages id="forms.staff-work_email" />
                       </Label>
@@ -475,12 +458,9 @@ note:state.note,
                         <IntlMessages id="forms.staff-work_email-muted" />
                       </FormText>
                     </FormGroup>
-
-                  </Colxx>
-                  <Colxx xxs="12" md="6">
-
-
-                    <FormGroup>
+                </Colxx>
+                <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
                       <Label for="work_email2">
                         <IntlMessages id="forms.staff-work_email2" />
                       </Label>
@@ -494,12 +474,15 @@ note:state.note,
                         <IntlMessages id="forms.staff-work_email2-muted" />
                       </FormText>
                     </FormGroup>
+
                   </Colxx>
-                </Row>
+                  </Row>
 
                 <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                 
+                  <Colxx xxs="12" md="6">
+
+                  <FormGroup>
                       <Label for="work_email3">
                         <IntlMessages id="forms.staff-work_email3" />
                       </Label>
@@ -514,11 +497,10 @@ note:state.note,
                         <IntlMessages id="forms.staff-work_email3-muted" />
                       </FormText>
                     </FormGroup>
-
+                  
                   </Colxx>
-                  <Colxx xxs="12" md="6">
- 
-                    <FormGroup>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
                       <Label for="home_email">
                         <IntlMessages id="forms.staff-home_email" />
                       </Label>
@@ -532,11 +514,15 @@ note:state.note,
                         <IntlMessages id="forms.staff-home_email-muted" />
                       </FormText>
                     </FormGroup>
+
                   </Colxx>
                 </Row>
+
                 <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                 
+                  <Colxx xxs="12" md="6">
+ 
+                  <FormGroup>
                       <Label for="other_email">
                         <IntlMessages id="forms.staff-other_email" />
                       </Label>
@@ -551,9 +537,8 @@ note:state.note,
                       </FormText>
                     </FormGroup>
                   </Colxx>
-                  <Colxx xxs="12" md="6">
-
-                    <FormGroup>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
                       <Label for="position">
                         <IntlMessages id="forms.staff-position" />
                       </Label>
@@ -571,8 +556,9 @@ note:state.note,
                 </Row>
 
                 <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
                       <Label for="work_tel">
                         <IntlMessages id="forms.staff-work_tel" />
                       </Label>
@@ -587,7 +573,7 @@ note:state.note,
                       </FormText>
                     </FormGroup>
                   </Colxx>
-                  <Colxx xxs="12" md="6">
+                   <Colxx xxs="12" md="6">
 
                     <FormGroup>
                       <Label for="work_tel2">
@@ -605,6 +591,8 @@ note:state.note,
                     </FormGroup>
                   </Colxx>
                 </Row>
+
+                 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
@@ -1077,7 +1065,26 @@ note:state.note,
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                    <FormGroup>
+                  <FormGroup>
+                    <Label for="staff-no">
+                      <IntlMessages id="forms.staff-staff_no" />   
+                    </Label>
+
+                    <Input
+                        type="text"
+                        value={state.staff_no || ''}
+                        onChange={(val) => setState({ ...state, staff_no: val.target.value })}
+                        placeholder={messages['forms.staff-staff_no']}
+
+                      />
+                  </FormGroup>  
+                  
+                  </Colxx>
+                </Row>
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
                       <Label for="bio">
                         <IntlMessages id="forms.staff-bio" />
                       </Label>
@@ -1091,12 +1098,10 @@ note:state.note,
                         <IntlMessages id="forms.staff-bio-muted" />
                       </FormText>
                     </FormGroup>
+                  
                   </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
                       <Label for="company_website_url">
                         <IntlMessages id="forms.staff-company_website_url" />
                       </Label>
@@ -1110,10 +1115,13 @@ note:state.note,
                         <IntlMessages id="forms.staff-company_website_url-muted" />
                       </FormText>
                     </FormGroup>
+                 
                   </Colxx>
-                  <Colxx xxs="12" md="6">
+                </Row>
 
-                    <FormGroup>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
                       <Label for="more_info_tab_url">
                         <IntlMessages id="forms.staff-more_info_tab_url" />
                       </Label>
@@ -1127,12 +1135,10 @@ note:state.note,
                         <IntlMessages id="forms.staff-more_info_tab_url-muted" />
                       </FormText>
                     </FormGroup>
+                   
                   </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
                       <Label for="facebook_url">
                         <IntlMessages id="forms.staff-facebook_url" />
                       </Label>
@@ -1146,9 +1152,13 @@ note:state.note,
                         <IntlMessages id="forms.staff-facebook_url-muted" />
                       </FormText>
                     </FormGroup>
+                   
                   </Colxx>
-                  <Colxx xxs="12" md="6">
-                    <FormGroup>
+                </Row>
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
                       <Label for="instagram_url">
                         <IntlMessages id="forms.staff-instagram_url" />
                       </Label>
@@ -1162,12 +1172,10 @@ note:state.note,
                         <IntlMessages id="forms.staff-instagram_url-muted" />
                       </FormText>
                     </FormGroup>
+                   
                   </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
                       <Label for="twitter_url">
                         <IntlMessages id="forms.staff-twitter_url" />
                       </Label>
@@ -1181,9 +1189,14 @@ note:state.note,
                         <IntlMessages id="forms.staff-twitter_url-muted" />
                       </FormText>
                     </FormGroup>
+                   
                   </Colxx>
-                  <Colxx xxs="12" md="6">
-                    <FormGroup>
+                </Row>
+
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
                       <Label for="whatsapp_url">
                         <IntlMessages id="forms.staff-whatsapp_url" />
                       </Label>
@@ -1198,13 +1211,10 @@ note:state.note,
                       </FormText>
                     </FormGroup>
 
+                   
                   </Colxx>
-                </Row>
-
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
                       <Label for="linkedin_url">
                         <IntlMessages id="forms.staff-linkedin_url" />
                       </Label>
@@ -1218,9 +1228,16 @@ note:state.note,
                         <IntlMessages id="forms.staff-linkedin_url-muted" />
                       </FormText>
                     </FormGroup>
+
+                  
+
                   </Colxx>
-                  <Colxx xxs="12" md="6">
-                    <FormGroup>
+                </Row>
+
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
                       <Label for="youtube_url">
                         <IntlMessages id="forms.staff-youtube_url" />
                       </Label>
@@ -1235,13 +1252,10 @@ note:state.note,
                       </FormText>
                     </FormGroup>
 
+                   
                   </Colxx>
-                </Row>
-
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
                       <Label for="wechat_id">
                         <IntlMessages id="forms.staff-wechat_id" />
                       </Label>
@@ -1255,9 +1269,14 @@ note:state.note,
                         <IntlMessages id="forms.staff-wechat_id-muted" />
                       </FormText>
                     </FormGroup>
+                 
+
                   </Colxx>
-                  <Colxx xxs="12" md="6">
-                    <FormGroup>
+                </Row>
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
                       <Label for="wechatpage_url">
                         <IntlMessages id="forms.staff-wechatpage_url" />
                       </Label>
@@ -1271,12 +1290,10 @@ note:state.note,
                         <IntlMessages id="forms.staff-wechatpage_url-muted" />
                       </FormText>
                     </FormGroup>
-
+               
+                 
                   </Colxx>
-                </Row>
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
+                  <Colxx xxs="12" md="6">
                   <FormGroup>
                       <Label for="tiktok_url">
                         <IntlMessages id="forms.staff-tiktok_url" />
@@ -1292,8 +1309,15 @@ note:state.note,
                       </FormText>
                     </FormGroup>
                  
+
                   </Colxx>
-                  <Colxx xxs="12" md="6">
+                </Row>
+            
+              
+
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="line_url">
                         <IntlMessages id="forms.staff-line_url" />
@@ -1308,16 +1332,10 @@ note:state.note,
                         <IntlMessages id="forms.staff-line_url-muted" />
                       </FormText>
                     </FormGroup>
-
+                  
                   </Colxx>
-                </Row>
-            
-              
-
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
                       <Label for="facebook_messenger_url">
                         <IntlMessages id="forms.staff-facebook_messenger_url" />
                       </Label>
@@ -1331,9 +1349,16 @@ note:state.note,
                         <IntlMessages id="forms.staff-facebook_messenger_url-muted" />
                       </FormText>
                     </FormGroup>
+
+                  
+
                   </Colxx>
-                  <Colxx xxs="12" md="6">
-                    <FormGroup>
+                </Row>    
+
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
                       <Label for="weibo_url">
                         <IntlMessages id="forms.staff-weibo_url" />
                       </Label>
@@ -1348,13 +1373,10 @@ note:state.note,
                       </FormText>
                     </FormGroup>
 
+                   
                   </Colxx>
-                </Row>    
-
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
                       <Label for="bilibili_url">
                         <IntlMessages id="forms.staff-bilibili_url" />
                       </Label>
@@ -1368,9 +1390,16 @@ note:state.note,
                         <IntlMessages id="forms.staff-bilibili_url-muted" />
                       </FormText>
                     </FormGroup>
+
+                
+
                   </Colxx>
-                  <Colxx xxs="12" md="6">
-                    <FormGroup>
+                </Row>    
+
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
                       <Label for="qq_url">
                         <IntlMessages id="forms.staff-qq_url" />
                       </Label>
@@ -1385,13 +1414,10 @@ note:state.note,
                       </FormText>
                     </FormGroup>
 
+                    
                   </Colxx>
-                </Row>    
-
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
                       <Label for="zhihu_url">
                         <IntlMessages id="forms.staff-zhihu_url" />
                       </Label>
@@ -1405,9 +1431,15 @@ note:state.note,
                         <IntlMessages id="forms.staff-zhihu_url-muted" />
                       </FormText>
                     </FormGroup>
+
+                 
+
                   </Colxx>
-                  <Colxx xxs="12" md="6">
-                    <FormGroup>
+                </Row>    
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
                       <Label for="app_store_url">
                         <IntlMessages id="forms.staff-app_store_url" />
                       </Label>
@@ -1422,12 +1454,10 @@ note:state.note,
                       </FormText>
                     </FormGroup>
 
+                  
                   </Colxx>
-                </Row>    
-
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
                       <Label for="google_play_url">
                         <IntlMessages id="forms.staff-google_play_url" />
                       </Label>
@@ -1441,9 +1471,13 @@ note:state.note,
                         <IntlMessages id="forms.staff-google_play_url-muted" />
                       </FormText>
                     </FormGroup>
+                 
                   </Colxx>
-                  <Colxx xxs="12" md="6">
-                    
+                </Row>   
+
+                
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="snapchat_url">
                         <IntlMessages id="forms.staff-snapchat_url" />
@@ -1458,11 +1492,10 @@ note:state.note,
                         <IntlMessages id="forms.staff-snapchat_url-muted" />
                       </FormText>
                     </FormGroup>
-                  </Colxx>
-                </Row>   
 
-                
-                <Row>
+              
+
+                  </Colxx>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="telegram_url">
@@ -1479,13 +1512,14 @@ note:state.note,
                       </FormText>
                     </FormGroup>
 
+               
                   </Colxx>
-                 
                 </Row>   
 
 
  
                 <Row>
+                
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="note">
@@ -1501,6 +1535,8 @@ note:state.note,
                         <IntlMessages id="forms.staff-note-muted" />
                       </FormText>
                     </FormGroup>
+
+                 
                   </Colxx>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
@@ -1538,7 +1574,7 @@ note:state.note,
 
 
                 </FormGroup>
-                  </Colxx>
+                </Colxx>
                 </Row>   
 
 
@@ -1563,11 +1599,6 @@ note:state.note,
                  
                   </FormGroup>
                   </Colxx>
-               
-                </Row>   
-
-
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                   <Label>
@@ -1589,8 +1620,10 @@ note:state.note,
 
                 </FormGroup>
                   </Colxx>
-                 
-                </Row> 
+                </Row>   
+
+
+               
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
@@ -1629,10 +1662,6 @@ note:state.note,
 
                     </FormGroup>
                   </Colxx>
-                 
-                </Row>   
-
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label>
@@ -1670,8 +1699,9 @@ note:state.note,
 
                     </FormGroup>
                   </Colxx>
-                   
-                </Row>
+                </Row>   
+
+               
                 <Button color="primary" className="mt-4" onClick={() => addNetItem()}>
                   <IntlMessages id="forms.submit" />
                 </Button>
