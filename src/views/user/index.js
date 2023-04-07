@@ -5,6 +5,9 @@ import UserLayout from 'layout/UserLayout';
 const Login = React.lazy(() =>
   import(/* webpackChunkName: "user-login" */ './login')
 );
+const VerifyToken = React.lazy(() =>
+  import(/* webpackChunkName: "user-verify-token" */ './verify-token')
+);
 const Register = React.lazy(() =>
   import(/* webpackChunkName: "user-register" */ './register')
 );
@@ -24,6 +27,10 @@ const User = ({ match }) => {
           <Route
             path={`${match.url}/login`}
             render={(props) => <Login {...props} />}
+          />
+            <Route
+            path={`${match.url}/verify-token`}
+            render={(props) => <VerifyToken {...props} />}
           />
           <Route
             path={`${match.url}/register`}

@@ -13,7 +13,7 @@ import {  CardHeader,
   Nav,
   NavItem,
   TabContent,
-  TabPane,Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle, InputGroup, InputGroupAddon, } from 'reactstrap';
+  TabPane,Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle, CustomInput } from 'reactstrap';
 import axios from 'axios';
 import { servicePath2 } from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
@@ -140,15 +140,23 @@ const AdminPage = ({ intl, match,currentUser }) => {
     company_id: 0,
     companies: [],
     status: true,
+  
+  };
+
+  const initialUserState = {
+    two_factor: false,
+    email: "",
   };
   const { id } = useParams();
   const [bannerfile, setBannerFile] = useState(null);
   const [logofile, setLogoFile] = useState(null);
   const [state, setState] = useState(initialState);
+  const [userState, setUserState] = useState(initialUserState);
   const [options, setOptions] = useState([]);
   const [selectedOptionLO, setSelectedOptionLO] = useState('');
   const [message, setMessage] = useState("");
-    const [messagePassword, setMessagePassword] = useState("");
+  const [messagePassword, setMessagePassword] = useState("");
+  const [messageTwoFactor, setMessageTwoFactor] = useState("");
   const apiUrl = `${servicePath2}/companies/codelist`;
  
   const CompanyBannerImgUrl = `${servicePath2}/files/${state.banner}`;
@@ -195,6 +203,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
         console.log(e);
       });
   };
+
   const updateAdminPassword = () => {
 
  console.log(state.company_id);
@@ -226,7 +235,38 @@ const AdminPage = ({ intl, match,currentUser }) => {
         }
   };
 
- 
+  const updateTwoFactor = () => {
+
+    console.log(userState);
+  
+    
+           UserDataService.update(currentUser.uid, userState)
+             .then(response => {
+               console.log(response.data);
+               setMessageTwoFactor("2fa status was updated successfully!");
+                
+             })
+             .catch(e => {
+               console.log(e);
+             });
+            
+     };
+
+     const fetchUserRecord = () => {
+      
+      UserDataService.get(id!==undefined?id:currentUser.uid)
+        .then(response => {
+          console.log("fetchUserRecord");
+          console.log(response.data.email);
+          
+          setUserState({...userState, two_factor: response.data.two_factor,email: response.data.email});
+          
+           
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    };
   const fetchCompanyRecord = () => {
     console.log(currentUser.companyId);
     console.log(id);
@@ -258,8 +298,10 @@ const AdminPage = ({ intl, match,currentUser }) => {
   }
   
   useEffect(() => {
+    fetchUserRecord();
     fetchCompanyRecord();
-    fetchCompanyCode()
+    fetchCompanyCode();
+  
   }, []);
   
   return (
@@ -314,20 +356,90 @@ const AdminPage = ({ intl, match,currentUser }) => {
                 <Button color="primary" className="mt-4" onClick={() => updateAdminPassword()}>
                   <IntlMessages id="forms.submit" />
                 </Button>
+                <p>{messagePassword}</p>
               </CardBody>
             </Card>
 
           </Form>
+       
+        </Colxx>
+      </Row>
+  <Row className="mb-4">
+        <Colxx xxs="12">
 
+  
+          <Form>
+            <Card className="mb-4">
+              <CardBody>
+                <CardTitle>
+                  <IntlMessages id="input-groups.update-2fa" />
+                </CardTitle>
+                <FormGroup>
+                  <Label for="work_tel">
+                    <IntlMessages id="forms.admin-email" />
+                  </Label>
+                  <Input
+                    type="text"
+                    value={userState.email || ''}
+                    placeholder={messages['forms.admin-email']}
+                    readOnly 
+                  />
+                  <FormText color="muted">
+                    <IntlMessages id="forms.admin-email-muted" />
+                  </FormText>
+                </FormGroup>
+       
+                 
+                  <FormGroup>
+                  <Label>
+                    <IntlMessages id="forms.admin-two-factor" />
+                  </Label>
+                  <CustomInput
+                    type="radio"
+                    id="twofactorOn"
+                    name="twofactorOn"
+                    label="Active"
+                    checked={userState.two_factor === true}
+                    onChange={(event) =>
+                      setUserState({
+                        ...userState,
+                        two_factor: event.target.value === 'on',
+                      })
+                    }
+                  />
+                
+                  <CustomInput
+                    type="radio"
+                    id="twofactorOff"
+                    name="twofactorOff"
+                    label="Disable"
+                    checked={userState.two_factor === false} 
+                    onChange={(event) =>
+                      setUserState({
+                        ...userState,
+                        two_factor: event.target.value !== 'on',
+                      })
+                    }
+                  />
+            
+                </FormGroup>
+                 
+               
+                <Button color="primary" className="mt-4" onClick={() => updateTwoFactor()}>
+                  <IntlMessages id="forms.submit" />
+                </Button>
+                <p>{messageTwoFactor}</p>
+              </CardBody>
+            </Card>
+          
+          </Form>
+        
         </Colxx>
       </Row>
 
-
       <Row>
       <Colxx xxs="12">
-        <CardTitle className="mb-4">
-          <IntlMessages id="cards.tab-admin-log" />
-        </CardTitle>
+      
         <Row>
           <Colxx xxs="12" >
             <Card className="mb-4">
@@ -624,7 +736,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                           </Label>
                           <Input
                             type="text"
-                            value={state.website || ''}
+                            value={state.work_tel || ''}
                             onChange={(val) => setState({ ...state, work_tel: val.target.value })}
                             placeholder={messages['forms.company-work_tel']}
 

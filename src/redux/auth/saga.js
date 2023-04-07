@@ -8,6 +8,7 @@ import { auth } from 'helpers/Firebase';
  
 import {
   LOGIN_USER,
+  VERIFY_TOKEN,
   REGISTER_USER,
   LOGOUT_USER,
   FORGOT_PASSWORD,
@@ -17,6 +18,8 @@ import {
 import {
   loginUserSuccess,
   loginUserError,
+  verifyTokenSuccess,
+  verifyTokenError,
   registerUserSuccess,
   registerUserError,
   forgotPasswordSuccess,
@@ -46,9 +49,19 @@ function* loginWithEmailPassword({ payload }) {
     const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
     if (!loginUser.message) {
       const item = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id,username: loginUser.username, logo: loginUser.logo,...currentUser };
-      setCurrentUser(item);
-      yield put(loginUserSuccess(item));
-      history.push(adminRoot);
+      const pcitem = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id, email,  password,logo: loginUser.logo,...currentUser };
+     
+      console.log(loginUser.two_factor);
+      if (loginUser.two_factor === true){
+        yield put(loginUserSuccess(pcitem));
+        setCurrentUser();
+        history.push("/user/verify-token"); 
+      }else{
+        
+        yield put(loginUserSuccess(item));
+        setCurrentUser(item);
+         history.push(adminRoot);
+      }
     } else {
       yield put(loginUserError(loginUser.message));
     }
@@ -56,6 +69,37 @@ function* loginWithEmailPassword({ payload }) {
     yield put(loginUserError(error));
   }
 }
+
+
+export function* watchVerifyToken() {
+  // eslint-disable-next-line no-use-before-define
+  yield takeEvery(VERIFY_TOKEN, loginWithToken);
+}
+
+const loginWithTokenAsync = async (userid,token) =>
+  // eslint-disable-next-line no-return-await
+  await authService.loginWithToken(userid,token)
+    .then((user) => user) 
+    .catch((error) => error);
+
+function* loginWithToken({ payload }) {
+  const { userid, token } = payload.user;
+  const { history } = payload;
+  try {
+    const loginUser = yield call(loginWithTokenAsync, userid, token);
+    if (!loginUser.message) {
+      const item = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id,username: loginUser.username, logo: loginUser.logo,...currentUser };
+      setCurrentUser(item);
+      yield put(verifyTokenSuccess(item));
+      history.push("/app");
+    } else { 
+      yield put(verifyTokenError(loginUser.message));
+    }
+  } catch (error) {
+    yield put(verifyTokenError(error));
+  }
+}
+
 
 export function* watchRegisterUser() {
   // eslint-disable-next-line no-use-before-define
@@ -171,6 +215,7 @@ function* resetPassword({ payload }) {
 export default function* rootSaga() {
   yield all([
     fork(watchLoginUser),
+    fork(watchVerifyToken),
     fork(watchLogoutUser),
     fork(watchRegisterUser),
     fork(watchForgotPassword),

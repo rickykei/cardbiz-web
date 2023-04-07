@@ -13,6 +13,7 @@ const create = data => {
 };
 
 const update = (id, data) => {
+
   return http.put(`/users/${id}`, data);
 };
 

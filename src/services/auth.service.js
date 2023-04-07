@@ -1,7 +1,9 @@
 import axios from "axios";
-
+import { servicePath2 } from 'constants/defaultValues';
+ 
 const SIGNUP_API_URL = "https://uat.profiles.digital/api/auth/signup";
 const SIGNIN_API_URL = "https://uat.profiles.digital/api/auth/signin";
+const SIGNINWITHTOKEN_API_URL = `${servicePath2}/auth/signinWithToken`;
 const CHANGEPASSWORD_API_URL = "https://uat.profiles.digital/api/auth/changePassword";
 
 const register = (username, email, password, roles) => {
@@ -11,6 +13,21 @@ const register = (username, email, password, roles) => {
     password,
 	roles,
   });
+};
+
+const loginWithToken = (userid,token) => {
+  return axios
+    .post(SIGNINWITHTOKEN_API_URL, {
+      userid,
+      token
+    })
+    .then((response) => {
+      if (response.data.accessToken) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      }
+
+      return response.data;
+    });
 };
 
 const login = (username, password) => {
@@ -53,6 +70,7 @@ const authService = {
   login,
   logout,
   changePassword,
+  loginWithToken,
 };
 
 export default authService;

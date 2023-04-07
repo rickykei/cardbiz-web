@@ -4,6 +4,9 @@ import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
+  VERIFY_TOKEN,
+  VERIFY_TOKEN_SUCCESS,
+  VERIFY_TOKEN_ERROR,
   REGISTER_USER,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
@@ -43,6 +46,22 @@ export default (state = INIT_STATE, action) => {
         currentUser: null,
         error: action.payload.message,
       };
+      case VERIFY_TOKEN:
+        return { ...state, loading: true, error: '' };
+      case VERIFY_TOKEN_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          currentUser: action.payload,
+          error: '',
+        };
+      case VERIFY_TOKEN_ERROR:
+        return {
+          ...state,
+          loading: false,
+          // currentUser: null,
+          error: action.payload.message,
+        };
     case FORGOT_PASSWORD:
       return { ...state, loading: true, error: '' };
     case FORGOT_PASSWORD_SUCCESS:
