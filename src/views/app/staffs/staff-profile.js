@@ -53,7 +53,7 @@ const StaffProfileModal = ({ intl, match}) => {
   const [encryptText,setEncryptText] =useState('');
   const moreInfoURL = `${servicePath4}/?key=${encryptText}`;
  
-  const qrcodeURL = `${servicePath4}/Touchless/genvcf2png.php?key=${encryptText}`;
+  const qrcodeURL = `${servicePath4}/genvcf2png.php?key=${encryptText}`;
 
 
   const getStaffLog = (aa) => {
