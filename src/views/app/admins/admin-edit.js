@@ -130,6 +130,57 @@ const dropzoneConfigBanner = {
   headers: { 'My-Awesome-Header': 'header value' },
 };
 
+const dropzoneConfigProfileTheme = {
+  autoProcessQueue: false,
+  thumbnailHeight: 160,
+  maxFilesize: 1,
+  maxFiles: 1,
+  acceptedFiles: ".jpeg,.jpg,.png,.gif",
+  uploadMultiple: false,
+  resizeWidth: 800,
+  previewTemplate: ReactDOMServer.renderToStaticMarkup(
+    <div className="dz-preview dz-file-preview mb-3">
+      <div className="d-flex flex-row ">
+        <div className="p-0 w-30 position-relative">
+          <div className="dz-error-mark">
+            <span>
+              <i />{' '}
+            </span>
+          </div>
+          <div className="dz-success-mark">
+            <span>
+              <i />
+            </span>
+          </div>
+          <div className="preview-container">
+            {/*  eslint-disable-next-line jsx-a11y/alt-text */}
+            <img data-dz-thumbnail className="img-thumbnail border-0" />
+            <i className="simple-icon-doc preview-icon" />
+          </div>
+        </div>
+        <div className="pl-3 pt-2 pr-2 pb-1 w-70 dz-details position-relative">
+          <div>
+            {' '}
+            <span data-dz-name />{' '}
+          </div>
+          <div className="text-primary text-extra-small" data-dz-size />
+          <div className="dz-progress">
+            <span className="dz-upload" data-dz-uploadprogress />
+          </div>
+          <div className="dz-error-message">
+            <span data-dz-errormessage />
+          </div>
+        </div>
+      </div>
+      <a href="#/" className="remove" data-dz-remove>
+        {' '}
+        <i className="glyph-icon simple-icon-trash" />{' '}
+      </a>
+    </div>
+  ),
+  headers: { 'My-Awesome-Header': 'header value' },
+};
+
 const AdminPage = ({ intl, match,currentUser }) => {
   const initialState = {
     id: null,
@@ -150,6 +201,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
   const { id } = useParams();
   const [bannerfile, setBannerFile] = useState(null);
   const [logofile, setLogoFile] = useState(null);
+  const [profileThemeFile, setProfileThemeFile] = useState(null);
   const [state, setState] = useState(initialState);
   const [userState, setUserState] = useState(initialUserState);
   const [options, setOptions] = useState([]);
@@ -161,9 +213,11 @@ const AdminPage = ({ intl, match,currentUser }) => {
  
   const CompanyBannerImgUrl = `${servicePath2}/files/${state.banner}`;
   const CompanyLogoImgUrl = `${servicePath2}/files/${state.logo}`;
+  const CompanyProfileThemeImgUrl = `${servicePath2}/files/${state.profile_theme}`;
   const { messages } = intl;
   const eventHandlers = { addedfile: (file) => { setBannerFile(file); } }
   const eventHandlers2 = { addedfile: (file) => { setLogoFile(file); } }
+  const eventHandlers3 = { addedfile: (file) => { setProfileThemeFile(file); } }
    const history = useHistory();
    const [activeFirstTab, setActiveFirstTab] = useState('1');
    const [activeSecondTab, setActiveSecondTab] = useState('1');
@@ -193,6 +247,8 @@ const AdminPage = ({ intl, match,currentUser }) => {
       data.append("banner", bannerfile);
       if (logofile !== null)
       data.append("logo", logofile);
+      if (profileThemeFile !== null)
+      data.append("profile_theme", profileThemeFile);
     CompanyDataService.update(state.id, data)
       .then(response => {
         console.log(response.data);
@@ -252,7 +308,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
             
      };
 
-     const fetchUserRecord = () => {
+  const fetchUserRecord = () => {
       
       UserDataService.get(id!==undefined?id:currentUser.uid)
         .then(response => {
@@ -267,6 +323,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
           console.log(e);
         });
     };
+
   const fetchCompanyRecord = () => {
     console.log(currentUser.companyId);
     console.log(id);
@@ -364,6 +421,8 @@ const AdminPage = ({ intl, match,currentUser }) => {
        
         </Colxx>
       </Row>
+
+
   <Row className="mb-4">
         <Colxx xxs="12">
 
@@ -630,6 +689,26 @@ const AdminPage = ({ intl, match,currentUser }) => {
 
                     </FormGroup>
 
+                   
+
+                    <FormGroup>
+
+                    <CardTitle>
+                      <IntlMessages id="form-company-profile-theme" />
+                    </CardTitle>
+                    <Row>
+                      <Colxx xxs="12" md="2" className="mb-5">
+                        <img src={CompanyProfileThemeImgUrl} alt="companyProfileThemeImage"   width="150" />
+                      </Colxx>
+                      <Colxx xxs="12" md="10">  <DropzoneComponent
+                        config={dropzoneComponentConfig}
+                        djsConfig={dropzoneConfigProfileTheme}
+                        eventHandlers={eventHandlers3} multiple={false} />
+                      </Colxx>
+                    </Row>
+
+                    </FormGroup>
+
                     {currentUser.companyId === '63142fd5b54bdbb18f556016' &&
                 <FormGroup>
                   <Label className="mt-4">
@@ -642,7 +721,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                     name="form-field-company"
                     options={options}
                     value={options.find(obj => {
-                      return obj.value === state.company_id;
+                      return obj.value === currentUser.companyId;
                     })}
                     onChange={(val) => setState({ ...state, company_id: val.value })}
                     
