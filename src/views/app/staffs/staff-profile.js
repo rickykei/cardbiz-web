@@ -3,7 +3,7 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { injectIntl } from 'react-intl';
-import { Row, Card, CardBody, Badge, CardTitle, CardSubtitle, CardText, Button, } from 'reactstrap';
+import { CardHeader,NavLink,Nav,NavItem,TabContent,TabPane,Row, Card, CardBody, Badge, CardTitle, CardSubtitle, CardText, Button, } from 'reactstrap';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import StaffDataService from 'services/StaffsService';
@@ -17,7 +17,8 @@ import ThumbnailLetters from 'components/cards/ThumbnailLetters';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ActionLogDataService from 'services/ActionLogDataService';
 import * as CryptoJS from 'crypto-js';
- 
+import classnames from 'classnames';
+
 function AES_ENCRYPT(text, secretKey) {
   const encrypted = CryptoJS.AES.encrypt(text,secretKey ,{
    mode: CryptoJS.mode.CBC,
@@ -49,11 +50,14 @@ const StaffProfileModal = ({ intl, match}) => {
   const bannerImgUrl2 = `${servicePath2}/files/${state.company_id.banner}`;
   const staffEditUrl = `../staff-edit/${state.id}`;
   const [adminLogData, setStaffLogData] = useState([]);
-
+  const [activeFirstTab, setActiveFirstTab] = useState('1');
   const [encryptText,setEncryptText] =useState('');
   const moreInfoURL = `${servicePath4}/?key=${encryptText}`;
  
-  const qrcodeURL = `${servicePath4}/genvcf2png.php?key=${encryptText}`;
+  const qrcodeURL = `${servicePath4}/?key=${encryptText}&qrtype=1`;
+  const qrcodeURL2 = `${servicePath4}/?key=${encryptText}&qrtype=2`;
+  const qrcodeURL3 = `${servicePath4}/?key=${encryptText}&qrtype=3`;
+  const qrcodeURL4 = `${servicePath4}/?key=${encryptText}&qrtype=4`;
 
 
   const getStaffLog = (aa) => {
@@ -305,13 +309,117 @@ const StaffProfileModal = ({ intl, match}) => {
                   </Card>
 
                   <Card className="mb-4">
-                    <CardBody>
-                      <CardTitle>
-                        <IntlMessages id="pages.QRcode" />
-                      </CardTitle>
+              <CardHeader>
+                <Nav tabs className="card-header-tabs ">
+                  <NavItem>
+                    <NavLink
+                      to="#"
+                      location={{}}
+                      className={classnames({
+                        active: activeFirstTab === '1',
+                        'nav-link': true,
+                      })}
+                      onClick={() => {
+                        setActiveFirstTab('1');
+                      }}
+                    >
+                     <IntlMessages id="cards.tab-admin-qr1" />
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      to="#"
+                      location={{}}
+                      className={classnames({
+                        active: activeFirstTab === '2',
+                        'nav-link': true,
+                      })}
+                      onClick={() => {
+                        setActiveFirstTab('2');
+                      }}
+                    >
+                       <IntlMessages id="cards.tab-admin-qr2" />
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      to="#"
+                      location={{}}
+                      className={classnames({
+                        active: activeFirstTab === '3',
+                        'nav-link': true,
+                      })}
+                      onClick={() => {
+                        setActiveFirstTab('3');
+                      }}
+                    >
+                       <IntlMessages id="cards.tab-admin-qr3" />
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      to="#"
+                      location={{}}
+                      className={classnames({
+                        active: activeFirstTab === '4',
+                        'nav-link': true,
+                      })}
+                      onClick={() => {
+                        setActiveFirstTab('4');
+                      }}
+                    >
+                       <IntlMessages id="cards.tab-admin-qr4" />
+                    </NavLink>
+                  </NavItem>
+                </Nav>
+              </CardHeader>
+
+              <TabContent activeTab={activeFirstTab}>
+                <TabPane tabId="1">
+                  <Row>
+                    <Colxx sm="12">
+                      <CardBody>
+                     
                       <img alt="qrcode" src={qrcodeURL}  width="250" />
-                    </CardBody>
-                  </Card>
+                   
+                      </CardBody>
+                    </Colxx>
+                  </Row>
+                </TabPane>
+                <TabPane tabId="2">
+                  <Row>
+                    <Colxx sm="12">
+                      <CardBody>
+                      
+                      <img alt="qrcode" src={qrcodeURL2}  width="250" />
+                      </CardBody>
+                    </Colxx>
+                  </Row>
+                </TabPane>
+                <TabPane tabId="3">
+                  <Row>
+                    <Colxx sm="12">
+                      <CardBody>
+                      <img alt="qrcode" src={qrcodeURL3}  width="250" />
+                 
+             
+                      </CardBody>
+                    </Colxx>
+                  </Row>
+                </TabPane>
+                <TabPane tabId="4">
+                  <Row>
+                    <Colxx sm="12">
+                      <CardBody>
+                      <img alt="qrcode" src={qrcodeURL4}  width="250" />
+                 
+             
+                      </CardBody>
+                    </Colxx>
+                  </Row>
+                </TabPane>
+              </TabContent>
+            </Card>
 
                 </Colxx>
                 <Colxx xxs="12" lg="7" xl="8" className="col-right">
