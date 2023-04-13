@@ -159,7 +159,7 @@ const AddNewStaffModal = ({
 	  
 	  note: "",
     note_timestamp: false,
-    smartcard_uid: null,
+    smartcard_uid: undefined,
     bizcard_option: true,
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",
@@ -246,12 +246,13 @@ note:state.note,
 
     for (const [key, val] of Object.entries(newItem)) {
       
-      if (key === "company_id") {
-        if (val === undefined) {
+      if (key === "company_id" && val ===undefined) {
+        
           data.append(key, currentUser.companyId);
-        }  else {
-          data.append(key, val);
-        }
+       } else if (key === "smartcard_uid" && val ===undefined){
+         console.log(key);
+        } else if (key === "qrcode_option" && val ===undefined){ 
+          console.log(key);
       } else {
         data.append(key, val);
       }
