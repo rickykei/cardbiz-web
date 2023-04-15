@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { useState , useEffect} from 'react';
 
 import { injectIntl } from 'react-intl';
@@ -72,7 +73,8 @@ const EditUserModal = ({ intl, match, }) => {
   }
 
   const updateUser = () => {
-     
+   
+    
     UserDataService.update(state.id, state)
       .then(response => {
         console.log(response.data);

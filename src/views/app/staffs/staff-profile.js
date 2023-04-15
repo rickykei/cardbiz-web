@@ -18,7 +18,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import ActionLogDataService from 'services/ActionLogDataService';
 import * as CryptoJS from 'crypto-js';
 import classnames from 'classnames';
-
+ 
 function AES_ENCRYPT(text, secretKey) {
   const encrypted = CryptoJS.AES.encrypt(text,secretKey ,{
    mode: CryptoJS.mode.CBC,
@@ -36,6 +36,8 @@ const StaffProfileModal = ({ intl, match}) => {
     no_of_admin: "",
     status: true,
     company_id: [],
+    smartcard_uid: [],
+
   };
   const [state, setState] = useState(initialState);
   const { messages } = intl;
@@ -65,7 +67,7 @@ const StaffProfileModal = ({ intl, match}) => {
     ActionLogDataService.getByStaffId(aa)
       .then(response => {
         setStaffLogData(response.data);
-        console.log(adminLogData);
+        
       })
       .catch(e => {
         console.log(e);
@@ -76,8 +78,11 @@ const StaffProfileModal = ({ intl, match}) => {
   const getStaff = (aa) => {
     StaffDataService.get(aa)
       .then(response => {
-        setState(response.data);
-        setEncryptText(encodeURIComponent(AES_ENCRYPT(response.data.id,"12345678123456781234567812345678")));
+    
+        setState(response.data); 
+    
+       setEncryptText(encodeURIComponent(AES_ENCRYPT(response.data.id,"12345678123456781234567812345678")));
+    
       })
       .catch(e => {
         console.log(e);
@@ -230,6 +235,11 @@ const StaffProfileModal = ({ intl, match}) => {
                         </p><p className="mb-3">{state.work_email} </p></>
                       ) : ''}
 
+                      {state.staff_no ? (
+                        <><p className="text-muted text-small mb-2">
+                          <IntlMessages id="pages.staff_no" />
+                        </p><p className="mb-3">{state.staff_no} </p></>
+                      ) : ''}
 
                       <p className="text-muted text-small mb-2">
                         <IntlMessages id="pages.additionalInfo" />
@@ -245,66 +255,9 @@ const StaffProfileModal = ({ intl, match}) => {
 
                          
                    
+ 
 
-                      <p className="text-muted text-small mb-2">
-                        <IntlMessages id="menu.socialMedia" />
-                      </p>
-
-
-                      <div className="social-icons">
-                        <ul className="list-unstyled list-inline">
-
-                          {state.facebook_url !== undefined && state.facebook_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.facebook_url}>
-                                <i className="simple-icon-social-facebook" />
-                              </a>
-                            </li>
-                          }
-
-                          {state.instagram_url !== undefined && state.instagram_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.instagram_url}>
-                                <i className="simple-icon-social-instagram" />
-                              </a>
-                            </li>
-                          }
-
-                          {state.twitter_url !== undefined && state.twitter_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.twitter_url}>
-                                <i className="simple-icon-social-twitter" />
-                              </a>
-                            </li>
-                          }
-
-                          {state.linkedin_url !== undefined && state.linkedin_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.linkedin_url}>
-                                <i className="simple-icon-social-linkedin" />
-                              </a>
-                            </li>
-                          }
-
-
-                          {state.youtube_url !== undefined && state.youtube_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.youtube_url}>
-                                <i className="simple-icon-social-youtube" />
-                              </a>
-                            </li>
-                          }
-                          {state.whatsapp_url !== undefined && state.whatsapp_url !== "" &&
-                            <li className="list-inline-item">
-                              <a href={state.whatsapp_url}>
-                                <i className="iconsminds-speach-bubble-11" />
-                              </a>
-                            </li>
-                          }
-
-
-                        </ul>
-                      </div>
+                      
                     </CardBody>
                   </Card>
 
@@ -448,7 +401,8 @@ const StaffProfileModal = ({ intl, match}) => {
 
                           <CardText className="text-muted text-small mb-2">
                             <p> {state.position}</p>
-                            <p> Uid : {state.smartcard_uid}</p>
+                            {(state.smartcard_uid)  &&
+                                 <p> UID_ : {state.smartcard_uid.uid}</p>}
                        </CardText>
                         </div>
                       </CardBody>

@@ -52,7 +52,11 @@ const TopNav = ({
   const [isInFullScreen, setIsInFullScreen] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
   let CompanyLogoImgUrl='/assets/img/profiles/l-1.jpg';
- 
+   
+if (currentUser!==undefined && currentUser!==null)
+CompanyLogoImgUrl = `${servicePath2}/files/${currentUser.logo}`;
+
+
   const search = () => {
     history.push(`${searchPath}?key=${searchKeyword}`);
     setSearchKeyword('');
@@ -168,10 +172,8 @@ const TopNav = ({
     e.preventDefault();
     clickOnMobileMenuAction(_containerClassnames);
   };
-  
-if (currentUser.logo!==undefined)
-CompanyLogoImgUrl = `${servicePath2}/files/${currentUser.logo}`;
-console.log("topnav");
+
+
   return (
     <nav className="navbar fixed-top">
       <div className="d-flex align-items-center navbar-left">
@@ -248,7 +250,7 @@ console.log("topnav");
           <UncontrolledDropdown className="dropdown-menu-right">
             <DropdownToggle className="p-0" color="empty">
               
-              <span className="name mr-1">Hi! {currentUser.username?(currentUser.username): ('User')}</span>
+              <span className="name mr-1">Hi! {currentUser!==null?(currentUser.username): ('User')}</span>
               <span>
                 
                 <img alt="Profile" src={CompanyLogoImgUrl} />  

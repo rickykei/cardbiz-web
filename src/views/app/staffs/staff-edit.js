@@ -83,14 +83,83 @@ const EditClientModal = ({ intl, match, currentUser}) => {
   const { id } = useParams();
   const initialState = {
     id: null,
-    name: "",
-    code: "",
-    no_of_license: "",
-    no_of_admin: "",
-    status: true,
-    company_id: "",
-    smartcard_uid: null, 
+    fname: "",
+    lname: "",
+    staff_no: "",
+    company_id: 0,
+    company_name_eng: "",
+    company_name_chi: "",
+    companies: [],
+    headshot: "",
+    work_email: "",
+    work_email2: "",
+    work_email3: "",
+    home_email: "",
+    other_email: "",
+    position: "",
+    work_tel: "",
+    work_tel2: "",
+    work_tel3: "",
+    work_tel4: "",
+    mobile: "",
+    mobile2: "",
+    mobile3: "",
+    mobile4: "",
+    home_tel: "",
+    fax: "",
+    web_link: "",
+    web_link2: "",
+    web_link3: "",
+    web_link4: "",
+    web_link5: "",
+    web_link6: "",
+    web_link_label: "",
+    web_link_label2: "",
+    web_link_label3: "",
+    web_link_label4: "",
+    web_link_label5: "",
+    web_link_label6: "",
+    address: "",
+    address2: "",
+    address3: "",
+    address4: "",
+    division: "",
+    department: "",
+    country: "",
+    bio: "",
+    company_website_url: "",
+    more_info_tab_url: "",
+    facebook_url: "",
+    instagram_url: "",
+    whatsapp_url: "",
+    linkedin_url: "",
+    youtube_url: "",
+    twitter_url: "",
+    wechat_id: "",
+    wechatpage_url: "",
+	  
+	  tiktok_url: "",
+ 
+	  line_url: "",
+	  facebookmessenger_url: "",
+	  weibo_url: "",
+	  bilibili_url: "",
+	  qq_url: "",
+	  zhihu_url : "",
+	  appsstore_url: "",
+	  googleplay_url: "",
+	  googlemap_url: "",
+	  snapchat_url: "",
+	  telegram_url: "",
+	  
+	  note: "",
     note_timestamp: false,
+    smartcard_uid: [],
+    bizcard_option: true,
+    updated_by: "630cf0461fa3f166eb3dee01",
+    created_by: "630cf0461fa3f166eb3dee01",
+    status: true,
+    qrcode_option: 1,
   };
   const apiUrl = `${servicePath2}/companies/codelist`;
   const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}&staffId=${id}`;
@@ -129,12 +198,18 @@ const EditClientModal = ({ intl, match, currentUser}) => {
      /* eslint-disable no-restricted-syntax */
 
     for (const [key, val] of Object.entries(state)) {
-      if (key !=='company_id')
-      data.append(key, val);
-      else if(typeof(val) === 'string')
-      data.append(key, val);
-      else
-      console.log('companycd');
+      if (val!==null&& val!==undefined ){
+        if (key !=='company_id')
+        data.append(key, val);
+        else if(typeof(val) === 'string')
+        data.append(key, val);
+        else
+        console.log('companycd');
+      }else if  (key==='qrcode_option' && val===undefined){
+        data.append(key, 1);
+      }else if  (key==='qrcode_option' && val===null){
+        data.append(key, 1);
+      }
       
     }
     StaffDataService.update(state.id, data)
