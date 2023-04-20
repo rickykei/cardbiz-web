@@ -102,10 +102,12 @@ const AddNewStaffModal = ({
     pro_title: "",
     subsidiary_eng: "",
     subsidiary_chi: "",
-    work_email: "",
+    address_eng: "",
+    address_chi: "",
     work_tel: "",
     work_tel2: "",
     work_tel3: "",
+     
     direct_tel: "",
     direct_tel2: "",
     direct_tel3: "",
@@ -120,8 +122,9 @@ const AddNewStaffModal = ({
     fax_no4: "",
     fax_no5: "",
     reuters: "",
-    address_eng: "",
-    address_chi: "",
+   
+    work_email: "",
+ 
     agent_no: "",
     broker_no: "",
     mpf_no:"",
