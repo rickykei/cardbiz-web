@@ -42,7 +42,6 @@ const StaffProfileModal = ({ intl, match}) => {
   const [state, setState] = useState(initialState);
   const { messages } = intl;
    
-  const [copyMoreInfoSuccess, setCopyMoreInfoSuccess] = useState('');
 
   const { id } = useParams();
 
@@ -55,11 +54,16 @@ const StaffProfileModal = ({ intl, match}) => {
   const [activeFirstTab, setActiveFirstTab] = useState('1');
   const [encryptText,setEncryptText] =useState('');
   const moreInfoURL = `${servicePath4}/?key=${encryptText}`;
- 
+  const [copyMoreInfoSuccess, setCopyMoreInfoSuccess] = useState('');
+
   const qrcodeURL = `${servicePath4}/?key=${encryptText}&qrtype=1`;
   const qrcodeURL2 = `${servicePath4}/?key=${encryptText}&qrtype=2`;
   const qrcodeURL3 = `${servicePath4}/?key=${encryptText}&qrtype=3`;
   const qrcodeURL4 = `${servicePath4}/?key=${encryptText}&qrtype=4`;
+  const [copyQrcodeurl1Success, setcopyQrcodeurl1Success] = useState('');
+  const [copyQrcodeurl2Success, setcopyQrcodeurl2Success] = useState('');
+  const [copyQrcodeurl3Success, setcopyQrcodeurl3Success] = useState('');
+  const [copyQrcodeurl4Success, setcopyQrcodeurl4Success] = useState('');
 
 
   const getStaffLog = (aa) => {
@@ -101,14 +105,35 @@ const StaffProfileModal = ({ intl, match}) => {
     navigator.clipboard.writeText(newClip).then(
       () => {
      
-   
+          if (newClip===moreInfoURL)
           setCopyMoreInfoSuccess("Copied!");
-       
+          if (newClip===qrcodeURL)
+          setcopyQrcodeurl1Success("Copied!");
+          
+          if (newClip===qrcodeURL2)
+          setcopyQrcodeurl2Success("Copied!");
+          
+          if (newClip===qrcodeURL3)
+          setcopyQrcodeurl3Success("Copied!");
+          
+          if (newClip===qrcodeURL4)
+          setcopyQrcodeurl4Success("Copied!");
       },
       () => {
      
-      
+        if (newClip===moreInfoURL)
           setCopyMoreInfoSuccess("Copy failed!");
+          if (newClip===qrcodeURL)
+          setcopyQrcodeurl1Success("Copy failed!!");
+          
+          if (newClip===qrcodeURL2)
+          setcopyQrcodeurl2Success("Copy failed!!");
+          
+          if (newClip===qrcodeURL3)
+          setcopyQrcodeurl3Success("Copy failed!!");
+          
+          if (newClip===qrcodeURL4)
+          setcopyQrcodeurl4Success("Copy failed!!");
       }
     );
   }
@@ -120,6 +145,62 @@ const StaffProfileModal = ({ intl, match}) => {
       .then((result) => {
         if (result.state === "granted" || result.state === "prompt") {
           updateClipboard(moreInfoURL);
+        }
+      })
+      .catch((error) => {
+        // couldn't query the permission
+        console.error(error);
+      });
+  }
+
+  const copyQRLink1 = () => {
+    navigator.permissions
+      .query({ name: "clipboard-write" })
+      .then((result) => {
+        if (result.state === "granted" || result.state === "prompt") {
+          updateClipboard(qrcodeURL);
+        }
+      })
+      .catch((error) => {
+        // couldn't query the permission
+        console.error(error);
+      });
+  }
+
+  const copyQRLink2 = () => {
+    navigator.permissions
+      .query({ name: "clipboard-write" })
+      .then((result) => {
+        if (result.state === "granted" || result.state === "prompt") {
+          updateClipboard(qrcodeURL2);
+        }
+      })
+      .catch((error) => {
+        // couldn't query the permission
+        console.error(error);
+      });
+  }
+
+  const copyQRLink3 = () => {
+    navigator.permissions
+      .query({ name: "clipboard-write" })
+      .then((result) => {
+        if (result.state === "granted" || result.state === "prompt") {
+          updateClipboard(qrcodeURL3);
+        }
+      })
+      .catch((error) => {
+        // couldn't query the permission
+        console.error(error);
+      });
+  }
+
+  const copyQRLink4 = () => {
+    navigator.permissions
+      .query({ name: "clipboard-write" })
+      .then((result) => {
+        if (result.state === "granted" || result.state === "prompt") {
+          updateClipboard(qrcodeURL4);
         }
       })
       .catch((error) => {
@@ -334,7 +415,8 @@ const StaffProfileModal = ({ intl, match}) => {
                       <CardBody>
                      
                       <img alt="qrcode" src={qrcodeURL}  width="250" />
-                   
+                      <Button onClick={copyQRLink1} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyQrcodeurl1Success} 
+
                       </CardBody>
                     </Colxx>
                   </Row>
@@ -345,6 +427,8 @@ const StaffProfileModal = ({ intl, match}) => {
                       <CardBody>
                       
                       <img alt="qrcode" src={qrcodeURL2}  width="250" />
+                      <Button onClick={copyQRLink2} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyQrcodeurl2Success} 
+
                       </CardBody>
                     </Colxx>
                   </Row>
@@ -354,6 +438,7 @@ const StaffProfileModal = ({ intl, match}) => {
                     <Colxx sm="12">
                       <CardBody>
                       <img alt="qrcode" src={qrcodeURL3}  width="250" />
+                      <Button onClick={copyQRLink3} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyQrcodeurl3Success} 
                  
              
                       </CardBody>
@@ -365,7 +450,8 @@ const StaffProfileModal = ({ intl, match}) => {
                     <Colxx sm="12">
                       <CardBody>
                       <img alt="qrcode" src={qrcodeURL4}  width="250" />
-                 
+                      <Button onClick={copyQRLink4} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyQrcodeurl4Success} 
+
              
                       </CardBody>
                     </Colxx>

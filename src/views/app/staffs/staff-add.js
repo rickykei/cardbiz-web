@@ -159,7 +159,7 @@ const AddNewStaffModal = ({
 	  
 	  note: "",
     note_timestamp: false,
-    smartcard_uid: undefined,
+    smartcard_uid: "",
     bizcard_option: true,
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",

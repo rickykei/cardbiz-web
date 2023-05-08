@@ -17,7 +17,7 @@ export const localeOptions = [
   { id: 'zh', name: '中文', direction: 'ltr' } 
  ,
 ];
-export const qrcodeSelectData = [{"label": "Vcard URL QR code", "value": 1},{"label": "E-profile URL QR code", "value": 2},{"label": "Generic URL QR code", "value": 3},{"label": "vcf content QR code", "value": 4}];
+export const qrcodeSelectData = [{"label": "Vcard", "value": 1},{"label": "E-profile", "value": 2},{"label": "Align with Smart Card ", "value": 3},{"label": "Vcf", "value": 4}];
   
 export const firebaseConfig = {
   apiKey: 'AIzaSyBBksq-Asxq2M4Ot-75X19IyrEYJqNBPcg',
