@@ -80,7 +80,7 @@ const StaffProfileModal = ({ intl, match}) => {
 
 
   const getStaff = (aa) => {
-    StaffDataService.get(aa)
+    StaffDataService.findByUserProfile(aa)
       .then(response => {
     
         setState(response.data); 
@@ -463,9 +463,9 @@ const StaffProfileModal = ({ intl, match}) => {
                 </Colxx>
                 <Colxx xxs="12" lg="7" xl="8" className="col-right">
 
-                  <ProfileVisitsChartCard/>   
+                  <ProfileVisitsChartCard className="mb-4"/>   
 
-                  <VcfVisitsChartCard/>
+                  <VcfVisitsChartCard className="mb-4"/>
                   
 
                   <Card className="d-flex flex-row mb-4">

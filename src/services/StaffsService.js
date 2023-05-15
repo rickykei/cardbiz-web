@@ -9,6 +9,11 @@ const get = id => {
   return http.get(`/staffs/${id}`);
 };
 
+const findByUserProfile = id => {
+  return http.get(`/staffs/findByUserProfile?id=${id}`);
+};
+
+
 const create = data => {
   return http.post("/staffs", data);
 };
@@ -36,7 +41,8 @@ const StaffsService = {
   update,
   remove,
   removeAll,
-  findByName
+  findByName,
+  findByUserProfile
 };
 
 export default StaffsService;

@@ -154,7 +154,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
 	  
 	  note: "",
     note_timestamp: false,
-    smartcard_uid: [],
+    smartcard_uid: "",
+ 
     bizcard_option: true,
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",
@@ -179,6 +180,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
   const getStaff = (aa) => {
     StaffDataService.get(aa)
       .then(response => {
+      
         setState(response.data);
         console.log(response.data);
        
@@ -1526,7 +1528,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                     onChange={(val) => setState({ ...state, smartcard_uid: val.value })}
                    
                   />
-                 
+                  
                   </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6" className="mb-5">
