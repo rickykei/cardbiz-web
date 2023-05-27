@@ -164,7 +164,7 @@ const AddNewStaffModal = ({
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",
     status: true,
-    qrcode_option: null,
+    qrcode_option: 1,
    
   };
   const [state, setState] = useState(initialState);
@@ -245,7 +245,7 @@ snapchat_url:state.snapchat_url,
 telegram_url:state.telegram_url,
 xiaohongshu_url:state.xiaohongshu_url,
 note:state.note,
-
+qrcode_option: state.qrcode_option,
       smartcard_uid: state.smartcard_uid,
       bizcard_option: state.bizcard_option,
       updatedBy:  currentUser.uid,
@@ -258,8 +258,12 @@ note:state.note,
     if (file2 !== null)
       data.append("file", file2);
 
-    /* eslint-disable no-restricted-syntax */
+      if (state.qrcode_option===undefined)
+      state.qrcode_option=1;
+      
 
+    /* eslint-disable no-restricted-syntax */
+    
     for (const [key, val] of Object.entries(newItem)) {
       
       if (key === "company_id" && val ===undefined) {

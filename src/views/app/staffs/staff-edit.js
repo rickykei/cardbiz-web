@@ -199,14 +199,17 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     data.append("file",file2);
      /* eslint-disable no-restricted-syntax */
 
+    if (state.qrcode_option===undefined)
+    state.qrcode_option=1;
+
     for (const [key, val] of Object.entries(state)) {
+     
       if (val!==null&& val!==undefined ){
-        if (key !=='company_id')
+        if (key !=='company_id'){
         data.append(key, val);
-        else if(typeof(val) === 'string')
-        data.append(key, val);
-        else
-        console.log('companycd');
+        
+        }
+        
       }else if  (key==='qrcode_option' && val===undefined){
         data.append(key, 1);
       }else if  (key==='qrcode_option' && val===null){
@@ -1542,7 +1545,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                     className="react-select"
                     classNamePrefix="react-select"
                     name="form-field-qrcode_option" 
-                    options={qrcodeSelectData}
+                    options={qrcodeSelectData} 
+                    defaultValue={{"label": "Vcard", "value": 1}}
                      value={qrcodeSelectData.find(obj => {
                       return obj.value === state.qrcode_option;
                     })}
