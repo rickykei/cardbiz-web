@@ -20,14 +20,14 @@ import axios from 'axios';
 const apiUrl = `${servicePath2}/companies/codelist`;
   
 const AddNewUserModal = ({
-  addUserItemAction, intl, match
+  addUserItemAction, intl, match, currentUser
 }) => {
   const initialState = {
     id: null,
     username: "",
     password: "",
     email: "",
-    company_id: 0,
+    company_id: currentUser.companyId,
     companies: [],
     status: true,
   };
@@ -36,6 +36,10 @@ const AddNewUserModal = ({
  
   const [options, setOptions] = useState([]);
   const addNetItem = () => {
+
+    if (state.company_id ===undefined) {
+      state.company_id= currentUser.companyId;
+    }
     const newItem = {
       username: state.username,
       password: state.password,
@@ -202,10 +206,12 @@ const AddNewUserModal = ({
     </>
   );
 };
-const mapStateToProps = ({ userListApp }) => {
+const mapStateToProps = ({ userListApp , authUser}) => {
   const { companies } = userListApp;
+  const { currentUser } = authUser;
   return {
-    companies
+    companies,
+    currentUser
   };
 };
 export default injectIntl(connect(mapStateToProps, {

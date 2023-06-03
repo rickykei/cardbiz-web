@@ -156,15 +156,15 @@ const AddNewStaffModal = ({
 	  googlemap_url: "",
 	  snapchat_url: "",
 	  telegram_url: "",
-	  
+	  xiaohongshu_url: "",
 	  note: "",
     note_timestamp: false,
-    smartcard_uid: undefined,
+    smartcard_uid: "",
     bizcard_option: true,
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",
     status: true,
-    qrcode_option: null,
+    qrcode_option: 1,
    
   };
   const [state, setState] = useState(initialState);
@@ -178,18 +178,26 @@ const AddNewStaffModal = ({
 
   const addNetItem = () => {
     const newItem = {
+      company_name_chi: state.company_name_chi,
+      company_name_eng: state.company_name_eng,
       fname: state.fname,
       lname: state.lname,
       company_id: selectedOptionLO.value,
       headshot: state.headshot,
       work_email: state.work_email,
+      work_email2: state.work_email2,
+      work_email3: state.work_email3,
       home_email: state.home_email,
       other_email: state.other_email,
       position: state.position,
       work_tel: state.work_tel,
       work_tel2: state.work_tel2,
+      work_tel3: state.work_tel3,
+      work_tel4: state.work_tel4,
       mobile: state.mobile,
       mobile2: state.mobile2,
+      mobile3: state.mobile3,
+      mobile4: state.mobile4,
       home_tel: state.home_tel,
       fax: state.fax,
       web_link: state.web_link,
@@ -198,8 +206,16 @@ const AddNewStaffModal = ({
       web_link4: state.web_link4,
       web_link5: state.web_link5,
       web_link6: state.web_link6,
+      web_link_label: state.web_link_label,
+      web_link_label2: state.web_link_label2,
+      web_link_label3: state.web_link_label3,
+      web_link_label4: state.web_link_label4,
+      web_link_label5: state.web_link_label5,
+      web_link_label6: state.web_link_label6,
       address: state.address,
       address2: state.address2,
+      address3: state.address3,
+      address4: state.address4,
       division: state.division,
       department: state.department,
       country: state.country,
@@ -213,10 +229,10 @@ const AddNewStaffModal = ({
       youtube_url: state.youtube_url,
       twitter_url: state.twitter_url,
       wechat_id: state.wechat_id,
-weixin_url:state.weixin_url,
-douyin_url:state.douyin_url,
+      wechatpage_url: state.wechatpage_url,
+
 tiktok_url:state.tiktok_url,
-kuaishou_url: state.kuaishou_url,
+
 line_url: state.line_url,
 facebook_messenger_url: state.facebook_messenger_url,
 weibo_url: state.weibo_url,
@@ -229,7 +245,7 @@ snapchat_url:state.snapchat_url,
 telegram_url:state.telegram_url,
 xiaohongshu_url:state.xiaohongshu_url,
 note:state.note,
-
+qrcode_option: state.qrcode_option,
       smartcard_uid: state.smartcard_uid,
       bizcard_option: state.bizcard_option,
       updatedBy:  currentUser.uid,
@@ -242,8 +258,12 @@ note:state.note,
     if (file2 !== null)
       data.append("file", file2);
 
-    /* eslint-disable no-restricted-syntax */
+      if (state.qrcode_option===undefined)
+      state.qrcode_option=1;
+      
 
+    /* eslint-disable no-restricted-syntax */
+    
     for (const [key, val] of Object.entries(newItem)) {
       
       if (key === "company_id" && val ===undefined) {
