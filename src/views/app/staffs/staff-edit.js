@@ -157,6 +157,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     smartcard_uid: "",
  
     bizcard_option: true,
+    dig_card_in_vcf:true,
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",
     status: true,
@@ -1604,18 +1605,18 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   <Colxx xxs="12" md="6" className="mb-5"> 
                   <FormGroup>
                   <Label>
-                    <IntlMessages id="forms.staff-status" />
+                    <IntlMessages id="forms.staff-dig_card_in_vcf-option" />
                   </Label>
                   <CustomInput
                     type="radio"
                     id="exCustomRadio3"
                     name="customRadio3"
-                    label="Active"
-                    checked={state.status === true}
+                    label={messages['forms.label.enable']}
+                    checked={state.dig_card_in_vcf === true}
                     onChange={(event) =>
                       setState({
                         ...state,
-                        status: event.target.value === 'on',
+                        dig_card_in_vcf: event.target.value === 'on',
                       })
                     }
                   />
@@ -1625,12 +1626,12 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                     type="radio"
                     id="exCustomRadio4"
                     name="customRadio4"
-                    label="Disable"
-                    checked={state.status === false}
+                    label={messages['forms.label.disable']}
+                    checked={state.dig_card_in_vcf === false}
                     onChange={(event) =>
                       setState({
                         ...state,
-                        status: event.target.value !== 'on',
+                        dig_card_in_vcf: event.target.value !== 'on',
                       })
                     }
                   />
@@ -1640,6 +1641,48 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                 </Colxx>
                 </Row>  
                 
+                <Row>
+                 
+                  
+
+                 <Colxx xxs="12" md="6" className="mb-5"> 
+                 <FormGroup>
+                 <Label>
+                   <IntlMessages id="forms.staff-status" />
+                 </Label>
+                 <CustomInput
+                   type="radio"
+                   id="exCustomRadio5"
+                   name="customRadio5"
+                   label="Active"
+                   checked={state.status === true}
+                   onChange={(event) =>
+                     setState({
+                       ...state,
+                       status: event.target.value === 'on',
+                     })
+                   }
+                 />
+
+
+                 <CustomInput
+                   type="radio"
+                   id="exCustomRadio6"
+                   name="customRadio6"
+                   label="Disable"
+                   checked={state.status === false}
+                   onChange={(event) =>
+                     setState({
+                       ...state,
+                       status: event.target.value !== 'on',
+                     })
+                   }
+                 />
+
+
+               </FormGroup>
+               </Colxx>
+               </Row>  
                
                 <Button color="primary" className="mt-4" onClick={updateStaff}>
                   <IntlMessages id="forms.submit" />

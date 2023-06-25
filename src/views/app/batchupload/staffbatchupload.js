@@ -77,7 +77,7 @@ const StaffBatchUpload = ({
   intl, match, currentUser
 }) => {
 
-  const downloadstaffexcel = `${servicePath2}/batch_upload/downloadStaffExcel?company_id=${currentUser.companyId}`;
+  const downloadstaffexcel = `${servicePath2}/batch_upload/downloadStaffExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
 
   const [file2, setFile] = useState(null);
   const { messages } = intl;
