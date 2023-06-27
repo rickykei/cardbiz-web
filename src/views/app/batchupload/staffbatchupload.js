@@ -97,6 +97,7 @@ const StaffBatchUpload = ({
     if (file2 !== null) {
       data.append("file", file2);
       data.append("company_id", currentUser.companyId);
+      data.append("uid",currentUser.uid);
       /* eslint-disable no-restricted-syntax */
 
       for (const [key, val] of Object.entries(data)) {
