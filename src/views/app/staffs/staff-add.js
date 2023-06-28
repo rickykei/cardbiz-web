@@ -161,6 +161,7 @@ const AddNewStaffModal = ({
     note_timestamp: false,
     smartcard_uid: "",
     bizcard_option: true,
+    dig_card_in_vcf:true,
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",
     status: true,
@@ -1683,46 +1684,87 @@ qrcode_option: state.qrcode_option,
 
                     </FormGroup>
                   </Colxx>
-                  <Colxx xxs="12" md="6" className="mb-5">
+                  <Colxx xxs="12" md="6" className="mb-5"> 
                   <FormGroup>
-                      <Label>
-                        <IntlMessages id="forms.staff-status" />
-                      </Label>
-                      <CustomInput
-                        type="radio"
-                        id="exCustomRadio3"
-                        name="customRadio3"
-                        label="Active"
-                        checked={state.status === true}
-                        onChange={(event) =>
-                          setState({
-                            ...state,
-                            status: event.target.value === 'on',
-                          })
-                        }
-                      />
+                  <Label>
+                    <IntlMessages id="forms.staff-dig_card_in_vcf-option" />
+                  </Label>
+                  <CustomInput
+                    type="radio"
+                    id="exCustomRadio3"
+                    name="customRadio3"
+                    label={messages['forms.label.enable']}
+                    checked={state.dig_card_in_vcf === true}
+                    onChange={(event) =>
+                      setState({
+                        ...state,
+                        dig_card_in_vcf: event.target.value === 'on',
+                      })
+                    }
+                  />
 
 
-                      <CustomInput
-                        type="radio"
-                        id="exCustomRadio4"
-                        name="customRadio4"
-                        label="Disable"
-                        checked={state.status === false}
-                        onChange={(event) =>
-                          setState({
-                            ...state,
-                            status: event.target.value !== 'on',
-                          })
-                        }
-                      />
+                  <CustomInput
+                    type="radio"
+                    id="exCustomRadio4"
+                    name="customRadio4"
+                    label={messages['forms.label.disable']}
+                    checked={state.dig_card_in_vcf === false}
+                    onChange={(event) =>
+                      setState({
+                        ...state,
+                        dig_card_in_vcf: event.target.value !== 'on',
+                      })
+                    }
+                  />
 
 
-                    </FormGroup>
-                  </Colxx>
+                </FormGroup>
+                </Colxx>
                 </Row>   
 
-               
+                <Row>
+                 
+                  
+
+                 <Colxx xxs="12" md="6" className="mb-5"> 
+                 <FormGroup>
+                 <Label>
+                   <IntlMessages id="forms.staff-status" />
+                 </Label>
+                 <CustomInput
+                   type="radio"
+                   id="exCustomRadio5"
+                   name="customRadio5"
+                   label="Active"
+                   checked={state.status === true}
+                   onChange={(event) =>
+                     setState({
+                       ...state,
+                       status: event.target.value === 'on',
+                     })
+                   }
+                 />
+
+
+                 <CustomInput
+                   type="radio"
+                   id="exCustomRadio6"
+                   name="customRadio6"
+                   label="Disable"
+                   checked={state.status === false}
+                   onChange={(event) =>
+                     setState({
+                       ...state,
+                       status: event.target.value !== 'on',
+                     })
+                   }
+                 />
+
+
+               </FormGroup>
+               </Colxx>
+               </Row>  
                 <Button color="primary" className="mt-4" onClick={() => addNetItem()}>
                   <IntlMessages id="forms.submit" />
                 </Button>

@@ -181,9 +181,11 @@ const EditClientModal = ({ intl, match, currentUser}) => {
   const getStaff = (aa) => {
     StaffDataService.get(aa)
       .then(response => {
-      
+        console.log('state value before get staff');
+        console.log(state);
         setState(response.data);
-        console.log(response.data);
+        console.log('state value after get staff');
+        console.log(state);
        
       })
       .catch(e => {
