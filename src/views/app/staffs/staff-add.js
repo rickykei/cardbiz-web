@@ -502,7 +502,7 @@ qrcode_option: state.qrcode_option,
 
                 <Row>
                  
-                  <Colxx xxs="12" md="6">
+                  <Colxx xxs="12" md="6" className="mb-5">
 
                   <FormGroup>
                       <Label for="work_email3">
@@ -521,7 +521,7 @@ qrcode_option: state.qrcode_option,
                     </FormGroup>
                   
                   </Colxx>
-                  <Colxx xxs="12" md="6" className="mb-5">
+                  <Colxx xxs="12" md="6" >
                   <FormGroup>
                       <Label for="home_email">
                         <IntlMessages id="forms.staff-home_email" />
@@ -542,7 +542,7 @@ qrcode_option: state.qrcode_option,
 
                 <Row>
                  
-                  <Colxx xxs="12" md="6">
+                  <Colxx xxs="12" md="6" className="mb-5">
  
                   <FormGroup>
                       <Label for="other_email">
@@ -579,7 +579,7 @@ qrcode_option: state.qrcode_option,
 
                 <Row>
                 
-                  <Colxx xxs="12" md="6">
+                  <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="work_tel">
                         <IntlMessages id="forms.staff-work_tel" />
@@ -651,7 +651,7 @@ qrcode_option: state.qrcode_option,
                   </Colxx>
                 </Row>
                 <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
+                  <Colxx xxs="12" md="6" className="mb-5" >
                     <FormGroup>
                       <Label for="mobile">
                         <IntlMessages id="forms.staff-mobile" />
@@ -1518,7 +1518,7 @@ qrcode_option: state.qrcode_option,
               
 
                   </Colxx>
-                  <Colxx xxs="12" md="6" className="mb-5">
+                  <Colxx xxs="12" md="6">
                   <FormGroup>
                       <Label for="telegram_url">
                         <IntlMessages id="forms.staff-telegram_url" />
@@ -1560,7 +1560,7 @@ qrcode_option: state.qrcode_option,
 
                  
                   </Colxx>
-                  <Colxx xxs="12" md="6" className="mb-5">
+                  <Colxx xxs="12" md="6" >
                   <FormGroup>
                   <Label for="note">
                         <IntlMessages id="forms.staff-note-timestamp" />
@@ -1621,7 +1621,7 @@ qrcode_option: state.qrcode_option,
                  
                   </FormGroup>
                   </Colxx>
-                  <Colxx xxs="12" md="6" className="mb-5">
+                  <Colxx xxs="12" md="6" >
                   <FormGroup>
                   <Label>
                     <IntlMessages id="forms.staff-qrcode_option" />
@@ -1684,7 +1684,7 @@ qrcode_option: state.qrcode_option,
 
                     </FormGroup>
                   </Colxx>
-                  <Colxx xxs="12" md="6" className="mb-5"> 
+                  <Colxx xxs="12" md="6" > 
                   <FormGroup>
                   <Label>
                     <IntlMessages id="forms.staff-dig_card_in_vcf-option" />

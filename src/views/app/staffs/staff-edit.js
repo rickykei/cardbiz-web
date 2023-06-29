@@ -1290,17 +1290,17 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   <Colxx xxs="12" md="6">
                     
                   <FormGroup>
-                      <Label for="facebookmessenger_url">
-                        <IntlMessages id="forms.staff-facebookmessenger_url" />
+                      <Label for="facebook_messenger_url">
+                        <IntlMessages id="forms.staff-facebook_messenger_url" />
                       </Label>
                       <Input
                         type="text"
                         value={state.facebook_messenger_url || ''}
                         onChange={(val) => setState({ ...state, facebook_messenger_url: val.target.value })}
-                        placeholder={messages['forms.staff-facebookmessenger_url']}
+                        placeholder={messages['forms.staff-facebook_messenger_url']}
                       />
                       <FormText color="muted">
-                        <IntlMessages id="forms.staff-facebookmessenger_url-muted" />
+                        <IntlMessages id="forms.staff-facebook_messenger_url-muted" />
                       </FormText>
                     </FormGroup>
                   </Colxx>
