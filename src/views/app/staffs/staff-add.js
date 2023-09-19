@@ -142,12 +142,13 @@ const AddNewStaffModal = ({
       insurance_no: "", 
       mpf_no: "", 
       hkma_no: "", 
-      type1_no: "", 
-      type4_no: "", 
-      type6_no: "", 
-      type9_no: "", 
-      sfc_type1_no: "", 
-      sfc_type2_no: "", 
+      type1_no: false, 
+      type4_no: false, 
+      type6_no: false, 
+      type9_no: false, 
+      sfc_no: "", 
+      sfc_type1_no: false, 
+      sfc_type2_no: false, 
       field051: "", 
       field052: "", 
       field053: "", 
@@ -169,12 +170,10 @@ const AddNewStaffModal = ({
       field069: "", 
       field070: "",  
       reuters_code: "", 
-      bloomberg_info: "", 
-      sfc_no: "", 
-      
+      bloomberg_info: "",  
     smartcard_uid: "",
     bizcard_option: true,
-    dig_card_in_vcf:true,
+    dig_card_in_vcf: true,
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",
     status: true, 
@@ -188,8 +187,10 @@ const AddNewStaffModal = ({
   const { messages } = intl;
   const [smartIdSelectData,setSmartIdSelectData] = useState([]);
   const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}`;
-
+  var clickCount=0;
+  
   const addNetItem = () => {
+    if (clickCount==0){
     const newItem = {
       company_id: selectedOptionLO.value,
       company_name_option: state.company_name_option,
@@ -206,8 +207,8 @@ const AddNewStaffModal = ({
         cc_no:state.cc_no,
         title_eng: state.title_eng,
         title_chi: state.title_chi,
-        title_eng: state.title_eng2,
-        title_chi: state.title_chi2,
+        title_eng2: state.title_eng2,
+        title_chi2: state.title_chi2,
         pro_title: state.pro_title,
         division_eng: state.division_eng,
         division_chi: state.division_chi,
@@ -272,13 +273,13 @@ const AddNewStaffModal = ({
         field067: state.field067,
         field068: state.field068,
         field069: state.field069,
-        field070: state.field070, 
-       
-      smartcard_uid: state.smartcard_uid,
-      bizcard_option: state.bizcard_option,
-      updatedBy:  currentUser.uid,
-      createdBy:  currentUser.uid,
-      status: state.status,
+        field070: state.field070,  
+        smartcard_uid: state.smartcard_uid,
+        bizcard_option: state.bizcard_option,
+        updatedBy:  currentUser.uid,
+        createdBy:  currentUser.uid,
+        status: state.status,
+        qrcode_option: state.qrcode_option,
 
     };
     const data = new FormData()
@@ -307,6 +308,8 @@ const AddNewStaffModal = ({
     history.push("/app/staffs/staffs-list");
 
     setState(initialState);
+    clickCount++;
+    }
   };
 
   async function fetchData() {
@@ -1359,73 +1362,148 @@ const AddNewStaffModal = ({
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
-                      <Label for="type1_no">
-                        <IntlMessages id="forms.staff-type1_no" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.type1_no || ''}
-                        onChange={(val) => setState({ ...state, type1_no: val.target.value })}
-                        placeholder={messages['forms.staff-type1_no']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-type1_no-muted" />
-                      </FormText>
-                    </FormGroup>
+                  <FormGroup>
+                    <Label>
+                      <IntlMessages id="forms.staff-type1_no" />
+                    </Label>
+                    <CustomInput
+                      type="radio"
+                      id="exCustomRadio-1-type1_no"
+                      name="customRadio-1-type1_no"
+                      label="Yes"
+                      checked={state.type1_no === true}
+                      onChange={(event) =>
+                        setState({
+                          ...state,
+                          type1_no: event.target.value === 'on',
+                        })
+                      }
+                    />
+
+
+                    <CustomInput
+                      type="radio"
+                      id="exCustomRadio-2-type1_no"
+                      name="customRadio-2-type1_no"
+                      label="No"
+                      checked={state.type1_no === false}
+                      onChange={(event) =>
+                        setState({
+                          ...state,
+                          type1_no: event.target.value !== 'on',
+                        })
+                      }
+                    /> 
+                  </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                    <FormGroup>
-                      <Label for="type4_no">
-                        <IntlMessages id="forms.staff-type4_no" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.type4_no || ''}
-                        onChange={(val) => setState({ ...state, type4_no: val.target.value })}
-                        placeholder={messages['forms.staff-type4_no']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-type4_no-muted" />
-                      </FormText>
-                    </FormGroup>
+                  <FormGroup>
+                    <Label>
+                      <IntlMessages id="forms.staff-type4_no" />
+                    </Label>
+                    <CustomInput
+                      type="radio"
+                      id="exCustomRadio-1-type4_no"
+                      name="customRadio-1-type4_no"
+                      label="Yes"
+                      checked={state.type4_no === true}
+                      onChange={(event) =>
+                        setState({
+                          ...state,
+                          type4_no: event.target.value === 'on',
+                        })
+                      }
+                    />
 
+
+                    <CustomInput
+                      type="radio"
+                      id="exCustomRadio-2-type4_no"
+                      name="customRadio-2-type4_no"
+                      label="No"
+                      checked={state.type4_no === false}
+                      onChange={(event) =>
+                        setState({
+                          ...state,
+                          type4_no: event.target.value !== 'on',
+                        })
+                      }
+                    /> 
+                  </FormGroup>
                   </Colxx>
                 </Row>
 
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
-                      <Label for="type6_no">
-                        <IntlMessages id="forms.staff-type6_no" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.type6_no || ''}
-                        onChange={(val) => setState({ ...state, type6_no: val.target.value })}
-                        placeholder={messages['forms.staff-type6_no']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-type6_no-muted" />
-                      </FormText>
-                    </FormGroup>
+                  <FormGroup>
+                    <Label>
+                      <IntlMessages id="forms.staff-type6_no" />
+                    </Label>
+                    <CustomInput
+                      type="radio"
+                      id="exCustomRadio-1-type6_no"
+                      name="customRadio-1-type6_no"
+                      label="Yes"
+                      checked={state.type6_no === true}
+                      onChange={(event) =>
+                        setState({
+                          ...state,
+                          type6_no: event.target.value === 'on',
+                        })
+                      }
+                    />
+
+
+                    <CustomInput
+                      type="radio"
+                      id="exCustomRadio-2-type6_no"
+                      name="customRadio-2-type6_no"
+                      label="No"
+                      checked={state.type6_no === false}
+                      onChange={(event) =>
+                        setState({
+                          ...state,
+                          type6_no: event.target.value !== 'on',
+                        })
+                      }
+                    /> 
+                  </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
                   <FormGroup>
-                      <Label for="type9_no">
-                        <IntlMessages id="forms.staff-type9_no" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.type9_no || ''}
-                        onChange={(val) => setState({ ...state, type9_no: val.target.value })}
-                        placeholder={messages['forms.staff-type9_no']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-type9_no-muted" />
-                      </FormText>
-                    </FormGroup>
+                    <Label>
+                      <IntlMessages id="forms.staff-type9_no" />
+                    </Label>
+                    <CustomInput
+                      type="radio"
+                      id="exCustomRadio-1-type9_no"
+                      name="customRadio-1-type9_no"
+                      label="Yes"
+                      checked={state.type9_no === true}
+                      onChange={(event) =>
+                        setState({
+                          ...state,
+                          type9_no: event.target.value === 'on',
+                        })
+                      }
+                    />
+
+
+                    <CustomInput
+                      type="radio"
+                      id="exCustomRadio-2-type9_no"
+                      name="customRadio-2-type9_no"
+                      label="No"
+                      checked={state.type9_no === false}
+                      onChange={(event) =>
+                        setState({
+                          ...state,
+                          type9_no: event.target.value !== 'on',
+                        })
+                      }
+                    /> 
+                  </FormGroup>
                   </Colxx>
                 </Row>
                 <Row>
@@ -1484,39 +1562,79 @@ const AddNewStaffModal = ({
                      
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                    <FormGroup>
-                      <Label for="sfc_type1_no">
-                        <IntlMessages id="forms.staff-sfc_type1_no" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.sfc_type1_no || ''}
-                        onChange={(val) => setState({ ...state, sfc_type1_no: val.target.value })}
-                        placeholder={messages['forms.staff-sfc_type1_no']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-sfc_type1_no-muted" />
-                      </FormText>
-                    </FormGroup>
+                  <FormGroup>
+                    <Label>
+                      <IntlMessages id="forms.staff-sfc_type1_no" />
+                    </Label>
+                    <CustomInput
+                      type="radio"
+                      id="exCustomRadio-1-sfc_type1_no"
+                      name="customRadio-1-sfc_type1_no"
+                      label="Yes"
+                      checked={state.sfc_type1_no === true}
+                      onChange={(event) =>
+                        setState({
+                          ...state,
+                          sfc_type1_no: event.target.value === 'on',
+                        })
+                      }
+                    />
+
+
+                    <CustomInput
+                      type="radio"
+                      id="exCustomRadio-2-sfc_type1_no"
+                      name="customRadio-2-sfc_type1_no"
+                      label="No"
+                      checked={state.sfc_type1_no === false}
+                      onChange={(event) =>
+                        setState({
+                          ...state,
+                          sfc_type1_no: event.target.value !== 'on',
+                        })
+                      }
+                    /> 
+                  </FormGroup>
 
                   </Colxx>
                 </Row>
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
-                      <Label for="sfc_type2_no">
-                        <IntlMessages id="forms.staff-sfc_type2_no" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.sfc_type2_no || ''}
-                        onChange={(val) => setState({ ...state, sfc_type2_no: val.target.value })}
-                        placeholder={messages['forms.staff-sfc_type2_no']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-sfc_type2_no-muted" />
-                      </FormText>
-                    </FormGroup>
+                <Label>
+                  <IntlMessages id="forms.staff-sfc_type2_no" />
+                </Label>
+                <CustomInput
+                  type="radio"
+                  id="exCustomRadio-1-sfc_type2_no"
+                  name="customRadio-1-sfc_type2_no"
+                  label="Yes"
+                  checked={state.sfc_type2_no === true}
+                  onChange={(event) =>
+                    setState({
+                      ...state,
+                      sfc_type2_no: event.target.value === 'on',
+                    })
+                  }
+                />
+
+
+                <CustomInput
+                  type="radio"
+                  id="exCustomRadio-2-sfc_type2_no"
+                  name="customRadio-2-sfc_type2_no"
+                  label="No"
+                  checked={state.sfc_type2_no === false}
+                  onChange={(event) =>
+                    setState({
+                      ...state,
+                      sfc_type2_no: event.target.value !== 'on',
+                    })
+                  }
+                />
+
+
+              </FormGroup>
                      
                   </Colxx>
                   <Colxx xxs="12" md="6">
