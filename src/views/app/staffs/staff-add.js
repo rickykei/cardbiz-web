@@ -672,41 +672,7 @@ const AddNewStaffModal = ({
                   </Colxx>
                 </Row>
 
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
-                      <Label for="pro_title">
-                        <IntlMessages id="forms.staff-pro_title" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.pro_title || ''}
-                        onChange={(val) => setState({ ...state, pro_title: val.target.value })}
-                        placeholder={messages['forms.staff-pro_title']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-pro_title-muted" />
-                      </FormText>
-                    </FormGroup>
-                  </Colxx>
-                  <Colxx xxs="12" md="6">
-
-                    <FormGroup>
-                      <Label for="work_email">
-                        <IntlMessages id="forms.staff-work_email" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.work_email || ''}
-                        onChange={(val) => setState({ ...state, work_email: val.target.value })}
-                        placeholder={messages['forms.staff-work_email']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-work_email-muted" />
-                      </FormText>
-                    </FormGroup>
-                  </Colxx>
-                </Row>
+            
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
@@ -852,7 +818,7 @@ const AddNewStaffModal = ({
                     </FormGroup>
                   </Colxx>
                 </Row>
-
+                
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
@@ -1153,18 +1119,18 @@ const AddNewStaffModal = ({
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                    <FormGroup>
-                      <Label for="web_link">
-                        <IntlMessages id="forms.staff-web_link" />
+                  <FormGroup>
+                      <Label for="pro_title">
+                        <IntlMessages id="forms.staff-pro_title" />
                       </Label>
                       <Input
                         type="text"
-                        value={state.web_link || ''}
-                        onChange={(val) => setState({ ...state, web_link: val.target.value })}
-                        placeholder={messages['forms.staff-web_link']}
+                        value={state.pro_title || ''}
+                        onChange={(val) => setState({ ...state, pro_title: val.target.value })}
+                        placeholder={messages['forms.staff-pro_title']}
                       />
                       <FormText color="muted">
-                        <IntlMessages id="forms.staff-web_link-muted" />
+                        <IntlMessages id="forms.staff-pro_title-muted" />
                       </FormText>
                     </FormGroup>
                   </Colxx>
@@ -2010,21 +1976,26 @@ const AddNewStaffModal = ({
                      
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                    <FormGroup>
-                      <Label for="field070">
-                        <IntlMessages id="forms.staff-field070" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.field070 || ''}
-                        onChange={(val) => setState({ ...state, field070: val.target.value })}
-                        placeholder={messages['forms.staff-field070']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-field070-muted" />
-                      </FormText>
-                    </FormGroup>
+                 
+                  <FormGroup>
+                  <Label>
+                    <IntlMessages id="forms.staff-qrcode_option" />
+                  </Label>
+                   
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    name="form-field-qrcode_option" 
+                    options={qrcodeSelectData}
+                     value={qrcodeSelectData.find(obj => {
+                      return obj.value === state.qrcode_option;
+                    })}
+                    onChange={(val) => setState({ ...state, qrcode_option: val.value })}
+                   
+                  />
 
+                </FormGroup>
                   </Colxx>
                 </Row>
                 <Row>
@@ -2049,32 +2020,14 @@ const AddNewStaffModal = ({
                   </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6" >
-                  <FormGroup>
-                  <Label>
-                    <IntlMessages id="forms.staff-qrcode_option" />
-                  </Label>
-                   
-                  <Select
-                    components={{ Input: CustomSelectInput }}
-                    className="react-select"
-                    classNamePrefix="react-select"
-                    name="form-field-qrcode_option" 
-                    options={qrcodeSelectData}
-                     value={qrcodeSelectData.find(obj => {
-                      return obj.value === state.qrcode_option;
-                    })}
-                    onChange={(val) => setState({ ...state, qrcode_option: val.value })}
-                   
-                  />
-
-                </FormGroup>
+                 
                   </Colxx>
                 </Row>   
 
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                  <FormGroup>
                       <Label>
                         <IntlMessages id="forms.staff-bizcard_option" />
                       </Label>
