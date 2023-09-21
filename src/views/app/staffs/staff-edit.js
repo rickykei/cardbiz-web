@@ -283,83 +283,85 @@ const EditClientModal = ({ intl, match, currentUser}) => {
       <CardBody>
          
         
-              <Row>
-          <Colxx xxs="12" md="6" className="mb-5">
-            <FormGroup>
-              <Label for="fname">
-                <IntlMessages id="forms.staff-fname" />
-              </Label>
-              <Input
-                type="text"
-                value={state.fname || ''}
-                onChange={(val) => setState({ ...state, fname: val.target.value })}
-                placeholder={messages['forms.staff-fname']}
+      <Row>
+                      <Colxx xxs="12" md="6" className="mb-5">
+                        <FormGroup>
+                          <Label for="fname">
+                            <IntlMessages id="forms.staff-fname" />
+                          </Label>
+                          <Input
+                            type="text"
+                            value={state.fname || ''}
+                            onChange={(val) => setState({ ...state, fname: val.target.value })}
+                            placeholder={messages['forms.staff-fname']}
 
-              />
-              <FormText color="muted">
-                <IntlMessages id="forms.staff-fname-muted" />
-              </FormText>
-            </FormGroup>
+                          />
+                          <FormText color="muted">
+                            <IntlMessages id="forms.staff-fname-muted" />
+                          </FormText>
+                        </FormGroup>
 
-          </Colxx>
-          <Colxx xxs="12" md="6">
+                      </Colxx>
+                      <Colxx xxs="12" md="6">
 
 
-            <FormGroup>
-              <Label for="lname">
-                <IntlMessages id="forms.staff-lname" />
-              </Label>
-              <Input
-                type="text"
-                value={state.lname || ''}
-                onChange={(val) => setState({ ...state, lname: val.target.value })}
-                placeholder={messages['forms.staff-lname']}
-              />
-              <FormText color="muted">
-                <IntlMessages id="forms.staff-lname-muted" />
-              </FormText>
-            </FormGroup>
-          </Colxx>
-       </Row>
+                        <FormGroup>
+                          <Label for="lname">
+                            <IntlMessages id="forms.staff-lname" />
+                          </Label>
+                          <Input
+                            type="text"
+                            value={state.lname || ''}
+                            onChange={(val) => setState({ ...state, lname: val.target.value })}
+                            placeholder={messages['forms.staff-lname']}
+                          />
+                          <FormText color="muted">
+                            <IntlMessages id="forms.staff-lname-muted" />
+                          </FormText>
+                        </FormGroup>
+                      </Colxx>
+                   </Row>
 
-      </CardBody>
-    </Card>
-    {(currentUser.companyId === '123321') &&
-    <Row className="mb-4">
-      <Colxx xxs="12">
-        <Card>
-          <CardBody>
-            <CardTitle>
-              <IntlMessages id="form-staff-headshot" />
-            </CardTitle>
-            <DropzoneComponent
-              config={dropzoneComponentConfig}
-              djsConfig={dropzoneConfig}
-              eventHandlers={eventHandlers} multiple={false} />
+                  </CardBody>
+                </Card>
+                {(currentUser.companyId === '123321') &&
+                <Row className="mb-4">
+                  <Colxx xxs="12">
+                    <Card>
+                      <CardBody>
+                        <CardTitle>
+                          <IntlMessages id="form-staff-headshot" />
+                        </CardTitle>
+                        <DropzoneComponent
+                          config={dropzoneComponentConfig}
+                          djsConfig={dropzoneConfig}
+                          eventHandlers={eventHandlers} multiple={false} />
 
-          </CardBody>
-        </Card>
-      </Colxx>
-    </Row>  }
-    {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
-      <FormGroup>
-        <Label className="mt-4">
-          <IntlMessages id="forms.user-company" />   
-        </Label>
+                      </CardBody>
+                    </Card>
+                  </Colxx>
+                </Row>  }
+                {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
+                  <FormGroup>
+                    <Label className="mt-4">
+                      <IntlMessages id="forms.user-company" />   
+                    </Label>
 
-        <Select
-          components={{ Input: CustomSelectInput }}
-          className="react-select"
-          classNamePrefix="react-select"
-          name="form-field-name"
-          options={options}
-          value={selectedOptionLO}
-          onChange={(val) => setSelectedOptionLO(val)}
-        />
-      </FormGroup>
-    }
+                    <Select
+                      components={{ Input: CustomSelectInput }}
+                      className="react-select"
+                      classNamePrefix="react-select"
+                      name="form-field-name"
+                      options={options}
+                      value={selectedOptionLO}
+                      onChange={(val) => setSelectedOptionLO(val)}
+                    />
+                  </FormGroup>
+                }
 
-<FormGroup>
+
+                
+               <FormGroup>
                   <Label>
                     <IntlMessages id="forms.staff-company_name_option" />
                   </Label>
@@ -378,166 +380,164 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   />
 
                 </FormGroup>
-    
+                 
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="company_name_eng2">
+                        <IntlMessages id="forms.staff-company_name_eng2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.company_name_eng2 || ''}
+                        onChange={(val) => setState({ ...state, company_name_eng2: val.target.value })}
+                        placeholder={messages['forms.staff-company_name_eng2']}
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="company_name_eng2">
-            <IntlMessages id="forms.staff-company_name_eng2" />
-          </Label>
-          <Input
-            type="text"
-            value={state.company_name_eng2 || ''}
-            onChange={(val) => setState({ ...state, company_name_eng2: val.target.value })}
-            placeholder={messages['forms.staff-company_name_eng2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-company_name_eng2-muted" />
+                      </FormText>
+                    </FormGroup>
 
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-company_name_eng2-muted" />
-          </FormText>
-        </FormGroup>
-
-      </Colxx>
-      <Colxx xxs="12" md="6">
-
-
-        <FormGroup>
-          <Label for="company_name_chi2">
-            <IntlMessages id="forms.staff-company_name_chi2" />
-          </Label>
-          <Input
-            type="text"
-            value={state.company_name_chi2 || ''}
-            onChange={(val) => setState({ ...state, company_name_chi2: val.target.value })}
-            placeholder={messages['forms.staff-company_name_chi2']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-company_name_chi2-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
-
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="company_name_eng3">
-            <IntlMessages id="forms.staff-company_name_eng3" />
-          </Label>
-          <Input
-            type="text"
-            value={state.company_name_eng3 || ''}
-            onChange={(val) => setState({ ...state, company_name_eng3: val.target.value })}
-            placeholder={messages['forms.staff-company_name_eng3']}
-
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-company_name_eng3-muted" />
-          </FormText>
-        </FormGroup>
-
-      </Colxx>
-      <Colxx xxs="12" md="6">
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
 
 
-        <FormGroup>
-          <Label for="company_name_chi3">
-            <IntlMessages id="forms.staff-company_name_chi3" />
-          </Label>
-          <Input
-            type="text"
-            value={state.company_name_chi3 || ''}
-            onChange={(val) => setState({ ...state, company_name_chi3: val.target.value })}
-            placeholder={messages['forms.staff-company_name_chi3']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-company_name_chi3-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+                    <FormGroup>
+                      <Label for="company_name_chi2">
+                        <IntlMessages id="forms.staff-company_name_chi2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.company_name_chi2 || ''}
+                        onChange={(val) => setState({ ...state, company_name_chi2: val.target.value })}
+                        placeholder={messages['forms.staff-company_name_chi2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-company_name_chi2-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="company_name_eng3">
+                        <IntlMessages id="forms.staff-company_name_eng3" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.company_name_eng3 || ''}
+                        onChange={(val) => setState({ ...state, company_name_eng3: val.target.value })}
+                        placeholder={messages['forms.staff-company_name_eng3']}
+
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-company_name_eng3-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
 
 
-  <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="staff_no">
-            <IntlMessages id="forms.staff-staff_no" />
-          </Label>
-          <Input
-            type="text"
-            value={state.staff_no || ''}
-            onChange={(val) => setState({ ...state, staff_no: val.target.value })}
-            placeholder={messages['forms.staff-staff_no']}
-
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-staff_no-muted" />
-          </FormText>
-        </FormGroup>
-
-      </Colxx>
-      <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="company_name_chi3">
+                        <IntlMessages id="forms.staff-company_name_chi3" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.company_name_chi3 || ''}
+                        onChange={(val) => setState({ ...state, company_name_chi3: val.target.value })}
+                        placeholder={messages['forms.staff-company_name_chi3']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-company_name_chi3-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
 
-        <FormGroup>
-          <Label for="cc_no">
-            <IntlMessages id="forms.staff-cc_no" />
-          </Label>
-          <Input
-            type="text"
-            value={state.cc_no || ''}
-            onChange={(val) => setState({ ...state, cc_no: val.target.value })}
-            placeholder={messages['forms.staff-cc_no']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-cc_no-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+              <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="staff_no">
+                        <IntlMessages id="forms.staff-staff_no" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.staff_no || ''}
+                        onChange={(val) => setState({ ...state, staff_no: val.target.value })}
+                        placeholder={messages['forms.staff-staff_no']}
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="title_eng">
-            <IntlMessages id="forms.staff-title_eng" />
-          </Label>
-          <Input
-            type="text"
-            value={state.title_eng || ''}
-            onChange={(val) => setState({ ...state, title_eng: val.target.value })}
-            placeholder={messages['forms.staff-title_eng']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-staff_no-muted" />
+                      </FormText>
+                    </FormGroup>
 
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-title_eng-muted" />
-          </FormText>
-        </FormGroup>
-
-      </Colxx>
-      <Colxx xxs="12" md="6">
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
 
 
-        <FormGroup>
-          <Label for="title_chi">
-            <IntlMessages id="forms.staff-title_chi" />
-          </Label>
-          <Input
-            type="text"
-            value={state.title_chi || ''}
-            onChange={(val) => setState({ ...state, title_chi: val.target.value })}
-            placeholder={messages['forms.staff-title_chi']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-title_chi-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+                    <FormGroup>
+                      <Label for="cc_no">
+                        <IntlMessages id="forms.staff-cc_no" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.cc_no || ''}
+                        onChange={(val) => setState({ ...state, cc_no: val.target.value })}
+                        placeholder={messages['forms.staff-cc_no']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-cc_no-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
-    <Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="title_eng">
+                        <IntlMessages id="forms.staff-title_eng" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.title_eng || ''}
+                        onChange={(val) => setState({ ...state, title_eng: val.target.value })}
+                        placeholder={messages['forms.staff-title_eng']}
+
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-title_eng-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+
+
+                    <FormGroup>
+                      <Label for="title_chi">
+                        <IntlMessages id="forms.staff-title_chi" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.title_chi || ''}
+                        onChange={(val) => setState({ ...state, title_chi: val.target.value })}
+                        placeholder={messages['forms.staff-title_chi']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-title_chi-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
+                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
                       <Label for="title_eng2">
@@ -573,697 +573,664 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                     </FormGroup>
                   </Colxx>
                 </Row>
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="pro_title">
-            <IntlMessages id="forms.staff-pro_title" />
-          </Label>
-          <Input
-            type="text"
-            value={state.pro_title || ''}
-            onChange={(val) => setState({ ...state, pro_title: val.target.value })}
-            placeholder={messages['forms.staff-pro_title']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-pro_title-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
 
-        <FormGroup>
-          <Label for="work_email">
-            <IntlMessages id="forms.staff-work_email" />
-          </Label>
-          <Input
-            type="text"
-            value={state.work_email || ''}
-            onChange={(val) => setState({ ...state, work_email: val.target.value })}
-            placeholder={messages['forms.staff-work_email']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-work_email-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+            
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="division_eng">
-            <IntlMessages id="forms.staff-division_eng" />
-          </Label>
-          <Input
-            type="text"
-            value={state.division_eng || ''}
-            onChange={(val) => setState({ ...state, division_eng: val.target.value })}
-            placeholder={messages['forms.staff-division_eng']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-division_eng-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="division_eng">
+                        <IntlMessages id="forms.staff-division_eng" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.division_eng || ''}
+                        onChange={(val) => setState({ ...state, division_eng: val.target.value })}
+                        placeholder={messages['forms.staff-division_eng']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-division_eng-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
 
-        <FormGroup>
-          <Label for="division_chi">
-            <IntlMessages id="forms.staff-division_chi" />
-          </Label>
-          <Input
-            type="text"
-            value={state.division_chi || ''}
-            onChange={(val) => setState({ ...state, division_chi: val.target.value })}
-            placeholder={messages['forms.staff-division_chi']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-division_chi-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+                    <FormGroup>
+                      <Label for="division_chi">
+                        <IntlMessages id="forms.staff-division_chi" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.division_chi || ''}
+                        onChange={(val) => setState({ ...state, division_chi: val.target.value })}
+                        placeholder={messages['forms.staff-division_chi']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-division_chi-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="dept_eng">
-            <IntlMessages id="forms.staff-dept_eng" />
-          </Label>
-          <Input
-            type="text"
-            value={state.dept_eng || ''}
-            onChange={(val) => setState({ ...state, dept_eng: val.target.value })}
-            placeholder={messages['forms.staff-dept_eng']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-dept_eng-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="dept_chi">
-            <IntlMessages id="forms.staff-dept_chi" />
-          </Label>
-          <Input
-            type="text"
-            value={state.dept_chi || ''}
-            onChange={(val) => setState({ ...state, dept_chi: val.target.value })}
-            placeholder={messages['forms.staff-dept_chi']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-dept_chi-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="dept_eng">
+                        <IntlMessages id="forms.staff-dept_eng" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.dept_eng || ''}
+                        onChange={(val) => setState({ ...state, dept_eng: val.target.value })}
+                        placeholder={messages['forms.staff-dept_eng']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-dept_eng-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="dept_chi">
+                        <IntlMessages id="forms.staff-dept_chi" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.dept_chi || ''}
+                        onChange={(val) => setState({ ...state, dept_chi: val.target.value })}
+                        placeholder={messages['forms.staff-dept_chi']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-dept_chi-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
-  
+              
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="address_eng">
-            <IntlMessages id="forms.staff-address_eng" />
-          </Label>
-          <Input
-            type="text"
-            value={state.address_eng || ''}
-            onChange={(val) => setState({ ...state, address_eng: val.target.value })}
-            placeholder={messages['forms.staff-address_eng']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-address_eng-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="address_eng">
+                        <IntlMessages id="forms.staff-address_eng" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.address_eng || ''}
+                        onChange={(val) => setState({ ...state, address_eng: val.target.value })}
+                        placeholder={messages['forms.staff-address_eng']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-address_eng-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
 
-        <FormGroup>
-          <Label for="address_chi">
-            <IntlMessages id="forms.staff-address_chi" />
-          </Label>
-          <Input
-            type="text"
-            value={state.address_chi || ''}
-            onChange={(val) => setState({ ...state, address_chi: val.target.value })}
-            placeholder={messages['forms.staff-address_chi']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-address_chi-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+                    <FormGroup>
+                      <Label for="address_chi">
+                        <IntlMessages id="forms.staff-address_chi" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.address_chi || ''}
+                        onChange={(val) => setState({ ...state, address_chi: val.target.value })}
+                        placeholder={messages['forms.staff-address_chi']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-address_chi-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="address_eng2">
-            <IntlMessages id="forms.staff-address_eng2" />
-          </Label>
-          <Input
-            type="text"
-            value={state.address_eng2 || ''}
-            onChange={(val) => setState({ ...state, address_eng2: val.target.value })}
-            placeholder={messages['forms.staff-address_eng2']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-address_eng2-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="address_eng2">
+                        <IntlMessages id="forms.staff-address_eng2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.address_eng2 || ''}
+                        onChange={(val) => setState({ ...state, address_eng2: val.target.value })}
+                        placeholder={messages['forms.staff-address_eng2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-address_eng2-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
 
-        <FormGroup>
-          <Label for="address_chi2">
-            <IntlMessages id="forms.staff-address_chi2" />
-          </Label>
-          <Input
-            type="text"
-            value={state.address_chi2 || ''}
-            onChange={(val) => setState({ ...state, address_chi2: val.target.value })}
-            placeholder={messages['forms.staff-address_chi2']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-address_chi2-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+                    <FormGroup>
+                      <Label for="address_chi2">
+                        <IntlMessages id="forms.staff-address_chi2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.address_chi2 || ''}
+                        onChange={(val) => setState({ ...state, address_chi2: val.target.value })}
+                        placeholder={messages['forms.staff-address_chi2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-address_chi2-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
+                
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="work_tel">
+                        <IntlMessages id="forms.staff-work_tel" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.work_tel || ''}
+                        onChange={(val) => setState({ ...state, work_tel: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-work_tel-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="work_tel">
-            <IntlMessages id="forms.staff-work_tel" />
-          </Label>
-          <Input
-            type="text"
-            value={state.work_tel || ''}
-            onChange={(val) => setState({ ...state, work_tel: val.target.value })}
-            placeholder={messages['forms.staff-work_tel']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-work_tel-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="work_tel2">
+                        <IntlMessages id="forms.staff-work_tel2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.work_tel2 || ''}
+                        onChange={(val) => setState({ ...state, work_tel2: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-work_tel2-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
-        <FormGroup>
-          <Label for="work_tel2">
-            <IntlMessages id="forms.staff-work_tel2" />
-          </Label>
-          <Input
-            type="text"
-            value={state.work_tel2 || ''}
-            onChange={(val) => setState({ ...state, work_tel2: val.target.value })}
-            placeholder={messages['forms.staff-work_tel2']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-work_tel2-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="work_tel3">
+                        <IntlMessages id="forms.staff-work_tel3" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.work_tel3 || ''}
+                        onChange={(val) => setState({ ...state, work_tel3: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel3']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-work_tel3-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="direct_tel">
+                        <IntlMessages id="forms.staff-direct_tel" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.direct_tel || ''}
+                        onChange={(val) => setState({ ...state, direct_tel: val.target.value })}
+                        placeholder={messages['forms.staff-direct_tel']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-direct_tel-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="work_tel3">
-            <IntlMessages id="forms.staff-work_tel3" />
-          </Label>
-          <Input
-            type="text"
-            value={state.work_tel3 || ''}
-            onChange={(val) => setState({ ...state, work_tel3: val.target.value })}
-            placeholder={messages['forms.staff-work_tel3']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-work_tel3-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="direct_tel">
-            <IntlMessages id="forms.staff-direct_tel" />
-          </Label>
-          <Input
-            type="text"
-            value={state.direct_tel || ''}
-            onChange={(val) => setState({ ...state, direct_tel: val.target.value })}
-            placeholder={messages['forms.staff-direct_tel']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-direct_tel-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="direct_tel2">
+                        <IntlMessages id="forms.staff-direct_tel2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.direct_tel2 || ''}
+                        onChange={(val) => setState({ ...state, direct_tel2: val.target.value })}
+                        placeholder={messages['forms.staff-direct_tel2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-direct_tel2-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="direct_tel3">
+                        <IntlMessages id="forms.staff-direct_tel3" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.direct_tel3 || ''}
+                        onChange={(val) => setState({ ...state, direct_tel3: val.target.value })}
+                        placeholder={messages['forms.staff-direct_tel3']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-direct_tel3-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="direct_tel2">
-            <IntlMessages id="forms.staff-direct_tel2" />
-          </Label>
-          <Input
-            type="text"
-            value={state.direct_tel2 || ''}
-            onChange={(val) => setState({ ...state, direct_tel2: val.target.value })}
-            placeholder={messages['forms.staff-direct_tel2']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-direct_tel2-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="direct_tel3">
-            <IntlMessages id="forms.staff-direct_tel3" />
-          </Label>
-          <Input
-            type="text"
-            value={state.direct_tel3 || ''}
-            onChange={(val) => setState({ ...state, direct_tel3: val.target.value })}
-            placeholder={messages['forms.staff-direct_tel3']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-direct_tel3-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="mobile">
+                        <IntlMessages id="forms.staff-mobile" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.mobile || ''}
+                        onChange={(val) => setState({ ...state, mobile: val.target.value })}
+                        placeholder={messages['forms.staff-mobile']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-mobile-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="mobile2">
+                        <IntlMessages id="forms.staff-mobile2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.mobile2 || ''}
+                        onChange={(val) => setState({ ...state, mobile2: val.target.value })}
+                        placeholder={messages['forms.staff-mobile2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-mobile2-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="mobile3">
+                        <IntlMessages id="forms.staff-mobile3" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.mobile3 || ''}
+                        onChange={(val) => setState({ ...state, mobile3: val.target.value })}
+                        placeholder={messages['forms.staff-mobile3']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-mobile3-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="mobile_china_tel">
+                        <IntlMessages id="forms.staff-mobile_china_tel" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.mobile_china_tel || ''}
+                        onChange={(val) => setState({ ...state, mobile_china_tel: val.target.value })}
+                        placeholder={messages['forms.staff-mobile_china_tel']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-mobile_china_tel-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="mobile">
-            <IntlMessages id="forms.staff-mobile" />
-          </Label>
-          <Input
-            type="text"
-            value={state.mobile || ''}
-            onChange={(val) => setState({ ...state, mobile: val.target.value })}
-            placeholder={messages['forms.staff-mobile']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-mobile-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="mobile2">
-            <IntlMessages id="forms.staff-mobile2" />
-          </Label>
-          <Input
-            type="text"
-            value={state.mobile2 || ''}
-            onChange={(val) => setState({ ...state, mobile2: val.target.value })}
-            placeholder={messages['forms.staff-mobile2']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-mobile2-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="mobile3">
-            <IntlMessages id="forms.staff-mobile3" />
-          </Label>
-          <Input
-            type="text"
-            value={state.mobile3 || ''}
-            onChange={(val) => setState({ ...state, mobile3: val.target.value })}
-            placeholder={messages['forms.staff-mobile3']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-mobile3-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="mobile_china_tel">
-            <IntlMessages id="forms.staff-mobile_china_tel" />
-          </Label>
-          <Input
-            type="text"
-            value={state.mobile_china_tel || ''}
-            onChange={(val) => setState({ ...state, mobile_china_tel: val.target.value })}
-            placeholder={messages['forms.staff-mobile_china_tel']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-mobile_china_tel-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="mobile_china_tel2">
+                        <IntlMessages id="forms.staff-mobile_china_tel2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.mobile_china_tel2 || ''}
+                        onChange={(val) => setState({ ...state, mobile_china_tel2: val.target.value })}
+                        placeholder={messages['forms.staff-mobile_china_tel2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-mobile_china_tel2-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="mobile_china_tel3">
+                        <IntlMessages id="forms.staff-mobile_china_tel3" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.mobile_china_tel3 || ''}
+                        onChange={(val) => setState({ ...state, mobile_china_tel3: val.target.value })}
+                        placeholder={messages['forms.staff-mobile_china_tel3']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-mobile_china_tel3-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
+ 
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="fax">
+                        <IntlMessages id="forms.staff-fax" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.fax || ''}
+                        onChange={(val) => setState({ ...state, fax: val.target.value })}
+                        placeholder={messages['forms.staff-fax']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-fax-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="swift_no">
+                        <IntlMessages id="forms.staff-swift_no" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.swift_no || ''}
+                        onChange={(val) => setState({ ...state, swift_no: val.target.value })}
+                        placeholder={messages['forms.staff-swift_no']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-swift_no-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="mobile_china_tel2">
-            <IntlMessages id="forms.staff-mobile_china_tel2" />
-          </Label>
-          <Input
-            type="text"
-            value={state.mobile_china_tel2 || ''}
-            onChange={(val) => setState({ ...state, mobile_china_tel2: val.target.value })}
-            placeholder={messages['forms.staff-mobile_china_tel2']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-mobile_china_tel2-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="mobile_china_tel3">
-            <IntlMessages id="forms.staff-mobile_china_tel3" />
-          </Label>
-          <Input
-            type="text"
-            value={state.mobile_china_tel3 || ''}
-            onChange={(val) => setState({ ...state, mobile_china_tel3: val.target.value })}
-            placeholder={messages['forms.staff-mobile_china_tel3']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-mobile_china_tel3-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="work_email">
+                        <IntlMessages id="forms.staff-work_email" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.work_email || ''}
+                        onChange={(val) => setState({ ...state, work_email: val.target.value })}
+                        placeholder={messages['forms.staff-work_email']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-work_email-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="work_email2">
+                        <IntlMessages id="forms.staff-work_email2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.work_email2 || ''}
+                        onChange={(val) => setState({ ...state, work_email2: val.target.value })}
+                        placeholder={messages['forms.staff-work_email2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-work_email2-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="fax">
-            <IntlMessages id="forms.staff-fax" />
-          </Label>
-          <Input
-            type="text"
-            value={state.fax || ''}
-            onChange={(val) => setState({ ...state, fax: val.target.value })}
-            placeholder={messages['forms.staff-fax']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-fax-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="swift_no">
-            <IntlMessages id="forms.staff-swift_no" />
-          </Label>
-          <Input
-            type="text"
-            value={state.swift_no || ''}
-            onChange={(val) => setState({ ...state, swift_no: val.target.value })}
-            placeholder={messages['forms.staff-swift_no']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-swift_no-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+               
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="work_email">
-            <IntlMessages id="forms.staff-work_email" />
-          </Label>
-          <Input
-            type="text"
-            value={state.work_email || ''}
-            onChange={(val) => setState({ ...state, work_email: val.target.value })}
-            placeholder={messages['forms.staff-work_email']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-work_email-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="work_email2">
-            <IntlMessages id="forms.staff-work_email2" />
-          </Label>
-          <Input
-            type="text"
-            value={state.work_email2 || ''}
-            onChange={(val) => setState({ ...state, work_email2: val.target.value })}
-            placeholder={messages['forms.staff-work_email2']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-work_email2-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="work_email3">
+                        <IntlMessages id="forms.staff-work_email3" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.work_email3 || ''}
+                        onChange={(val) => setState({ ...state, work_email3: val.target.value })}
+                        placeholder={messages['forms.staff-work_email3']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-work_email3-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
+                      <Label for="pro_title">
+                        <IntlMessages id="forms.staff-pro_title" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.pro_title || ''}
+                        onChange={(val) => setState({ ...state, pro_title: val.target.value })}
+                        placeholder={messages['forms.staff-pro_title']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-pro_title-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
-   
-
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="work_email3">
-            <IntlMessages id="forms.staff-work_email3" />
-          </Label>
-          <Input
-            type="text"
-            value={state.work_email3 || ''}
-            onChange={(val) => setState({ ...state, work_email3: val.target.value })}
-            placeholder={messages['forms.staff-work_email3']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-work_email3-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="web_link">
-            <IntlMessages id="forms.staff-web_link" />
-          </Label>
-          <Input
-            type="text"
-            value={state.web_link || ''}
-            onChange={(val) => setState({ ...state, web_link: val.target.value })}
-            placeholder={messages['forms.staff-web_link']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-web_link-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-    </Row>
-
-     
+                 
+ 
 
 
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="web_link">
+                        <IntlMessages id="forms.staff-web_link" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.web_link || ''}
+                        onChange={(val) => setState({ ...state, web_link: val.target.value })}
+                        placeholder={messages['forms.staff-web_link']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-web_link-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="web_link_label">
+                        <IntlMessages id="forms.staff-web_link_label" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.web_link_label || ''}
+                        onChange={(val) => setState({ ...state, web_link_label: val.target.value })}
+                        placeholder={messages['forms.staff-web_link_label']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-web_link_label-muted" />
+                      </FormText>
+                    </FormGroup>
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="web_link">
-            <IntlMessages id="forms.staff-web_link" />
-          </Label>
-          <Input
-            type="text"
-            value={state.web_link || ''}
-            onChange={(val) => setState({ ...state, web_link: val.target.value })}
-            placeholder={messages['forms.staff-web_link']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-web_link-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="web_link_label">
-            <IntlMessages id="forms.staff-web_link_label" />
-          </Label>
-          <Input
-            type="text"
-            value={state.web_link_label || ''}
-            onChange={(val) => setState({ ...state, web_link_label: val.target.value })}
-            placeholder={messages['forms.staff-web_link_label']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-web_link_label-muted" />
-          </FormText>
-        </FormGroup>
-
-      </Colxx>
-    </Row>
-
-
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="web_link2">
-            <IntlMessages id="forms.staff-web_link2" />
-          </Label>
-          <Input
-            type="text"
-            value={state.web_link2 || ''}
-            onChange={(val) => setState({ ...state, web_link2: val.target.value })}
-            placeholder={messages['forms.staff-web_link2']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-web_link2-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="web_link_label2">
-            <IntlMessages id="forms.staff-web_link_label2" />
-          </Label>
-          <Input
-            type="text"
-            value={state.web_link_label2 || ''}
-            onChange={(val) => setState({ ...state, web_link_label2: val.target.value })}
-            placeholder={messages['forms.staff-web_link_label2']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-web_link_label2-muted" />
-          </FormText>
-        </FormGroup>
-
-      </Colxx>
-    </Row>
-
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="web_link3">
-            <IntlMessages id="forms.staff-web_link3" />
-          </Label>
-          <Input
-            type="text"
-            value={state.web_link3 || ''}
-            onChange={(val) => setState({ ...state, web_link3: val.target.value })}
-            placeholder={messages['forms.staff-web_link3']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-web_link3-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="web_link_label3">
-            <IntlMessages id="forms.staff-web_link_label3" />
-          </Label>
-          <Input
-            type="text"
-            value={state.web_link_label3 || ''}
-            onChange={(val) => setState({ ...state, web_link_label3: val.target.value })}
-            placeholder={messages['forms.staff-web_link_label3']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-web_link_label3-muted" />
-          </FormText>
-        </FormGroup>
-
-      </Colxx>
-    </Row>
+                  </Colxx>
+                </Row>
 
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="agent_no">
-            <IntlMessages id="forms.staff-agent_no" />
-          </Label>
-          <Input
-            type="text"
-            value={state.agent_no || ''}
-            onChange={(val) => setState({ ...state, agent_no: val.target.value })}
-            placeholder={messages['forms.staff-agent_no']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-agent_no-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="insurance_no">
-            <IntlMessages id="forms.staff-insurance_no" />
-          </Label>
-          <Input
-            type="text"
-            value={state.insurance_no || ''}
-            onChange={(val) => setState({ ...state, insurance_no: val.target.value })}
-            placeholder={messages['forms.staff-insurance_no']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-insurance_no-muted" />
-          </FormText>
-        </FormGroup>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="web_link2">
+                        <IntlMessages id="forms.staff-web_link2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.web_link2 || ''}
+                        onChange={(val) => setState({ ...state, web_link2: val.target.value })}
+                        placeholder={messages['forms.staff-web_link2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-web_link2-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="web_link_label2">
+                        <IntlMessages id="forms.staff-web_link_label2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.web_link_label2 || ''}
+                        onChange={(val) => setState({ ...state, web_link_label2: val.target.value })}
+                        placeholder={messages['forms.staff-web_link_label2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-web_link_label2-muted" />
+                      </FormText>
+                    </FormGroup>
 
-      </Colxx>
-    </Row>
+                  </Colxx>
+                </Row>
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="web_link3">
+                        <IntlMessages id="forms.staff-web_link3" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.web_link3 || ''}
+                        onChange={(val) => setState({ ...state, web_link3: val.target.value })}
+                        placeholder={messages['forms.staff-web_link3']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-web_link3-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="web_link_label3">
+                        <IntlMessages id="forms.staff-web_link_label3" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.web_link_label3 || ''}
+                        onChange={(val) => setState({ ...state, web_link_label3: val.target.value })}
+                        placeholder={messages['forms.staff-web_link_label3']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-web_link_label3-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                </Row>
 
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label for="mpf_no">
-            <IntlMessages id="forms.staff-mpf_no" />
-          </Label>
-          <Input
-            type="text"
-            value={state.mpf_no || ''}
-            onChange={(val) => setState({ ...state, mpf_no: val.target.value })}
-            placeholder={messages['forms.staff-mpf_no']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-mpf_no-muted" />
-          </FormText>
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label for="hkma_no">
-            <IntlMessages id="forms.staff-hkma_no" />
-          </Label>
-          <Input
-            type="text"
-            value={state.hkma_no || ''}
-            onChange={(val) => setState({ ...state, hkma_no: val.target.value })}
-            placeholder={messages['forms.staff-hkma_no']}
-          />
-          <FormText color="muted">
-            <IntlMessages id="forms.staff-hkma_no-muted" />
-          </FormText>
-        </FormGroup>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="agent_no">
+                        <IntlMessages id="forms.staff-agent_no" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.agent_no || ''}
+                        onChange={(val) => setState({ ...state, agent_no: val.target.value })}
+                        placeholder={messages['forms.staff-agent_no']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-agent_no-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="insurance_no">
+                        <IntlMessages id="forms.staff-insurance_no" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.insurance_no || ''}
+                        onChange={(val) => setState({ ...state, insurance_no: val.target.value })}
+                        placeholder={messages['forms.staff-insurance_no']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-insurance_no-muted" />
+                      </FormText>
+                    </FormGroup>
 
-      </Colxx>
-    </Row>
+                  </Colxx>
+                </Row>
+
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="mpf_no">
+                        <IntlMessages id="forms.staff-mpf_no" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.mpf_no || ''}
+                        onChange={(val) => setState({ ...state, mpf_no: val.target.value })}
+                        placeholder={messages['forms.staff-mpf_no']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-mpf_no-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="hkma_no">
+                        <IntlMessages id="forms.staff-hkma_no" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.hkma_no || ''}
+                        onChange={(val) => setState({ ...state, hkma_no: val.target.value })}
+                        placeholder={messages['forms.staff-hkma_no']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-hkma_no-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                </Row>
 
 
 
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-      <FormGroup>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
                     <Label>
                       <IntlMessages id="forms.staff-type1_no" />
                     </Label>
@@ -1296,9 +1263,9 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       }
                     /> 
                   </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-      <FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                  <FormGroup>
                     <Label>
                       <IntlMessages id="forms.staff-type4_no" />
                     </Label>
@@ -1331,12 +1298,11 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       }
                     /> 
                   </FormGroup>
+                  </Colxx>
+                </Row>
 
-      </Colxx>
-    </Row>
 
-
-    <Row>
+                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                     <Label>
@@ -1445,7 +1411,6 @@ const EditClientModal = ({ intl, match, currentUser}) => {
 
                   </Colxx>
                 </Row>
-     
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
@@ -1913,45 +1878,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                      
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                    <FormGroup>
-                      <Label for="field070">
-                        <IntlMessages id="forms.staff-field070" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.field070 || ''}
-                        onChange={(val) => setState({ ...state, field070: val.target.value })}
-                        placeholder={messages['forms.staff-field070']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-field070-muted" />
-                      </FormText>
-                    </FormGroup>
-
-                  </Colxx>
-                </Row>
-    <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
-                  <Label for="note">
-                        <IntlMessages id="forms.staff-smartcard_uid" />
-                  </Label>
-                  <Select
-                    components={{ Input: CustomSelectInput }}
-                    className="react-select"
-                    classNamePrefix="react-select"
-                    name="form-field-smartcard_uid" 
-                    options={smartIdSelectData}
-                     value={smartIdSelectData.find(obj => {
-                      return obj.value === state.smartcard_uid;
-                    })}
-                    onChange={(val) => setState({ ...state, smartcard_uid: val.value })}
-                   
-                  />
                  
-                  </FormGroup>
-                  </Colxx>
-                  <Colxx xxs="12" md="6" >
                   <FormGroup>
                   <Label>
                     <IntlMessages id="forms.staff-qrcode_option" />
@@ -1972,85 +1899,111 @@ const EditClientModal = ({ intl, match, currentUser}) => {
 
                 </FormGroup>
                   </Colxx>
+                </Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
+                  <Label for="smartcard_uid">
+                        <IntlMessages id="forms.staff-smartcard_uid" />
+                  </Label>
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    name="form-field-smartcard_uid" 
+                    options={smartIdSelectData}
+                     value={smartIdSelectData.find(obj => {
+                      return obj.value === state.smartcard_uid;
+                    })}
+                    onChange={(val) => setState({ ...state, smartcard_uid: val.value })}
+                   
+                  />
+                 
+                  </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6" >
+                 
+                  </Colxx>
                 </Row>   
 
-    <Row>
-      <Colxx xxs="12" md="6" className="mb-5">
-        <FormGroup>
-          <Label>
-            <IntlMessages id="forms.staff-bizcard_option" />
-          </Label>
-          <CustomInput
-            type="radio"
-            id="exCustomRadio2"
-            name="customRadio2"
-            label="eprofile"
-            checked={state.bizcard_option === true}
-            onChange={(event) =>
-              setState({
-                ...state,
-                bizcard_option: event.target.value === 'on',
-              })
-            }
-          />
+
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
+                      <Label>
+                        <IntlMessages id="forms.staff-bizcard_option" />
+                      </Label>
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio2"
+                        name="customRadio2"
+                        label="eprofile"
+                        checked={state.bizcard_option === true}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            bizcard_option: event.target.value === 'on',
+                          })
+                        }
+                      />
 
 
-          <CustomInput
-            type="radio"
-            id="exCustomRadio"
-            name="customRadio"
-            label="vcf"
-            checked={state.bizcard_option === false}
-            onChange={(event) =>
-              setState({
-                ...state,
-                bizcard_option: event.target.value !== 'on',
-              })
-            }
-          />
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio"
+                        name="customRadio"
+                        label="vcf"
+                        checked={state.bizcard_option === false}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            bizcard_option: event.target.value !== 'on',
+                          })
+                        }
+                      />
 
 
-        </FormGroup>
-      </Colxx>
-      <Colxx xxs="12" md="6">
-        <FormGroup>
-          <Label>
-            <IntlMessages id="forms.staff-status" />
-          </Label>
-          <CustomInput
-            type="radio"
-            id="exCustomRadio3"
-            name="customRadio3"
-            label="Active"
-            checked={state.status === true}
-            onChange={(event) =>
-              setState({
-                ...state,
-                status: event.target.value === 'on',
-              })
-            }
-          />
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label>
+                        <IntlMessages id="forms.staff-status" />
+                      </Label>
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio3"
+                        name="customRadio3"
+                        label="Active"
+                        checked={state.status === true}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            status: event.target.value === 'on',
+                          })
+                        }
+                      />
 
 
-          <CustomInput
-            type="radio"
-            id="exCustomRadio4"
-            name="customRadio4"
-            label="Disable"
-            checked={state.status === false}
-            onChange={(event) =>
-              setState({
-                ...state,
-                status: event.target.value !== 'on',
-              })
-            }
-          />
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio4"
+                        name="customRadio4"
+                        label="Disable"
+                        checked={state.status === false}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            status: event.target.value !== 'on',
+                          })
+                        }
+                      />
 
 
-        </FormGroup>
+                    </FormGroup>
 
-      </Colxx>
-    </Row>
+                  </Colxx>
+                </Row>
     <Button color="primary" className="mt-4" onClick={updateStaff}>
                   <IntlMessages id="forms.submit" />
                 </Button>
