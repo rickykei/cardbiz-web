@@ -168,7 +168,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
   const[file2,setFile]=useState(null);
   const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
   const [smartIdSelectData,setSmartIdSelectData] = useState([]);
-
+  const [isDisabled, setIsDisabled] = useState(false);
+  
 
   const getStaff = (aa) => {
     StaffDataService.get(aa)
@@ -186,8 +187,9 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     getStaff(id);
   }, [id]);
 
-  const updateStaff = () => {
-   
+  const updateStaff = (e) => {
+    setIsDisabled(true);  
+    e.preventDefault();
     const data = new FormData() 
   
     if(file2 !== null)
@@ -207,9 +209,11 @@ const EditClientModal = ({ intl, match, currentUser}) => {
       .then(response => {
         console.log(response.data);
         setMessage("The Staff was updated successfully!");
+        setIsDisabled(false); // <--- here
         history.push("/app/staffs/staffs-list");
       })
       .catch(e => {
+        setIsDisabled(false); // <--- here
         console.log(e);
       });
   };
@@ -2004,7 +2008,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
 
                   </Colxx>
                 </Row>
-    <Button color="primary" className="mt-4" onClick={updateStaff}>
+    <Button color="primary" className="mt-4" onClick={(e) => updateStaff(e)} disabled={isDisabled}>
                   <IntlMessages id="forms.submit" />
                 </Button>
                 <p>{message}</p>

@@ -18,9 +18,7 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 import { servicePath2,qrcodeSelectData,companyNameSelectData} from 'constants/defaultValues';
 import axios from 'axios';
 import DropzoneComponent from 'react-dropzone-component';
-
-
-
+ 
 const apiUrl = `${servicePath2}/companies/codelist`;
 
 
@@ -187,10 +185,11 @@ const AddNewStaffModal = ({
   const { messages } = intl;
   const [smartIdSelectData,setSmartIdSelectData] = useState([]);
   const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}`;
-  var clickCount=0;
-  
-  const addNetItem = () => {
-    if (clickCount==0){
+  const [isDisabled, setIsDisabled] = useState(false);
+ 
+  const addNetItem = (e) => {
+    setIsDisabled(true);  
+    e.preventDefault();
     const newItem = {
       company_id: selectedOptionLO.value,
       company_name_option: state.company_name_option,
@@ -287,7 +286,7 @@ const AddNewStaffModal = ({
     if (file2 !== null)
       data.append("file", file2);
 
-    /* eslint-disable no-restricted-syntax */
+      /* eslint-disable no-restricted-syntax */
 
     for (const [key, val] of Object.entries(newItem)) {
       
@@ -300,16 +299,11 @@ const AddNewStaffModal = ({
       } else {
         data.append(key, val);
       }
-    }
-
-
+    } 
     addStaffItemAction(data);
-
-    history.push("/app/staffs/staffs-list");
-
-    setState(initialState);
-    clickCount++;
-    }
+    setIsDisabled(false); 
+    setState(initialState); 
+    history.push("/app/staffs/staffs-list"); 
   };
 
   async function fetchData() {
@@ -2102,7 +2096,7 @@ const AddNewStaffModal = ({
 
                   </Colxx>
                 </Row>
-                <Button color="primary" className="mt-4" onClick={() => addNetItem()}>
+                <Button color="primary" className="mt-4" onClick={(e) => addNetItem(e)} disabled={isDisabled}>
                   <IntlMessages id="forms.submit" />
                 </Button>
               </Form>

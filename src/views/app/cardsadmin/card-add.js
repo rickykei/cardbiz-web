@@ -38,8 +38,12 @@ const AddNewCardModal = ({
   const [options, setOptions] = useState([]);
   const [state, setState] = useState(initialState);
   const history = useHistory();
- 
-  const addNetItem = () => {
+  const [isDisabled, setIsDisabled] = useState(false);
+  const { messages } = intl;
+
+  const addNetItem = (e) => {
+    setIsDisabled(true);  
+    e.preventDefault();
     const newItem = {
       uid: state.uid,
       status: state.status,
@@ -49,18 +53,18 @@ const AddNewCardModal = ({
     CardDataService.create(newItem)
     .then(response => {
       console.log(response.data);
-       
+      setIsDisabled(false); // <--- here
       history.push("/app/cards/cards-list");
     })
     .catch(e => {
-      console.log(e);
-    });
-  
-    setState(initialState);
-  };
- 
-  const { messages } = intl;
+      setIsDisabled(false); // <--- here
+      console.log(e);  
+    }); 
 
+    setState(initialState);
+  } 
+ 
+ 
   async function fetchData() {
     axios.get(`${apiUrl}`)
       .then((res) => {
@@ -178,7 +182,7 @@ const AddNewCardModal = ({
 
                 </Colxx>
                 </Row>
-                <Button color="primary" className="mt-4" onClick={() => addNetItem()}>
+                <Button color="primary" className="mt-4" onClick={(e) => addNetItem(e)} disabled={isDisabled}>
                   <IntlMessages id="forms.submit" />
                 </Button>
               </Form>
