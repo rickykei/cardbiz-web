@@ -18,7 +18,7 @@ const DeleteClientModal = () => {
         if (res){
           setStatus( 'Delete successful' );
         }
-        history.push("/app/cards/cards-list");
+        history.push("/app/cardsadmin/cards-list");
         
       }).catch(error => {
         setErrorMessage(error.message);

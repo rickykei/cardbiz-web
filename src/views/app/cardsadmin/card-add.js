@@ -17,7 +17,9 @@ import axios from 'axios';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import CardDataService from 'services/CardsService';
 
-
+const delay = ms => new Promise(
+  resolve => setTimeout(resolve, ms)
+);
  
 const apiUrl = `${servicePath2}/companies/codelist`;
 
@@ -38,31 +40,33 @@ const AddNewCardModal = ({
   const [options, setOptions] = useState([]);
   const [state, setState] = useState(initialState);
   const history = useHistory();
-  const [isDisabled, setIsDisabled] = useState(false);
+  let [enabled, setEnabled] = useState(true);
+
   const { messages } = intl;
 
-  const addNetItem = (e) => {
-    setIsDisabled(true);  
+  const addNetItem =  async (e) => {
     e.preventDefault();
+    setEnabled(false);
+    console.log('submitted!')  
     const newItem = {
       uid: state.uid,
       status: state.status,
       company_id: selectedOptionLO.value,
     }
     
-    CardDataService.create(newItem)
+   await CardDataService.create(newItem)
     .then(response => {
       console.log(response.data);
-      setIsDisabled(false); // <--- here
-      history.push("/app/cards/cards-list");
+      setState(initialState); 
+      delay(1000);
+      history.push("/app/cardsadmin/cards-list");
     })
     .catch(e => {
-      setIsDisabled(false); // <--- here
+       
       console.log(e);  
     }); 
-
-    setState(initialState);
-  } 
+   
+  }; 
  
  
   async function fetchData() {
@@ -182,7 +186,7 @@ const AddNewCardModal = ({
 
                 </Colxx>
                 </Row>
-                <Button color="primary" className="mt-4" onClick={(e) => addNetItem(e)} disabled={isDisabled}>
+                <Button color="primary" className="mt-4" onClick={(e) => addNetItem(e)} disabled={!enabled}>
                   <IntlMessages id="forms.submit" />
                 </Button>
               </Form>

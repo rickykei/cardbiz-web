@@ -21,7 +21,9 @@ import DropzoneComponent from 'react-dropzone-component';
  
 const apiUrl = `${servicePath2}/companies/codelist`;
 
-
+const delay = ms => new Promise(
+  resolve => setTimeout(resolve, ms)
+);
 const ReactDOMServer = require('react-dom/server');
 
 const dropzoneComponentConfig = {
@@ -78,6 +80,7 @@ const dropzoneConfig = {
   headers: { 'My-Awesome-Header': 'header value' },
 };
 
+ 
 
 
 const AddNewStaffModal = ({
@@ -185,11 +188,12 @@ const AddNewStaffModal = ({
   const { messages } = intl;
   const [smartIdSelectData,setSmartIdSelectData] = useState([]);
   const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}`;
-  const [isDisabled, setIsDisabled] = useState(false);
- 
-  const addNetItem = (e) => {
-    setIsDisabled(true);  
+  let [enabled, setEnabled] = useState(true);
+
+  const addNetItem = async (e) => {
     e.preventDefault();
+    setEnabled(false);
+    console.log('submitted!')
     const newItem = {
       company_id: selectedOptionLO.value,
       company_name_option: state.company_name_option,
@@ -300,13 +304,13 @@ const AddNewStaffModal = ({
         data.append(key, val);
       }
     } 
-    addStaffItemAction(data);
-    setIsDisabled(false); 
+    addStaffItemAction(data); 
     setState(initialState); 
+    await delay(1000);
     history.push("/app/staffs/staffs-list"); 
   };
 
-  async function fetchData() {
+  async  function fetchData() {
     axios.get(`${apiUrl}`)
       .then((res) => {
         return res.data;
@@ -2096,7 +2100,7 @@ const AddNewStaffModal = ({
 
                   </Colxx>
                 </Row>
-                <Button color="primary" className="mt-4" onClick={(e) => addNetItem(e)} disabled={isDisabled}>
+                <Button color="primary" className="mt-4" onClick={(e) => addNetItem(e)} disabled={!enabled}>
                   <IntlMessages id="forms.submit" />
                 </Button>
               </Form>

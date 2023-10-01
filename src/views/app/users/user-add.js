@@ -18,7 +18,8 @@ import { servicePath2 } from 'constants/defaultValues';
 import axios from 'axios';
 
 const apiUrl = `${servicePath2}/companies/codelist`;
-  
+const delay = ms => new Promise(  resolve => setTimeout(resolve, ms));
+
 const AddNewUserModal = ({
   addUserItemAction, intl, match, currentUser
 }) => {
@@ -31,12 +32,16 @@ const AddNewUserModal = ({
     companies: [],
     status: true,
   };
+  let [enabled, setEnabled] = useState(true);
+  const { messages } = intl;
   const [state, setState] = useState(initialState);
   const history = useHistory();
- 
   const [options, setOptions] = useState([]);
-  const addNetItem = () => {
 
+  const addNetItem = async (e) => {
+    e.preventDefault();
+    setEnabled(false);
+    console.log('submitted!')  
     if (state.company_id ===undefined) {
       state.company_id= currentUser.companyId;
     }
@@ -50,11 +55,11 @@ const AddNewUserModal = ({
     };
    
     addUserItemAction(newItem);
-
+    setState(initialState); 
+    await delay(1000);
     history.push("/app/users/users-list");
  
   };
-  const { messages } = intl;
 
   async function fetchData() {
     axios.get(`${apiUrl}`)
@@ -191,7 +196,7 @@ const AddNewUserModal = ({
 
 
                 </FormGroup>
-                <Button color="primary" className="mt-4" onClick={() => addNetItem()}>
+                <Button color="primary" className="mt-4" onClick={(e) => addNetItem(e)} disabled={!enabled}>
                   <IntlMessages id="forms.submit" />
                 </Button>
               </Form>

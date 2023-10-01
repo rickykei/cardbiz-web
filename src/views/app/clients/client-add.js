@@ -15,7 +15,10 @@ import Breadcrumb from 'containers/navs/Breadcrumb';
 import { addClientItem } from 'redux/actions';
 import { useHistory } from "react-router-dom";
 
-
+ 
+const delay = ms => new Promise(
+  resolve => setTimeout(resolve, ms)
+);
 const AddNewClientModal = ({
 
   addClientItemAction, intl, match,
@@ -31,9 +34,14 @@ const AddNewClientModal = ({
   };
   const [state, setState] = useState(initialState);
   const history = useHistory();
+  let [enabled, setEnabled] = useState(true);
+  const { messages } = intl;
 
-  const addNetItem = () => {
-    const newItem = {
+  const addNetItem = async (e) => {
+    e.preventDefault();
+    setEnabled(false);
+    console.log('submitted!')  
+  const newItem = {
       name: state.name,
       code: state.code,
       no_of_license: state.no_of_license,
@@ -41,14 +49,12 @@ const AddNewClientModal = ({
       smartcard_uid: state.smartcard_uid,
       status: state.status,
     };
-    console.log(newItem);
     addClientItemAction(newItem);
-
+    setState(initialState); 
+    await delay(1000);
     history.push("/app/clients/clients-list");
-
-    setState(initialState);
   };
-  const { messages } = intl;
+
   return (
 
     <>
@@ -161,7 +167,7 @@ const AddNewClientModal = ({
                 
                   
                 </FormGroup>
-                <Button color="primary" className="mt-4" onClick={() => addNetItem()}>
+                <Button color="primary" className="mt-4" onClick={(e) => addNetItem(e)} disabled={!enabled}>
                   <IntlMessages id="forms.submit" />
                 </Button>
               </Form>
