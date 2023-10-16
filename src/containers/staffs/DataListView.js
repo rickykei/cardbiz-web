@@ -36,7 +36,7 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
                 </p>
               </NavLink>
               <p className="mb-1 text-small w-10 w-sm-100 ">
-                {product.company_id.code}
+                {product.cc_no}
               </p>
               <p className="mb-1 text-muted text-small w-10 w-sm-100">
                 {product.updatedAt}

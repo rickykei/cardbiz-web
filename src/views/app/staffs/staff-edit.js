@@ -285,7 +285,44 @@ const EditClientModal = ({ intl, match, currentUser}) => {
 
     <Card className="mb-4">
       <CardBody>
-         
+      <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
+                      <Label for="cc_no">
+                        <IntlMessages id="forms.staff-cc_no" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.cc_no || ''}
+                        onChange={(val) => setState({ ...state, cc_no: val.target.value })}
+                        placeholder={messages['forms.staff-cc_no']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-cc_no-muted" />
+                      </FormText>
+                    </FormGroup> 
+
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+
+
+                    <FormGroup>
+                      <Label for="staff_no">
+                        <IntlMessages id="forms.staff-staff_no" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.staff_no || ''}
+                        onChange={(val) => setState({ ...state, staff_no: val.target.value })}
+                        placeholder={messages['forms.staff-staff_no']}
+
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-staff_no-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
         
       <Row>
                       <Colxx xxs="12" md="6" className="mb-5">
@@ -464,44 +501,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                 </Row>
 
 
-              <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
-                      <Label for="staff_no">
-                        <IntlMessages id="forms.staff-staff_no" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.staff_no || ''}
-                        onChange={(val) => setState({ ...state, staff_no: val.target.value })}
-                        placeholder={messages['forms.staff-staff_no']}
-
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-staff_no-muted" />
-                      </FormText>
-                    </FormGroup>
-
-                  </Colxx>
-                  <Colxx xxs="12" md="6">
-
-
-                    <FormGroup>
-                      <Label for="cc_no">
-                        <IntlMessages id="forms.staff-cc_no" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.cc_no || ''}
-                        onChange={(val) => setState({ ...state, cc_no: val.target.value })}
-                        placeholder={messages['forms.staff-cc_no']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-cc_no-muted" />
-                      </FormText>
-                    </FormGroup>
-                  </Colxx>
-                </Row>
+            
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
@@ -1042,7 +1042,25 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   </Colxx>
                 </Row>
 
+                <Row>
+                <Colxx xxs="12" md="6">
+                  <FormGroup>
+                      <Label for="pro_title2">
+                        <IntlMessages id="forms.staff-pro_title2" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.pro_title2 || ''}
+                        onChange={(val) => setState({ ...state, pro_title2: val.target.value })}
+                        placeholder={messages['forms.staff-pro_title2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-pro_title2-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
                  
+                </Row>
  
 
 
