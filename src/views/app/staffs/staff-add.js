@@ -170,6 +170,7 @@ const AddNewStaffModal = ({
       field068: "", 
       field069: "", 
       field070: "",  
+      field071: "",
       reuters_code: "", 
       bloomberg_info: "",  
     smartcard_uid: "",
@@ -277,6 +278,7 @@ const AddNewStaffModal = ({
         field068: state.field068,
         field069: state.field069,
         field070: state.field070,  
+        field071: state.field071, 
         smartcard_uid: state.smartcard_uid,
         bizcard_option: state.bizcard_option,
         updatedBy:  currentUser.uid,
@@ -1144,17 +1146,17 @@ const AddNewStaffModal = ({
                 <Row>
                 <Colxx xxs="12" md="6">
                   <FormGroup>
-                      <Label for="pro_title2">
-                        <IntlMessages id="forms.staff-pro_title2" />
+                      <Label for="field071">
+                        <IntlMessages id="forms.staff-field071" />
                       </Label>
                       <Input
                         type="text"
-                        value={state.pro_title2 || ''}
-                        onChange={(val) => setState({ ...state, pro_title2: val.target.value })}
-                        placeholder={messages['forms.staff-pro_title2']}
+                        value={state.field071 || ''}
+                        onChange={(val) => setState({ ...state, field071: val.target.value })}
+                        placeholder={messages['forms.staff-field071']}
                       />
                       <FormText color="muted">
-                        <IntlMessages id="forms.staff-pro_title2-muted" />
+                        <IntlMessages id="forms.staff-field071-muted" />
                       </FormText>
                     </FormGroup>
                   </Colxx>

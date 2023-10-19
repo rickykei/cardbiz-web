@@ -1045,17 +1045,17 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                 <Row>
                 <Colxx xxs="12" md="6">
                   <FormGroup>
-                      <Label for="pro_title2">
-                        <IntlMessages id="forms.staff-pro_title2" />
+                      <Label for="field071">
+                        <IntlMessages id="forms.staff-field071" />
                       </Label>
                       <Input
                         type="text"
-                        value={state.pro_title2 || ''}
-                        onChange={(val) => setState({ ...state, pro_title2: val.target.value })}
-                        placeholder={messages['forms.staff-pro_title2']}
+                        value={state.field071 || ''}
+                        onChange={(val) => setState({ ...state, field071: val.target.value })}
+                        placeholder={messages['forms.staff-field071']}
                       />
                       <FormText color="muted">
-                        <IntlMessages id="forms.staff-pro_title2-muted" />
+                        <IntlMessages id="forms.staff-field071-muted" />
                       </FormText>
                     </FormGroup>
                   </Colxx>
