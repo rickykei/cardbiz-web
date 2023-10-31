@@ -22,7 +22,9 @@ import DropzoneComponent from 'react-dropzone-component';
 
 
 const apiUrl = `${servicePath2}/companies/codelist`;
-
+const delay = ms => new Promise(
+  resolve => setTimeout(resolve, ms)
+);
 
 const ReactDOMServer = require('react-dom/server');
 
@@ -176,8 +178,12 @@ const AddNewStaffModal = ({
   const { messages } = intl;
   const [smartIdSelectData,setSmartIdSelectData] = useState([]);
   const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}`;
-
-  const addNetItem = () => {
+  let [enabled, setEnabled] = useState(true);
+  
+  const addNetItem =  async (e) => {
+    e.preventDefault();
+    setEnabled(false);
+    console.log('submitted!')
     const newItem = {
       company_name_chi: state.company_name_chi,
       company_name_eng: state.company_name_eng,
@@ -281,10 +287,9 @@ qrcode_option: state.qrcode_option,
 
 
     addStaffItemAction(data);
-
-    history.push("/app/staffs/staffs-list");
-
     setState(initialState);
+    await delay(1000);
+    history.push("/app/staffs/staffs-list");
   };
 
   async function fetchData() {
@@ -1765,7 +1770,7 @@ qrcode_option: state.qrcode_option,
                </FormGroup>
                </Colxx>
                </Row>  
-                <Button color="primary" className="mt-4" onClick={() => addNetItem()}>
+                <Button color="primary" className="mt-4" onClick={(e) => addNetItem(e)} disabled={!enabled}>
                   <IntlMessages id="forms.submit" />
                 </Button>
               </Form>

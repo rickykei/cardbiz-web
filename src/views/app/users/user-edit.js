@@ -38,8 +38,9 @@ const EditUserModal = ({ intl, match, }) => {
   const [state, setState] = useState(initialState);
   const history = useHistory();
   const [message, setMessage] = useState("");
-  
   const [options, setOptions] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const getUser = (aa) => {
     UserDataService.get(aa)
       .then(response => {
@@ -72,13 +73,14 @@ const EditUserModal = ({ intl, match, }) => {
       })
   }
 
-  const updateUser = () => {
-   
-    
+  const updateUser = (e) => {
+    setIsDisabled(true);  
+    e.preventDefault();
     UserDataService.update(state.id, state)
       .then(response => {
         console.log(response.data);
         setMessage("The user was updated successfully!");
+        setIsDisabled(false); // <--- here
         history.push("/app/users/users-list");
       })
       .catch(e => {
@@ -207,7 +209,7 @@ const EditUserModal = ({ intl, match, }) => {
 
 
                 </FormGroup>
-                <Button color="primary" className="mt-4" onClick={updateUser}>
+                <Button color="primary" className="mt-4"  onClick={(e) => updateUser(e)} disabled={isDisabled}>
                   <IntlMessages id="forms.submit" />
                 </Button>
                 <p>{message}</p>

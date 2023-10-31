@@ -32,6 +32,8 @@ const EditClientModal = ({ intl, match, }) => {
   const [state, setState] = useState(initialState);
   const history = useHistory();
   const [message, setMessage] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
+
 
   const getClient = (aa) => {
     ClientDataService.get(aa)
@@ -49,11 +51,15 @@ const EditClientModal = ({ intl, match, }) => {
     getClient(id);
   }, [id]);
 
-  const updateClient = () => {
+  const updateClient = (e) => {
+    setIsDisabled(true);  
+    e.preventDefault();
+
     ClientDataService.update(state.id, state)
       .then(response => {
         console.log(response.data);
         setMessage("The client was updated successfully!");
+        setIsDisabled(false); // <--- here
         history.push("/app/clients/clients-list");
       })
       .catch(e => {
@@ -175,7 +181,7 @@ const EditClientModal = ({ intl, match, }) => {
 
 
                 </FormGroup>
-                <Button color="primary" className="mt-4" onClick={updateClient}>
+                <Button color="primary" className="mt-4" onClick={(e) => updateClient(e)} disabled={isDisabled}>
                   <IntlMessages id="forms.submit" />
                 </Button>
                 <p>{message}</p>
