@@ -40,11 +40,11 @@ const AddNewCardModal = ({
   const [options, setOptions] = useState([]);
   const [state, setState] = useState(initialState);
   const history = useHistory();
-  let [enabled, setEnabled] = useState(true);
+  const [enabled, setEnabled] = useState(true);
 
   const { messages } = intl;
 
-  const addNetItem =  async (e) => {
+  const addNetItem =   (e) => {
     e.preventDefault();
     setEnabled(false);
     console.log('submitted!')  
@@ -54,17 +54,13 @@ const AddNewCardModal = ({
       company_id: selectedOptionLO.value,
     }
     
-   await CardDataService.create(newItem)
+    CardDataService.create(newItem)
     .then(response => {
       console.log(response.data);
       setState(initialState); 
       delay(1000);
       history.push("/app/cardsadmin/cards-list");
-    })
-    .catch(e => {
-       
-      console.log(e);  
-    }); 
+    });
    
   }; 
  

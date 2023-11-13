@@ -32,7 +32,7 @@ const AddNewUserModal = ({
     companies: [],
     status: true,
   };
-  let [enabled, setEnabled] = useState(true);
+  const [enabled, setEnabled] = useState(true);
   const { messages } = intl;
   const [state, setState] = useState(initialState);
   const history = useHistory();

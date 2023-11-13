@@ -211,11 +211,10 @@ const EditClientModal = ({ intl, match, currentUser}) => {
         setMessage("The Staff was updated successfully!");
         setIsDisabled(false); // <--- here
         history.push("/app/staffs/staffs-list");
-      })
-      .catch(e => {
-        setIsDisabled(false); // <--- here
-        console.log(e);
       });
+
+      setIsDisabled(false); // <--- here
+      
   };
 
   async function fetchData() {
@@ -1943,9 +1942,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                  
                   </FormGroup>
                   </Colxx>
-                  <Colxx xxs="12" md="6" >
-                 
-                  </Colxx>
+                  
                 </Row>   
 
 

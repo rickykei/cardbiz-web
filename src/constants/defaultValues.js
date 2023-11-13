@@ -46,9 +46,9 @@ export const adminRoot = '/app';
 export const buyUrl = ' ';
 export const searchPath = `${adminRoot}/pages/miscellaneous/search`;
 
-export const servicePath3 = 'https://bea.e-profile.digital';
+export const servicePath3 = 'https://ebcard.hkbea.digital';
 export const servicePath2 = `${servicePath3}/api`;
-export const servicePath4 = 'https://bea.e-profile.digital';
+export const servicePath4 = 'https://ebcard.hkbea.digital';
 
 export const servicePath = 'https://api.coloredstrategies.com';
 export const themeColorStorageKey = '__theme_selected_color';

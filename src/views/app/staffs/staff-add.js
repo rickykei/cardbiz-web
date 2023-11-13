@@ -189,7 +189,7 @@ const AddNewStaffModal = ({
   const { messages } = intl;
   const [smartIdSelectData,setSmartIdSelectData] = useState([]);
   const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}`;
-  let [enabled, setEnabled] = useState(true);
+  const [enabled, setEnabled] = useState(true);
 
   const addNetItem = async (e) => {
     e.preventDefault();
@@ -2044,9 +2044,7 @@ const AddNewStaffModal = ({
                  
                   </FormGroup>
                   </Colxx>
-                  <Colxx xxs="12" md="6" >
-                 
-                  </Colxx>
+                   
                 </Row>   
 
 
