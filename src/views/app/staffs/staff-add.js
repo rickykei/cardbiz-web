@@ -120,8 +120,7 @@ const AddNewStaffModal = ({
       work_tel2: "", 
       work_tel3: "", 
       direct_tel: "", 
-      direct_tel2: "", 
-      direct_tel3: "", 
+     
       mobile: "", 
       mobile2: "", 
       mobile3: "", 
@@ -136,9 +135,7 @@ const AddNewStaffModal = ({
       web_link: "", 
       web_link2: "", 
       web_link3: "", 
-      web_link_label: "", 
-      web_link_label2: "", 
-      web_link_label3: "", 
+    
       agent_no: "", 
       insurance_no: "", 
       mpf_no: "", 
@@ -171,6 +168,8 @@ const AddNewStaffModal = ({
       field069: "", 
       field070: "",  
       field071: "",
+      field072: "",  
+      field073: "",
       reuters_code: "", 
       bloomberg_info: "",  
     smartcard_uid: "",
@@ -189,7 +188,7 @@ const AddNewStaffModal = ({
   const { messages } = intl;
   const [smartIdSelectData,setSmartIdSelectData] = useState([]);
   const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}`;
-  const [enabled, setEnabled] = useState(true);
+  let [enabled, setEnabled] = useState(true);
 
   const addNetItem = async (e) => {
     e.preventDefault();
@@ -226,8 +225,7 @@ const AddNewStaffModal = ({
         work_tel2: state.work_tel2,
         work_tel3: state.work_tel3,
         direct_tel: state.direct_tel,
-        direct_tel2: state.direct_tel2,
-        direct_tel3: state.direct_tel3,
+        
         mobile: state.mobile,
         mobile2: state.mobile2,
         mobile3: state.mobile3,
@@ -242,9 +240,7 @@ const AddNewStaffModal = ({
         web_link: state.web_link,
         web_link2: state.web_link2,
         web_link3: state.web_link3,
-        web_link_label: state.web_link_label,
-        web_link_label2: state.web_link_label2,
-        web_link_label3: state.web_link_label3,
+       
         agent_no: state.agent_no,
         insurance_no: state.insurance_no,
         mpf_no: state.mpf_no,
@@ -279,6 +275,8 @@ const AddNewStaffModal = ({
         field069: state.field069,
         field070: state.field070,  
         field071: state.field071, 
+        field072: state.field072,  
+        field073: state.field073, 
         smartcard_uid: state.smartcard_uid,
         bizcard_option: state.bizcard_option,
         updatedBy:  currentUser.uid,
@@ -897,40 +895,7 @@ const AddNewStaffModal = ({
                   </Colxx>
                 </Row>
 
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
-                      <Label for="direct_tel2">
-                        <IntlMessages id="forms.staff-direct_tel2" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.direct_tel2 || ''}
-                        onChange={(val) => setState({ ...state, direct_tel2: val.target.value })}
-                        placeholder={messages['forms.staff-direct_tel2']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-direct_tel2-muted" />
-                      </FormText>
-                    </FormGroup>
-                  </Colxx>
-                  <Colxx xxs="12" md="6">
-                    <FormGroup>
-                      <Label for="direct_tel3">
-                        <IntlMessages id="forms.staff-direct_tel3" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.direct_tel3 || ''}
-                        onChange={(val) => setState({ ...state, direct_tel3: val.target.value })}
-                        placeholder={messages['forms.staff-direct_tel3']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-direct_tel3-muted" />
-                      </FormText>
-                    </FormGroup>
-                  </Colxx>
-                </Row>
+                 
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
@@ -1182,27 +1147,6 @@ const AddNewStaffModal = ({
                       </FormText>
                     </FormGroup>
                   </Colxx>
-                  <Colxx xxs="12" md="6">
-                    <FormGroup>
-                      <Label for="web_link_label">
-                        <IntlMessages id="forms.staff-web_link_label" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.web_link_label || ''}
-                        onChange={(val) => setState({ ...state, web_link_label: val.target.value })}
-                        placeholder={messages['forms.staff-web_link_label']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-web_link_label-muted" />
-                      </FormText>
-                    </FormGroup>
-
-                  </Colxx>
-                </Row>
-
-
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
                       <Label for="web_link2">
@@ -1219,25 +1163,10 @@ const AddNewStaffModal = ({
                       </FormText>
                     </FormGroup>
                   </Colxx>
-                  <Colxx xxs="12" md="6">
-                    <FormGroup>
-                      <Label for="web_link_label2">
-                        <IntlMessages id="forms.staff-web_link_label2" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.web_link_label2 || ''}
-                        onChange={(val) => setState({ ...state, web_link_label2: val.target.value })}
-                        placeholder={messages['forms.staff-web_link_label2']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-web_link_label2-muted" />
-                      </FormText>
-                    </FormGroup>
-
-                  </Colxx>
                 </Row>
 
+
+               
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
@@ -1255,27 +1184,6 @@ const AddNewStaffModal = ({
                       </FormText>
                     </FormGroup>
                   </Colxx>
-                  <Colxx xxs="12" md="6">
-                    <FormGroup>
-                      <Label for="web_link_label3">
-                        <IntlMessages id="forms.staff-web_link_label3" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.web_link_label3 || ''}
-                        onChange={(val) => setState({ ...state, web_link_label3: val.target.value })}
-                        placeholder={messages['forms.staff-web_link_label3']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-web_link_label3-muted" />
-                      </FormText>
-                    </FormGroup>
-
-                  </Colxx>
-                </Row>
-
-
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
                       <Label for="agent_no">
@@ -1292,6 +1200,11 @@ const AddNewStaffModal = ({
                       </FormText>
                     </FormGroup>
                   </Colxx>
+                </Row>
+
+
+                <Row>
+                 
                   <Colxx xxs="12" md="6">
                     <FormGroup>
                       <Label for="insurance_no">
@@ -1309,10 +1222,6 @@ const AddNewStaffModal = ({
                     </FormGroup>
 
                   </Colxx>
-                </Row>
-
-
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
                       <Label for="mpf_no">
@@ -1329,6 +1238,11 @@ const AddNewStaffModal = ({
                       </FormText>
                     </FormGroup>
                   </Colxx>
+                </Row>
+
+
+                <Row>
+               
                   <Colxx xxs="12" md="6">
                     <FormGroup>
                       <Label for="hkma_no">
@@ -1346,12 +1260,7 @@ const AddNewStaffModal = ({
                     </FormGroup>
 
                   </Colxx>
-                </Row>
 
-
-
-
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                     <Label>
@@ -1387,6 +1296,13 @@ const AddNewStaffModal = ({
                     /> 
                   </FormGroup>
                   </Colxx>
+                </Row>
+
+
+
+
+                <Row>
+           
                   <Colxx xxs="12" md="6">
                   <FormGroup>
                     <Label>
@@ -1422,10 +1338,6 @@ const AddNewStaffModal = ({
                     /> 
                   </FormGroup>
                   </Colxx>
-                </Row>
-
-
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                     <Label>
@@ -1461,6 +1373,11 @@ const AddNewStaffModal = ({
                     /> 
                   </FormGroup>
                   </Colxx>
+                </Row>
+
+
+                <Row>
+              
                   <Colxx xxs="12" md="6">
                   <FormGroup>
                     <Label>
@@ -1496,8 +1413,6 @@ const AddNewStaffModal = ({
                     /> 
                   </FormGroup>
                   </Colxx>
-                </Row>
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="reuters_code">
@@ -1515,6 +1430,9 @@ const AddNewStaffModal = ({
                     </FormGroup>
                     
                   </Colxx>
+                </Row>
+                <Row>
+               
                   <Colxx xxs="12" md="6">
                   <FormGroup>
                       <Label for="bloomberg_info">
@@ -1533,8 +1451,6 @@ const AddNewStaffModal = ({
                    
 
                   </Colxx>
-                </Row>
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="sfc_no">
@@ -1552,6 +1468,9 @@ const AddNewStaffModal = ({
                     </FormGroup>
                      
                   </Colxx>
+                </Row>
+                <Row>
+             
                   <Colxx xxs="12" md="6">
                   <FormGroup>
                     <Label>
@@ -1588,8 +1507,6 @@ const AddNewStaffModal = ({
                   </FormGroup>
 
                   </Colxx>
-                </Row>
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                 <Label>
@@ -1628,6 +1545,9 @@ const AddNewStaffModal = ({
               </FormGroup>
                      
                   </Colxx>
+                </Row>
+                <Row>
+                 
                   <Colxx xxs="12" md="6">
                     <FormGroup>
                       <Label for="field051">
@@ -1645,8 +1565,6 @@ const AddNewStaffModal = ({
                     </FormGroup>
 
                   </Colxx>
-                </Row>
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="field052">
@@ -1664,6 +1582,9 @@ const AddNewStaffModal = ({
                     </FormGroup>
                      
                   </Colxx>
+                </Row>
+                <Row>
+                
                   <Colxx xxs="12" md="6">
                     <FormGroup>
                       <Label for="field053">
@@ -1681,8 +1602,6 @@ const AddNewStaffModal = ({
                     </FormGroup>
 
                   </Colxx>
-                </Row>
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="field054">
@@ -1700,6 +1619,9 @@ const AddNewStaffModal = ({
                     </FormGroup>
                      
                   </Colxx>
+                </Row>
+                <Row>
+                
                   <Colxx xxs="12" md="6">
                     <FormGroup>
                       <Label for="field055">
@@ -1717,9 +1639,6 @@ const AddNewStaffModal = ({
                     </FormGroup>
 
                   </Colxx>
-                </Row>
-
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="field056">
@@ -1737,6 +1656,10 @@ const AddNewStaffModal = ({
                     </FormGroup>
                      
                   </Colxx>
+                </Row>
+
+                <Row>
+                 
                   <Colxx xxs="12" md="6">
                     <FormGroup>
                       <Label for="field057">
@@ -1754,9 +1677,6 @@ const AddNewStaffModal = ({
                     </FormGroup>
 
                   </Colxx>
-                </Row>
-
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="field058">
@@ -1774,6 +1694,10 @@ const AddNewStaffModal = ({
                     </FormGroup>
                      
                   </Colxx>
+                </Row>
+
+                <Row>
+                  
                   <Colxx xxs="12" md="6">
                     <FormGroup>
                       <Label for="field059">
@@ -1791,9 +1715,6 @@ const AddNewStaffModal = ({
                     </FormGroup>
 
                   </Colxx>
-                </Row>
-
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="field060">
@@ -1811,6 +1732,10 @@ const AddNewStaffModal = ({
                     </FormGroup>
                      
                   </Colxx>
+                </Row>
+
+                <Row>
+                
                   <Colxx xxs="12" md="6">
                     <FormGroup>
                       <Label for="field061">
@@ -1828,9 +1753,6 @@ const AddNewStaffModal = ({
                     </FormGroup>
 
                   </Colxx>
-                </Row>
-
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="field062">
@@ -1848,6 +1770,10 @@ const AddNewStaffModal = ({
                     </FormGroup>
                      
                   </Colxx>
+                </Row>
+
+                <Row>
+                 
                   <Colxx xxs="12" md="6">
                     <FormGroup>
                       <Label for="field063">
@@ -1865,10 +1791,6 @@ const AddNewStaffModal = ({
                     </FormGroup>
 
                   </Colxx>
-                </Row>
-
-                
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="field064">
@@ -1886,6 +1808,11 @@ const AddNewStaffModal = ({
                     </FormGroup>
                      
                   </Colxx>
+                </Row>
+
+                
+                <Row>
+                
                   <Colxx xxs="12" md="6">
                     <FormGroup>
                       <Label for="field065">
@@ -1903,10 +1830,6 @@ const AddNewStaffModal = ({
                     </FormGroup>
 
                   </Colxx>
-                </Row>
-
-                
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="field066">
@@ -1924,6 +1847,11 @@ const AddNewStaffModal = ({
                     </FormGroup>
                      
                   </Colxx>
+                </Row>
+
+                
+                <Row>
+                 
                   <Colxx xxs="12" md="6">
                     <FormGroup>
                       <Label for="field067">
@@ -1941,10 +1869,6 @@ const AddNewStaffModal = ({
                     </FormGroup>
 
                   </Colxx>
-                </Row>
-
-                
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="field068">
@@ -1962,6 +1886,11 @@ const AddNewStaffModal = ({
                     </FormGroup>
                      
                   </Colxx>
+                </Row>
+
+                
+                <Row>
+                 
                   <Colxx xxs="12" md="6">
                     <FormGroup>
                       <Label for="field069">
@@ -1979,10 +1908,7 @@ const AddNewStaffModal = ({
                     </FormGroup>
 
                   </Colxx>
-                </Row>
-
                 
-                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                       <Label for="field070">
@@ -2000,30 +1926,69 @@ const AddNewStaffModal = ({
                     </FormGroup>
                      
                   </Colxx>
-                  <Colxx xxs="12" md="6">
                  
-                  <FormGroup>
-                  <Label>
-                    <IntlMessages id="forms.staff-qrcode_option" />
-                  </Label>
-                   
-                  <Select
-                    components={{ Input: CustomSelectInput }}
-                    className="react-select"
-                    classNamePrefix="react-select"
-                    name="form-field-qrcode_option" 
-                    options={qrcodeSelectData}
-                     value={qrcodeSelectData.find(obj => {
-                      return obj.value === state.qrcode_option;
-                    })}
-                    onChange={(val) => setState({ ...state, qrcode_option: val.value })}
-                   
-                  />
+                </Row>
+                
+                <Row>
+                <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="field072">
+                        <IntlMessages id="forms.staff-field072" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.field072 || ''}
+                        onChange={(val) => setState({ ...state, field072: val.target.value })}
+                        placeholder={messages['forms.staff-field072']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-field072-muted" />
+                      </FormText>
+                    </FormGroup>
 
-                </FormGroup>
                   </Colxx>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
+                      <Label for="field073">
+                        <IntlMessages id="forms.staff-field073" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.field073 || ''}
+                        onChange={(val) => setState({ ...state, field073: val.target.value })}
+                        placeholder={messages['forms.staff-field073']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-field073-muted" />
+                      </FormText>
+                    </FormGroup>
+                     
+                  </Colxx>
+               
                 </Row>
                 <Row>
+                <Colxx xxs="12" md="6">
+                 
+                 <FormGroup>
+                 <Label>
+                   <IntlMessages id="forms.staff-qrcode_option" />
+                 </Label>
+                  
+                 <Select
+                   components={{ Input: CustomSelectInput }}
+                   className="react-select"
+                   classNamePrefix="react-select"
+                   name="form-field-qrcode_option" 
+                   options={qrcodeSelectData}
+                    value={qrcodeSelectData.find(obj => {
+                     return obj.value === state.qrcode_option;
+                   })}
+                   onChange={(val) => setState({ ...state, qrcode_option: val.value })}
+                  
+                 />
+
+               </FormGroup>
+                 </Colxx>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
                   <Label for="smartcard_uid">
@@ -2044,7 +2009,9 @@ const AddNewStaffModal = ({
                  
                   </FormGroup>
                   </Colxx>
-                   
+                  <Colxx xxs="12" md="6" >
+                 
+                  </Colxx>
                 </Row>   
 
 
