@@ -12,12 +12,13 @@ import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import Breadcrumb from 'containers/navs/Breadcrumb';
 import { addStaffItem } from 'redux/actions';
- import Select from 'react-select';
+import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import { servicePath2,qrcodeSelectData,companyNameSelectData} from 'constants/defaultValues';
 import axios from 'axios';
 import DropzoneComponent from 'react-dropzone-component';
- 
+import { useHistory } from "react-router-dom";
+
 const apiUrl = `${servicePath2}/companies/codelist`;
 
 const delay = ms => new Promise(
@@ -178,7 +179,7 @@ const AddNewStaffModal = ({
     qrcode_option: 1,
   };
   const [state, setState] = useState(initialState);
-   
+  const history = useHistory();
   const [selectedOptionLO, setSelectedOptionLO] = useState('');
   const [options, setOptions] = useState([]);
   const [file2, setFile] = useState(null);
