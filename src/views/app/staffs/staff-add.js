@@ -153,7 +153,7 @@ const AddNewStaffModal = ({
       field056: "", 
       field057: "", 
       field058: "", 
-      field059: "", 
+      field059: false, 
       field060: "", 
       field061: "", 
       field062: "", 
@@ -1241,22 +1241,43 @@ const AddNewStaffModal = ({
 </Row>
 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
-                      <Label for="field059">
-                        <IntlMessages id="forms.staff-field059" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.field059 || ''}
-                        onChange={(val) => setState({ ...state, field059: val.target.value })}
-                        placeholder={messages['forms.staff-field059']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-field059-muted" />
-                      </FormText>
-                    </FormGroup>
+                  <FormGroup>
+                <Label>
+                  <IntlMessages id="forms.staff-field059" />
+                </Label>
+                <CustomInput
+                  type="radio"
+                  id="exCustomRadio-1-field059"
+                  name="customRadio-1-field059"
+                  label="Yes"
+                  checked={state.field059 === true}
+                  onChange={(event) =>
+                    setState({
+                      ...state,
+                      field059: event.target.value === 'on',
+                    })
+                  }
+                />
+
+
+                <CustomInput
+                  type="radio"
+                  id="exCustomRadio-2-field059"
+                  name="customRadio-2-field059"
+                  label="No"
+                  checked={state.field059 === false}
+                  onChange={(event) =>
+                    setState({
+                      ...state,
+                      field059: event.target.value !== 'on',
+                    })
+                  }
+                /> 
+
+              </FormGroup> 
 
                   </Colxx>
+
                   <Colxx xxs="12" md="6">
                   <FormGroup>
                       <Label for="field060">
