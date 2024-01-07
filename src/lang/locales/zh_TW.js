@@ -914,7 +914,7 @@ module.exports = {
     'forms.staff-field056': '金管局註冊編號下面的附加信息',
     'forms.staff-field057': '金管局註冊編號下面的附加信息',
     'forms.staff-field058': '金管局註冊編號下面的附加信息',
-    'forms.staff-field059': '證監會中央編號下面的附加信息',
+    'forms.staff-field059': '第4類：就證券提供意見',
     'forms.staff-field060': '證監會中央編號下面的附加信息',
     'forms.staff-field061': '員工簡介下面的附加信息',
     'forms.staff-field062': '員工簡介下面的附加信息',

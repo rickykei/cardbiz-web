@@ -922,7 +922,7 @@ module.exports = {
     'forms.staff-field056': 'Reserved Field under HKMA Reg No.',
     'forms.staff-field057': 'Reserved Field under HKMA Reg No.',
     'forms.staff-field058': 'Reserved Field under HKMA Reg No.',
-    'forms.staff-field059': 'Reserved Field under SFC Central Entity No.',
+    'forms.staff-field059': 'Type 4: Advising on Securities',
     'forms.staff-field060': 'Reserved Field under SFC Central Entity No.',
     'forms.staff-field061': 'Reserved Field at the bottom of Staff Profile',
     'forms.staff-field062': 'Reserved Field at the bottom of Staff Profile',
