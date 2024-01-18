@@ -175,7 +175,7 @@ const AddNewStaffModal = ({
     dig_card_in_vcf: true,
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",
-    status: true, 
+    status: true,
     qrcode_option: 1,
   };
   const [state, setState] = useState(initialState);
@@ -280,10 +280,11 @@ const AddNewStaffModal = ({
         field073: state.field073, 
         smartcard_uid: state.smartcard_uid,
         bizcard_option: state.bizcard_option,
-        updatedBy:  currentUser.uid,
-        createdBy:  currentUser.uid,
-        status: state.status,
         qrcode_option: state.qrcode_option,
+        createdBy: currentUser.uid,
+        updatedBy: currentUser.uid,
+        status: state.status,
+        uid: currentUser.uid,
 
     };
     const data = new FormData()

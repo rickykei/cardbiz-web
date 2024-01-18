@@ -170,8 +170,9 @@ const EditClientModal = ({ intl, match, currentUser}) => {
       note_timestamp: false,
       note: "",
       updated_by: "630cf0461fa3f166eb3dee01",
-      created_by: "630cf0461fa3f166eb3dee01",
-      status: true, 
+      created_by: "630cf0461fa3f166eb3dee01", 
+      status: true,
+     
       qrcode_option: 1,
      
   };
