@@ -33,7 +33,7 @@ const AddNewClientModal = ({
   };
   const [state, setState] = useState(initialState);
   const history = useHistory();
-  let [enabled, setEnabled] = useState(true);
+  const [enabled, setEnabled] = useState(true);
   
   const addNetItem = async (e) => {
     e.preventDefault();

@@ -158,10 +158,11 @@ const EditClientModal = ({ intl, match, currentUser}) => {
  
     bizcard_option: true,
     dig_card_in_vcf:true,
-    updated_by: "630cf0461fa3f166eb3dee01",
-    created_by: "630cf0461fa3f166eb3dee01",
+    updatedBy:  currentUser.uid,
+    createdBy:  "",
     status: true,
     qrcode_option: 1,
+    uid: currentUser.uid,
   };
   const apiUrl = `${servicePath2}/companies/codelist`;
   const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}&staffId=${id}`;
@@ -229,8 +230,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
         setIsDisabled(false); // <--- here
         history.push("/app/staffs/staffs-list");
       })
-      .catch(e => {
-        console.log(e);
+      .catch(r => {
+        console.log(r);
       });
   };
 

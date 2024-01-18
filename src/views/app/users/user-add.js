@@ -37,7 +37,7 @@ const AddNewUserModal = ({
   const history = useHistory();
  
   const [options, setOptions] = useState([]);
-  let [enabled, setEnabled] = useState(true);
+  const [enabled, setEnabled] = useState(true);
   
 
   const addNetItem = async (e) => {

@@ -62,8 +62,8 @@ const EditClientModal = ({ intl, match, }) => {
         setIsDisabled(false); // <--- here
         history.push("/app/clients/clients-list");
       })
-      .catch(e => {
-        console.log(e);
+      .catch(f => {
+        console.log(f);
       });
   };
   

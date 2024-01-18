@@ -15,7 +15,7 @@ import { addStaffItem } from 'redux/actions';
 import { useHistory } from "react-router-dom";
 import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
-import { servicePath2,qrcodeSelectData } from 'constants/defaultValues';
+import { servicePath2, qrcodeSelectData } from 'constants/defaultValues';
 import axios from 'axios';
 import DropzoneComponent from 'react-dropzone-component';
 
@@ -144,31 +144,31 @@ const AddNewStaffModal = ({
     twitter_url: "",
     wechat_id: "",
     wechatpage_url: "",
-	  
-	  tiktok_url: "",
- 
-	  line_url: "",
-	  facebookmessenger_url: "",
-	  weibo_url: "",
-	  bilibili_url: "",
-	  qq_url: "",
-	  zhihu_url : "",
-	  appsstore_url: "",
-	  googleplay_url: "",
-	  googlemap_url: "",
-	  snapchat_url: "",
-	  telegram_url: "",
-	  xiaohongshu_url: "",
-	  note: "",
+
+    tiktok_url: "",
+
+    line_url: "",
+    facebookmessenger_url: "",
+    weibo_url: "",
+    bilibili_url: "",
+    qq_url: "",
+    zhihu_url: "",
+    appsstore_url: "",
+    googleplay_url: "",
+    googlemap_url: "",
+    snapchat_url: "",
+    telegram_url: "",
+    xiaohongshu_url: "",
+    note: "",
     note_timestamp: false,
     smartcard_uid: "",
     bizcard_option: true,
-    dig_card_in_vcf:true,
+    dig_card_in_vcf: true,
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",
     status: true,
     qrcode_option: 1,
-   
+
   };
   const [state, setState] = useState(initialState);
   const history = useHistory();
@@ -176,11 +176,11 @@ const AddNewStaffModal = ({
   const [options, setOptions] = useState([]);
   const [file2, setFile] = useState(null);
   const { messages } = intl;
-  const [smartIdSelectData,setSmartIdSelectData] = useState([]);
+  const [smartIdSelectData, setSmartIdSelectData] = useState([]);
   const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}`;
-  let [enabled, setEnabled] = useState(true);
-  
-  const addNetItem =  async (e) => {
+  const [enabled, setEnabled] = useState(true);
+
+  const addNetItem = async (e) => {
     e.preventDefault();
     setEnabled(false);
     console.log('submitted!')
@@ -238,48 +238,48 @@ const AddNewStaffModal = ({
       wechat_id: state.wechat_id,
       wechatpage_url: state.wechatpage_url,
 
-tiktok_url:state.tiktok_url,
+      tiktok_url: state.tiktok_url,
 
-line_url: state.line_url,
-facebook_messenger_url: state.facebook_messenger_url,
-weibo_url: state.weibo_url,
-bilibili_url: state.bilibili_url,
-qq_url:state.qq_url,
-zhihu_url:state.zhihu_url,
-app_store_url:state.app_store_url,
-google_play_url: state.google_play_url,
-snapchat_url:state.snapchat_url,
-telegram_url:state.telegram_url,
-xiaohongshu_url:state.xiaohongshu_url,
-note:state.note,
-qrcode_option: state.qrcode_option,
+      line_url: state.line_url,
+      facebook_messenger_url: state.facebook_messenger_url,
+      weibo_url: state.weibo_url,
+      bilibili_url: state.bilibili_url,
+      qq_url: state.qq_url,
+      zhihu_url: state.zhihu_url,
+      app_store_url: state.app_store_url,
+      google_play_url: state.google_play_url,
+      snapchat_url: state.snapchat_url,
+      telegram_url: state.telegram_url,
+      xiaohongshu_url: state.xiaohongshu_url,
+      note: state.note,
+      qrcode_option: state.qrcode_option,
       smartcard_uid: state.smartcard_uid,
       bizcard_option: state.bizcard_option,
-      updatedBy:  currentUser.uid,
-      createdBy:  currentUser.uid,
+      updatedBy: currentUser.uid,
+      createdBy: currentUser.uid,
       status: state.status,
-
+      uid: currentUser.uid,
     };
     const data = new FormData()
 
     if (file2 !== null)
       data.append("file", file2);
 
-      if (state.qrcode_option===undefined)
-      state.qrcode_option=1;
-      
+    if (state.qrcode_option === undefined)
+      state.qrcode_option = 1;
+
 
     /* eslint-disable no-restricted-syntax */
-    
+
     for (const [key, val] of Object.entries(newItem)) {
-      
-      if (key === "company_id" && val ===undefined) {
-        
-          data.append(key, currentUser.companyId);
-       } else if (key === "smartcard_uid" && val ===undefined){
-         console.log(key);
-        } else if (key === "qrcode_option" && val ===undefined){ 
-          console.log(key);
+
+      if (key === "company_id" && val === undefined) {
+
+        data.append(key, currentUser.companyId);
+      } else if (key === "smartcard_uid" && val === undefined) {
+        console.log(key);
+      } else if (key === "qrcode_option" && val === undefined) {
+        console.log(key);
       } else {
         data.append(key, val);
       }
@@ -320,19 +320,19 @@ qrcode_option: state.qrcode_option,
 
   async function fetchSmartCardData() {
     axios.get(`${apiUrlSmartCard}`)
-      .then(({data}) => {
-        const option = data.map((item)=>({
-          "value" : item.value,
-          "label" : item.label,
-      }))
-      setSmartIdSelectData(option);
-          
+      .then(({ data }) => {
+        const option = data.map((item) => ({
+          "value": item.value,
+          "label": item.label,
+        }))
+        setSmartIdSelectData(option);
+
       })
       .catch(error => {
         console.error('Smart Card Uid Get error!', error);
       })
   }
-  
+
   useEffect(() => {
 
     fetchData();
@@ -356,7 +356,7 @@ qrcode_option: state.qrcode_option,
             <CardBody>
 
               <Form>
-              <Row>
+                <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
                       <Label for="fname">
@@ -394,7 +394,7 @@ qrcode_option: state.qrcode_option,
                     </FormGroup>
                   </Colxx>
                 </Row>
- 
+
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
@@ -449,7 +449,7 @@ qrcode_option: state.qrcode_option,
                       </CardBody>
                     </Card>
                   </Colxx>
-                </Row>  
+                </Row>
                 {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
                   <FormGroup>
                     <Label className="mt-4">
@@ -467,10 +467,10 @@ qrcode_option: state.qrcode_option,
                     />
                   </FormGroup>
                 }
-              
+
                 <Row>
-                <Colxx xxs="12" md="6" className="mb-5">
-                <FormGroup>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
                       <Label for="work_email">
                         <IntlMessages id="forms.staff-work_email" />
                       </Label>
@@ -485,9 +485,9 @@ qrcode_option: state.qrcode_option,
                         <IntlMessages id="forms.staff-work_email-muted" />
                       </FormText>
                     </FormGroup>
-                </Colxx>
-                <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
                       <Label for="work_email2">
                         <IntlMessages id="forms.staff-work_email2" />
                       </Label>
@@ -503,13 +503,13 @@ qrcode_option: state.qrcode_option,
                     </FormGroup>
 
                   </Colxx>
-                  </Row>
+                </Row>
 
                 <Row>
-                 
+
                   <Colxx xxs="12" md="6" className="mb-5">
 
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="work_email3">
                         <IntlMessages id="forms.staff-work_email3" />
                       </Label>
@@ -524,10 +524,10 @@ qrcode_option: state.qrcode_option,
                         <IntlMessages id="forms.staff-work_email3-muted" />
                       </FormText>
                     </FormGroup>
-                  
+
                   </Colxx>
                   <Colxx xxs="12" md="6" >
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="home_email">
                         <IntlMessages id="forms.staff-home_email" />
                       </Label>
@@ -546,10 +546,10 @@ qrcode_option: state.qrcode_option,
                 </Row>
 
                 <Row>
-                 
+
                   <Colxx xxs="12" md="6" className="mb-5">
- 
-                  <FormGroup>
+
+                    <FormGroup>
                       <Label for="other_email">
                         <IntlMessages id="forms.staff-other_email" />
                       </Label>
@@ -565,7 +565,7 @@ qrcode_option: state.qrcode_option,
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="position">
                         <IntlMessages id="forms.staff-position" />
                       </Label>
@@ -583,9 +583,9 @@ qrcode_option: state.qrcode_option,
                 </Row>
 
                 <Row>
-                
+
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="work_tel">
                         <IntlMessages id="forms.staff-work_tel" />
                       </Label>
@@ -600,7 +600,7 @@ qrcode_option: state.qrcode_option,
                       </FormText>
                     </FormGroup>
                   </Colxx>
-                   <Colxx xxs="12" md="6">
+                  <Colxx xxs="12" md="6">
 
                     <FormGroup>
                       <Label for="work_tel2">
@@ -619,7 +619,7 @@ qrcode_option: state.qrcode_option,
                   </Colxx>
                 </Row>
 
-                 
+
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
@@ -1092,26 +1092,26 @@ qrcode_option: state.qrcode_option,
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
-                    <Label for="staff-no">
-                      <IntlMessages id="forms.staff-staff_no" />   
-                    </Label>
+                    <FormGroup>
+                      <Label for="staff-no">
+                        <IntlMessages id="forms.staff-staff_no" />
+                      </Label>
 
-                    <Input
+                      <Input
                         type="text"
                         value={state.staff_no || ''}
                         onChange={(val) => setState({ ...state, staff_no: val.target.value })}
                         placeholder={messages['forms.staff-staff_no']}
 
                       />
-                  </FormGroup>  
-                  
+                    </FormGroup>
+
                   </Colxx>
                 </Row>
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="bio">
                         <IntlMessages id="forms.staff-bio" />
                       </Label>
@@ -1125,10 +1125,10 @@ qrcode_option: state.qrcode_option,
                         <IntlMessages id="forms.staff-bio-muted" />
                       </FormText>
                     </FormGroup>
-                  
+
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="company_website_url">
                         <IntlMessages id="forms.staff-company_website_url" />
                       </Label>
@@ -1142,13 +1142,13 @@ qrcode_option: state.qrcode_option,
                         <IntlMessages id="forms.staff-company_website_url-muted" />
                       </FormText>
                     </FormGroup>
-                 
+
                   </Colxx>
                 </Row>
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="more_info_tab_url">
                         <IntlMessages id="forms.staff-more_info_tab_url" />
                       </Label>
@@ -1162,10 +1162,10 @@ qrcode_option: state.qrcode_option,
                         <IntlMessages id="forms.staff-more_info_tab_url-muted" />
                       </FormText>
                     </FormGroup>
-                   
+
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="facebook_url">
                         <IntlMessages id="forms.staff-facebook_url" />
                       </Label>
@@ -1179,13 +1179,13 @@ qrcode_option: state.qrcode_option,
                         <IntlMessages id="forms.staff-facebook_url-muted" />
                       </FormText>
                     </FormGroup>
-                   
+
                   </Colxx>
                 </Row>
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="instagram_url">
                         <IntlMessages id="forms.staff-instagram_url" />
                       </Label>
@@ -1199,10 +1199,10 @@ qrcode_option: state.qrcode_option,
                         <IntlMessages id="forms.staff-instagram_url-muted" />
                       </FormText>
                     </FormGroup>
-                   
+
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="twitter_url">
                         <IntlMessages id="forms.staff-twitter_url" />
                       </Label>
@@ -1216,14 +1216,14 @@ qrcode_option: state.qrcode_option,
                         <IntlMessages id="forms.staff-twitter_url-muted" />
                       </FormText>
                     </FormGroup>
-                   
+
                   </Colxx>
                 </Row>
 
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="whatsapp_url">
                         <IntlMessages id="forms.staff-whatsapp_url" />
                       </Label>
@@ -1238,10 +1238,10 @@ qrcode_option: state.qrcode_option,
                       </FormText>
                     </FormGroup>
 
-                   
+
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="linkedin_url">
                         <IntlMessages id="forms.staff-linkedin_url" />
                       </Label>
@@ -1256,7 +1256,7 @@ qrcode_option: state.qrcode_option,
                       </FormText>
                     </FormGroup>
 
-                  
+
 
                   </Colxx>
                 </Row>
@@ -1264,7 +1264,7 @@ qrcode_option: state.qrcode_option,
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="youtube_url">
                         <IntlMessages id="forms.staff-youtube_url" />
                       </Label>
@@ -1279,10 +1279,10 @@ qrcode_option: state.qrcode_option,
                       </FormText>
                     </FormGroup>
 
-                   
+
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="wechat_id">
                         <IntlMessages id="forms.staff-wechat_id" />
                       </Label>
@@ -1296,14 +1296,14 @@ qrcode_option: state.qrcode_option,
                         <IntlMessages id="forms.staff-wechat_id-muted" />
                       </FormText>
                     </FormGroup>
-                 
+
 
                   </Colxx>
                 </Row>
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="wechatpage_url">
                         <IntlMessages id="forms.staff-wechatpage_url" />
                       </Label>
@@ -1317,11 +1317,11 @@ qrcode_option: state.qrcode_option,
                         <IntlMessages id="forms.staff-wechatpage_url-muted" />
                       </FormText>
                     </FormGroup>
-               
-                 
+
+
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="tiktok_url">
                         <IntlMessages id="forms.staff-tiktok_url" />
                       </Label>
@@ -1335,17 +1335,17 @@ qrcode_option: state.qrcode_option,
                         <IntlMessages id="forms.staff-tiktok_url-muted" />
                       </FormText>
                     </FormGroup>
-                 
+
 
                   </Colxx>
                 </Row>
-            
-              
+
+
 
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="line_url">
                         <IntlMessages id="forms.staff-line_url" />
                       </Label>
@@ -1359,10 +1359,10 @@ qrcode_option: state.qrcode_option,
                         <IntlMessages id="forms.staff-line_url-muted" />
                       </FormText>
                     </FormGroup>
-                  
+
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="facebook_messenger_url">
                         <IntlMessages id="forms.staff-facebook_messenger_url" />
                       </Label>
@@ -1377,15 +1377,15 @@ qrcode_option: state.qrcode_option,
                       </FormText>
                     </FormGroup>
 
-                  
+
 
                   </Colxx>
-                </Row>    
+                </Row>
 
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="weibo_url">
                         <IntlMessages id="forms.staff-weibo_url" />
                       </Label>
@@ -1400,10 +1400,10 @@ qrcode_option: state.qrcode_option,
                       </FormText>
                     </FormGroup>
 
-                   
+
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="bilibili_url">
                         <IntlMessages id="forms.staff-bilibili_url" />
                       </Label>
@@ -1418,15 +1418,15 @@ qrcode_option: state.qrcode_option,
                       </FormText>
                     </FormGroup>
 
-                
+
 
                   </Colxx>
-                </Row>    
+                </Row>
 
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="qq_url">
                         <IntlMessages id="forms.staff-qq_url" />
                       </Label>
@@ -1441,10 +1441,10 @@ qrcode_option: state.qrcode_option,
                       </FormText>
                     </FormGroup>
 
-                    
+
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="zhihu_url">
                         <IntlMessages id="forms.staff-zhihu_url" />
                       </Label>
@@ -1459,14 +1459,14 @@ qrcode_option: state.qrcode_option,
                       </FormText>
                     </FormGroup>
 
-                 
+
 
                   </Colxx>
-                </Row>    
+                </Row>
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="app_store_url">
                         <IntlMessages id="forms.staff-app_store_url" />
                       </Label>
@@ -1481,10 +1481,10 @@ qrcode_option: state.qrcode_option,
                       </FormText>
                     </FormGroup>
 
-                  
+
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="google_play_url">
                         <IntlMessages id="forms.staff-google_play_url" />
                       </Label>
@@ -1498,14 +1498,14 @@ qrcode_option: state.qrcode_option,
                         <IntlMessages id="forms.staff-google_play_url-muted" />
                       </FormText>
                     </FormGroup>
-                 
-                  </Colxx>
-                </Row>   
 
-                
+                  </Colxx>
+                </Row>
+
+
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="snapchat_url">
                         <IntlMessages id="forms.staff-snapchat_url" />
                       </Label>
@@ -1520,11 +1520,11 @@ qrcode_option: state.qrcode_option,
                       </FormText>
                     </FormGroup>
 
-              
+
 
                   </Colxx>
                   <Colxx xxs="12" md="6">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="telegram_url">
                         <IntlMessages id="forms.staff-telegram_url" />
                       </Label>
@@ -1539,16 +1539,16 @@ qrcode_option: state.qrcode_option,
                       </FormText>
                     </FormGroup>
 
-               
+
                   </Colxx>
-                </Row>   
+                </Row>
 
 
- 
+
                 <Row>
-                
+
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label for="note">
                         <IntlMessages id="forms.staff-note" />
                       </Label>
@@ -1563,97 +1563,97 @@ qrcode_option: state.qrcode_option,
                       </FormText>
                     </FormGroup>
 
-                 
+
                   </Colxx>
                   <Colxx xxs="12" md="6" >
-                  <FormGroup>
-                  <Label for="note">
+                    <FormGroup>
+                      <Label for="note">
                         <IntlMessages id="forms.staff-note-timestamp" />
-                  </Label>
-                  <CustomInput
-                    type="radio"
-                    id="noteRadioOn"
-                    name="noteRadioOn"
-                    label={messages['forms.label.note-timestamp-on']}
-                    checked={state.note_timestamp === true}
-                    onChange={(event) =>
-                      setState({
-                        ...state,
-                        note_timestamp: event.target.value === 'on',
-                      })
-                    }
-                  />
+                      </Label>
+                      <CustomInput
+                        type="radio"
+                        id="noteRadioOn"
+                        name="noteRadioOn"
+                        label={messages['forms.label.note-timestamp-on']}
+                        checked={state.note_timestamp === true}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            note_timestamp: event.target.value === 'on',
+                          })
+                        }
+                      />
 
 
-                  <CustomInput
-                    type="radio"
-                    id="noteRadioOff"
-                    name="noteRadioOff"
-                    label={messages['forms.label.note-timestamp-off']}
-                    checked={state.note_timestamp === false}
-                    onChange={(event) =>
-                      setState({
-                        ...state,
-                        note_timestamp: event.target.value !== 'on',
-                      })
-                    }
-                  />
+                      <CustomInput
+                        type="radio"
+                        id="noteRadioOff"
+                        name="noteRadioOff"
+                        label={messages['forms.label.note-timestamp-off']}
+                        checked={state.note_timestamp === false}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            note_timestamp: event.target.value !== 'on',
+                          })
+                        }
+                      />
 
 
-                </FormGroup>
-                </Colxx>
-                </Row>   
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
-                  <Label for="note">
+                    <FormGroup>
+                      <Label for="note">
                         <IntlMessages id="forms.staff-smartcard_uid" />
-                  </Label>
-                  <Select
-                    components={{ Input: CustomSelectInput }}
-                    className="react-select"
-                    classNamePrefix="react-select"
-                    name="form-field-smartcard_uid" 
-                    options={smartIdSelectData}
-                     value={smartIdSelectData.find(obj => {
-                      return obj.value === state.smartcard_uid;
-                    })}
-                    onChange={(val) => setState({ ...state, smartcard_uid: val.value })}
-                   
-                  />
-                 
-                  </FormGroup>
+                      </Label>
+                      <Select
+                        components={{ Input: CustomSelectInput }}
+                        className="react-select"
+                        classNamePrefix="react-select"
+                        name="form-field-smartcard_uid"
+                        options={smartIdSelectData}
+                        value={smartIdSelectData.find(obj => {
+                          return obj.value === state.smartcard_uid;
+                        })}
+                        onChange={(val) => setState({ ...state, smartcard_uid: val.value })}
+
+                      />
+
+                    </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6" >
-                  <FormGroup>
-                  <Label>
-                    <IntlMessages id="forms.staff-qrcode_option" />
-                  </Label>
-                   
-                  <Select
-                    components={{ Input: CustomSelectInput }}
-                    className="react-select"
-                    classNamePrefix="react-select"
-                    name="form-field-qrcode_option" 
-                    options={qrcodeSelectData}
-                     value={qrcodeSelectData.find(obj => {
-                      return obj.value === state.qrcode_option;
-                    })}
-                    onChange={(val) => setState({ ...state, qrcode_option: val.value })}
-                   
-                  />
+                    <FormGroup>
+                      <Label>
+                        <IntlMessages id="forms.staff-qrcode_option" />
+                      </Label>
 
-                </FormGroup>
+                      <Select
+                        components={{ Input: CustomSelectInput }}
+                        className="react-select"
+                        classNamePrefix="react-select"
+                        name="form-field-qrcode_option"
+                        options={qrcodeSelectData}
+                        value={qrcodeSelectData.find(obj => {
+                          return obj.value === state.qrcode_option;
+                        })}
+                        onChange={(val) => setState({ ...state, qrcode_option: val.value })}
+
+                      />
+
+                    </FormGroup>
                   </Colxx>
-                </Row>   
+                </Row>
 
 
-               
+
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
+                    <FormGroup>
                       <Label>
                         <IntlMessages id="forms.staff-bizcard_option" />
                       </Label>
@@ -1689,87 +1689,87 @@ qrcode_option: state.qrcode_option,
 
                     </FormGroup>
                   </Colxx>
-                  <Colxx xxs="12" md="6" > 
-                  <FormGroup>
-                  <Label>
-                    <IntlMessages id="forms.staff-dig_card_in_vcf-option" />
-                  </Label>
-                  <CustomInput
-                    type="radio"
-                    id="exCustomRadio3"
-                    name="customRadio3"
-                    label={messages['forms.label.enable']}
-                    checked={state.dig_card_in_vcf === true}
-                    onChange={(event) =>
-                      setState({
-                        ...state,
-                        dig_card_in_vcf: event.target.value === 'on',
-                      })
-                    }
-                  />
+                  <Colxx xxs="12" md="6" >
+                    <FormGroup>
+                      <Label>
+                        <IntlMessages id="forms.staff-dig_card_in_vcf-option" />
+                      </Label>
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio3"
+                        name="customRadio3"
+                        label={messages['forms.label.enable']}
+                        checked={state.dig_card_in_vcf === true}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            dig_card_in_vcf: event.target.value === 'on',
+                          })
+                        }
+                      />
 
 
-                  <CustomInput
-                    type="radio"
-                    id="exCustomRadio4"
-                    name="customRadio4"
-                    label={messages['forms.label.disable']}
-                    checked={state.dig_card_in_vcf === false}
-                    onChange={(event) =>
-                      setState({
-                        ...state,
-                        dig_card_in_vcf: event.target.value !== 'on',
-                      })
-                    }
-                  />
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio4"
+                        name="customRadio4"
+                        label={messages['forms.label.disable']}
+                        checked={state.dig_card_in_vcf === false}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            dig_card_in_vcf: event.target.value !== 'on',
+                          })
+                        }
+                      />
 
 
-                </FormGroup>
-                </Colxx>
-                </Row>   
+                    </FormGroup>
+                  </Colxx>
+                </Row>
 
                 <Row>
-                 
-                  
-
-                 <Colxx xxs="12" md="6" className="mb-5"> 
-                 <FormGroup>
-                 <Label>
-                   <IntlMessages id="forms.staff-status" />
-                 </Label>
-                 <CustomInput
-                   type="radio"
-                   id="exCustomRadio5"
-                   name="customRadio5"
-                   label="Active"
-                   checked={state.status === true}
-                   onChange={(event) =>
-                     setState({
-                       ...state,
-                       status: event.target.value === 'on',
-                     })
-                   }
-                 />
 
 
-                 <CustomInput
-                   type="radio"
-                   id="exCustomRadio6"
-                   name="customRadio6"
-                   label="Disable"
-                   checked={state.status === false}
-                   onChange={(event) =>
-                     setState({
-                       ...state,
-                       status: event.target.value !== 'on',
-                     })
-                   }
-                 />
+
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label>
+                        <IntlMessages id="forms.staff-status" />
+                      </Label>
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio5"
+                        name="customRadio5"
+                        label="Active"
+                        checked={state.status === true}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            status: event.target.value === 'on',
+                          })
+                        }
+                      />
 
 
-               </FormGroup>
-               </Colxx>
-               </Row>  
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio6"
+                        name="customRadio6"
+                        label="Disable"
+                        checked={state.status === false}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            status: event.target.value !== 'on',
+                          })
+                        }
+                      />
+
+
+                    </FormGroup>
+                  </Colxx>
+                </Row>
                 <Button color="primary" className="mt-4" onClick={(e) => addNetItem(e)} disabled={!enabled}>
                   <IntlMessages id="forms.submit" />
                 </Button>

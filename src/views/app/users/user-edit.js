@@ -83,8 +83,8 @@ const EditUserModal = ({ intl, match, }) => {
         setIsDisabled(false); // <--- here
         history.push("/app/users/users-list");
       })
-      .catch(e => {
-        console.log(e);
+      .catch(r => {
+        console.log(r);
       });
   };
   useEffect(() => {
