@@ -159,10 +159,10 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     bizcard_option: true,
     dig_card_in_vcf:true,
     updatedBy:  currentUser.uid,
-    createdBy:  "",
+    createdBy:  currentUser.uid,
     status: true,
     qrcode_option: 1,
-    uid: currentUser.uid,
+ 
   };
   const apiUrl = `${servicePath2}/companies/codelist`;
   const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}&staffId=${id}`;
@@ -204,7 +204,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     if(file2 !== null)
     data.append("file",file2);
      /* eslint-disable no-restricted-syntax */
-
+     data.append("uid",currentUser.uid);
+     console.log('add uid before update staff');
     if (state.qrcode_option===undefined)
     state.qrcode_option=1;
 
