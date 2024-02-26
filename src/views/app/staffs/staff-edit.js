@@ -212,9 +212,11 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     for (const [key, val] of Object.entries(state)) {
      
       if (val!==null&& val!==undefined ){
-        if (key !=='company_id'){
-        data.append(key, val);
+        if (  key !=='company_id' ){
+         data.append(key, val);
         
+        }else if (currentUser.companyId === '63142fd5b54bdbb18f556016'){
+          data.append(key, val);
         }
         
       }else if  (key==='qrcode_option' && val===undefined){
