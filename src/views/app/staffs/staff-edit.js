@@ -215,9 +215,10 @@ const EditClientModal = ({ intl, match, currentUser}) => {
         if (  key !=='company_id' ){
          data.append(key, val);
         
-        }else if (currentUser.companyId === '63142fd5b54bdbb18f556016'){
-          data.append(key, val);
-        }
+        }else if(typeof(val) === 'string')
+         data.append(key, val);
+         else
+         console.log('companycd');
         
       }else if  (key==='qrcode_option' && val===undefined){
         data.append(key, 1);
