@@ -58,11 +58,11 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
                   <DropdownItem href={`staff-edit/${product.id}`}>
                     <IntlMessages id="dropdowns.edit" />
                   </DropdownItem>
-                  
+                  {/*
                   <DropdownItem href={`staff-del/${product.id}`}>
                     <IntlMessages id="dropdowns.delete" />
                   </DropdownItem>
-                   
+                   */}
                   <DropdownItem href={`staff-deactive/${product.id}`}>
                     <IntlMessages id="dropdowns.deactive" />
                   </DropdownItem>
