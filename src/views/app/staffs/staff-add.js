@@ -92,6 +92,10 @@ const AddNewStaffModal = ({
     id: null,
     fname: "",
     lname: "",
+    mname: "",
+    pname: "",
+    oname: "",
+    pdname: "",
     staff_no: "",
     company_id: 0,
     company_name_eng: "",
@@ -189,6 +193,10 @@ const AddNewStaffModal = ({
       company_name_eng: state.company_name_eng,
       fname: state.fname,
       lname: state.lname,
+      mname: state.mname,
+      pname: state.pname,
+      oname: state.oname,
+      pdname: state.pdname,
       company_id: selectedOptionLO.value,
       headshot: state.headshot,
       work_email: state.work_email,
@@ -236,10 +244,8 @@ const AddNewStaffModal = ({
       youtube_url: state.youtube_url,
       twitter_url: state.twitter_url,
       wechat_id: state.wechat_id,
-      wechatpage_url: state.wechatpage_url,
-
-      tiktok_url: state.tiktok_url,
-
+      wechatpage_url: state.wechatpage_url, 
+      tiktok_url: state.tiktok_url, 
       line_url: state.line_url,
       facebook_messenger_url: state.facebook_messenger_url,
       weibo_url: state.weibo_url,
@@ -394,7 +400,82 @@ const AddNewStaffModal = ({
                     </FormGroup>
                   </Colxx>
                 </Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="mname">
+                        <IntlMessages id="forms.staff-mname" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.mname || ''}
+                        onChange={(val) => setState({ ...state, mname: val.target.value })}
+                        placeholder={messages['forms.staff-middlename']}
 
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-middlename-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+
+
+                    <FormGroup>
+                      <Label for="pname">
+                        <IntlMessages id="forms.staff-prefixname" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.pname || ''}
+                        onChange={(val) => setState({ ...state, pname: val.target.value })}
+                        placeholder={messages['forms.staff-prefixname']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-prefixname-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="oname">
+                        <IntlMessages id="forms.staff-othername" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.oname || ''}
+                        onChange={(val) => setState({ ...state, oname: val.target.value })}
+                        placeholder={messages['forms.staff-othername']}
+
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-othername-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+
+
+                    <FormGroup>
+                      <Label for="pdname">
+                        <IntlMessages id="forms.staff-prodesname" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.pdname || ''}
+                        onChange={(val) => setState({ ...state, pdname: val.target.value })}
+                        placeholder={messages['forms.staff-prodesname']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-prodesname-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>

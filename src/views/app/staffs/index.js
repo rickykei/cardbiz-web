@@ -5,16 +5,19 @@ const StaffsList = React.lazy(() =>
   import(/* webpackChunkName: "staffs-list" */ './staffs-list')
 );
 const StaffAdd = React.lazy(() =>
-import(/* webpackChunkName: "staffs-add" */ './staff-add')
+  import(/* webpackChunkName: "staffs-add" */ './staff-add')
 );
 const StaffDel = React.lazy(() =>
-import(/* webpackChunkName: "staffs-del" */ './staff-del')
+  import(/* webpackChunkName: "staffs-del" */ './staff-del')
 );
 const StaffEdit = React.lazy(() =>
-import(/* webpackChunkName: "staffs-edit" */ './staff-edit')
+  import(/* webpackChunkName: "staffs-edit" */ './staff-edit')
+);
+const StaffDeactive = React.lazy(() =>
+  import(/* webpackChunkName: "staffs-deactive" */ './staff-deactive')
 );
 const StaffProfile = React.lazy(() =>
-import(/* webpackChunkName: "staffs-profile" */ './staff-profile')
+  import(/* webpackChunkName: "staffs-profile" */ './staff-profile')
 );
 const Staffs = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -23,20 +26,28 @@ const Staffs = ({ match }) => (
       <Route
         path={`${match.url}/staffs-list`}
         render={(props) => <StaffsList {...props} />}
-      />  <Route
-      path={`${match.url}/staff-add`}
-      render={(props) => <StaffAdd {...props} />}
-    /><Route
-      path={`${match.url}/staff-del/:id`}
-      render={(props) => <StaffDel {...props} />}
-    /><Route
-    path={`${match.url}/staff-edit/:id`}
-    render={(props) => <StaffEdit {...props} />}
-  /><Route
-  path={`${match.url}/staff-profile/:id`}
-  render={(props) => <StaffProfile {...props} />}
-/>
-       <Redirect to="/error" />
+      />
+      <Route
+        path={`${match.url}/staff-add`}
+        render={(props) => <StaffAdd {...props} />}
+      />
+      <Route
+        path={`${match.url}/staff-del/:id`}
+        render={(props) => <StaffDel {...props} />}
+      />
+      <Route
+        path={`${match.url}/staff-edit/:id`}
+        render={(props) => <StaffEdit {...props} />}
+      />
+      <Route
+        path={`${match.url}/staff-profile/:id`}
+        render={(props) => <StaffProfile {...props} />}
+      />
+      <Route
+        path={`${match.url}/staff-deactive/:id`}
+        render={(props) => <StaffDeactive {...props} />}
+      />
+      <Redirect to="/error" />
     </Switch>
   </Suspense>
 );
