@@ -28,13 +28,20 @@ const data = [
     icon: 'iconsminds-id-card',
     label: 'menu.smartcard.list',
     to: `${adminRoot}/cards/cards-list`,
-     roles: [UserRole.Editor]
+     roles: [UserRole.Editor,UserRole.Admin]
   },
   {
     id: 'staffs',
     icon: 'iconsminds-business-mens',
     label: 'menu.staffs.profile',
     to: `${adminRoot}/staffs`,
+    roles: [UserRole.Admin,UserRole.Editor] 
+  },
+  {
+    id: 'staffsdeactive',
+    icon: 'iconsminds-business-mens',
+    label: 'menu.staffsdactive.profile',
+    to: `${adminRoot}/staffsdeactive`,
     roles: [UserRole.Admin,UserRole.Editor] 
   },
   {

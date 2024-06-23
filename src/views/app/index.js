@@ -15,6 +15,7 @@ const Admins = React.lazy(() => import(/* webpackChunkName: "admins" */ './admin
 const Clients = React.lazy(() => import(/* webpackChunkName: "clients" */ './clients'));
 const Users = React.lazy(() => import(/* webpackChunkName: "users" */ './users'));
 const Staffs = React.lazy(() => import(/* webpackChunkName: "staffs" */ './staffs'));
+const StaffsDeactive = React.lazy(() => import(/* webpackChunkName: "staffsdeactive" */ './staffsdeactive'));
 const Cards = React.lazy(() => import(/* webpackChunkName: "cards" */ './cards'));
 const CardsAdmin = React.lazy(() => import(/* webpackChunkName: "cardsadmin" */ './cardsadmin'));
 const BatchUpload = React.lazy(() => import(/* webpackChunkName: "batchupload" */ './batchupload'));
@@ -60,7 +61,12 @@ const App = ({ match }) => {
             /><Route
               path={`${match.url}/staffs`}
               render={(props) => <Staffs {...props} />}
-            /><Route
+            />
+            <Route
+              path={`${match.url}/staffsdeactive`}
+              render={(props) => <StaffsDeactive {...props} />}
+            />
+            <Route
             path={`${match.url}/batchupload`}
             render={(props) => <BatchUpload {...props} />}
           /><Route
