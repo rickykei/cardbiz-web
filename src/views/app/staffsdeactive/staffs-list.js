@@ -1,14 +1,14 @@
- 
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {  servicePath2 } from 'constants/defaultValues';
+import { servicePath2 } from 'constants/defaultValues';
 import ListPageHeading from 'containers/staffs/ListPageHeading';
 import ListPageListing from 'containers/staffs/ListPageListingDeActive';
 import useMousetrap from 'hooks/use-mousetrap';
 import { connect } from 'react-redux';
 
 
- 
+
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -27,7 +27,7 @@ const orderOptions = [
 const pageSizes = [5, 10, 15, 20];
 
 
-const DataListPages = ({ match ,currentUser }) => {
+const DataListPages = ({ match, currentUser }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('list');
   const [currentPage, setCurrentPage] = useState(1);
@@ -41,17 +41,17 @@ const DataListPages = ({ match ,currentUser }) => {
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
   const [search, setSearch] = useState('');
- 
+
   const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
- 
-  let apiUrl ="";
-if(currentUser.role===0)
- apiUrl = `${servicePath2}/staffs/findAllDeactive`;
-else
-apiUrl = `${servicePath2}/staffs/findAllDeactiveByCompanyId`;
- 
+
+  let apiUrl = "";
+  if (currentUser.role === 0)
+    apiUrl = `${servicePath2}/staffs/findAllDeactive`;
+  else
+    apiUrl = `${servicePath2}/staffs/findAllDeactiveByCompanyId`;
+
   async function fetchData() {
     axios
       .get(
@@ -72,7 +72,7 @@ apiUrl = `${servicePath2}/staffs/findAllDeactiveByCompanyId`;
         
       });
   }
-  
+
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedPageSize, selectedOrderOption]);
@@ -80,7 +80,7 @@ apiUrl = `${servicePath2}/staffs/findAllDeactiveByCompanyId`;
   useEffect(() => {
     setIsLoaded(true);
     fetchData();
-  }, [selectedPageSize, currentPage, selectedOrderOption, search ]);
+  }, [selectedPageSize, currentPage, selectedOrderOption, search]);
 
   const onCheckItem = (event, id) => {
     if (
@@ -189,7 +189,7 @@ apiUrl = `${servicePath2}/staffs/findAllDeactiveByCompanyId`;
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
         />
-        
+
         <ListPageListing
           items={items}
           displayMode={displayMode}
@@ -206,7 +206,7 @@ apiUrl = `${servicePath2}/staffs/findAllDeactiveByCompanyId`;
   );
 };
 
-const mapStateToProps = ({ menu,authUser, settings }) => {
+const mapStateToProps = ({ menu, authUser, settings }) => {
   const { containerClassnames, menuClickCount, selectedMenuHasSubItems } = menu;
   const { locale } = settings;
   const { currentUser } = authUser;
@@ -218,4 +218,4 @@ const mapStateToProps = ({ menu,authUser, settings }) => {
     currentUser,
   };
 };
-export default  connect(mapStateToProps) (DataListPages);
+export default connect(mapStateToProps)(DataListPages);
