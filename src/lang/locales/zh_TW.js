@@ -658,6 +658,7 @@ module.exports = {
   'forms.staff-bizcard_option': '智能卡選項',
   'menu.hr.users': '註冊管理員',
   'menu.staffs.profile': '員工目錄',
+  'menu.staffsdactive.profile': '不在職員工目錄', 
   'menu.hr.admin': '管理員',
   'menu.user-profile': '個人資料設置',
   'menu.card-edit': '編輯',

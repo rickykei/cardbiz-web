@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {  servicePath2 } from 'constants/defaultValues';
 import ListPageHeading from 'containers/staffs/ListPageHeading';
-import ListPageListing from 'containers/staffs/ListPageListing';
+import ListPageListing from 'containers/staffs/ListPageListingDeActive';
 import useMousetrap from 'hooks/use-mousetrap';
 import { connect } from 'react-redux';
 
@@ -69,7 +69,11 @@ apiUrl = `${servicePath2}/staffs/findAllDeactiveByCompanyId`;
         );
         setSelectedItems([]);
         setTotalItemCount(data.totalItem);
-        setIsLoaded(true);
+        if(data.totalItem === 0){
+          setIsLoaded(false);
+        }else{
+          setIsLoaded(true);
+        }
       });
   }
   

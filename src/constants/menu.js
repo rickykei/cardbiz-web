@@ -39,7 +39,7 @@ const data = [
   },
   {
     id: 'staffsdeactive',
-    icon: 'iconsminds-business-mens',
+    icon: 'simple-icon-user-unfollow',
     label: 'menu.staffsdactive.profile',
     to: `${adminRoot}/staffsdeactive`,
     roles: [UserRole.Admin,UserRole.Editor] 

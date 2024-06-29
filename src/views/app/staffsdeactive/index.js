@@ -16,6 +16,9 @@ const StaffEdit = React.lazy(() =>
 const StaffDeactive = React.lazy(() =>
   import(/* webpackChunkName: "staffs-deactive" */ './staff-deactive')
 );
+const StaffActive = React.lazy(() =>
+  import(/* webpackChunkName: "staffs-active" */ './staff-active')
+);
 const StaffProfile = React.lazy(() =>
   import(/* webpackChunkName: "staffs-profile" */ './staff-profile')
 );
@@ -46,6 +49,10 @@ const StaffsDeactive = ({ match }) => (
       <Route
         path={`${match.url}/staff-deactive/:id`}
         render={(props) => <StaffDeactive {...props} />}
+      />
+      <Route
+        path={`${match.url}/staff-active/:id`}
+        render={(props) => <StaffActive {...props} />}
       />
       <Redirect to="/error" />
     </Switch>
