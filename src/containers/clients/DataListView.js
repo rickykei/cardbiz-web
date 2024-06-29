@@ -58,10 +58,11 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
                         <DropdownItem href={`../admins/admin-edit/${product.id}`}>
                           <IntlMessages id="dropdowns.admin.edit" />
                         </DropdownItem>
+                        {/*
                         <DropdownItem href={`client-del/${product.id}`}>
                           <IntlMessages id="dropdowns.delete" />
                         </DropdownItem>
-                         
+                         */}
                       </DropdownMenu>
                     </ButtonDropdown>
                  
