@@ -69,7 +69,7 @@ apiUrl = `${servicePath2}/staffs/findAllDeactiveByCompanyId`;
         );
         setSelectedItems([]);
         setTotalItemCount(data.totalItem);
-        
+        setIsLoaded(true);
       });
   }
   
@@ -77,8 +77,7 @@ apiUrl = `${servicePath2}/staffs/findAllDeactiveByCompanyId`;
     setCurrentPage(1);
   }, [selectedPageSize, selectedOrderOption]);
 
-  useEffect(() => {
-    setIsLoaded(true);
+  useEffect(() => { 
     fetchData();
   }, [selectedPageSize, currentPage, selectedOrderOption, search ]);
 
