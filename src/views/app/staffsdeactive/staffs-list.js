@@ -50,12 +50,12 @@ const DataListPages = ({ match ,currentUser }) => {
 if(currentUser.role===0)
  apiUrl = `${servicePath2}/staffs/findAllDeactive`;
 else
-apiUrl = `${servicePath2}/staffs/findAllDeactiveByCompanyId`;
+apiUrl = `${servicePath2}/staffs/findByCompanyId`;
  
   async function fetchData() {
     axios
       .get(
-        `${apiUrl}?companyId=${currentUser.companyId}&pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
+        `${apiUrl}?deactive=1&companyId=${currentUser.companyId}&pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
       )
       .then((res) => {
         return res.data;
