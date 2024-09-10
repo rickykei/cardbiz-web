@@ -224,8 +224,8 @@ const AdminPage = ({ intl, match,currentUser }) => {
    const downloadStaffLogExcel = `${servicePath2}/staff_logs/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
    const downloadStaffProfileExcel =`${servicePath2}/profile_counter/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
    const downloadStaffVcfExcel =`${servicePath2}/vcf_counter/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
+   const downloadStaffLinkExcel =`${servicePath2}/batch_upload/downloadStaffLinkExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
  
-
   const updateCompany = () => {
 
     console.log(state.company_id);
@@ -549,6 +549,21 @@ const AdminPage = ({ intl, match,currentUser }) => {
                        <IntlMessages id="cards.tab-admin-log3" />
                     </NavLink>
                   </NavItem>
+                  <NavItem>
+                    <NavLink
+                      to="#"
+                      location={{}}
+                      className={classnames({
+                        active: activeFirstTab === '4',
+                        'nav-link': true,
+                      })}
+                      onClick={() => {
+                        setActiveFirstTab('4');
+                      }}
+                    >
+                       <IntlMessages id="cards.tab-admin-log4" />
+                    </NavLink>
+                  </NavItem>
                 </Nav>
               </CardHeader>
 
@@ -585,6 +600,17 @@ const AdminPage = ({ intl, match,currentUser }) => {
                   <IntlMessages id="forms.download_staff_vcf_excel" />
                 </Button></a>
              
+                      </CardBody>
+                    </Colxx>
+                  </Row>
+                </TabPane>
+                <TabPane tabId="4">
+                  <Row>
+                    <Colxx sm="12">
+                      <CardBody>
+                      <a href={downloadStaffLinkExcel}><Button color="primary" className="mt-4" >
+                  <IntlMessages id="forms.download_staff_link_excel" />
+                </Button></a> 
                       </CardBody>
                     </Colxx>
                   </Row>
