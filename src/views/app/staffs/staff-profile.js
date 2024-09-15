@@ -51,7 +51,7 @@ const StaffProfileModal = ({ intl, match}) => {
   const bannerImgUrl2 = `${servicePath2}/files/${state.company_id.banner}`;
   const staffEditUrl = `../staff-edit/${state.id}`;
   const [adminLogData, setStaffLogData] = useState([]);
-  const [activeFirstTab, setActiveFirstTab] = useState('1');
+  const [activeFirstTab, setActiveFirstTab] = useState('4');
   const [encryptText,setEncryptText] =useState('');
   const moreInfoURL = `${servicePath4}/?key=${encryptText}`;
   const [copyMoreInfoSuccess, setCopyMoreInfoSuccess] = useState('');
@@ -263,8 +263,8 @@ const StaffProfileModal = ({ intl, match}) => {
 
                   <Card className="mb-4">
                     <CardBody>
-                      <div className="text-center pt-4">
-                        <p className="list-item-heading pt-2">{state.fname} </p>
+                      <div className="text-center pt-4">  
+                        <p className="list-item-heading pt-2">{state.fname} {state.lname} {state.mname} {state.pname} {state.oname} {state.pdname} </p>
                       </div>
                       <p className="mb-3">{messages['forms.staff-firstname']}  </p>
 
