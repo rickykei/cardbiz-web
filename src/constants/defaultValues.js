@@ -19,6 +19,8 @@ export const localeOptions = [
 ];
 export const qrcodeSelectData = [{"label": "Vcard", "value": 1},{"label": "Align with Smart Card", "value": 2},{"label": "E-profile", "value": 3},{"label": "Vcf", "value": 4}];
   
+export const minisiteSelectData = [{"label": "style1", "value": 1},{"label": "style2", "value": 2}];
+
 export const firebaseConfig = {
   apiKey: 'AIzaSyBBksq-Asxq2M4Ot-75X19IyrEYJqNBPcg',
   authDomain: 'gogo-react-login.firebaseapp.com',

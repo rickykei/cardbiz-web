@@ -15,7 +15,7 @@ import { addStaffItem } from 'redux/actions';
 import { useHistory } from "react-router-dom";
 import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
-import { servicePath2, qrcodeSelectData } from 'constants/defaultValues';
+import { servicePath2, qrcodeSelectData,minisiteSelectData } from 'constants/defaultValues';
 import axios from 'axios';
 import DropzoneComponent from 'react-dropzone-component';
 
@@ -172,6 +172,7 @@ const AddNewStaffModal = ({
     created_by: "630cf0461fa3f166eb3dee01",
     status: true,
     qrcode_option: 1,
+    minisite_option: 1,
 
   };
   const [state, setState] = useState(initialState);
@@ -260,6 +261,7 @@ const AddNewStaffModal = ({
       xiaohongshu_url: state.xiaohongshu_url,
       note: state.note,
       qrcode_option: state.qrcode_option,
+      minisite_option: state.minisite_option,
       note_timestamp: state.note_timestamp,
       smartcard_uid: state.smartcard_uid,
       bizcard_option: state.bizcard_option,
@@ -1650,41 +1652,27 @@ const AddNewStaffModal = ({
 
                   </Colxx>
                   <Colxx xxs="12" md="6" >
-                    <FormGroup>
-                      <Label for="note">
-                        <IntlMessages id="forms.staff-note-timestamp" />
+
+                  <FormGroup>
+                      <Label>
+                        <IntlMessages id="forms.staff-minisite_option" />
                       </Label>
-                      <CustomInput
-                        type="radio"
-                        id="noteRadioOn"
-                        name="noteRadioOn"
-                        label={messages['forms.label.note-timestamp-on']}
-                        checked={state.note_timestamp === true}
-                        onChange={(event) =>
-                          setState({
-                            ...state,
-                            note_timestamp: event.target.value === 'on',
-                          })
-                        }
+
+                      <Select
+                        components={{ Input: CustomSelectInput }}
+                        className="react-select"
+                        classNamePrefix="react-select"
+                        name="form-field-minisite_option"
+                        options={minisiteSelectData}
+                        value={minisiteSelectData.find(obj => {
+                          return obj.value === state.minisite_option;
+                        })}
+                        onChange={(val) => setState({ ...state, minisite_option: val.value })}
+
                       />
-
-
-                      <CustomInput
-                        type="radio"
-                        id="noteRadioOff"
-                        name="noteRadioOff"
-                        label={messages['forms.label.note-timestamp-off']}
-                        checked={state.note_timestamp === false}
-                        onChange={(event) =>
-                          setState({
-                            ...state,
-                            note_timestamp: event.target.value !== 'on',
-                          })
-                        }
-                      />
-
 
                     </FormGroup>
+                  
                   </Colxx>
                 </Row>
 
@@ -1846,6 +1834,43 @@ const AddNewStaffModal = ({
                           setState({
                             ...state,
                             status: event.target.value !== 'on',
+                          })
+                        }
+                      />
+
+
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6" >
+                  <FormGroup>
+                      <Label for="note">
+                        <IntlMessages id="forms.staff-note-timestamp" />
+                      </Label>
+                      <CustomInput
+                        type="radio"
+                        id="noteRadioOn"
+                        name="noteRadioOn"
+                        label={messages['forms.label.note-timestamp-on']}
+                        checked={state.note_timestamp === true}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            note_timestamp: event.target.value === 'on',
+                          })
+                        }
+                      />
+
+
+                      <CustomInput
+                        type="radio"
+                        id="noteRadioOff"
+                        name="noteRadioOff"
+                        label={messages['forms.label.note-timestamp-off']}
+                        checked={state.note_timestamp === false}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            note_timestamp: event.target.value !== 'on',
                           })
                         }
                       />
