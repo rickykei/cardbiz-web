@@ -20,6 +20,22 @@ export const localeOptions = [
 export const qrcodeSelectData = [{"label": "Vcard", "value": 1},{"label": "Align with Smart Card", "value": 2},{"label": "E-profile", "value": 3},{"label": "Vcf", "value": 4}];
   
 export const minisiteSelectData = [{"label": "Digital Business Card", "value": 1},{"label": "E-Invitation", "value": 2}];
+export const walletHeadLogoSelectData = [{"label": "Company Logo", "value": 1},{"label": "HeadShot", "value": 2},{"label": "None", "value": 3}];
+export const walletField1SelectData = [
+  {"label": "First Name only", "value": 1},
+  {"label": "First Name and Last Name", "value": 2},
+  {"label": "First Name, Last Name and Other Name", "value": 3},
+  {"label": "Full Name", "value": 4},
+  {"label": "Company Name - English", "value": 5},
+  {"label": "Company Name - Other Language", "value": 6},
+  {"label": "Company Name - Both Language together", "value": 7},
+  {"label": "Division", "value": 8},
+  {"label": "Department", "value": 9},
+  {"label": "Country", "value": 10},
+  {"label": "Title - position", "value": 11},
+  {"label": "None", "value": 12},
+];
+
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyBBksq-Asxq2M4Ot-75X19IyrEYJqNBPcg',

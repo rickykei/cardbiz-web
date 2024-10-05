@@ -12,6 +12,7 @@ const Ui = React.lazy(() => import(/* webpackChunkName: "ui" */ './ui'));
 const Menu = React.lazy(() => import(/* webpackChunkName: "menu" */ './menu'));
 const BlankPage = React.lazy(() => import(/* webpackChunkName: "blank-page" */ './blank-page'));
 const Admins = React.lazy(() => import(/* webpackChunkName: "admins" */ './admins'));
+const Wallets = React.lazy(() => import(/* webpackChunkName: "wallets" */ './wallets'));
 const Clients = React.lazy(() => import(/* webpackChunkName: "clients" */ './clients'));
 const Users = React.lazy(() => import(/* webpackChunkName: "users" */ './users'));
 const Staffs = React.lazy(() => import(/* webpackChunkName: "staffs" */ './staffs'));
@@ -79,6 +80,10 @@ const App = ({ match }) => {
             <Route
               path={`${match.url}/admins`}
               render={(props) => <Admins {...props} />}
+            />
+            <Route
+              path={`${match.url}/wallets`}
+              render={(props) => <Wallets {...props} />}
             />
             <Route
               path={`${match.url}/menu`}

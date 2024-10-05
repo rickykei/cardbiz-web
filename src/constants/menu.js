@@ -58,5 +58,12 @@ const data = [
     to: `${adminRoot}/admins`,
      roles: [UserRole.Admin, UserRole.Editor] 
   },
+  {
+    id: 'wallet',
+    icon: 'iconsminds-administrator',
+    label: 'menu.hr.wallet',
+    to: `${adminRoot}/wallets`,
+    roles: [UserRole.Admin, UserRole.Editor] 
+  },
 ];
 export default data;
