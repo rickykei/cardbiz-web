@@ -35,7 +35,7 @@ export const walletField1SelectData = [
   {"label": "Title - position", "value": 11},
   {"label": "None", "value": 12},
 ];
-
+export const walletField1SelectDataLabel = ["Name","Name","Name","Name","Company","Company","Company","Division","Department","Country","Position"," "];
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyBBksq-Asxq2M4Ot-75X19IyrEYJqNBPcg',

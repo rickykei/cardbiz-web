@@ -348,22 +348,7 @@ const WalletPage = ({ intl, match,currentUser }) => {
                       /> 
                     </FormGroup>
 
-                    <FormGroup>
-                      <Label for="mname">
-                        <IntlMessages id="forms.staff-wallet_text_color" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={state.wallet_text_color || ''}
-                        onChange={(val) => setState({ ...state, wallet_text_color: val.target.value })}
-                        placeholder={messages['forms.staff-wallet_text_color']}
-
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-wallet_text_color-muted" />
-                      </FormText>
-                    </FormGroup>
-
+                  
                     <FormGroup>
                       <Label for="mname">
                         <IntlMessages id="forms.staff-wallet_bg_color" />

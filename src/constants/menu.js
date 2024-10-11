@@ -60,7 +60,7 @@ const data = [
   },
   {
     id: 'wallet',
-    icon: 'iconsminds-administrator',
+    icon: 'simple-icon-wallet',
     label: 'menu.hr.wallet',
     to: `${adminRoot}/wallets`,
     roles: [UserRole.Admin, UserRole.Editor] 
