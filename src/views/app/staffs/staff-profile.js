@@ -18,7 +18,8 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import ActionLogDataService from 'services/ActionLogDataService';
 import * as CryptoJS from 'crypto-js';
 import classnames from 'classnames';
- 
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+
 function AES_ENCRYPT(text, secretKey) {
   const encrypted = CryptoJS.AES.encrypt(text,secretKey ,{
    mode: CryptoJS.mode.CBC,
@@ -26,7 +27,7 @@ function AES_ENCRYPT(text, secretKey) {
  }).toString();
  return encrypted;
 } 
-const StaffProfileModal = ({ intl, match}) => {
+const StaffProfileModal = ({ intl, match,currentUser}) => {
   console.log("staffprofile");
   const initialState = {
     id: null,
@@ -37,14 +38,13 @@ const StaffProfileModal = ({ intl, match}) => {
     status: true,
     company_id: [],
     smartcard_uid: [],
-
+    
   };
   const [state, setState] = useState(initialState);
-  const { messages } = intl;
-   
-
+  const { messages } = intl; 
   const { id } = useParams();
-
+  
+  const [copyStatus, setCopyStatus] = useState(false); 
   const username = `${state.fname} ${state.lname}`;
   const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
   const bannerImgUrl = "/assets/img/social/header.jpg";
@@ -60,10 +60,25 @@ const StaffProfileModal = ({ intl, match}) => {
   const qrcodeURL2 = `${servicePath4}/?key=${encryptText}&qrtype=2`;
   const qrcodeURL3 = `${servicePath4}/?key=${encryptText}&qrtype=3`;
   const qrcodeURL4 = `${servicePath4}/?key=${encryptText}&qrtype=4`;
+  const qrcodeURL5 = `${servicePath4}/?key=${encryptText}&qrtype=5`;
+  const qrcodeURL6 = `${servicePath4}/?key=${encryptText}&qrtype=6`;
+  const qrcodeURL7 = `${servicePath4}/?key=${encryptText}&qrtype=7`;
+ 
+  const qrcodeURLactual = `${servicePath4}/?key=${encryptText}&qrtype=1`;
+  const qrcodeURLactual2 = `${servicePath4}/?key=${encryptText}`;
+  const qrcodeURLactual3 = `${servicePath4}/?key=${encryptText}&bo=1`;
+  const qrcodeURLactual4 = `${servicePath4}/?key=${encryptText}&bo=0`;
+  const qrcodeURLactual5 = `${servicePath4}/?key=${encryptText}&gengw=1`;
+  const qrcodeURLactual6 = `${servicePath4}/?key=${encryptText}&genaw=1`;
+  const qrcodeURLactual7 = `${servicePath4}/?key=${encryptText}&mobilesite=1`;
+ 
   const [copyQrcodeurl1Success, setcopyQrcodeurl1Success] = useState('');
   const [copyQrcodeurl2Success, setcopyQrcodeurl2Success] = useState('');
   const [copyQrcodeurl3Success, setcopyQrcodeurl3Success] = useState('');
   const [copyQrcodeurl4Success, setcopyQrcodeurl4Success] = useState('');
+  const [copyQrcodeurl5Success, setcopyQrcodeurl5Success] = useState('');
+  const [copyQrcodeurl6Success, setcopyQrcodeurl6Success] = useState('');
+  const [copyQrcodeurl7Success, setcopyQrcodeurl7Success] = useState('');
 
 
   const getStaffLog = (aa) => {
@@ -81,10 +96,8 @@ const StaffProfileModal = ({ intl, match}) => {
 
   const getStaff = (aa) => {
     StaffDataService.findByUserProfile(aa)
-      .then(response => {
-    
-        setState(response.data); 
-    
+      .then(response => { 
+       setState(response.data); 
        setEncryptText(encodeURIComponent(AES_ENCRYPT(response.data.id,"12345678123456781234567812345678")));
     
       })
@@ -95,119 +108,16 @@ const StaffProfileModal = ({ intl, match}) => {
   };
 
   useEffect(() => {
+    console.log("useeffectid=");
+    console.log(id); 
     if (id){
       getStaff(id);
       getStaffLog(id);
     }
   }, [id]);
 
-  const updateClipboard = (newClip) => {
-    navigator.clipboard.writeText(newClip).then(
-      () => {
-     
-          if (newClip===moreInfoURL)
-          setCopyMoreInfoSuccess("Copied!");
-          if (newClip===qrcodeURL)
-          setcopyQrcodeurl1Success("Copied!");
-          
-          if (newClip===qrcodeURL2)
-          setcopyQrcodeurl2Success("Copied!");
-          
-          if (newClip===qrcodeURL3)
-          setcopyQrcodeurl3Success("Copied!");
-          
-          if (newClip===qrcodeURL4)
-          setcopyQrcodeurl4Success("Copied!");
-      },
-      () => {
-     
-        if (newClip===moreInfoURL)
-          setCopyMoreInfoSuccess("Copy failed!");
-          if (newClip===qrcodeURL)
-          setcopyQrcodeurl1Success("Copy failed!!");
-          
-          if (newClip===qrcodeURL2)
-          setcopyQrcodeurl2Success("Copy failed!!");
-          
-          if (newClip===qrcodeURL3)
-          setcopyQrcodeurl3Success("Copy failed!!");
-          
-          if (newClip===qrcodeURL4)
-          setcopyQrcodeurl4Success("Copy failed!!");
-      }
-    );
-  }
+  
  
-  const copyLink3 = () => {
-
-    navigator.permissions
-      .query({ name: "clipboard-write" })
-      .then((result) => {
-        if (result.state === "granted" || result.state === "prompt") {
-          updateClipboard(moreInfoURL);
-        }
-      })
-      .catch((error) => {
-        // couldn't query the permission
-        console.error(error);
-      });
-  }
-
-  const copyQRLink1 = () => {
-    navigator.permissions
-      .query({ name: "clipboard-write" })
-      .then((result) => {
-        if (result.state === "granted" || result.state === "prompt") {
-          updateClipboard(qrcodeURL);
-        }
-      })
-      .catch((error) => {
-        // couldn't query the permission
-        console.error(error);
-      });
-  }
-
-  const copyQRLink2 = () => {
-    navigator.permissions
-      .query({ name: "clipboard-write" })
-      .then((result) => {
-        if (result.state === "granted" || result.state === "prompt") {
-          updateClipboard(qrcodeURL2);
-        }
-      })
-      .catch((error) => {
-        // couldn't query the permission
-        console.error(error);
-      });
-  }
-
-  const copyQRLink3 = () => {
-    navigator.permissions
-      .query({ name: "clipboard-write" })
-      .then((result) => {
-        if (result.state === "granted" || result.state === "prompt") {
-          updateClipboard(qrcodeURL3);
-        }
-      })
-      .catch((error) => {
-        // couldn't query the permission
-        console.error(error);
-      });
-  }
-
-  const copyQRLink4 = () => {
-    navigator.permissions
-      .query({ name: "clipboard-write" })
-      .then((result) => {
-        if (result.state === "granted" || result.state === "prompt") {
-          updateClipboard(qrcodeURL4);
-        }
-      })
-      .catch((error) => {
-        // couldn't query the permission
-        console.error(error);
-      });
-  }
   return (
 
     <>
@@ -329,14 +239,17 @@ const StaffProfileModal = ({ intl, match}) => {
                         color="outline-secondary"
                         className="mb-1 mr-1"
                         pill
-                      >
+                      > 
                         <a href={moreInfoURL} target="_blank" rel="noreferrer"  ><IntlMessages id="profile.button.moreInfo" /> </a>
-                      </Badge>
-                        <Button onClick={copyLink3} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyMoreInfoSuccess}</p>
-
-                         
+                      </Badge> 
+                      <CopyToClipboard text={moreInfoURL} onCopy={() =>setCopyMoreInfoSuccess(true)}>
+                        <Button> <i className="iconsminds-file-copy" /></Button>
+                      </CopyToClipboard>  
+                      {copyMoreInfoSuccess ? <span style={{color: 'red'}}>Copied.</span> : null}
                    
- 
+                      </p>
+
+                     
 
                       
                     </CardBody>
@@ -405,6 +318,51 @@ const StaffProfileModal = ({ intl, match}) => {
                        <IntlMessages id="cards.tab-admin-qr4" />
                     </NavLink>
                   </NavItem>
+                  <NavItem>
+                    <NavLink
+                      to="#"
+                      location={{}}
+                      className={classnames({
+                        active: activeFirstTab === '5',
+                        'nav-link': true,
+                      })}
+                      onClick={() => {
+                        setActiveFirstTab('5');
+                      }}
+                    >
+                       <IntlMessages id="cards.tab-admin-qr5" />
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      to="#"
+                      location={{}}
+                      className={classnames({
+                        active: activeFirstTab === '6',
+                        'nav-link': true,
+                      })}
+                      onClick={() => {
+                        setActiveFirstTab('6');
+                      }}
+                    >
+                       <IntlMessages id="cards.tab-admin-qr6" />
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      to="#"
+                      location={{}}
+                      className={classnames({
+                        active: activeFirstTab === '7',
+                        'nav-link': true,
+                      })}
+                      onClick={() => {
+                        setActiveFirstTab('7');
+                      }}
+                    >
+                       <IntlMessages id="cards.tab-admin-qr7" />
+                    </NavLink>
+                  </NavItem>
                 </Nav>
               </CardHeader>
 
@@ -414,8 +372,12 @@ const StaffProfileModal = ({ intl, match}) => {
                     <Colxx sm="12">
                       <CardBody>
                      
+
                       <img alt="qrcode" src={qrcodeURL}  width="250" />
-                      <Button onClick={copyQRLink1} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyQrcodeurl1Success} 
+                      <CopyToClipboard text={qrcodeURLactual} onCopy={() =>setcopyQrcodeurl1Success(true)}>
+                        <Button> <i className="iconsminds-file-copy" /></Button>
+                      </CopyToClipboard>  
+                      {copyQrcodeurl1Success ? <span style={{color: 'red'}}>Copied.</span> : null}
 
                       </CardBody>
                     </Colxx>
@@ -427,7 +389,10 @@ const StaffProfileModal = ({ intl, match}) => {
                       <CardBody>
                       
                       <img alt="qrcode" src={qrcodeURL2}  width="250" />
-                      <Button onClick={copyQRLink2} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyQrcodeurl2Success} 
+                      <CopyToClipboard text={qrcodeURLactual2} onCopy={() =>setcopyQrcodeurl2Success(true)}>
+                        <Button> <i className="iconsminds-file-copy" /></Button>
+                      </CopyToClipboard>  
+                      {copyQrcodeurl2Success ? <span style={{color: 'red'}}>Copied.</span> : null}
 
                       </CardBody>
                     </Colxx>
@@ -438,8 +403,11 @@ const StaffProfileModal = ({ intl, match}) => {
                     <Colxx sm="12">
                       <CardBody>
                       <img alt="qrcode" src={qrcodeURL3}  width="250" />
-                      <Button onClick={copyQRLink3} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyQrcodeurl3Success} 
-                 
+                      <CopyToClipboard text={qrcodeURLactual3} onCopy={() =>setcopyQrcodeurl3Success(true)}>
+                        <Button> <i className="iconsminds-file-copy" /></Button>
+                      </CopyToClipboard>  
+                      {copyQrcodeurl3Success ? <span style={{color: 'red'}}>Copied.</span> : null}
+
              
                       </CardBody>
                     </Colxx>
@@ -450,9 +418,60 @@ const StaffProfileModal = ({ intl, match}) => {
                     <Colxx sm="12">
                       <CardBody>
                       <img alt="qrcode" src={qrcodeURL4}  width="250" />
-                      <Button onClick={copyQRLink4} color="secondary" className="mt-6"> <i className="iconsminds-file-copy" /></Button>{copyQrcodeurl4Success} 
+                      <CopyToClipboard text={qrcodeURLactual4} onCopy={() =>setcopyQrcodeurl4Success(true)}>
+                        <Button> <i className="iconsminds-file-copy" /></Button>
+                      </CopyToClipboard>  
+                      {copyQrcodeurl4Success ? <span style={{color: 'red'}}>Copied.</span> : null}
 
              
+                      </CardBody>
+                    </Colxx>
+                  </Row>
+                </TabPane>
+
+                <TabPane tabId="5">
+                  <Row>
+                    <Colxx sm="12">
+                      <CardBody>
+                      
+                      <img alt="qrcode" src={qrcodeURL5}  width="250" />
+                      <CopyToClipboard text={qrcodeURLactual5} onCopy={() =>setcopyQrcodeurl5Success(true)}>
+                        <Button> <i className="iconsminds-file-copy" /></Button>
+                      </CopyToClipboard>  
+                      {copyQrcodeurl5Success ? <span style={{color: 'red'}}>Copied.</span> : null}
+
+                      </CardBody>
+                    </Colxx>
+                  </Row>
+                </TabPane>
+
+                <TabPane tabId="6">
+                  <Row>
+                    <Colxx sm="12">
+                      <CardBody>
+                      
+                      <img alt="qrcode" src={qrcodeURL6}  width="250" />
+                      <CopyToClipboard text={qrcodeURLactual6} onCopy={() =>setcopyQrcodeurl6Success(true)}>
+                        <Button> <i className="iconsminds-file-copy" /></Button>
+                      </CopyToClipboard>  
+                      {copyQrcodeurl6Success ? <span style={{color: 'red'}}>Copied.</span> : null}
+
+                      </CardBody>
+                    </Colxx>
+                  </Row>
+                </TabPane>
+
+                <TabPane tabId="7">
+                  <Row>
+                    <Colxx sm="12">
+                      <CardBody>
+                      
+                      <img alt="qrcode" src={qrcodeURL7}  width="250" />
+                      <CopyToClipboard text={qrcodeURLactual7} onCopy={() =>setcopyQrcodeurl7Success(true)}>
+                        <Button> <i className="iconsminds-file-copy" /></Button>
+                      </CopyToClipboard>  
+                      {copyQrcodeurl7Success ? <span style={{color: 'red'}}>Copied.</span> : null}
+
                       </CardBody>
                     </Colxx>
                   </Row>

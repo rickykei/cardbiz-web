@@ -856,7 +856,7 @@ module.exports = {
     'menu.staffs-list-deactive-header':'De-Active Staff List',
     'forms.staff-minisite_option':'E-Profile Option',
     'menu.user-add':'Add Admin User',
-    'cards.tab-admin-log4':'Staff Full List',
+    'cards.tab-admin-log7':'Staff Full List',
     'forms.download_staff_link_excel':'Download',
     'menu.hr.wallet':'Mobile Wallet',
     'menu.wallets':'Wallet Menu',

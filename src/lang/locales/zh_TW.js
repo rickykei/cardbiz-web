@@ -848,7 +848,7 @@ module.exports = {
     'menu.staffs-list-deactive-header':'已停用人員列表',
         'forms.staff-minisite_option':'電子卡選項',
     'menu.user-add':'新增管理員用戶',
-    'cards.tab-admin-log4':'完整員工名單',
+    'cards.tab-admin-log7':'完整員工名單',
     'forms.download_staff_link_excel':'下載',
      'menu.hr.wallet':'電子錢包',
     'menu.wallets':'錢包選項',

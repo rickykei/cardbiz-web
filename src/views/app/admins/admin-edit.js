@@ -224,6 +224,9 @@ const AdminPage = ({ intl, match,currentUser }) => {
    const downloadStaffLogExcel = `${servicePath2}/staff_logs/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
    const downloadStaffProfileExcel =`${servicePath2}/profile_counter/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
    const downloadStaffVcfExcel =`${servicePath2}/vcf_counter/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
+   const downloadStaffGWExcel =`${servicePath2}/gw_counter/downloadStaffGWExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
+   const downloadStaffAWExcel =`${servicePath2}/aw_counter/downloadStaffAWExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
+   const downloadStaffMobileSiteExcel =`${servicePath2}/mobilesite_counter/downloadStaffMobileSiteExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
    const downloadStaffLinkExcel =`${servicePath2}/batch_upload/downloadStaffLinkExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
  
   const updateCompany = () => {
@@ -549,7 +552,6 @@ const AdminPage = ({ intl, match,currentUser }) => {
                        <IntlMessages id="cards.tab-admin-log3" />
                     </NavLink>
                   </NavItem>
-                  {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
                   <NavItem>
                     <NavLink
                       to="#"
@@ -565,8 +567,55 @@ const AdminPage = ({ intl, match,currentUser }) => {
                        <IntlMessages id="cards.tab-admin-log4" />
                     </NavLink>
                   </NavItem>
-                }
+                  <NavItem>
+                    <NavLink
+                      to="#"
+                      location={{}}
+                      className={classnames({
+                        active: activeFirstTab === '5',
+                        'nav-link': true,
+                      })}
+                      onClick={() => {
+                        setActiveFirstTab('5');
+                      }}
+                    >
+                       <IntlMessages id="cards.tab-admin-log5" />
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      to="#"
+                      location={{}}
+                      className={classnames({
+                        active: activeFirstTab === '6',
+                        'nav-link': true,
+                      })}
+                      onClick={() => {
+                        setActiveFirstTab('6');
+                      }}
+                    >
+                       <IntlMessages id="cards.tab-admin-log6" />
+                    </NavLink>
+                  </NavItem>
                 </Nav>
+                  {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
+                  <NavItem>
+                    <NavLink
+                      to="#"
+                      location={{}}
+                      className={classnames({
+                        active: activeFirstTab === '7',
+                        'nav-link': true,
+                      })}
+                      onClick={() => {
+                        setActiveFirstTab('7');
+                      }}
+                    >
+                       <IntlMessages id="cards.tab-admin-log7" />
+                    </NavLink>
+                  </NavItem>
+                }
+                
               </CardHeader>
 
               <TabContent activeTab={activeFirstTab}>
@@ -606,8 +655,41 @@ const AdminPage = ({ intl, match,currentUser }) => {
                     </Colxx>
                   </Row>
                 </TabPane>
-                {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
                 <TabPane tabId="4">
+                  <Row>
+                    <Colxx sm="12">
+                      <CardBody>
+                      <a href={downloadStaffGWExcel}><Button color="primary" className="mt-4" >
+                  <IntlMessages id="forms.download_staff_gw_excel" />
+                </Button></a> 
+                      </CardBody>
+                    </Colxx>
+                  </Row>
+                </TabPane>
+                <TabPane tabId="5">
+                  <Row>
+                    <Colxx sm="12">
+                      <CardBody>
+                      <a href={downloadStaffAWExcel}><Button color="primary" className="mt-4" >
+                  <IntlMessages id="forms.download_staff_aw_excel" />
+                </Button></a> 
+                      </CardBody>
+                    </Colxx>
+                  </Row>
+                </TabPane>
+                <TabPane tabId="6">
+                  <Row>
+                    <Colxx sm="12">
+                      <CardBody>
+                      <a href={downloadStaffMobileSiteExcel}><Button color="primary" className="mt-4" >
+                  <IntlMessages id="forms.download_staff_mobilesite_excel" />
+                </Button></a> 
+                      </CardBody>
+                    </Colxx>
+                  </Row>
+                </TabPane>
+                {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
+                <TabPane tabId="7">
                   <Row>
                     <Colxx sm="12">
                       <CardBody>
