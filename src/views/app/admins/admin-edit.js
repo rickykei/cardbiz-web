@@ -597,7 +597,6 @@ const AdminPage = ({ intl, match,currentUser }) => {
                        <IntlMessages id="cards.tab-admin-log6" />
                     </NavLink>
                   </NavItem>
-                </Nav>
                   {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
                   <NavItem>
                     <NavLink
@@ -615,6 +614,8 @@ const AdminPage = ({ intl, match,currentUser }) => {
                     </NavLink>
                   </NavItem>
                 }
+                </Nav>
+                 
                 
               </CardHeader>
 
