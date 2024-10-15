@@ -28,14 +28,13 @@ export const walletField1SelectData = [
   {"label": "Full Name", "value": 4},
   {"label": "Company Name - English", "value": 5},
   {"label": "Company Name - Other Language", "value": 6},
-  {"label": "Company Name - Both Language together", "value": 7},
-  {"label": "Division", "value": 8},
-  {"label": "Department", "value": 9},
-  {"label": "Country", "value": 10},
-  {"label": "Title - position", "value": 11},
-  {"label": "None", "value": 12},
+  {"label": "Division", "value": 7},
+  {"label": "Department", "value": 8},
+  {"label": "Country", "value": 9},
+  {"label": "Title - position", "value": 10},
+  {"label": "None", "value": 11},
 ];
-export const walletField1SelectDataLabel = ["Name","Name","Name","Name","Company","Company","Company","Division","Department","Country","Position"," "];
+export const walletField1SelectDataLabel = ["Name","Name","Name","Name","Company","Company","Division","Department","Country","Position"," "];
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyBBksq-Asxq2M4Ot-75X19IyrEYJqNBPcg',

@@ -93,12 +93,12 @@ const WalletPage = ({ intl, match,currentUser }) => {
     wallet_field1_option: Number,   
     wallet_field2_option: Number,   
     wallet_field3_option: Number,
-    wallet_logo_option: 1,
+    wallet_logo_option: Number,
     wallet_banner: "",
     wallet_qrcode_option: Number,
     wallet_text_color: String,
     wallet_bg_color: String,
-    wallet_status: Boolean,  
+    wallet_status: true,  
   };
 
   const [selectedOptionLO, setSelectedOptionLO] = useState('');
@@ -176,6 +176,19 @@ const WalletPage = ({ intl, match,currentUser }) => {
     console.log(id);
     CompanyDataService.get(id!==undefined?id:currentUser.companyId)
       .then(response => {
+ 
+        if (response.data.wallet_field1_option===undefined)
+          response.data.wallet_field1_option=1;
+        if (response.data.wallet_field2_option===undefined)
+          response.data.wallet_field2_option=2;
+        if (response.data.wallet_field3_option===undefined)
+          response.data.wallet_field3_option=10;
+        if (response.data.wallet_logo_option===undefined)
+          response.data.wallet_logo_option=1;
+        if (response.data.wallet_qrcode_option===undefined)
+          response.data.wallet_qrcode_option=4;
+        if (response.data.wallet_bg_color===undefined)
+          response.data.wallet_bg_color="#ADD8E6"; 
         setState(response.data);
          
       })
