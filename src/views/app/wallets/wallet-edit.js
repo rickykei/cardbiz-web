@@ -15,7 +15,7 @@ import {  CardHeader,
   TabContent,
   TabPane,Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle, CustomInput } from 'reactstrap';
 import axios from 'axios';
-import { servicePath2 , walletHeadLogoSelectData,walletField1SelectData,qrcodeSelectData} from 'constants/defaultValues';
+import { servicePath2 , walletHeadLogoSelectData,walletField1SelectData,walletField1SelectDataWithoutNone,qrcodeSelectData} from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
 import CompanyDataService from 'services/CompanyService';
 import { useParams, useHistory,NavLink } from "react-router-dom";
@@ -315,8 +315,8 @@ const WalletPage = ({ intl, match,currentUser }) => {
                         className="react-select"
                         classNamePrefix="react-select"
                         name="form-field-wallet_field2_option"
-                        options={walletField1SelectData}
-                        value={walletField1SelectData.find(obj => {
+                        options={walletField1SelectDataWithoutNone}
+                        value={walletField1SelectDataWithoutNone.find(obj => {
                           return obj.value === state.wallet_field2_option;
                         })}
                         onChange={(val) => setState({ ...state, wallet_field2_option: val.value })}
@@ -334,8 +334,8 @@ const WalletPage = ({ intl, match,currentUser }) => {
                         className="react-select"
                         classNamePrefix="react-select"
                         name="form-field-wallet_field3_option"
-                        options={walletField1SelectData}
-                        value={walletField1SelectData.find(obj => {
+                        options={walletField1SelectDataWithoutNone}
+                        value={walletField1SelectDataWithoutNone.find(obj => {
                           return obj.value === state.wallet_field3_option;
                         })}
                         onChange={(val) => setState({ ...state, wallet_field3_option: val.value })}

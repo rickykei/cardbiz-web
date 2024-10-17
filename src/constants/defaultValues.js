@@ -34,6 +34,19 @@ export const walletField1SelectData = [
   {"label": "Title - position", "value": 10},
   {"label": "None", "value": 11},
 ];
+export const walletField1SelectDataWithoutNone = [
+  {"label": "First Name only", "value": 1},
+  {"label": "First Name and Last Name", "value": 2},
+  {"label": "First Name, Last Name and Other Name", "value": 3},
+  {"label": "Full Name", "value": 4},
+  {"label": "Company Name - English", "value": 5},
+  {"label": "Company Name - Other Language", "value": 6},
+  {"label": "Division", "value": 7},
+  {"label": "Department", "value": 8},
+  {"label": "Country", "value": 9},
+  {"label": "Title - position", "value": 10},
+  
+];
 export const walletField1SelectDataLabel = ["Name","Name","Name","Name","Company","Company","Division","Department","Country","Position"," "];
 
 export const firebaseConfig = {
