@@ -188,7 +188,7 @@ const WalletPage = ({ intl, match,currentUser }) => {
         if (response.data.wallet_qrcode_option===undefined)
           response.data.wallet_qrcode_option=4;
         if (response.data.wallet_bg_color===undefined)
-          response.data.wallet_bg_color="#ADD8E6"; 
+          response.data.wallet_bg_color="#000000"; 
         setState(response.data);
          
       })
