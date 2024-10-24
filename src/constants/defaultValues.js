@@ -19,7 +19,7 @@ export const localeOptions = [
 ];
 export const qrcodeSelectData = [{"label": "Vcard", "value": 1},{"label": "Align with Smart Card", "value": 2},{"label": "E-profile", "value": 3},{"label": "Vcf", "value": 4}];
   
-export const minisiteSelectData = [{"label": "Digital Business Card", "value": 1},{"label": "E-Invitation", "value": 2}];
+export const minisiteSelectData = [{"label": "Digital Business Card - Original", "value": 1},{"label": "Digital Business Card - Compact", "value": 3},{"label": "E-Invitation", "value": 2}];
 export const walletHeadLogoSelectData = [{"label": "Company Logo", "value": 1},{"label": "HeadShot", "value": 2},{"label": "None", "value": 3}];
 export const walletField1SelectData = [
   {"label": "First Name only", "value": 1},

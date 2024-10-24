@@ -597,7 +597,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                        <IntlMessages id="cards.tab-admin-log6" />
                     </NavLink>
                   </NavItem>
-                  {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
+                  
                   <NavItem>
                     <NavLink
                       to="#"
@@ -613,7 +613,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                        <IntlMessages id="cards.tab-admin-log7" />
                     </NavLink>
                   </NavItem>
-                }
+                 
                 </Nav>
                  
                 
@@ -689,7 +689,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                     </Colxx>
                   </Row>
                 </TabPane>
-                {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
+               
                 <TabPane tabId="7">
                   <Row>
                     <Colxx sm="12">
@@ -701,7 +701,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                     </Colxx>
                   </Row>
                 </TabPane>
-                }
+             
               </TabContent>
             </Card>
           </Colxx>
