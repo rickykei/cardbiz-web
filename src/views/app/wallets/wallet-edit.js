@@ -178,7 +178,7 @@ const WalletPage = ({ intl, match,currentUser }) => {
       .then(response => {
  
         if (response.data.wallet_field1_option===undefined)
-          response.data.wallet_field1_option=1;
+          response.data.wallet_field1_option=5;
         if (response.data.wallet_field2_option===undefined)
           response.data.wallet_field2_option=2;
         if (response.data.wallet_field3_option===undefined)
