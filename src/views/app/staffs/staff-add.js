@@ -107,17 +107,32 @@ const AddNewStaffModal = ({
     work_email3: "",
     home_email: "",
     other_email: "",
+    work_email_label: "",
+    work_email2_label: "",
+    work_email3_label: "",
+    home_email_label: "",
+    other_email_label: "",
     position: "",
     work_tel: "",
     work_tel2: "",
     work_tel3: "",
     work_tel4: "",
+    work_tel_label: "",
+    work_tel2_label: "",
+    work_tel3_label: "",
+    work_tel4_label: "",
     mobile: "",
     mobile2: "",
     mobile3: "",
     mobile4: "",
     home_tel: "",
     fax: "",
+    mobile_label: "",
+    mobile2_label: "",
+    mobile3_label: "",
+    mobile4_label: "",
+    home_tel_label: "",
+    fax_label: "",
     web_link: "",
     web_link2: "",
     web_link3: "",
@@ -134,6 +149,10 @@ const AddNewStaffModal = ({
     address2: "",
     address3: "",
     address4: "",
+    address_label: "",
+    address2_label: "",
+    address3_label: "",
+    address4_label: "",
     division: "",
     department: "",
     country: "",
@@ -206,17 +225,32 @@ const AddNewStaffModal = ({
       work_email3: state.work_email3,
       home_email: state.home_email,
       other_email: state.other_email,
+      work_email_label: state.work_email_label,
+      work_email2_label: state.work_email2_label,
+      work_email3_label: state.work_email3_label,
+      home_email_label: state.home_email_label,
+      other_email_label: state.other_email_label,
       position: state.position,
       work_tel: state.work_tel,
       work_tel2: state.work_tel2,
       work_tel3: state.work_tel3,
       work_tel4: state.work_tel4,
+      work_tel_label: state.work_tel_label,
+      work_tel2_label: state.work_tel2_label,
+      work_tel3_label: state.work_tel3_label,
+      work_tel4_label: state.work_tel4_label,
       mobile: state.mobile,
       mobile2: state.mobile2,
       mobile3: state.mobile3,
       mobile4: state.mobile4,
       home_tel: state.home_tel,
       fax: state.fax,
+      mobile_label: state.mobile_label,
+      mobile2_label: state.mobile2_label,
+      mobile3_label: state.mobile3_label,
+      mobile4_label: state.mobile4_label,
+      home_tel_label: state.home_tel_label,
+      fax_label: state.fax_label,
       web_link: state.web_link,
       web_link2: state.web_link2,
       web_link3: state.web_link3,
@@ -233,6 +267,10 @@ const AddNewStaffModal = ({
       address2: state.address2,
       address3: state.address3,
       address4: state.address4,
+      address_label: state.address_label,
+      address2_label: state.address2_label,
+      address3_label: state.address3_label,
+      address4_label: state.address4_label,
       division: state.division,
       department: state.department,
       country: state.country,
@@ -559,17 +597,33 @@ const AddNewStaffModal = ({
                     <FormGroup>
                       <Label for="work_email">
                         <IntlMessages id="forms.staff-work_email" />
-                      </Label>
+                      </Label> 
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_email_label || ''}
+                        onChange={(val) => setState({ ...state, work_email_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_email_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_email_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_email || ''}
                         onChange={(val) => setState({ ...state, work_email: val.target.value })}
                         placeholder={messages['forms.staff-work_email']}
-
                       />
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_email-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
+                      
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6" className="mb-5">
@@ -577,6 +631,20 @@ const AddNewStaffModal = ({
                       <Label for="work_email2">
                         <IntlMessages id="forms.staff-work_email2" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_email2_label || ''}
+                        onChange={(val) => setState({ ...state, work_email2_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_email2_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_email2_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_email2 || ''}
@@ -586,6 +654,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_email2-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
 
                   </Colxx>
@@ -599,24 +669,53 @@ const AddNewStaffModal = ({
                       <Label for="work_email3">
                         <IntlMessages id="forms.staff-work_email3" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_email3_label || ''}
+                        onChange={(val) => setState({ ...state, work_email3_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_email3_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_email3_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_email3 || ''}
                         onChange={(val) => setState({ ...state, work_email3: val.target.value })}
                         placeholder={messages['forms.staff-work_email3']}
-
                       />
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_email3-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
 
                   </Colxx>
                   <Colxx xxs="12" md="6" >
                     <FormGroup>
-                      <Label for="home_email">
-                        <IntlMessages id="forms.staff-home_email" />
+                      <Label for="home_email_label">
+                        <IntlMessages id="forms.staff-home_email_label" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.home_email_label || ''}
+                        onChange={(val) => setState({ ...state, home_email_label: val.target.value })}
+                        placeholder={messages['forms.staff-home_email_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-home_email_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.home_email || ''}
@@ -626,6 +725,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-home_email-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
 
                   </Colxx>
@@ -639,6 +740,20 @@ const AddNewStaffModal = ({
                       <Label for="other_email">
                         <IntlMessages id="forms.staff-other_email" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.other_email_label || ''}
+                        onChange={(val) => setState({ ...state, other_email_label: val.target.value })}
+                        placeholder={messages['forms.staff-other_email_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-other_email_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.other_email || ''}
@@ -648,6 +763,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-other_email-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6" className="mb-5">
@@ -675,6 +792,20 @@ const AddNewStaffModal = ({
                       <Label for="work_tel">
                         <IntlMessages id="forms.staff-work_tel" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_tel_label || ''}
+                        onChange={(val) => setState({ ...state, work_tel_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_tel_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_tel || ''}
@@ -684,6 +815,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_tel-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -692,6 +825,20 @@ const AddNewStaffModal = ({
                       <Label for="work_tel2">
                         <IntlMessages id="forms.staff-work_tel2" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_tel2_label || ''}
+                        onChange={(val) => setState({ ...state, work_tel2_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel2_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_tel2_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_tel2 || ''}
@@ -701,6 +848,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_tel2-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -712,6 +861,20 @@ const AddNewStaffModal = ({
                       <Label for="work_tel3">
                         <IntlMessages id="forms.staff-work_tel3" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_tel3_label || ''}
+                        onChange={(val) => setState({ ...state, work_tel3_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel3_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_tel3_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_tel3 || ''}
@@ -721,6 +884,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_tel3-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -729,6 +894,20 @@ const AddNewStaffModal = ({
                       <Label for="work_tel4">
                         <IntlMessages id="forms.staff-work_tel4" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_tel4_label || ''}
+                        onChange={(val) => setState({ ...state, work_tel4_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel4_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_tel4_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_tel4 || ''}
@@ -738,6 +917,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_tel4-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -747,6 +928,20 @@ const AddNewStaffModal = ({
                       <Label for="mobile">
                         <IntlMessages id="forms.staff-mobile" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.mobile_label || ''}
+                        onChange={(val) => setState({ ...state, mobile_label: val.target.value })}
+                        placeholder={messages['forms.staff-mobile_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-mobile_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.mobile || ''}
@@ -756,6 +951,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-mobile-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -763,6 +960,20 @@ const AddNewStaffModal = ({
                       <Label for="mobile2">
                         <IntlMessages id="forms.staff-mobile2" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.mobile2_label || ''}
+                        onChange={(val) => setState({ ...state, mobile2_label: val.target.value })}
+                        placeholder={messages['forms.staff-mobile2_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-mobile2_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.mobile2 || ''}
@@ -772,6 +983,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-mobile2-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -781,6 +994,20 @@ const AddNewStaffModal = ({
                       <Label for="mobile3">
                         <IntlMessages id="forms.staff-mobile3" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.mobile3_label || ''}
+                        onChange={(val) => setState({ ...state, mobile3_label: val.target.value })}
+                        placeholder={messages['forms.staff-mobile3_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-mobile3_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.mobile3 || ''}
@@ -790,6 +1017,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-mobile3-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -797,6 +1026,20 @@ const AddNewStaffModal = ({
                       <Label for="mobile4">
                         <IntlMessages id="forms.staff-mobile4" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.mobile4_label || ''}
+                        onChange={(val) => setState({ ...state, mobile4_label: val.target.value })}
+                        placeholder={messages['forms.staff-mobile4_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-mobile4_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.mobile4 || ''}
@@ -806,6 +1049,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-mobile4-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -815,6 +1060,20 @@ const AddNewStaffModal = ({
                       <Label for="home_tel">
                         <IntlMessages id="forms.staff-home_tel" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.home_tel_label || ''}
+                        onChange={(val) => setState({ ...state, home_tel_label: val.target.value })}
+                        placeholder={messages['forms.staff-home_tel_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-home_tel_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.home_tel || ''}
@@ -824,6 +1083,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-home_tel-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -832,6 +1093,20 @@ const AddNewStaffModal = ({
                       <Label for="fax">
                         <IntlMessages id="forms.staff-fax" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.fax_label || ''}
+                        onChange={(val) => setState({ ...state, fax_label: val.target.value })}
+                        placeholder={messages['forms.staff-fax_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-fax_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.fax || ''}
@@ -841,6 +1116,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-fax-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -1063,6 +1340,20 @@ const AddNewStaffModal = ({
                       <Label for="address">
                         <IntlMessages id="forms.staff-address" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.address_label || ''}
+                        onChange={(val) => setState({ ...state, address_label: val.target.value })}
+                        placeholder={messages['forms.staff-address_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-address_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.address || ''}
@@ -1072,6 +1363,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-address-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -1079,6 +1372,20 @@ const AddNewStaffModal = ({
                       <Label for="address2">
                         <IntlMessages id="forms.staff-address2" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.address2_label || ''}
+                        onChange={(val) => setState({ ...state, address2_label: val.target.value })}
+                        placeholder={messages['forms.staff-address2_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-address2_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.address2 || ''}
@@ -1088,6 +1395,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-address2-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -1097,6 +1406,20 @@ const AddNewStaffModal = ({
                       <Label for="address3">
                         <IntlMessages id="forms.staff-address3" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.address3_label || ''}
+                        onChange={(val) => setState({ ...state, address3_label: val.target.value })}
+                        placeholder={messages['forms.staff-address3_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-address3_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.address3 || ''}
@@ -1106,6 +1429,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-address3-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -1113,6 +1438,20 @@ const AddNewStaffModal = ({
                       <Label for="address4">
                         <IntlMessages id="forms.staff-address4" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.address4_label || ''}
+                        onChange={(val) => setState({ ...state, address4_label: val.target.value })}
+                        placeholder={messages['forms.staff-address4_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-address4_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.address4 || ''}
@@ -1122,6 +1461,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-address4-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
