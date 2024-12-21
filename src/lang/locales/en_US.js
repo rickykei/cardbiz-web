@@ -569,6 +569,7 @@ module.exports = {
   'menu.staff-profile': 'Profile',
   'menu.staff-edit': 'Edit Staff', 
   'form-staff-headshot': 'Headshot (Recommended Size: 300px x 300px. Must be in square and do not include space and symbol in the filename)',
+  'form-staff-wechat-qrCode': 'Wechat (Recommended Size: 300px x 300px. Must be in square and do not include space and symbol in the filename)',
   'forms.user-company': 'Company Name',
   'forms.staff-work_email': 'Work E-mail',
   'forms.staff-home_email': 'Home E-mail',

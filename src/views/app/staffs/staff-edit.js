@@ -19,6 +19,7 @@ import { useParams,useHistory } from "react-router-dom";
 import { servicePath2 ,qrcodeSelectData,minisiteSelectData} from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
 import 'dropzone/dist/min/dropzone.min.css';
+ import {Html5Qrcode} from "html5-qrcode";
 
 const ReactDOMServer = require('react-dom/server');
 
@@ -75,8 +76,6 @@ const dropzoneConfig = {
   ),
   headers: { 'My-Awesome-Header': 'header value' },
 };
-
-
 
 const EditClientModal = ({ intl, match, currentUser}) => {
  
@@ -303,6 +302,24 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     }
   }
 
+  const eventHandlersQR = {
+      addedfile: (file) => {
+        const html5QrCode = new Html5Qrcode( "reader");
+   
+          html5QrCode.scanFile(file, true)
+          .then(decodedText => {
+            setState({ ...state, wechat_id: decodedText })
+  
+            console.log(decodedText);
+          })
+          .catch(err => {
+            // failure, handle it.
+            console.log(`Error scanning file. Reason: ${err}`)
+          });
+       // });
+      }
+    }
+
   useEffect(() => {
     if (id){
       getStaff(id);
@@ -499,6 +516,24 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                         config={dropzoneComponentConfig}
                         djsConfig={dropzoneConfig}
                         eventHandlers ={eventHandlers} multiple={false}/> 
+                        </Colxx>
+                        </Row>
+                        </CardBody>
+                    </Card>
+                    <Card className="mb-4">
+                      <CardBody>
+                        <CardTitle>
+                          <IntlMessages id="form-staff-wechat-qrCode" />
+                        </CardTitle> 
+                        <Row>
+                        <Colxx xxs="12" md="2" className="mb-5">
+                          <span id="qr_str"> </span>
+                        </Colxx> 
+                        <Colxx xxs="12" md="10">  <DropzoneComponent
+                         config={dropzoneComponentConfig}
+                         djsConfig={dropzoneConfig}
+                         eventHandlers={eventHandlersQR} multiple={false} />
+                         <div id="reader" style={{display : 'none' }}> My reader</div>
                         </Colxx>
                         </Row>
                         </CardBody>

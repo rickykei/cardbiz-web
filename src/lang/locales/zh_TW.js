@@ -560,6 +560,7 @@ module.exports = {
   'menu.clients-edit': '公司登錄',
   'menu.staff-edit': '編輯員工資料',
   'form-staff-headshot': '員工照片 (建議尺寸: 300px x 300px. 圖像必須是正方形，文件名中不能包含空格和符號)',
+  'form-staff-wechat-qrCode': '微信 (建議尺寸: 300px x 300px. 圖像必須是正方形，文件名中不能包含空格和符號)',
   'forms.user-company': '公司名稱',
   'forms.staff-work_email': '工作電郵',
   'forms.staff-home_email': '私人電郵',

@@ -18,8 +18,7 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 import { servicePath2, qrcodeSelectData,minisiteSelectData } from 'constants/defaultValues';
 import axios from 'axios';
 import DropzoneComponent from 'react-dropzone-component';
-
-
+import {Html5Qrcode} from "html5-qrcode";
 
 const apiUrl = `${servicePath2}/companies/codelist`;
 const delay = ms => new Promise(
@@ -360,10 +359,27 @@ const AddNewStaffModal = ({
 
   }
 
-
   const eventHandlers = {
     addedfile: (file) => {
-      setFile(file);
+     setFile(file);
+    }
+  }
+
+  const eventHandlersQR = {
+    addedfile: (file) => {
+      const html5QrCode = new Html5Qrcode( "reader");
+ 
+        html5QrCode.scanFile(file, true)
+        .then(decodedText => {
+          setState({ ...state, wechat_id: decodedText })
+
+          console.log(decodedText);
+        })
+        .catch(err => {
+          // failure, handle it.
+          console.log(`Error scanning file. Reason: ${err}`)
+        });
+     // });
     }
   }
 
@@ -570,6 +586,23 @@ const AddNewStaffModal = ({
                           djsConfig={dropzoneConfig}
                           eventHandlers={eventHandlers} multiple={false} />
 
+                      </CardBody>
+                    </Card>
+                  </Colxx>
+                </Row>
+
+                <Row className="mb-4">
+                  <Colxx xxs="12">
+                    <Card>
+                      <CardBody>
+                        <CardTitle>
+                          <IntlMessages id="form-staff-wechat-qrCode" />
+                        </CardTitle>
+                        <DropzoneComponent
+                          config={dropzoneComponentConfig}
+                          djsConfig={dropzoneConfig}
+                          eventHandlers={eventHandlersQR} multiple={false} />
+                          <div id="reader" style={{display : 'none' }}> My reader</div>
                       </CardBody>
                     </Card>
                   </Colxx>
