@@ -19,6 +19,13 @@ export const localeOptions = [
 ];
 export const qrcodeSelectData = [{"label": "Vcard", "value": 1},{"label": "Align with Smart Card", "value": 2},{"label": "E-profile", "value": 3},{"label": "Vcf", "value": 4}];
   
+export const fontfamilySelectData = [{"label": "Didot", "value": "Didot"},{"label": "Baskerville", "value": "Baskerville"},{"label": "Garamond", "value": "Garamond"},{"label": "Times New Roman", "value": "Times New Roman"},
+  {"label": "New York", "value": "New York"},{"label": "Georgia", "value": "Georgia"},{"label": "Helvetica", "value": "Helvetica"},{"label": "Futura", "value": "Futura"},{"label": "Avenir", "value": "Avenir"},
+  {"label": "Montserrat", "value": "Montserrat"},{"label": "Arial", "value": "Arial"},{"label": "Arial Black", "value": "Arial Black"},{"label": "Verdana", "value": "Verdana"},{"label": "Tahoma", "value": "Tahoma"},
+  {"label": "Trebuchet MS", "value": "Trebuchet MS"},{"label": "Impact", "value": "Impact"},{"label": "Gill Sans", "value": "Gill Sans"},{"label": "Palatino", "value": "Palatino"},{"label": "Courier", "value": "Courier"},
+  {"label": "Monaco", "value": "Monaco"},{"label": "Bradley Hand", "value": "Bradley Hand"},{"label": "Brush Script MT", "value": "Brush Script MT"},{"label": "Luminari", "value": "Luminari"},
+  {"label": "Comic Sans MS", "value": "Comic Sans MS"},{"label": "Lato", "value": "Lato"},{"label": "Lora", "value": "Lora"}
+];
 export const minisiteSelectData = [{"label": "Digital Business Card - Original", "value": 1},
   {"label": "Digital Business Card - Compact (EN)", "value": 3},
   {"label": "Digital Business Card - Compact (CHI -  Traditional)", "value": 4},
