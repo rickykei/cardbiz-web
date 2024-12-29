@@ -202,6 +202,7 @@ const AddNewStaffModal = ({
   const [smartIdSelectData, setSmartIdSelectData] = useState([]);
   const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}`;
   const [enabled, setEnabled] = useState(true);
+  const [dText, setDText] = useState('');
 
   const addNetItem = async (e) => {
     e.preventDefault();
@@ -282,7 +283,7 @@ const AddNewStaffModal = ({
       linkedin_url: state.linkedin_url,
       youtube_url: state.youtube_url,
       twitter_url: state.twitter_url,
-      wechat_id: state.wechat_id,
+      wechat_id: dText || state.wechat_id,
       wechatpage_url: state.wechatpage_url, 
       tiktok_url: state.tiktok_url, 
       line_url: state.line_url,
@@ -371,8 +372,8 @@ const AddNewStaffModal = ({
  
         html5QrCode.scanFile(file, true)
         .then(decodedText => {
-          setState({ ...state, wechat_id: decodedText })
-
+         //  setState({ ...state, wechat_id: decodedText })
+          setDText(decodedText);
           console.log(decodedText);
         })
         .catch(err => {
@@ -1748,7 +1749,7 @@ const AddNewStaffModal = ({
                       </Label>
                       <Input
                         type="text"
-                        value={state.wechat_id || ''}
+                        value={dText || state.wechat_id || ''}
                         onChange={(val) => setState({ ...state, wechat_id: val.target.value })}
                         placeholder={messages['forms.staff-wechat_id']}
                       />

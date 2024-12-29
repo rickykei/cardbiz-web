@@ -201,6 +201,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
   const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
   const [smartIdSelectData,setSmartIdSelectData] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [dText, setDText] = useState(false);
   
 
   const getStaff = (aa) => {
@@ -231,6 +232,9 @@ const EditClientModal = ({ intl, match, currentUser}) => {
      console.log('add uid before update staff');
     if (state.qrcode_option===undefined)
     state.qrcode_option=1;
+
+    if (dText !==null || dText !== undefined)
+      state.wechat_id=dText;
 
     for (const [key, val] of Object.entries(state)) {
      
@@ -303,21 +307,21 @@ const EditClientModal = ({ intl, match, currentUser}) => {
   }
 
   const eventHandlersQR = {
-      addedfile: (file) => {
-        const html5QrCode = new Html5Qrcode( "reader");
-   
+      addedfile: (file,val) => {
+        const html5QrCode = new Html5Qrcode( "reader"); 
           html5QrCode.scanFile(file, true)
           .then(decodedText => {
-            setState({ ...state, wechat_id: decodedText })
-  
-            console.log(decodedText);
+            console.log(val);
+            setDText(decodedText);
+             
           })
           .catch(err => {
-            // failure, handle it.
-            console.log(`Error scanning file. Reason: ${err}`)
+            
+            console.log(`${err}`)
           });
-       // });
+       
       }
+      
     }
 
   useEffect(() => {
@@ -532,7 +536,9 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                         <Colxx xxs="12" md="10">  <DropzoneComponent
                          config={dropzoneComponentConfig}
                          djsConfig={dropzoneConfig}
-                         eventHandlers={eventHandlersQR} multiple={false} />
+                         eventHandlers={eventHandlersQR}  
+                         multiple={false}  
+                         />
                          <div id="reader" style={{display : 'none' }}> My reader</div>
                         </Colxx>
                         </Row>
@@ -1666,7 +1672,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       </Label>
                       <Input
                         type="text"
-                        value={state.wechat_id || ''}
+                        value={dText||state.wechat_id || ''}
                         onChange={(val) => setState({ ...state, wechat_id: val.target.value })}
                         placeholder={messages['forms.staff-wechat_id']}
                       />
