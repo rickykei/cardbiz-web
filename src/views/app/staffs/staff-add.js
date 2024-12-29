@@ -18,7 +18,7 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 import { servicePath2, qrcodeSelectData,minisiteSelectData } from 'constants/defaultValues';
 import axios from 'axios';
 import DropzoneComponent from 'react-dropzone-component';
-import {Html5Qrcode} from 'html5-qrcode';
+import {Html5Qrcode} from "html5-qrcode";
 
 const apiUrl = `${servicePath2}/companies/codelist`;
 const delay = ms => new Promise(

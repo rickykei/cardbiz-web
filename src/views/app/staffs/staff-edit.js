@@ -19,7 +19,7 @@ import { useParams,useHistory } from "react-router-dom";
 import { servicePath2 ,qrcodeSelectData,minisiteSelectData} from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
 import 'dropzone/dist/min/dropzone.min.css';
-import {Html5Qrcode} from "html5-qrcode";
+ import {Html5Qrcode} from "html5-qrcode";
 
 const ReactDOMServer = require('react-dom/server');
 
@@ -308,7 +308,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
    
           html5QrCode.scanFile(file, true)
           .then(decodedText => {
-            state.wechat_id= decodedText; 
+            setState({ ...state, wechat_id: decodedText })
+  
             console.log(decodedText);
           })
           .catch(err => {
