@@ -11,7 +11,7 @@ import { servicePath2,fontfamilySelectData } from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
 import { useParams, useHistory } from "react-router-dom";
 import 'dropzone/dist/min/dropzone.min.css';
-import ClientDataService from 'services/ClientsService';
+import CompanyService from 'services/CompanyService';
 import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 
@@ -45,8 +45,8 @@ const EditClientModal = ({ intl, match, }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [bgfile, setBgFile] = useState(null);
 
-  const getClient = (aa) => {
-    ClientDataService.get(aa)
+  const getCompany= (aa) => {
+    CompanyService.get(aa)
       .then(response => {
         setState(response.data);
         console.log(response.data);
@@ -58,34 +58,36 @@ const EditClientModal = ({ intl, match, }) => {
   
   useEffect(() => {
     if (id)
-    getClient(id);
+      getCompany(id);
   }, [id]);
 
   const bgImgUrl = `${servicePath2}/files/${state.bg_image}`;
 
-  const updateClient = () => {
+  const updateCompany = () => {
     
-    const data = new FormData() 
+    const data = new FormData(); 
 
     /* eslint-disable no-restricted-syntax */
+
+
     for (const [key, val] of Object.entries(state)) {
-     
-     
-       
+      if (key!=='bg_image')
           data.append(key, val);
-        
-      
+          
     }
 
-    if (bgfile !== null)
+    if (bgfile !== null){
       data.append("bg_image", bgfile);
+    }
 
-    ClientDataService.update(state.id, data)
+    console.log(data.get('smartcard_uid'));
+
+    CompanyService.update(state.id, data)
       .then(response => {
         console.log(response.data);
         setMessage("The client was updated successfully!");
         setIsDisabled(false); // <--- here
-        history.push("/app/clients/clients-list");
+        history.push("/app/minisite/minisite-list");
       })
       .catch(f => {
         console.log(f);
@@ -156,7 +158,7 @@ const EditClientModal = ({ intl, match, }) => {
 
 <Row>
   <Colxx xxs="12">
-    <Breadcrumb heading="menu.users-add" match={match} />
+    <Breadcrumb heading="menu.minisite-edit" match={match} />
     <Separator className="mb-5" />
   </Colxx>
 </Row>
@@ -460,7 +462,7 @@ const EditClientModal = ({ intl, match, }) => {
                 </CardBody>
             </Card>
                
-            <Button color="primary" className="mt-4" onClick={(e) => updateClient(e)} disabled={isDisabled}>
+            <Button color="primary" className="mt-4" onClick={(e) => updateCompany(e)} disabled={isDisabled}>
               <IntlMessages id="forms.submit" />
             </Button>
             <p>{message}</p>

@@ -1043,4 +1043,5 @@ module.exports = {
   'forms.minisite-backgroundcolor-muted': 'E.g #FFFFFF',
   'forms.minisite-backgroundimg': 'Background Image',
   'forms.minisite-backgroundimg-muted': 'https',
+  'forms.minisite-links-selected-color':'Link selected Color',
 };
