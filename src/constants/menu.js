@@ -77,7 +77,7 @@ const data = [
     icon: 'simple-icon-wallet',
     label: 'menu.style.miniside',
     to: `${adminRoot}/minisite`,
-    roles: [UserRole.Admin, UserRole.Editor] 
+    roles: [UserRole.Editor] 
   },
 ];
 export default data;
