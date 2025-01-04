@@ -20,6 +20,7 @@ const StaffsDeactive = React.lazy(() => import(/* webpackChunkName: "staffsdeact
 const Cards = React.lazy(() => import(/* webpackChunkName: "cards" */ './cards'));
 const CardsAdmin = React.lazy(() => import(/* webpackChunkName: "cardsadmin" */ './cardsadmin'));
 const BatchUpload = React.lazy(() => import(/* webpackChunkName: "batchupload" */ './batchupload'));
+const MinisiteAdmin = React.lazy(() => import(/* webpackChunkName: "minisiteAdmin" */ './minisiteAdmin'));
 const Minisite = React.lazy(() => import(/* webpackChunkName: "minisite" */ './minisite'));
 
 const App = ({ match }) => {
@@ -87,8 +88,12 @@ const App = ({ match }) => {
               render={(props) => <Wallets {...props} />}
             />
             <Route
-              path={`${match.url}/minisite`}
-              render={(props) => <Minisite {...props} />}
+              path={`${match.url}/minisiteAdmin`}
+              render={(props) => <MinisiteAdmin {...props} />}
+            />
+            <Route
+            path={`${match.url}/minisite`}
+            render={(props) => <Minisite {...props} />}
             />
             <Route
               path={`${match.url}/menu`}

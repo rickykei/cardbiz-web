@@ -17,6 +17,10 @@ const update = (id, data) => {
   return http.post(`/companies/${id}`, data);
 };
 
+const updateMinisite = (id, data) => {
+  return http.post(`/companies/minisite/${id}`, data);
+};
+
 const remove = id => {
   return http.delete(`/companies/${id}`);
 };
@@ -36,7 +40,8 @@ const CompanyService = {
   update,
   remove,
   removeAll,
-  findByName
+  findByName,
+  updateMinisite
 };
 
 export default CompanyService;

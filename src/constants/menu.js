@@ -66,6 +66,13 @@ const data = [
     roles: [UserRole.Admin, UserRole.Editor] 
   },
   {
+    id: 'MinisiteAdmin',
+    icon: 'simple-icon-wallet',
+    label: 'menu.style.miniside',
+    to: `${adminRoot}/minisiteAdmin`,
+    roles: [UserRole.Admin] 
+  },
+  {
     id: 'Minisite',
     icon: 'simple-icon-wallet',
     label: 'menu.style.miniside',

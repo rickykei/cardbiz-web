@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
-import { connect } from 'react-redux';
+ 
 import Breadcrumb from 'containers/navs/Breadcrumb';
 import { injectIntl } from 'react-intl';
 import { Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle } from 'reactstrap';
@@ -17,7 +17,7 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 
 const ReactDOMServer = require('react-dom/server');
 
-const EditMinisteModal = ({ intl, match,currentUser }) => {
+const EditClientModal = ({ intl, match, }) => {
 
   const { id } = useParams();
   const initialState = {
@@ -46,7 +46,7 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
   const [bgfile, setBgFile] = useState(null);
 
   const getCompany= (aa) => {
-    CompanyService.get(aa!==undefined?aa:currentUser.companyId)
+    CompanyService.get(aa)
       .then(response => {
         setState(response.data);
         console.log(response.data);
@@ -58,7 +58,6 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
   
   useEffect(() => {
     if (id)
-      console.log(id);
       getCompany(id);
   }, [id]);
 
@@ -86,7 +85,9 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
     CompanyService.updateMinisite(state.id, data)
       .then(response => {
         console.log(response.data);
-        setMessage("The minisite was updated successfully!");
+        setMessage("The client was updated successfully!");
+        setIsDisabled(false); // <--- here
+        history.push("/app/minisiteAdmin/minisite-list");
       })
       .catch(f => {
         console.log(f);
@@ -499,17 +500,4 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
   );
 };
  
-const mapStateToProps = ({ menu,authUser, settings }) => {
-  const { containerClassnames, menuClickCount, selectedMenuHasSubItems } = menu;
-  const { locale } = settings;
-  const { currentUser } = authUser;
-  return {
-    containerClassnames,
-    menuClickCount,
-    selectedMenuHasSubItems,
-    locale,
-    currentUser,
-  };
-};
-export default injectIntl(connect(mapStateToProps)(EditMinisteModal));
-
+export default injectIntl(EditClientModal);

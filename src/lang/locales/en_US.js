@@ -1031,6 +1031,7 @@ module.exports = {
   'forms.minisite-fontfamily': 'Font family',
   'forms.minisite-fontfamily-muted': 'Arial Black',
   'forms.minisite-text-color': 'Text color',
+  'forms.minisite-title-text-color': 'Title text color',
   'forms.minisite-social-icon-bg-color': 'Social icon background color',
   'forms.minisite-button-color': 'Button color',
   'forms.minisite-links-hover-color': 'Link hover color',
