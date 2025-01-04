@@ -66,18 +66,18 @@ const data = [
     roles: [UserRole.Admin, UserRole.Editor] 
   },
   {
-    id: 'MinisiteAdmin',
+    id: 'minisiteAdmin',
     icon: 'simple-icon-wallet',
-    label: 'menu.style.miniside',
+    label: 'menu.style.minisite.admin',
     to: `${adminRoot}/minisiteAdmin`,
     roles: [UserRole.Admin] 
   },
   {
-    id: 'Minisite',
+    id: 'minisite',
     icon: 'simple-icon-wallet',
-    label: 'menu.style.miniside',
+    label: 'menu.style.minisite',
     to: `${adminRoot}/minisite`,
-    roles: [UserRole.Editor] 
+    roles: [UserRole.Admin,UserRole.Editor] 
   },
 ];
 export default data;
