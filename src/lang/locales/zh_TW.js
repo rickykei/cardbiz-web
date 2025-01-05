@@ -1029,7 +1029,7 @@ module.exports = {
   'forms.minisite-button-color': 'Button color',
   'forms.minisite-links-hover-color': 'Link hover color',
   'forms.minisite-links-not-hover-color': 'Link no hover color',
-  'forms.minisite-photo-color': 'Photo color',
+  'forms.minisite-key-wording-color': 'Key wording color',
   'forms.minisite-site-bg-color': 'Site background color',
   'forms.minisite-left-nav-bar-color': 'Left nav bar color',
   'forms.minisite-bio-wording-color': 'Bio wording color',

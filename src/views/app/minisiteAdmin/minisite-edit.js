@@ -36,7 +36,7 @@ const EditClientModal = ({ intl, match, }) => {
     links_selected_color:"",
     left_nav_bar_color:"",
     bio_wording_color:"",
-    photo_color:"",
+    key_wording_color:"",
     site_bg_color:"", 
   };
   const [state, setState] = useState(initialState);
@@ -308,14 +308,14 @@ const EditClientModal = ({ intl, match, }) => {
 
               <Colxx xxs="12" md="6" className="mb-5">
                 <FormGroup>
-                  <Label for="photocolor">
-                    <IntlMessages id="forms.minisite-photo-color" />
+                  <Label for="keywordingcolor">
+                    <IntlMessages id="forms.minisite-key-wording-color" />
                   </Label>
                   <Input
                     type="text"
-                    value={state.photo_color || ''}
-                    onChange={(val) => setState({ ...state, photo_color: val.target.value })}
-                    placeholder={messages['forms.minisite-photo-color']}
+                    value={state.key_wording_color || ''}
+                    onChange={(val) => setState({ ...state, key_wording_color: val.target.value })}
+                    placeholder={messages['forms.minisite-key-wording-color']}
 
                   />
                   <FormText color="muted">
