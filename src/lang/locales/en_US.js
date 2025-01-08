@@ -1020,7 +1020,8 @@ module.exports = {
   'wizard.async': 'Async save for 3 seconds!',
 
   /* 2024/12/26 Minisite */
-  'menu.style.miniside': 'Minisite',
+  'menu.style.minisite': 'Minisite',
+  'menu.style.minisite.admin': 'Minisite',
   'menu.minisite-list': 'Minisite List',
   'menu.minisite': 'Minisite List',
   'menu.minisite-edit': 'Company Minisite Style Info',

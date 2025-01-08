@@ -14,6 +14,7 @@ import 'dropzone/dist/min/dropzone.min.css';
 import CompanyService from 'services/CompanyService';
 import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
+import { PhotoshopPicker } from 'react-color';
 
 const ReactDOMServer = require('react-dom/server');
 
@@ -149,8 +150,191 @@ const EditClientModal = ({ intl, match, }) => {
     headers: { 'My-Awesome-Header': 'header value' },
   };
 
-  const eventHandlers = { addedfile: (file) => { setBgFile(file); } };
   
+  const eventHandlers = { addedfile: (file) => { setBgFile(file); } };
+
+  const [displayColorPicker, setDisplayColorPicker] = useState(false);
+  const [myfontcolor, setColor] = useState(false);
+  const openColorBorad = () => {
+    setDisplayColorPicker(!displayColorPicker);
+  };
+  const handleClose = () => {
+    setDisplayColorPicker(false);
+  };
+ 
+  const handleChange = (color) => {
+    setColor(color.hex);
+    state.font_color = color.hex;
+  };
+
+  const [displayTextColorPicker, setTextColorPicker] = useState(false);
+  const [myTextcolor, setColor1] = useState(false);
+  const openTextColorBorad = () => {
+    setTextColorPicker(!displayTextColorPicker);
+  };
+  const handleTextColorClose = () => {
+    setTextColorPicker(false);
+  };
+ 
+  const handleTextColorChange = (color) => {
+    setColor1(color.hex);
+    state.text_color = color.hex;
+  };
+
+  const [displaySocialBgColorPicker, setSocialBgColorPicker] = useState(false);
+  const [mySocialBgcolor, setColor2] = useState(false);
+  const openSocialBgColorBorad = () => {
+    setSocialBgColorPicker(!displaySocialBgColorPicker);
+  };
+  const handleSocialBgColorClose = () => {
+    setSocialBgColorPicker(false);
+  };
+ 
+  const handleSocialBgColorChange = (color) => {
+    setColor2(color.hex);
+    state.social_icon_bg_color = color.hex;
+  };
+
+  const [displayButtonColorPicker, setButtonColorPicker] = useState(false);
+  const [myButtoncolor, setColor3] = useState(false);
+  const openButtonColorBorad = () => {
+    setButtonColorPicker(!displayButtonColorPicker);
+  };
+  const handleButtonColorClose = () => {
+    setButtonColorPicker(false);
+  };
+ 
+  const handleButtonColorChange = (color) => {
+    setColor3(color.hex);
+    state.button_color = color.hex;
+  };
+
+  const [displayTitleTextColorPicker, setTitleTextColorPicker] = useState(false);
+  const [myTitleTextcolor, setColor4] = useState(false);
+  const openTitleTextColorBorad = () => {
+    setTitleTextColorPicker(!displayTitleTextColorPicker);
+  };
+  const handleTitleTextColorClose = () => {
+    setTitleTextColorPicker(false);
+  };
+ 
+  const handleTitleTextColorChange = (color) => {
+    setColor4(color.hex);
+    state.title_text_color = color.hex;
+  };
+
+  const [displayKeyWordingColorPicker, setKeyWordingColorPicker] = useState(false);
+  const [myKeyWordingcolor, setColor5] = useState(false);
+  const openKeyWordingColorBorad = () => {
+    setKeyWordingColorPicker(!displayKeyWordingColorPicker);
+  };
+  const handleKeyWordingColorClose = () => {
+    setKeyWordingColorPicker(false);
+  };
+ 
+  const handleKeyWordingColorChange = (color) => {
+    setColor5(color.hex);
+    state.key_wording_color = color.hex;
+  };
+
+  const [displayLinksHoverColorPicker, setLinksHoverColorPicker] = useState(false);
+  const [myLinksHovercolor, setColor6] = useState(false);
+  const openLinksHoverColorBorad = () => {
+    setLinksHoverColorPicker(!displayLinksHoverColorPicker);
+  };
+  const handleLinksHoverColorClose = () => {
+    setLinksHoverColorPicker(false);
+  };
+ 
+  const handleLinksHoverColorChange = (color) => {
+    setColor6(color.hex);
+    state.links_hover_color = color.hex;
+  };
+
+  const [displayLinksNotHoverColorPicker, setLinksNotHoverColorPicker] = useState(false);
+  const [myLinksNotHovercolor, setColor7] = useState(false);
+  const openLinksNotHoverColorBorad = () => {
+    setLinksNotHoverColorPicker(!displayLinksNotHoverColorPicker);
+  };
+  const handleLinksNotHoverColorClose = () => {
+    setLinksNotHoverColorPicker(false);
+  };
+ 
+  const handleLinksNotHoverColorChange = (color) => {
+    setColor7(color.hex);
+    state.links_not_hover_color = color.hex;
+  };
+
+  const [displayLinksSelectedColorPicker, setLinksSelectedColorPicker] = useState(false);
+  const [myLinksSelectedcolor, setColor8] = useState(false);
+  const openLinksSelectedColorBorad = () => {
+    setLinksSelectedColorPicker(!displayLinksSelectedColorPicker);
+  };
+  const handleLinksSelectedColorClose = () => {
+    setLinksSelectedColorPicker(false);
+  };
+ 
+  const handleLinksSelectedColorChange = (color) => {
+    setColor8(color.hex);
+    state.links_selected_color = color.hex;
+  };
+
+  const [displayLeftNavBarColorPicker, setLeftNavBarColorPicker] = useState(false);
+  const [myLeftNavBarcolor, setColor9] = useState(false);
+  const openLeftNavBarColorBorad = () => {
+    setLeftNavBarColorPicker(!displayLeftNavBarColorPicker);
+  };
+  const handleLeftNavBarColorClose = () => {
+    setLeftNavBarColorPicker(false);
+  };
+ 
+  const handleLeftNavBarColorChange = (color) => {
+    setColor9(color.hex);
+    state.left_nav_bar_color = color.hex;
+  };
+
+  const [displayBgColorPicker, setBgColorPicker] = useState(false);
+  const [myBgcolor, setColor10] = useState(false);
+  const openBgColorBorad = () => {
+    setBgColorPicker(!displayBgColorPicker);
+  };
+  const handleBgColorClose = () => {
+    setBgColorPicker(false);
+  };
+ 
+  const handleBgColorChange = (color) => {
+    setColor10(color.hex);
+    state.bg_color = color.hex;
+  };
+
+  const [displayBioWordingColorPicker, setBioWordingColorPicker] = useState(false);
+  const [myBioWordingcolor, setColor11] = useState(false);
+  const openBioWordingColorBorad = () => {
+    setBioWordingColorPicker(!displayBioWordingColorPicker);
+  };
+  const handleBioWordingColorClose = () => {
+    setBioWordingColorPicker(false);
+  };
+ 
+  const handleBioWordingColorChange = (color) => {
+    setColor11(color.hex);
+    state.bio_wording_color = color.hex;
+  };
+
+  const [displaySiteBgColorPicker, setSiteBgColorPicker] = useState(false);
+  const [mySiteBgcolor, setColor12] = useState(false);
+  const openSiteBgColorBorad = () => {
+    setSiteBgColorPicker(!displaySiteBgColorPicker);
+  };
+  const handleSiteBgColorClose = () => {
+    setSiteBgColorPicker(false);
+  };
+ 
+  const handleSiteBgColorChange = (color) => {
+    setColor12(color.hex);
+    state.site_bg_color = color.hex;
+  };
+
   const { messages } = intl;
   return (
 
@@ -178,8 +362,11 @@ const EditClientModal = ({ intl, match, }) => {
                     value={state.font_color || ''}
                     onChange={(val) => setState({ ...state, font_color: val.target.value })}
                     placeholder={messages['forms.minisite-fontcolor']}
-
+                    onClick={openColorBorad}
                   />
+                   {displayColorPicker ? (
+                   <PhotoshopPicker  color={myfontcolor} onAccept={handleClose} onCancel={handleClose} onChangeComplete={handleChange} />
+                   ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
@@ -239,8 +426,12 @@ const EditClientModal = ({ intl, match, }) => {
                     type="text"
                     value={state.text_color || ''}
                     onChange={(val) => setState({ ...state, text_color: val.target.value })}
+                    onClick={openTextColorBorad}
                     placeholder={messages['forms.minisite-text-color']}
                   />
+                  {displayTextColorPicker ? (
+                   <PhotoshopPicker  color={myTextcolor} onAccept={handleTextColorClose} onCancel={handleTextColorClose} onChangeComplete={handleTextColorChange} />
+                   ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
@@ -259,8 +450,11 @@ const EditClientModal = ({ intl, match, }) => {
                     value={state.social_icon_bg_color || ''}
                     onChange={(val) => setState({ ...state, social_icon_bg_color: val.target.value })}
                     placeholder={messages['forms.minisite-social-icon-bg-color']}
-
+                    onClick={openSocialBgColorBorad}
                   />
+                  {displaySocialBgColorPicker ? (
+                   <PhotoshopPicker  color={mySocialBgcolor} onAccept={handleSocialBgColorClose} onCancel={handleSocialBgColorClose} onChangeComplete={handleSocialBgColorChange} />
+                   ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
@@ -279,7 +473,11 @@ const EditClientModal = ({ intl, match, }) => {
                     value={state.button_color || ''}
                     onChange={(val) => setState({ ...state, button_color: val.target.value })}
                     placeholder={messages['forms.minisite-button-color']}
+                    onClick={openButtonColorBorad}
                   />
+                  {displayButtonColorPicker ? (
+                   <PhotoshopPicker  color={myButtoncolor} onAccept={handleButtonColorClose} onCancel={handleButtonColorClose} onChangeComplete={handleButtonColorChange} />
+                   ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
@@ -299,7 +497,11 @@ const EditClientModal = ({ intl, match, }) => {
                   value={state.title_text_color || ''}
                   onChange={(val) => setState({ ...state, title_text_color: val.target.value })}
                   placeholder={messages['forms.minisite-title-text-color']}
+                  onClick={openTitleTextColorBorad}
                 />
+                {displayTitleTextColorPicker ? (
+                   <PhotoshopPicker  color={myTitleTextcolor} onAccept={handleTitleTextColorClose} onCancel={handleTitleTextColorClose} onChangeComplete={handleTitleTextColorChange} />
+                   ) : null}
                 <FormText color="muted">
                   <IntlMessages id="forms.minisite-fontcolor-muted" />
                 </FormText>
@@ -316,8 +518,11 @@ const EditClientModal = ({ intl, match, }) => {
                     value={state.key_wording_color || ''}
                     onChange={(val) => setState({ ...state, key_wording_color: val.target.value })}
                     placeholder={messages['forms.minisite-key-wording-color']}
-
+                    onClick={openKeyWordingColorBorad}
                   />
+                   {displayKeyWordingColorPicker ? (
+                   <PhotoshopPicker  color={myKeyWordingcolor} onAccept={handleKeyWordingColorClose} onCancel={handleKeyWordingColorClose} onChangeComplete={handleKeyWordingColorChange} />
+                   ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
@@ -338,8 +543,11 @@ const EditClientModal = ({ intl, match, }) => {
                     value={state.links_hover_color || ''}
                     onChange={(val) => setState({ ...state, links_hover_color: val.target.value })}
                     placeholder={messages['forms.minisite-links-hover-color']}
-
+                    onClick={openLinksHoverColorBorad}
                   />
+                  {displayLinksHoverColorPicker ? (
+                   <PhotoshopPicker  color={myLinksHovercolor} onAccept={handleLinksHoverColorClose} onCancel={handleLinksHoverColorClose} onChangeComplete={handleLinksHoverColorChange} />
+                   ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
@@ -358,7 +566,11 @@ const EditClientModal = ({ intl, match, }) => {
                     value={state.links_not_hover_color || ''}
                     onChange={(val) => setState({ ...state, links_not_hover_color: val.target.value })}
                     placeholder={messages['forms.minisite-links-not-hover-color']}
+                    onClick={openLinksNotHoverColorBorad}
                   />
+                   {displayLinksNotHoverColorPicker ? (
+                   <PhotoshopPicker  color={myLinksNotHovercolor} onAccept={handleLinksNotHoverColorClose} onCancel={handleLinksNotHoverColorClose} onChangeComplete={handleLinksNotHoverColorChange} />
+                   ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
@@ -377,8 +589,11 @@ const EditClientModal = ({ intl, match, }) => {
                     value={state.links_selected_color || ''}
                     onChange={(val) => setState({ ...state, links_selected_color: val.target.value })}
                     placeholder={messages['forms.minisite-links-selected-color']}
-
+                    onClick={openLinksSelectedColorBorad}
                   />
+                  {displayLinksSelectedColorPicker ? (
+                   <PhotoshopPicker  color={myLinksSelectedcolor} onAccept={handleLinksSelectedColorClose} onCancel={handleLinksSelectedColorClose} onChangeComplete={handleLinksSelectedColorChange} />
+                   ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
@@ -397,7 +612,11 @@ const EditClientModal = ({ intl, match, }) => {
                     value={state.left_nav_bar_color || ''}
                     onChange={(val) => setState({ ...state, left_nav_bar_color: val.target.value })}
                     placeholder={messages['forms.minisite-left-nav-bar-color']}
+                    onClick={openLeftNavBarColorBorad}
                   />
+                  {displayLeftNavBarColorPicker ? (
+                   <PhotoshopPicker  color={myLeftNavBarcolor} onAccept={handleLeftNavBarColorClose} onCancel={handleLeftNavBarColorClose} onChangeComplete={handleLeftNavBarColorChange} />
+                   ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
@@ -417,7 +636,11 @@ const EditClientModal = ({ intl, match, }) => {
                     value={state.bg_color || ''}
                     onChange={(val) => setState({ ...state, bg_color: val.target.value })}
                     placeholder={messages['forms.minisite-backgroundcolor']}
+                    onClick={openBgColorBorad}
                   />
+                   {displayBgColorPicker ? (
+                   <PhotoshopPicker  color={myBgcolor} onAccept={handleBgColorClose} onCancel={handleBgColorClose} onChangeComplete={handleBgColorChange} />
+                   ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
@@ -436,7 +659,11 @@ const EditClientModal = ({ intl, match, }) => {
                     value={state.bio_wording_color || ''}
                     onChange={(val) => setState({ ...state, bio_wording_color: val.target.value })}
                     placeholder={messages['forms.minisite-bio-wording-color']}
+                    onClick={openBioWordingColorBorad}
                   />
+                  {displayBioWordingColorPicker ? (
+                   <PhotoshopPicker  color={myBioWordingcolor} onAccept={handleBioWordingColorClose} onCancel={handleBioWordingColorClose} onChangeComplete={handleBioWordingColorChange} />
+                   ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
@@ -457,7 +684,11 @@ const EditClientModal = ({ intl, match, }) => {
                     value={state.site_bg_color || ''}
                     onChange={(val) => setState({ ...state, site_bg_color: val.target.value })}
                     placeholder={messages['forms.minisite-site-bg-color']}
+                    onClick={openSiteBgColorBorad}
                   />
+                  {displaySiteBgColorPicker ? (
+                   <PhotoshopPicker  color={mySiteBgcolor} onAccept={handleSiteBgColorClose} onCancel={handleSiteBgColorClose} onChangeComplete={handleSiteBgColorChange} />
+                   ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
