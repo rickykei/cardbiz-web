@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useRef,useState, useEffect } from 'react';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { connect } from 'react-redux';
@@ -15,6 +15,8 @@ import CompanyService from 'services/CompanyService';
 import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import { PhotoshopPicker } from 'react-color';
+import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
 
 const ReactDOMServer = require('react-dom/server');
 
@@ -45,7 +47,44 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
   const [message, setMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
   const [bgfile, setBgFile] = useState(null);
-  
+
+  const [imageFile, setImageFile] = useState(null);
+  const [cropResult, setCropResult] = useState(null);
+  const [displayCroper, setDisplayCroper] = useState(false);
+  const openCroper = () => {
+    setDisplayCroper(!displayCroper);
+  };
+  const handleCloseCroper = () => {
+    setDisplayCroper(false);
+  };
+
+  const eventHandlers = { 
+    addedfile: (file) => { 
+    setBgFile(file); 
+  },
+  thumbnail: (file) => { 
+      openCroper();
+      setImageFile(file.dataURL);
+    },
+};
+  const cropperRef = useRef(null);
+  const onCrop = () => {
+    const imageElement = cropperRef?.current;
+    const cropper = imageElement?.cropper;
+    // 如果感觉卡顿，请注释下面这一行
+    // console.log(cropper.getCroppedCanvas().toDataURL()); 
+    // setBgFile(cropper.getCroppedCanvas().toBlob());  
+  };
+
+  const onCropEnd = () => {
+    const imageElement = cropperRef?.current;
+    const cropper = imageElement?.cropper;
+    document.getElementById('previewImg').src = cropper.getCroppedCanvas().toDataURL();
+    cropper.getCroppedCanvas().toBlob((blob) => {
+      setBgFile(blob);
+    })
+    handleCloseCroper();
+  };
 
   const getCompany= (aa) => {
     CompanyService.get(aa!==undefined?aa:currentUser.companyId)
@@ -123,7 +162,7 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
               </div>
               <div className="preview-container">
                 {/*  eslint-disable-next-line jsx-a11y/alt-text */}
-                <img data-dz-thumbnail className="img-thumbnail border-0" />
+                <img id="previewImg" data-dz-thumbnail className="img-thumbnail border-0" />
                 <i className="simple-icon-doc preview-icon" />
               </div>
             </div>
@@ -149,9 +188,6 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
       ),
     headers: { 'My-Awesome-Header': 'header value' },
   };
-
-  
-  const eventHandlers = { addedfile: (file) => { setBgFile(file); } };
 
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
   const [myfontcolor, setColor] = useState(false);
@@ -334,7 +370,7 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
     setColor12(color.hex);
     state.site_bg_color = color.hex;
   };
-  
+
   const { messages } = intl;
   return (
 
@@ -709,7 +745,22 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
                   config={dropzoneComponentConfig}
                   djsConfig={dropzoneConfigBgimg}
                   eventHandlers={eventHandlers} multiple={false} />
-                  
+                {displayCroper ? (
+                <Cropper
+                      src={imageFile}
+                      style={{ height: 400, width: "100%" }}
+                      // Cropper.js options
+                      initialAspectRatio={16 / 9}
+                      guides={false}
+                      crop={onCrop}
+                      ref={cropperRef}
+                    />
+                ) : null}
+                {displayCroper ? (
+                  <Button color="primary" className="mt-4" onClick={(e) => onCropEnd(e)} >
+                    <IntlMessages id="forms.submit" />
+                  </Button>
+                ) : null}
                 </Colxx>
                 </Row>
                 </CardBody>
