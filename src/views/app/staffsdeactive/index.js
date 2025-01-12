@@ -4,14 +4,8 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 const StaffsList = React.lazy(() =>
   import(/* webpackChunkName: "staffs-list" */ './staffs-list')
 );
-const StaffAdd = React.lazy(() =>
-  import(/* webpackChunkName: "staffs-add" */ './staff-add')
-);
 const StaffDel = React.lazy(() =>
   import(/* webpackChunkName: "staffs-del" */ './staff-del')
-);
-const StaffEdit = React.lazy(() =>
-  import(/* webpackChunkName: "staffs-edit" */ './staff-edit')
 );
 const StaffDeactive = React.lazy(() =>
   import(/* webpackChunkName: "staffs-deactive" */ './staff-deactive')
@@ -31,16 +25,8 @@ const StaffsDeactive = ({ match }) => (
         render={(props) => <StaffsList {...props} />}
       />
       <Route
-        path={`${match.url}/staff-add`}
-        render={(props) => <StaffAdd {...props} />}
-      />
-      <Route
         path={`${match.url}/staff-del/:id`}
         render={(props) => <StaffDel {...props} />}
-      />
-      <Route
-        path={`${match.url}/staff-edit/:id`}
-        render={(props) => <StaffEdit {...props} />}
       />
       <Route
         path={`${match.url}/staff-profile/:id`}
