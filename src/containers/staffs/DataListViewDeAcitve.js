@@ -53,12 +53,6 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
                 </Button>
                 <DropdownToggle caret outline color="info" />
                 <DropdownMenu>
-                 
-                   
-                  <DropdownItem href={`staff-edit/${product.id}`}>
-                    <IntlMessages id="dropdowns.edit" />
-                  </DropdownItem>
-                  
                   <DropdownItem href={`staff-del/${product.id}`}>
                     <IntlMessages id="dropdowns.delete" />
                   </DropdownItem>
