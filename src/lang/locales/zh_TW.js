@@ -1036,7 +1036,9 @@ module.exports = {
   'forms.minisite-bio-wording-color': 'Bio wording color',
   'forms.minisite-backgroundcolor': 'Background color',
   'forms.minisite-backgroundcolor-muted': 'E.g #FFFFFF',
-  'forms.minisite-backgroundimg': 'Background Image',
+  'forms.minisite-backgroundimg': 'Background Image (Recommended Size: 1920px x 1134px. Must be in square and do not include space and symbol in the filename)',
   'forms.minisite-backgroundimg-muted': 'https',
   'forms.minisite-links-selected-color':'Link selected Color',
+  'forms.crop.ok':'OK',
+  'forms.crop.cancel':'Cancel',
 };

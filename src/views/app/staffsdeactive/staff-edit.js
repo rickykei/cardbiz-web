@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useState , useEffect} from 'react';
+import React, {useRef, useState , useEffect} from 'react';
 import { injectIntl } from 'react-intl';
 import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,  } from 'reactstrap';
 import 'react-tagsinput/react-tagsinput.css';
@@ -16,9 +16,12 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 import StaffDataService from 'services/StaffsService';
 import { connect } from 'react-redux';
 import { useParams,useHistory } from "react-router-dom";
-import { servicePath2 ,qrcodeSelectData} from 'constants/defaultValues';
+import { servicePath2 ,qrcodeSelectData,minisiteSelectData} from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
 import 'dropzone/dist/min/dropzone.min.css';
+ import {Html5Qrcode} from "html5-qrcode";
+ import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
 
 const ReactDOMServer = require('react-dom/server');
 
@@ -49,7 +52,7 @@ const dropzoneConfig = {
           </div>
           <div className="preview-container">
             {/*  eslint-disable-next-line jsx-a11y/alt-text */}
-            <img data-dz-thumbnail className="img-thumbnail border-0" />
+            <img id="previewHeadshotImg" data-dz-thumbnail className="img-thumbnail border-0" />
             <i className="simple-icon-doc preview-icon" />
           </div>
         </div>
@@ -76,8 +79,6 @@ const dropzoneConfig = {
   headers: { 'My-Awesome-Header': 'header value' },
 };
 
-
-
 const EditClientModal = ({ intl, match, currentUser}) => {
  
   const { id } = useParams();
@@ -100,7 +101,16 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     work_email3: "",
     home_email: "",
     other_email: "",
+    work_email_label: "",
+    work_email2_label: "",
+    work_email3_label: "",
+    home_email_label: "",
+    other_email_label: "",
     position: "",
+    work_tel_label: "",
+    work_tel2_label: "",
+    work_tel3_label: "",
+    work_tel4_label: "",
     work_tel: "",
     work_tel2: "",
     work_tel3: "",
@@ -111,6 +121,12 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     mobile4: "",
     home_tel: "",
     fax: "",
+    mobile_label: "",
+    mobile2_label: "",
+    mobile3_label: "",
+    mobile4_label: "",
+    home_tel_label: "",
+    fax_label: "",
     web_link: "",
     web_link2: "",
     web_link3: "",
@@ -127,6 +143,10 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     address2: "",
     address3: "",
     address4: "",
+    address_label: "",
+    address2_label: "",
+    address3_label: "",
+    address4_label: "",
     division: "",
     department: "",
     country: "",
@@ -145,13 +165,13 @@ const EditClientModal = ({ intl, match, currentUser}) => {
 	  tiktok_url: "",
  
 	  line_url: "",
-	  facebookmessenger_url: "",
+	  facebook_messenger_url: "",
 	  weibo_url: "",
 	  bilibili_url: "",
 	  qq_url: "",
 	  zhihu_url : "",
-	  appsstore_url: "",
-	  googleplay_url: "",
+	  app_store_url: "",
+	  google_play_url: "",
 	  googlemap_url: "",
 	  snapchat_url: "",
 	  telegram_url: "",
@@ -166,6 +186,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     createdBy:  currentUser.uid,
     status: true,
     qrcode_option: 1,
+    minisite_option:1,
  
   };
   const apiUrl = `${servicePath2}/companies/codelist`;
@@ -182,6 +203,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
   const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
   const [smartIdSelectData,setSmartIdSelectData] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [dText, setDText] = useState(false);
   
 
   const getStaff = (aa) => {
@@ -213,6 +235,9 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     if (state.qrcode_option===undefined)
     state.qrcode_option=1;
 
+    if (dText !==null || dText !== undefined)
+      state.wechat_id=dText;
+
     for (const [key, val] of Object.entries(state)) {
      
       if (val!==null&& val!==undefined ){
@@ -236,7 +261,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
         console.log(response.data);
         setMessage("The Staff was updated successfully!");
         setIsDisabled(false); // <--- here
-        history.push("/app/staffs/staffs-list");
+        history.push("/app/staffsdeactive/staffs-list");
       })
       .catch(r => {
         console.log(r);
@@ -277,11 +302,55 @@ const EditClientModal = ({ intl, match, currentUser}) => {
 
   const { messages } = intl;
   
+  const [headshotImageFile, setHeadshotImageFile] = useState(null);
+  const [displayHeadshotCroper, setDisplayHeadshotCroper] = useState(false);
+  const openHeadshotCroper = () => {
+    setDisplayHeadshotCroper(!displayHeadshotCroper);
+  };
+  const handleCloseHeadshotCroper = () => {
+    setDisplayHeadshotCroper(false);
+  };
+
+  const cropperHeadshotRef = useRef(null);
+
+  const onCropHeadshotEnd = () => {
+    const imageElement = cropperHeadshotRef?.current;
+    const cropper = imageElement?.cropper;
+    document.getElementById('previewHeadshotImg').src = cropper.getCroppedCanvas().toDataURL();
+    cropper.getCroppedCanvas().toBlob((blob) => {
+      setFile(blob);
+    })
+    handleCloseHeadshotCroper();
+  };
+
   const eventHandlers = {
     addedfile: (file) => {
      setFile(file);
-    }
+    },
+    thumbnail: (file) => { 
+      openHeadshotCroper();
+      setHeadshotImageFile(file.dataURL);
+    },
+    removedfile:() => { handleCloseHeadshotCroper() } 
   }
+
+  const eventHandlersQR = {
+      addedfile: (file,val) => {
+        const html5QrCode = new Html5Qrcode( "reader"); 
+          html5QrCode.scanFile(file, true)
+          .then(decodedText => {
+            console.log(val);
+            setDText(decodedText);
+             
+          })
+          .catch(err => {
+            
+            console.log(`${err}`)
+          });
+       
+      }
+      
+    }
 
   useEffect(() => {
     if (id){
@@ -479,6 +548,47 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                         config={dropzoneComponentConfig}
                         djsConfig={dropzoneConfig}
                         eventHandlers ={eventHandlers} multiple={false}/> 
+                        {displayHeadshotCroper ? (
+                          <Cropper
+                                src={headshotImageFile}
+                                style={{ height: 400, width: "100%" }}
+                                // Cropper.js options
+                                initialAspectRatio={16 / 9}
+                                guides={false}
+                                
+                                ref={cropperHeadshotRef}
+                              />
+                          ) : null}
+                          {displayHeadshotCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => onCropHeadshotEnd(e)} >
+                              <IntlMessages id="forms.crop.ok" />
+                            </Button>
+                          ) : null}
+                          {displayHeadshotCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => handleCloseHeadshotCroper(e)} >
+                              <IntlMessages id="forms.crop.cancel" />
+                            </Button>
+                          ) : null}
+                        </Colxx>
+                        </Row>
+                        </CardBody>
+                    </Card>
+                    <Card className="mb-4">
+                      <CardBody>
+                        <CardTitle>
+                          <IntlMessages id="form-staff-wechat-qrCode" />
+                        </CardTitle> 
+                        <Row>
+                        <Colxx xxs="12" md="2" className="mb-5">
+                          <span id="qr_str"> </span>
+                        </Colxx> 
+                        <Colxx xxs="12" md="10">  <DropzoneComponent
+                         config={dropzoneComponentConfig}
+                         djsConfig={dropzoneConfig}
+                         eventHandlers={eventHandlersQR}  
+                         multiple={false}  
+                         />
+                         <div id="reader" style={{display : 'none' }}> My reader</div>
                         </Colxx>
                         </Row>
                         </CardBody>
@@ -510,16 +620,31 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="work_email">
                         <IntlMessages id="forms.staff-work_email" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_email_label || ''}
+                        onChange={(val) => setState({ ...state, work_email_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_email_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_email_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_email || ''}
                         onChange={(val) => setState({ ...state, work_email: val.target.value })}
                         placeholder={messages['forms.staff-work_email']}
-
                       />
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_email-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                    </Colxx>
                    <Colxx xxs="12" md="6">
@@ -527,6 +652,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="work_email2">
                         <IntlMessages id="forms.staff-work_email2" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_email2_label || ''}
+                        onChange={(val) => setState({ ...state, work_email2_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_email2_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_email2_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_email2 || ''}
@@ -536,6 +675,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_email2-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                    </Colxx>
                   </Row>
@@ -547,16 +688,31 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="work_email3">
                         <IntlMessages id="forms.staff-work_email3" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_email3_label || ''}
+                        onChange={(val) => setState({ ...state, work_email3_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_email3_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_email3_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_email3 || ''}
                         onChange={(val) => setState({ ...state, work_email3: val.target.value })}
                         placeholder={messages['forms.staff-work_email3']}
-
                       />
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_email3-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
 
                   </Colxx>
@@ -566,6 +722,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="home_email">
                         <IntlMessages id="forms.staff-home_email" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.home_email_label || ''}
+                        onChange={(val) => setState({ ...state, home_email_label: val.target.value })}
+                        placeholder={messages['forms.staff-home_email_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-home_email_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.home_email || ''}
@@ -575,6 +745,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-home_email-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                     
                   </Colxx>
@@ -586,6 +758,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="other_email">
                         <IntlMessages id="forms.staff-other_email" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.other_email_label || ''}
+                        onChange={(val) => setState({ ...state, other_email_label: val.target.value })}
+                        placeholder={messages['forms.staff-other_email_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-other_email_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.other_email || ''}
@@ -595,6 +781,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-other_email-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
 
                   </Colxx>
@@ -623,6 +811,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="work_tel">
                         <IntlMessages id="forms.staff-work_tel" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_tel_label || ''}
+                        onChange={(val) => setState({ ...state, work_tel_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_tel_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_tel || ''}
@@ -632,6 +834,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_tel-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -640,6 +844,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="work_tel2">
                         <IntlMessages id="forms.staff-work_tel2" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_tel2_label || ''}
+                        onChange={(val) => setState({ ...state, work_tel2_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel2_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_tel2_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_tel2 || ''}
@@ -649,6 +867,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_tel2-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -659,6 +879,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="work_tel3">
                         <IntlMessages id="forms.staff-work_tel3" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_tel3_label || ''}
+                        onChange={(val) => setState({ ...state, work_tel3_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel3_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_tel3_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_tel3 || ''}
@@ -668,6 +902,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_tel3-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -675,6 +911,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="work_tel4">
                         <IntlMessages id="forms.staff-work_tel4" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_tel4_label || ''}
+                        onChange={(val) => setState({ ...state, work_tel4_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel4_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_tel4_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_tel4 || ''}
@@ -684,6 +934,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_tel4-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                     
                   </Colxx>
@@ -694,6 +946,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="mobile">
                         <IntlMessages id="forms.staff-mobile" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.mobile_label || ''}
+                        onChange={(val) => setState({ ...state, mobile_label: val.target.value })}
+                        placeholder={messages['forms.staff-mobile_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-mobile_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.mobile || ''}
@@ -703,6 +969,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-mobile-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -710,6 +978,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="mobile2">
                         <IntlMessages id="forms.staff-mobile2" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.mobile2_label || ''}
+                        onChange={(val) => setState({ ...state, mobile2_label: val.target.value })}
+                        placeholder={messages['forms.staff-mobile2_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-mobile2_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.mobile2 || ''}
@@ -719,6 +1001,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-mobile2-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   
                   </Colxx>
@@ -729,6 +1013,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="mobile3">
                         <IntlMessages id="forms.staff-mobile3" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.mobile3_label || ''}
+                        onChange={(val) => setState({ ...state, mobile3_label: val.target.value })}
+                        placeholder={messages['forms.staff-mobile3_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-mobile3_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.mobile3 || ''}
@@ -738,6 +1036,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-mobile3-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -745,6 +1045,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="mobile4">
                         <IntlMessages id="forms.staff-mobile4" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.mobile4_label || ''}
+                        onChange={(val) => setState({ ...state, mobile4_label: val.target.value })}
+                        placeholder={messages['forms.staff-mobile4_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-mobile4_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.mobile4 || ''}
@@ -754,6 +1068,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-mobile4-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -763,15 +1079,31 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   <Label for="home_tel">
                     <IntlMessages id="forms.staff-home_tel" />
                   </Label>
-                  <Input
-                    type="text"
-                    value={state.home_tel || ''}
-                    onChange={(val) => setState({ ...state, home_tel: val.target.value })}
-                    placeholder={messages['forms.staff-home_tel']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-home_tel-muted" />
-                  </FormText>
+                  <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.home_tel_label || ''}
+                        onChange={(val) => setState({ ...state, home_tel_label: val.target.value })}
+                        placeholder={messages['forms.staff-home_tel_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-home_tel_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
+                      <Input
+                        type="text"
+                        value={state.home_tel || ''}
+                        onChange={(val) => setState({ ...state, home_tel: val.target.value })}
+                        placeholder={messages['forms.staff-home_tel']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-home_tel-muted" />
+                      </FormText>
+                      </Colxx> 
+                     </Row> 
                 </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -779,15 +1111,31 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   <Label for="fax">
                     <IntlMessages id="forms.staff-fax" />
                   </Label>
-                  <Input
-                    type="text"
-                    value={state.fax || ''}
-                    onChange={(val) => setState({ ...state, fax: val.target.value })}
-                    placeholder={messages['forms.staff-fax']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-fax-muted" />
-                  </FormText>
+                  <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.fax_label || ''}
+                        onChange={(val) => setState({ ...state, fax_label: val.target.value })}
+                        placeholder={messages['forms.staff-fax_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-fax_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
+                      <Input
+                        type="text"
+                        value={state.fax || ''}
+                        onChange={(val) => setState({ ...state, fax: val.target.value })}
+                        placeholder={messages['forms.staff-fax']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-fax-muted" />
+                      </FormText>
+                      </Colxx> 
+                     </Row> 
                 </FormGroup>
                   </Colxx>
                 </Row>
@@ -1009,15 +1357,31 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   <Label for="address">
                     <IntlMessages id="forms.staff-address" />
                   </Label>
-                  <Input
-                    type="text"
-                    value={state.address || ''}
-                    onChange={(val) => setState({ ...state, address: val.target.value })}
-                    placeholder={messages['forms.staff-address']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-address-muted" />
-                  </FormText>
+                  <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.address_label || ''}
+                        onChange={(val) => setState({ ...state, address_label: val.target.value })}
+                        placeholder={messages['forms.staff-address_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-address_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
+                      <Input
+                        type="text"
+                        value={state.address || ''}
+                        onChange={(val) => setState({ ...state, address: val.target.value })}
+                        placeholder={messages['forms.staff-address']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-address-muted" />
+                      </FormText>
+                      </Colxx> 
+                     </Row> 
                 </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -1025,15 +1389,31 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   <Label for="address2">
                     <IntlMessages id="forms.staff-address2" />
                   </Label>
-                  <Input
-                    type="text"
-                    value={state.address2 || ''}
-                    onChange={(val) => setState({ ...state, address2: val.target.value })}
-                    placeholder={messages['forms.staff-address2']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.staff-address2-muted" />
-                  </FormText>
+                  <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.address2_label || ''}
+                        onChange={(val) => setState({ ...state, address2_label: val.target.value })}
+                        placeholder={messages['forms.staff-address2_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-address2_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
+                      <Input
+                        type="text"
+                        value={state.address2 || ''}
+                        onChange={(val) => setState({ ...state, address2: val.target.value })}
+                        placeholder={messages['forms.staff-address2']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-address2-muted" />
+                      </FormText>
+                      </Colxx> 
+                     </Row> 
                 </FormGroup>
                   </Colxx>
                 </Row>
@@ -1044,6 +1424,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="address3">
                         <IntlMessages id="forms.staff-address3" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.address3_label || ''}
+                        onChange={(val) => setState({ ...state, address3_label: val.target.value })}
+                        placeholder={messages['forms.staff-address3_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-address3_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.address3 || ''}
@@ -1053,6 +1447,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-address3-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                 </Colxx>
                   <Colxx xxs="12" md="6">
@@ -1060,6 +1456,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="address4">
                         <IntlMessages id="forms.staff-address4" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.address4_label || ''}
+                        onChange={(val) => setState({ ...state, address4_label: val.target.value })}
+                        placeholder={messages['forms.staff-address4_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-address4_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.address4 || ''}
@@ -1069,6 +1479,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-address4-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                 </Colxx>
                 </Row>
@@ -1309,7 +1721,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       </Label>
                       <Input
                         type="text"
-                        value={state.wechat_id || ''}
+                        value={dText||state.wechat_id || ''}
                         onChange={(val) => setState({ ...state, wechat_id: val.target.value })}
                         placeholder={messages['forms.staff-wechat_id']}
                       />
@@ -1565,40 +1977,25 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                    
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
-                  <Label for="note">
-                        <IntlMessages id="forms.staff-note-timestamp" />
-                  </Label>
-                  <CustomInput
-                    type="radio"
-                    id="noteRadioOn"
-                    name="noteRadioOn"
-                    label={messages['forms.label.note-timestamp-on']}
-                    checked={state.note_timestamp === true}
-                    onChange={(event) =>
-                      setState({
-                        ...state,
-                        note_timestamp: event.target.value === 'on',
-                      })
-                    }
-                  />
+                      <Label>
+                        <IntlMessages id="forms.staff-minisite_option" />
+                      </Label>
 
+                      <Select
+                        components={{ Input: CustomSelectInput }}
+                        className="react-select"
+                        classNamePrefix="react-select"
+                        name="form-field-minisite_option"
+                        options={minisiteSelectData}
+                        value={minisiteSelectData.find(obj => {
+                          return obj.value === state.minisite_option;
+                        })}
+                        onChange={(val) => setState({ ...state, minisite_option: val.value })}
 
-                  <CustomInput
-                    type="radio"
-                    id="noteRadioOff"
-                    name="noteRadioOff"
-                    label={messages['forms.label.note-timestamp-off']}
-                    checked={state.note_timestamp === false}
-                    onChange={(event) =>
-                      setState({
-                        ...state,
-                        note_timestamp: event.target.value !== 'on',
-                      })
-                    }
-                  />
+                      />
 
-
-                </FormGroup>
+                    </FormGroup>
+                  
                   </Colxx>
                   
                    
@@ -1771,6 +2168,43 @@ const EditClientModal = ({ intl, match, currentUser}) => {
 
                </FormGroup>
                </Colxx>
+               <Colxx xxs="12" md="6" >
+                  <FormGroup>
+                      <Label for="note">
+                        <IntlMessages id="forms.staff-note-timestamp" />
+                      </Label>
+                      <CustomInput
+                        type="radio"
+                        id="noteRadioOn"
+                        name="noteRadioOn"
+                        label={messages['forms.label.note-timestamp-on']}
+                        checked={state.note_timestamp === true}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            note_timestamp: event.target.value === 'on',
+                          })
+                        }
+                      />
+
+
+                      <CustomInput
+                        type="radio"
+                        id="noteRadioOff"
+                        name="noteRadioOff"
+                        label={messages['forms.label.note-timestamp-off']}
+                        checked={state.note_timestamp === false}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            note_timestamp: event.target.value !== 'on',
+                          })
+                        }
+                      />
+
+
+                    </FormGroup>
+                  </Colxx>
                </Row>  
                
                 <Button color="primary" className="mt-4" onClick={(e) => updateStaff(e)} disabled={isDisabled}>

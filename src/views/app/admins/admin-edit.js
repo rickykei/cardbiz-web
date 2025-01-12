@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useRef,useState, useEffect } from 'react';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { connect } from 'react-redux';
@@ -22,6 +22,8 @@ import { useParams, useHistory,NavLink } from "react-router-dom";
 import 'dropzone/dist/min/dropzone.min.css';
 import UserDataService from 'services/UsersService';
 import classnames from 'classnames';
+import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
 
 const ReactDOMServer = require('react-dom/server');
 
@@ -52,7 +54,7 @@ const dropzoneConfigLogo = {
           </div>
           <div className="preview-container">
             {/*  eslint-disable-next-line jsx-a11y/alt-text */}
-            <img data-dz-thumbnail className="img-thumbnail border-0" />
+            <img id="previewLogoImg" data-dz-thumbnail className="img-thumbnail border-0" />
             <i className="simple-icon-doc preview-icon" />
           </div>
         </div>
@@ -103,7 +105,7 @@ const dropzoneConfigBanner = {
           </div>
           <div className="preview-container">
             {/*  eslint-disable-next-line jsx-a11y/alt-text */}
-            <img data-dz-thumbnail className="img-thumbnail border-0" />
+            <img id="previewBannerImg" data-dz-thumbnail className="img-thumbnail border-0" />
             <i className="simple-icon-doc preview-icon" />
           </div>
         </div>
@@ -154,7 +156,7 @@ const dropzoneConfigProfileTheme = {
           </div>
           <div className="preview-container">
             {/*  eslint-disable-next-line jsx-a11y/alt-text */}
-            <img data-dz-thumbnail className="img-thumbnail border-0" />
+            <img id="previewProfileImg" data-dz-thumbnail className="img-thumbnail border-0" />
             <i className="simple-icon-doc preview-icon" />
           </div>
         </div>
@@ -215,9 +217,96 @@ const AdminPage = ({ intl, match,currentUser }) => {
   const CompanyLogoImgUrl = `${servicePath2}/files/${state.logo}`;
   const CompanyProfileThemeImgUrl = `${servicePath2}/files/${state.profile_theme}`;
   const { messages } = intl;
-  const eventHandlers = { addedfile: (file) => { setBannerFile(file); } }
-  const eventHandlers2 = { addedfile: (file) => { setLogoFile(file); } }
-  const eventHandlers3 = { addedfile: (file) => { setProfileThemeFile(file); } }
+
+  const [bannerImageFile, setBannerImageFile] = useState(null);
+  const [displayBannerCroper, setDisplayBannerCroper] = useState(false);
+  const openBannerCroper = () => {
+    setDisplayBannerCroper(!displayBannerCroper);
+  };
+  const handleCloseBannerCroper = () => {
+    setDisplayBannerCroper(false);
+  };
+
+  const cropperBannerRef = useRef(null);
+
+  const onCropBannerEnd = () => {
+    const imageElement = cropperBannerRef?.current;
+    const cropper = imageElement?.cropper;
+    document.getElementById('previewBannerImg').src = cropper.getCroppedCanvas().toDataURL();
+    cropper.getCroppedCanvas().toBlob((blob) => {
+      setBannerFile(blob);
+    })
+    handleCloseBannerCroper();
+  };
+
+  const eventHandlers = { 
+    addedfile: (file) => { setBannerFile(file); } ,
+    thumbnail: (file) => { 
+      openBannerCroper();
+      setBannerImageFile(file.dataURL);
+    },
+    removedfile:(file) => { handleCloseBannerCroper() } 
+  }
+
+  const [logoImageFile, setLogoImageFile] = useState(null);
+  const [displayLogoCroper, setDisplayLogoCroper] = useState(false);
+  const openLogoCroper = () => {
+    setDisplayLogoCroper(!displayLogoCroper);
+  };
+  const handleCloseLogoCroper = () => {
+    setDisplayLogoCroper(false);
+  };
+
+  const cropperLogoRef = useRef(null);
+
+  const onCropLogoEnd = () => {
+    const imageElement = cropperLogoRef?.current;
+    const cropper = imageElement?.cropper;
+    document.getElementById('previewLogoImg').src = cropper.getCroppedCanvas().toDataURL();
+    cropper.getCroppedCanvas().toBlob((blob) => {
+      setLogoFile(blob);
+    })
+    handleCloseLogoCroper();
+  };
+
+  const eventHandlers2 = { 
+    addedfile: (file) => { setLogoFile(file); } ,
+    thumbnail: (file) => { 
+      openLogoCroper();
+      setLogoImageFile(file.dataURL);
+    },
+    removedfile:(file) => { handleCloseLogoCroper() } 
+  }
+
+  const [profileImageFile, setProfileImageFile] = useState(null);
+  const [displayProfileCroper, setDisplayProfileCroper] = useState(false);
+  const openProfileCroper = () => {
+    setDisplayProfileCroper(!displayProfileCroper);
+  };
+  const handleCloseProfileCroper = () => {
+    setDisplayProfileCroper(false);
+  };
+
+  const cropperProfileRef = useRef(null);
+
+  const onCropProfileEnd = () => {
+    const imageElement = cropperProfileRef?.current;
+    const cropper = imageElement?.cropper;
+    document.getElementById('previewProfileImg').src = cropper.getCroppedCanvas().toDataURL();
+    cropper.getCroppedCanvas().toBlob((blob) => {
+      setProfileThemeFile(blob);
+    })
+    handleCloseProfileCroper();
+  };
+  
+  const eventHandlers3 = { 
+    addedfile: (file) => { setProfileThemeFile(file); },
+    thumbnail: (file) => { 
+      openProfileCroper();
+      setProfileImageFile(file.dataURL);
+    },
+    removedfile:(file) => { handleCloseProfileCroper() } 
+  }
    const history = useHistory();
    const [activeFirstTab, setActiveFirstTab] = useState('1');
    const [activeSecondTab, setActiveSecondTab] = useState('1');
@@ -740,6 +829,27 @@ const AdminPage = ({ intl, match,currentUser }) => {
                           config={dropzoneComponentConfig}
                           djsConfig={dropzoneConfigBanner}
                           eventHandlers={eventHandlers} multiple={false} />
+                          {displayBannerCroper ? (
+                          <Cropper
+                                src={bannerImageFile}
+                                style={{ height: 400, width: "100%" }}
+                                // Cropper.js options
+                                initialAspectRatio={16 / 9}
+                                guides={false}
+                                
+                                ref={cropperBannerRef}
+                              />
+                          ) : null}
+                          {displayBannerCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => onCropBannerEnd(e)} >
+                              <IntlMessages id="forms.crop.ok" />
+                            </Button>
+                          ) : null}
+                          {displayBannerCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => handleCloseBannerCroper(e)} >
+                              <IntlMessages id="forms.crop.cancel" />
+                            </Button>
+                          ) : null}
                         </Colxx>
                       </Row>
 
@@ -758,6 +868,27 @@ const AdminPage = ({ intl, match,currentUser }) => {
                           config={dropzoneComponentConfig}
                           djsConfig={dropzoneConfigLogo}
                           eventHandlers={eventHandlers2} multiple={false} />
+                          {displayLogoCroper ? (
+                          <Cropper
+                                src={logoImageFile}
+                                style={{ height: 400, width: "100%" }}
+                                // Cropper.js options
+                                initialAspectRatio={16 / 9}
+                                guides={false}
+                                
+                                ref={cropperLogoRef}
+                              />
+                          ) : null}
+                          {displayLogoCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => onCropLogoEnd(e)} >
+                              <IntlMessages id="forms.crop.ok" />
+                            </Button>
+                          ) : null}
+                          {displayLogoCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => handleCloseLogoCroper(e)} >
+                              <IntlMessages id="forms.crop.cancel" />
+                            </Button>
+                          ) : null}
                         </Colxx>
                       </Row>
 
@@ -778,6 +909,27 @@ const AdminPage = ({ intl, match,currentUser }) => {
                         config={dropzoneComponentConfig}
                         djsConfig={dropzoneConfigProfileTheme}
                         eventHandlers={eventHandlers3} multiple={false} />
+                        {displayProfileCroper ? (
+                          <Cropper
+                                src={profileImageFile}
+                                style={{ height: 400, width: "100%" }}
+                                // Cropper.js options
+                                initialAspectRatio={16 / 9}
+                                guides={false}
+                                
+                                ref={cropperProfileRef}
+                              />
+                          ) : null}
+                          {displayProfileCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => onCropProfileEnd(e)} >
+                              <IntlMessages id="forms.crop.ok" />
+                            </Button>
+                          ) : null}
+                          {displayProfileCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => handleCloseProfileCroper(e)} >
+                              <IntlMessages id="forms.crop.cancel" />
+                            </Button>
+                          ) : null}
                       </Colxx>
                     </Row>
 

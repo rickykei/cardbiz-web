@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useState , useEffect} from 'react';
+import React, {useRef, useState , useEffect} from 'react';
 import { injectIntl } from 'react-intl';
 import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle,  } from 'reactstrap';
 import 'react-tagsinput/react-tagsinput.css';
@@ -20,6 +20,8 @@ import { servicePath2 ,qrcodeSelectData,minisiteSelectData} from 'constants/defa
 import DropzoneComponent from 'react-dropzone-component';
 import 'dropzone/dist/min/dropzone.min.css';
  import {Html5Qrcode} from "html5-qrcode";
+ import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
 
 const ReactDOMServer = require('react-dom/server');
 
@@ -50,7 +52,7 @@ const dropzoneConfig = {
           </div>
           <div className="preview-container">
             {/*  eslint-disable-next-line jsx-a11y/alt-text */}
-            <img data-dz-thumbnail className="img-thumbnail border-0" />
+            <img id="previewHeadshotImg" data-dz-thumbnail className="img-thumbnail border-0" />
             <i className="simple-icon-doc preview-icon" />
           </div>
         </div>
@@ -300,10 +302,36 @@ const EditClientModal = ({ intl, match, currentUser}) => {
 
   const { messages } = intl;
   
+  const [headshotImageFile, setHeadshotImageFile] = useState(null);
+  const [displayHeadshotCroper, setDisplayHeadshotCroper] = useState(false);
+  const openHeadshotCroper = () => {
+    setDisplayHeadshotCroper(!displayHeadshotCroper);
+  };
+  const handleCloseHeadshotCroper = () => {
+    setDisplayHeadshotCroper(false);
+  };
+
+  const cropperHeadshotRef = useRef(null);
+
+  const onCropHeadshotEnd = () => {
+    const imageElement = cropperHeadshotRef?.current;
+    const cropper = imageElement?.cropper;
+    document.getElementById('previewHeadshotImg').src = cropper.getCroppedCanvas().toDataURL();
+    cropper.getCroppedCanvas().toBlob((blob) => {
+      setFile(blob);
+    })
+    handleCloseHeadshotCroper();
+  };
+
   const eventHandlers = {
     addedfile: (file) => {
      setFile(file);
-    }
+    },
+    thumbnail: (file) => { 
+      openHeadshotCroper();
+      setHeadshotImageFile(file.dataURL);
+    },
+    removedfile:() => { handleCloseHeadshotCroper() } 
   }
 
   const eventHandlersQR = {
@@ -520,6 +548,27 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                         config={dropzoneComponentConfig}
                         djsConfig={dropzoneConfig}
                         eventHandlers ={eventHandlers} multiple={false}/> 
+                        {displayHeadshotCroper ? (
+                          <Cropper
+                                src={headshotImageFile}
+                                style={{ height: 400, width: "100%" }}
+                                // Cropper.js options
+                                initialAspectRatio={16 / 9}
+                                guides={false}
+                                
+                                ref={cropperHeadshotRef}
+                              />
+                          ) : null}
+                          {displayHeadshotCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => onCropHeadshotEnd(e)} >
+                              <IntlMessages id="forms.crop.ok" />
+                            </Button>
+                          ) : null}
+                          {displayHeadshotCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => handleCloseHeadshotCroper(e)} >
+                              <IntlMessages id="forms.crop.cancel" />
+                            </Button>
+                          ) : null}
                         </Colxx>
                         </Row>
                         </CardBody>

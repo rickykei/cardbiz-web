@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
-import React, { useRef,useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
  
@@ -8,15 +8,12 @@ import Breadcrumb from 'containers/navs/Breadcrumb';
 import { injectIntl } from 'react-intl';
 import { Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle } from 'reactstrap';
 import { servicePath2,fontfamilySelectData } from 'constants/defaultValues';
-import DropzoneComponent from 'react-dropzone-component';
 import { useParams, useHistory } from "react-router-dom";
-import 'dropzone/dist/min/dropzone.min.css';
 import CompanyService from 'services/CompanyService';
 import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import { PhotoshopPicker } from 'react-color';
-import Cropper from "react-cropper";
-import "cropperjs/dist/cropper.css";
+
 
 const ReactDOMServer = require('react-dom/server');
 
@@ -46,45 +43,6 @@ const EditClientModal = ({ intl, match, }) => {
   const history = useHistory();
   const [message, setMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
-  const [bgfile, setBgFile] = useState(null);
-
-  const [imageFile, setImageFile] = useState(null);
-  const [cropResult, setCropResult] = useState(null);
-  const [displayCroper, setDisplayCroper] = useState(false);
-  const openCroper = () => {
-    setDisplayCroper(!displayCroper);
-  };
-  const handleCloseCroper = () => {
-    setDisplayCroper(false);
-  };
-
-  const eventHandlers = { 
-    addedfile: (file) => { 
-    setBgFile(file); 
-  },
-  thumbnail: (file) => { 
-      openCroper();
-      setImageFile(file.dataURL);
-    },
-};
-  const cropperRef = useRef(null);
-  const onCrop = () => {
-    const imageElement = cropperRef?.current;
-    const cropper = imageElement?.cropper;
-    // 如果感觉卡顿，请注释下面这一行
-    // console.log(cropper.getCroppedCanvas().toDataURL()); 
-    // setBgFile(cropper.getCroppedCanvas().toBlob());  
-  };
-
-  const onCropEnd = () => {
-    const imageElement = cropperRef?.current;
-    const cropper = imageElement?.cropper;
-    document.getElementById('previewImg').src = cropper.getCroppedCanvas().toDataURL();
-    cropper.getCroppedCanvas().toBlob((blob) => {
-      setBgFile(blob);
-    })
-    handleCloseCroper();
-  };
 
   const getCompany= (aa) => {
     CompanyService.get(aa)
@@ -112,13 +70,7 @@ const EditClientModal = ({ intl, match, }) => {
 
 
     for (const [key, val] of Object.entries(state)) {
-      if (key!=='bg_image')
           data.append(key, val);
-          
-    }
-
-    if (bgfile !== null){
-      data.append("bg_image", bgfile);
     }
 
     console.log(data.get('smartcard_uid'));
@@ -133,61 +85,6 @@ const EditClientModal = ({ intl, match, }) => {
       .catch(f => {
         console.log(f);
       });
-  };
-
- 
-  const dropzoneComponentConfig = {
-    postUrl: 'no-url',
-  
-  };
-  const dropzoneConfigBgimg = {
-    autoProcessQueue: false,
-      thumbnailHeight: 160,
-      maxFilesize:10,
-      maxFiles: 1,
-      acceptedFiles: ".jpeg,.jpg,.png,.gif",
-      uploadMultiple: false,
-      previewTemplate: ReactDOMServer.renderToStaticMarkup(
-        <div className="dz-preview dz-file-preview mb-3">
-          <div className="d-flex flex-row ">
-            <div className="p-0 w-30 position-relative">
-              <div className="dz-error-mark">
-                <span>
-                  <i />{' '}
-                </span>
-              </div>
-              <div className="dz-success-mark">
-                <span>
-                  <i />
-                </span>
-              </div>
-              <div className="preview-container">
-                {/*  eslint-disable-next-line jsx-a11y/alt-text */}
-                <img id="previewImg" data-dz-thumbnail className="img-thumbnail border-0" />
-                <i className="simple-icon-doc preview-icon" />
-              </div>
-            </div>
-            <div className="pl-3 pt-2 pr-2 pb-1 w-70 dz-details position-relative">
-              <div>
-                {' '}
-                <span data-dz-name />{' '}
-              </div>
-              <div className="text-primary text-extra-small" data-dz-size />
-              <div className="dz-progress">
-                <span className="dz-upload" data-dz-uploadprogress />
-              </div>
-              <div className="dz-error-message">
-                <span data-dz-errormessage />
-              </div>
-            </div>
-          </div>
-          <a href="#/" className="remove" data-dz-remove>
-            {' '}
-            <i className="glyph-icon simple-icon-trash" />{' '}
-          </a>
-        </div>
-      ),
-    headers: { 'My-Awesome-Header': 'header value' },
   };
 
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
@@ -732,40 +629,6 @@ const EditClientModal = ({ intl, match, }) => {
                 </FormGroup>
               </Colxx>
             </Row>
-
-            <Card className="mb-4">
-              <CardBody>
-                <CardTitle>
-                  <IntlMessages id="forms.minisite-backgroundimg" />
-                </CardTitle> 
-                <Row>
-                <Colxx xxs="12" md="2" className="mb-5">
-                  <img src={bgImgUrl} alt="backgroundImage"  width="150"/>
-                </Colxx> 
-                <Colxx xxs="12" md="10">  <DropzoneComponent
-                  config={dropzoneComponentConfig}
-                  djsConfig={dropzoneConfigBgimg}
-                  eventHandlers={eventHandlers} multiple={false} />
-                {displayCroper ? (
-                <Cropper
-                      src={imageFile}
-                      style={{ height: 400, width: "100%" }}
-                      // Cropper.js options
-                      initialAspectRatio={16 / 9}
-                      guides={false}
-                      crop={onCrop}
-                      ref={cropperRef}
-                    />
-                ) : null}
-                {displayCroper ? (
-                  <Button color="primary" className="mt-4" onClick={(e) => onCropEnd(e)} >
-                    <IntlMessages id="forms.submit" />
-                  </Button>
-                ) : null}
-                </Colxx>
-                </Row>
-                </CardBody>
-            </Card>
                
             <Button color="primary" className="mt-4" onClick={(e) => updateCompany(e)} disabled={isDisabled}>
               <IntlMessages id="forms.submit" />

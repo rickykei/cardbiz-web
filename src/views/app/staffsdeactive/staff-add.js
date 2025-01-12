@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useState, useEffect } from 'react';
+import React, { useRef,useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle, } from 'reactstrap';
@@ -15,11 +15,12 @@ import { addStaffItem } from 'redux/actions';
 import { useHistory } from "react-router-dom";
 import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
-import { servicePath2, qrcodeSelectData } from 'constants/defaultValues';
+import { servicePath2, qrcodeSelectData,minisiteSelectData } from 'constants/defaultValues';
 import axios from 'axios';
 import DropzoneComponent from 'react-dropzone-component';
-
-
+import {Html5Qrcode} from "html5-qrcode";
+import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
 
 const apiUrl = `${servicePath2}/companies/codelist`;
 const delay = ms => new Promise(
@@ -55,7 +56,7 @@ const dropzoneConfig = {
           </div>
           <div className="preview-container">
             {/*  eslint-disable-next-line jsx-a11y/alt-text */}
-            <img data-dz-thumbnail className="img-thumbnail border-0" />
+            <img id="previewHeadshotImg" data-dz-thumbnail className="img-thumbnail border-0" />
             <i className="simple-icon-doc preview-icon" />
           </div>
         </div>
@@ -107,17 +108,32 @@ const AddNewStaffModal = ({
     work_email3: "",
     home_email: "",
     other_email: "",
+    work_email_label: "",
+    work_email2_label: "",
+    work_email3_label: "",
+    home_email_label: "",
+    other_email_label: "",
     position: "",
     work_tel: "",
     work_tel2: "",
     work_tel3: "",
     work_tel4: "",
+    work_tel_label: "",
+    work_tel2_label: "",
+    work_tel3_label: "",
+    work_tel4_label: "",
     mobile: "",
     mobile2: "",
     mobile3: "",
     mobile4: "",
     home_tel: "",
     fax: "",
+    mobile_label: "",
+    mobile2_label: "",
+    mobile3_label: "",
+    mobile4_label: "",
+    home_tel_label: "",
+    fax_label: "",
     web_link: "",
     web_link2: "",
     web_link3: "",
@@ -134,6 +150,10 @@ const AddNewStaffModal = ({
     address2: "",
     address3: "",
     address4: "",
+    address_label: "",
+    address2_label: "",
+    address3_label: "",
+    address4_label: "",
     division: "",
     department: "",
     country: "",
@@ -152,14 +172,14 @@ const AddNewStaffModal = ({
     tiktok_url: "",
 
     line_url: "",
-    facebookmessenger_url: "",
+    facebook_messenger_url: "",
     weibo_url: "",
     bilibili_url: "",
     qq_url: "",
     zhihu_url: "",
-    appsstore_url: "",
-    googleplay_url: "",
-    googlemap_url: "",
+    app_store_url: "",
+    google_play_url: "",
+  
     snapchat_url: "",
     telegram_url: "",
     xiaohongshu_url: "",
@@ -172,6 +192,7 @@ const AddNewStaffModal = ({
     created_by: "630cf0461fa3f166eb3dee01",
     status: true,
     qrcode_option: 1,
+    minisite_option: 1,
 
   };
   const [state, setState] = useState(initialState);
@@ -183,6 +204,7 @@ const AddNewStaffModal = ({
   const [smartIdSelectData, setSmartIdSelectData] = useState([]);
   const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}`;
   const [enabled, setEnabled] = useState(true);
+  const [dText, setDText] = useState('');
 
   const addNetItem = async (e) => {
     e.preventDefault();
@@ -197,6 +219,7 @@ const AddNewStaffModal = ({
       pname: state.pname,
       oname: state.oname,
       pdname: state.pdname,
+      staff_no: state.staff_no,
       company_id: selectedOptionLO.value,
       headshot: state.headshot,
       work_email: state.work_email,
@@ -204,17 +227,32 @@ const AddNewStaffModal = ({
       work_email3: state.work_email3,
       home_email: state.home_email,
       other_email: state.other_email,
+      work_email_label: state.work_email_label,
+      work_email2_label: state.work_email2_label,
+      work_email3_label: state.work_email3_label,
+      home_email_label: state.home_email_label,
+      other_email_label: state.other_email_label,
       position: state.position,
       work_tel: state.work_tel,
       work_tel2: state.work_tel2,
       work_tel3: state.work_tel3,
       work_tel4: state.work_tel4,
+      work_tel_label: state.work_tel_label,
+      work_tel2_label: state.work_tel2_label,
+      work_tel3_label: state.work_tel3_label,
+      work_tel4_label: state.work_tel4_label,
       mobile: state.mobile,
       mobile2: state.mobile2,
       mobile3: state.mobile3,
       mobile4: state.mobile4,
       home_tel: state.home_tel,
       fax: state.fax,
+      mobile_label: state.mobile_label,
+      mobile2_label: state.mobile2_label,
+      mobile3_label: state.mobile3_label,
+      mobile4_label: state.mobile4_label,
+      home_tel_label: state.home_tel_label,
+      fax_label: state.fax_label,
       web_link: state.web_link,
       web_link2: state.web_link2,
       web_link3: state.web_link3,
@@ -231,6 +269,10 @@ const AddNewStaffModal = ({
       address2: state.address2,
       address3: state.address3,
       address4: state.address4,
+      address_label: state.address_label,
+      address2_label: state.address2_label,
+      address3_label: state.address3_label,
+      address4_label: state.address4_label,
       division: state.division,
       department: state.department,
       country: state.country,
@@ -243,7 +285,7 @@ const AddNewStaffModal = ({
       linkedin_url: state.linkedin_url,
       youtube_url: state.youtube_url,
       twitter_url: state.twitter_url,
-      wechat_id: state.wechat_id,
+      wechat_id: dText || state.wechat_id,
       wechatpage_url: state.wechatpage_url, 
       tiktok_url: state.tiktok_url, 
       line_url: state.line_url,
@@ -259,8 +301,11 @@ const AddNewStaffModal = ({
       xiaohongshu_url: state.xiaohongshu_url,
       note: state.note,
       qrcode_option: state.qrcode_option,
+      minisite_option: state.minisite_option,
+      note_timestamp: state.note_timestamp,
       smartcard_uid: state.smartcard_uid,
       bizcard_option: state.bizcard_option,
+      dig_card_in_vcf: state.dig_card_in_vcf,
       updatedBy: currentUser.uid,
       createdBy: currentUser.uid,
       status: state.status,
@@ -295,7 +340,7 @@ const AddNewStaffModal = ({
     addStaffItemAction(data);
     setState(initialState);
     await delay(1000);
-    history.push("/app/staffs/staffs-list");
+    history.push("/app/staffsdeactive/staffs-list");
   };
 
   async function fetchData() {
@@ -317,10 +362,53 @@ const AddNewStaffModal = ({
 
   }
 
+  const [headshotImageFile, setHeadshotImageFile] = useState(null);
+  const [displayHeadshotCroper, setDisplayHeadshotCroper] = useState(false);
+  const openHeadshotCroper = () => {
+    setDisplayHeadshotCroper(!displayHeadshotCroper);
+  };
+  const handleCloseHeadshotCroper = () => {
+    setDisplayHeadshotCroper(false);
+  };
+
+  const cropperHeadshotRef = useRef(null);
+
+  const onCropHeadshotEnd = () => {
+    const imageElement = cropperHeadshotRef?.current;
+    const cropper = imageElement?.cropper;
+    document.getElementById('previewHeadshotImg').src = cropper.getCroppedCanvas().toDataURL();
+    cropper.getCroppedCanvas().toBlob((blob) => {
+      setFile(blob);
+    })
+    handleCloseHeadshotCroper();
+  };
 
   const eventHandlers = {
     addedfile: (file) => {
-      setFile(file);
+     setFile(file);
+    },
+    thumbnail: (file) => { 
+      openHeadshotCroper();
+      setHeadshotImageFile(file.dataURL);
+    },
+    removedfile:() => { handleCloseHeadshotCroper() } 
+  }
+
+  const eventHandlersQR = {
+    addedfile: (file) => {
+      const html5QrCode = new Html5Qrcode( "reader");
+ 
+        html5QrCode.scanFile(file, true)
+        .then(decodedText => {
+         //  setState({ ...state, wechat_id: decodedText })
+          setDText(decodedText);
+          console.log(decodedText);
+        })
+        .catch(err => {
+          // failure, handle it.
+          console.log(`Error scanning file. Reason: ${err}`)
+        });
+     // });
     }
   }
 
@@ -526,7 +614,44 @@ const AddNewStaffModal = ({
                           config={dropzoneComponentConfig}
                           djsConfig={dropzoneConfig}
                           eventHandlers={eventHandlers} multiple={false} />
+                        {displayHeadshotCroper ? (
+                          <Cropper
+                                src={headshotImageFile}
+                                style={{ height: 400, width: "100%" }}
+                                // Cropper.js options
+                                initialAspectRatio={16 / 9}
+                                guides={false}
+                                
+                                ref={cropperHeadshotRef}
+                              />
+                          ) : null}
+                          {displayHeadshotCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => onCropHeadshotEnd(e)} >
+                              <IntlMessages id="forms.crop.ok" />
+                            </Button>
+                          ) : null}
+                          {displayHeadshotCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => handleCloseHeadshotCroper(e)} >
+                              <IntlMessages id="forms.crop.cancel" />
+                            </Button>
+                          ) : null}
+                      </CardBody>
+                    </Card>
+                  </Colxx>
+                </Row>
 
+                <Row className="mb-4">
+                  <Colxx xxs="12">
+                    <Card>
+                      <CardBody>
+                        <CardTitle>
+                          <IntlMessages id="form-staff-wechat-qrCode" />
+                        </CardTitle>
+                        <DropzoneComponent
+                          config={dropzoneComponentConfig}
+                          djsConfig={dropzoneConfig}
+                          eventHandlers={eventHandlersQR} multiple={false} />
+                          <div id="reader" style={{display : 'none' }}> My reader</div>
                       </CardBody>
                     </Card>
                   </Colxx>
@@ -554,17 +679,33 @@ const AddNewStaffModal = ({
                     <FormGroup>
                       <Label for="work_email">
                         <IntlMessages id="forms.staff-work_email" />
-                      </Label>
+                      </Label> 
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_email_label || ''}
+                        onChange={(val) => setState({ ...state, work_email_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_email_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_email_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_email || ''}
                         onChange={(val) => setState({ ...state, work_email: val.target.value })}
                         placeholder={messages['forms.staff-work_email']}
-
                       />
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_email-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
+                      
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6" className="mb-5">
@@ -572,6 +713,20 @@ const AddNewStaffModal = ({
                       <Label for="work_email2">
                         <IntlMessages id="forms.staff-work_email2" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_email2_label || ''}
+                        onChange={(val) => setState({ ...state, work_email2_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_email2_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_email2_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_email2 || ''}
@@ -581,6 +736,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_email2-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
 
                   </Colxx>
@@ -594,24 +751,53 @@ const AddNewStaffModal = ({
                       <Label for="work_email3">
                         <IntlMessages id="forms.staff-work_email3" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_email3_label || ''}
+                        onChange={(val) => setState({ ...state, work_email3_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_email3_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_email3_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_email3 || ''}
                         onChange={(val) => setState({ ...state, work_email3: val.target.value })}
                         placeholder={messages['forms.staff-work_email3']}
-
                       />
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_email3-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
 
                   </Colxx>
                   <Colxx xxs="12" md="6" >
                     <FormGroup>
-                      <Label for="home_email">
-                        <IntlMessages id="forms.staff-home_email" />
+                      <Label for="home_email_label">
+                        <IntlMessages id="forms.staff-home_email_label" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.home_email_label || ''}
+                        onChange={(val) => setState({ ...state, home_email_label: val.target.value })}
+                        placeholder={messages['forms.staff-home_email_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-home_email_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.home_email || ''}
@@ -621,6 +807,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-home_email-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
 
                   </Colxx>
@@ -634,6 +822,20 @@ const AddNewStaffModal = ({
                       <Label for="other_email">
                         <IntlMessages id="forms.staff-other_email" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.other_email_label || ''}
+                        onChange={(val) => setState({ ...state, other_email_label: val.target.value })}
+                        placeholder={messages['forms.staff-other_email_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-other_email_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.other_email || ''}
@@ -643,6 +845,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-other_email-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6" className="mb-5">
@@ -670,6 +874,20 @@ const AddNewStaffModal = ({
                       <Label for="work_tel">
                         <IntlMessages id="forms.staff-work_tel" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_tel_label || ''}
+                        onChange={(val) => setState({ ...state, work_tel_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_tel_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_tel || ''}
@@ -679,6 +897,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_tel-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -687,6 +907,20 @@ const AddNewStaffModal = ({
                       <Label for="work_tel2">
                         <IntlMessages id="forms.staff-work_tel2" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_tel2_label || ''}
+                        onChange={(val) => setState({ ...state, work_tel2_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel2_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_tel2_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_tel2 || ''}
@@ -696,6 +930,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_tel2-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -707,6 +943,20 @@ const AddNewStaffModal = ({
                       <Label for="work_tel3">
                         <IntlMessages id="forms.staff-work_tel3" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_tel3_label || ''}
+                        onChange={(val) => setState({ ...state, work_tel3_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel3_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_tel3_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_tel3 || ''}
@@ -716,6 +966,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_tel3-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -724,6 +976,20 @@ const AddNewStaffModal = ({
                       <Label for="work_tel4">
                         <IntlMessages id="forms.staff-work_tel4" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.work_tel4_label || ''}
+                        onChange={(val) => setState({ ...state, work_tel4_label: val.target.value })}
+                        placeholder={messages['forms.staff-work_tel4_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-work_tel4_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.work_tel4 || ''}
@@ -733,6 +999,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-work_tel4-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -742,6 +1010,20 @@ const AddNewStaffModal = ({
                       <Label for="mobile">
                         <IntlMessages id="forms.staff-mobile" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.mobile_label || ''}
+                        onChange={(val) => setState({ ...state, mobile_label: val.target.value })}
+                        placeholder={messages['forms.staff-mobile_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-mobile_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.mobile || ''}
@@ -751,6 +1033,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-mobile-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -758,6 +1042,20 @@ const AddNewStaffModal = ({
                       <Label for="mobile2">
                         <IntlMessages id="forms.staff-mobile2" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.mobile2_label || ''}
+                        onChange={(val) => setState({ ...state, mobile2_label: val.target.value })}
+                        placeholder={messages['forms.staff-mobile2_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-mobile2_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.mobile2 || ''}
@@ -767,6 +1065,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-mobile2-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -776,6 +1076,20 @@ const AddNewStaffModal = ({
                       <Label for="mobile3">
                         <IntlMessages id="forms.staff-mobile3" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.mobile3_label || ''}
+                        onChange={(val) => setState({ ...state, mobile3_label: val.target.value })}
+                        placeholder={messages['forms.staff-mobile3_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-mobile3_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.mobile3 || ''}
@@ -785,6 +1099,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-mobile3-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -792,6 +1108,20 @@ const AddNewStaffModal = ({
                       <Label for="mobile4">
                         <IntlMessages id="forms.staff-mobile4" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.mobile4_label || ''}
+                        onChange={(val) => setState({ ...state, mobile4_label: val.target.value })}
+                        placeholder={messages['forms.staff-mobile4_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-mobile4_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.mobile4 || ''}
@@ -801,6 +1131,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-mobile4-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -810,6 +1142,20 @@ const AddNewStaffModal = ({
                       <Label for="home_tel">
                         <IntlMessages id="forms.staff-home_tel" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.home_tel_label || ''}
+                        onChange={(val) => setState({ ...state, home_tel_label: val.target.value })}
+                        placeholder={messages['forms.staff-home_tel_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-home_tel_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.home_tel || ''}
@@ -819,6 +1165,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-home_tel-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -827,6 +1175,20 @@ const AddNewStaffModal = ({
                       <Label for="fax">
                         <IntlMessages id="forms.staff-fax" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.fax_label || ''}
+                        onChange={(val) => setState({ ...state, fax_label: val.target.value })}
+                        placeholder={messages['forms.staff-fax_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-fax_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.fax || ''}
@@ -836,6 +1198,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-fax-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -1058,6 +1422,20 @@ const AddNewStaffModal = ({
                       <Label for="address">
                         <IntlMessages id="forms.staff-address" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.address_label || ''}
+                        onChange={(val) => setState({ ...state, address_label: val.target.value })}
+                        placeholder={messages['forms.staff-address_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-address_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.address || ''}
@@ -1067,6 +1445,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-address-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -1074,6 +1454,20 @@ const AddNewStaffModal = ({
                       <Label for="address2">
                         <IntlMessages id="forms.staff-address2" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.address2_label || ''}
+                        onChange={(val) => setState({ ...state, address2_label: val.target.value })}
+                        placeholder={messages['forms.staff-address2_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-address2_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.address2 || ''}
@@ -1083,6 +1477,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-address2-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -1092,6 +1488,20 @@ const AddNewStaffModal = ({
                       <Label for="address3">
                         <IntlMessages id="forms.staff-address3" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.address3_label || ''}
+                        onChange={(val) => setState({ ...state, address3_label: val.target.value })}
+                        placeholder={messages['forms.staff-address3_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-address3_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.address3 || ''}
@@ -1101,6 +1511,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-address3-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="12" md="6">
@@ -1108,6 +1520,20 @@ const AddNewStaffModal = ({
                       <Label for="address4">
                         <IntlMessages id="forms.staff-address4" />
                       </Label>
+                      <Row >
+                      <Colxx xxs="6" md="6" className="mb-5">
+                     
+                      <Input
+                        type="text"
+                        value={state.address4_label || ''}
+                        onChange={(val) => setState({ ...state, address4_label: val.target.value })}
+                        placeholder={messages['forms.staff-address4_label']}
+
+                      />  <FormText color="muted">
+                      <IntlMessages id="forms.staff-address4_label-muted" />
+                    </FormText>
+                      </Colxx>
+                      <Colxx xxs="12" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.address4 || ''}
@@ -1117,6 +1543,8 @@ const AddNewStaffModal = ({
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-address4-muted" />
                       </FormText>
+                      </Colxx> 
+                     </Row> 
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -1369,7 +1797,7 @@ const AddNewStaffModal = ({
                       </Label>
                       <Input
                         type="text"
-                        value={state.wechat_id || ''}
+                        value={dText || state.wechat_id || ''}
                         onChange={(val) => setState({ ...state, wechat_id: val.target.value })}
                         placeholder={messages['forms.staff-wechat_id']}
                       />
@@ -1647,41 +2075,27 @@ const AddNewStaffModal = ({
 
                   </Colxx>
                   <Colxx xxs="12" md="6" >
-                    <FormGroup>
-                      <Label for="note">
-                        <IntlMessages id="forms.staff-note-timestamp" />
+
+                  <FormGroup>
+                      <Label>
+                        <IntlMessages id="forms.staff-minisite_option" />
                       </Label>
-                      <CustomInput
-                        type="radio"
-                        id="noteRadioOn"
-                        name="noteRadioOn"
-                        label={messages['forms.label.note-timestamp-on']}
-                        checked={state.note_timestamp === true}
-                        onChange={(event) =>
-                          setState({
-                            ...state,
-                            note_timestamp: event.target.value === 'on',
-                          })
-                        }
+
+                      <Select
+                        components={{ Input: CustomSelectInput }}
+                        className="react-select"
+                        classNamePrefix="react-select"
+                        name="form-field-minisite_option"
+                        options={minisiteSelectData}
+                        value={minisiteSelectData.find(obj => {
+                          return obj.value === state.minisite_option;
+                        })}
+                        onChange={(val) => setState({ ...state, minisite_option: val.value })}
+
                       />
-
-
-                      <CustomInput
-                        type="radio"
-                        id="noteRadioOff"
-                        name="noteRadioOff"
-                        label={messages['forms.label.note-timestamp-off']}
-                        checked={state.note_timestamp === false}
-                        onChange={(event) =>
-                          setState({
-                            ...state,
-                            note_timestamp: event.target.value !== 'on',
-                          })
-                        }
-                      />
-
 
                     </FormGroup>
+                  
                   </Colxx>
                 </Row>
 
@@ -1843,6 +2257,43 @@ const AddNewStaffModal = ({
                           setState({
                             ...state,
                             status: event.target.value !== 'on',
+                          })
+                        }
+                      />
+
+
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6" >
+                  <FormGroup>
+                      <Label for="note">
+                        <IntlMessages id="forms.staff-note-timestamp" />
+                      </Label>
+                      <CustomInput
+                        type="radio"
+                        id="noteRadioOn"
+                        name="noteRadioOn"
+                        label={messages['forms.label.note-timestamp-on']}
+                        checked={state.note_timestamp === true}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            note_timestamp: event.target.value === 'on',
+                          })
+                        }
+                      />
+
+
+                      <CustomInput
+                        type="radio"
+                        id="noteRadioOff"
+                        name="noteRadioOff"
+                        label={messages['forms.label.note-timestamp-off']}
+                        checked={state.note_timestamp === false}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            note_timestamp: event.target.value !== 'on',
                           })
                         }
                       />

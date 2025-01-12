@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useRef,useState, useEffect } from 'react';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { connect } from 'react-redux';
@@ -21,7 +21,8 @@ import CompanyDataService from 'services/CompanyService';
 import { useParams, useHistory,NavLink } from "react-router-dom";
 import 'dropzone/dist/min/dropzone.min.css';
 import UserDataService from 'services/UsersService';
-
+import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
 
 const ReactDOMServer = require('react-dom/server');
 
@@ -52,7 +53,7 @@ const dropzoneConfigBanner = {
           </div>
           <div className="preview-container">
             {/*  eslint-disable-next-line jsx-a11y/alt-text */}
-            <img data-dz-thumbnail className="img-thumbnail border-0" />
+            <img id="previewWalletImg" data-dz-thumbnail className="img-thumbnail border-0" />
             <i className="simple-icon-doc preview-icon" />
           </div>
         </div>
@@ -117,10 +118,37 @@ const WalletPage = ({ intl, match,currentUser }) => {
   const CompanyBannerImgUrl = `${servicePath2}/files/${state.wallet_banner}`;
   
   const { messages } = intl;
-  const eventHandlers = { addedfile: (file) => { setwalletBannerFile(file); } }
+
+  const [walletImageFile, setWalletImageFile] = useState(null);
+  const [displayWalletCroper, setDisplayWalletCroper] = useState(false);
+  const openWalletCroper = () => {
+    setDisplayWalletCroper(!displayWalletCroper);
+  };
+  const handleCloseWalletCroper = () => {
+    setDisplayWalletCroper(false);
+  };
+
+  const cropperWalletRef = useRef(null);
+
+  const onCropWalletEnd = () => {
+    const imageElement = cropperWalletRef?.current;
+    const cropper = imageElement?.cropper;
+    document.getElementById('previewWalletImg').src = cropper.getCroppedCanvas().toDataURL();
+    cropper.getCroppedCanvas().toBlob((blob) => {
+      setwalletBannerFile(blob);
+    })
+    handleCloseWalletCroper();
+  };
+
+  const eventHandlers = { 
+    addedfile: (file) => { setwalletBannerFile(file); },
+    thumbnail: (file) => { 
+      openWalletCroper();
+      setWalletImageFile(file.dataURL);
+    },
+    removedfile:(file) => { handleCloseWalletCroper() } 
+  }
  
- 
-    
   const updateCompany = () => {
 
     console.log(state.company_id);
@@ -262,6 +290,27 @@ const WalletPage = ({ intl, match,currentUser }) => {
                           config={dropzoneComponentConfig}
                           djsConfig={dropzoneConfigBanner}
                           eventHandlers={eventHandlers} multiple={false} />
+                          {displayWalletCroper ? (
+                          <Cropper
+                                src={walletImageFile}
+                                style={{ height: 400, width: "100%" }}
+                                // Cropper.js options
+                                initialAspectRatio={16 / 9}
+                                guides={false}
+                                
+                                ref={cropperWalletRef}
+                              />
+                          ) : null}
+                          {displayWalletCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => onCropWalletEnd(e)} >
+                              <IntlMessages id="forms.crop.ok" />
+                            </Button>
+                          ) : null}
+                          {displayWalletCroper ? (
+                            <Button color="primary" className="mt-4" onClick={(e) => handleCloseWalletCroper(e)} >
+                              <IntlMessages id="forms.crop.cancel" />
+                            </Button>
+                          ) : null}
                         </Colxx>
                       </Row>
 
