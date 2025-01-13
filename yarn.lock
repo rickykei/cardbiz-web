@@ -4512,6 +4512,11 @@
     "gud" "^1.0.0"
     "warning" "^4.0.3"
 
+"cropperjs@^1.6.2":
+  "integrity" "sha512-nhymn9GdnV3CqiEHJVai54TULFAE3VshJTXSqSJKa8yXAKyBKDWdhHarnlIPrshJ0WMFTGuFvG02YjLXfPiuOA=="
+  "resolved" "https://registry.npmjs.org/cropperjs/-/cropperjs-1.6.2.tgz"
+  "version" "1.6.2"
+
 "cross-spawn@^6.0.0":
   "integrity" "sha512-eTVLrBSt7fjbDygz805pMnstIs2VTBNkRm0qxZd+M7A5XDdxVRWO5MxGBXZhjY4cqLYLdtrGqRf8mBPmzwSpWQ=="
   "resolved" "https://registry.npmjs.org/cross-spawn/-/cross-spawn-6.0.5.tgz"
