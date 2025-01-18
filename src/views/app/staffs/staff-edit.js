@@ -160,6 +160,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     youtube_url: "",
     twitter_url: "",
     wechat_id: "",
+    wechat_qr_url:"",
     wechatpage_url: "",
 	  
 	  tiktok_url: "",
@@ -203,6 +204,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
   const hsImgUrl = `${servicePath2}/files/${state.headshot}`;
   const [smartIdSelectData,setSmartIdSelectData] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isQRDisabled, setIsQRDisabled] = useState(false);
   const [dText, setDText] = useState(false);
   
 
@@ -236,7 +238,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     state.qrcode_option=1;
 
     if (dText !==null || dText !== undefined)
-      state.wechat_id=dText;
+      state.wechat_qr_url=dText;
 
     for (const [key, val] of Object.entries(state)) {
      
@@ -341,7 +343,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
           .then(decodedText => {
             console.log(val);
             setDText(decodedText);
-             
+            setIsQRDisabled(true);
           })
           .catch(err => {
             
@@ -363,6 +365,11 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     fetchData();
     fetchSmartCardData();
   }, []);
+
+  const initValue = () => {
+    setDText('');
+    setIsQRDisabled(false);
+  };
 
 
   return (
@@ -1721,7 +1728,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       </Label>
                       <Input
                         type="text"
-                        value={dText||state.wechat_id || ''}
+                        value={state.wechat_id || ''}
                         onChange={(val) => setState({ ...state, wechat_id: val.target.value })}
                         placeholder={messages['forms.staff-wechat_id']}
                       />
@@ -2000,6 +2007,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   
                    
                 </Row>   
+
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                   <FormGroup>
@@ -2045,8 +2053,32 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   </Colxx>
                 </Row>   
 
-
-               
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
+                      <Label for="note">
+                        <IntlMessages id="forms.staff-wechat_qr_url" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={dText||state.wechat_qr_url || ''}
+                        onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
+                        placeholder={messages['forms.staff-wechat_qr_url']}
+                        disabled={isQRDisabled}
+                      />
+                      {isQRDisabled ? (
+                      <Button color="primary" className="mt-4" onClick={(e) => initValue(e)} >
+                        <IntlMessages id="forms.crop.cancel" />
+                      </Button>
+                      ) : null}
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-wechat_qr_url-muted" />
+                      </FormText>
+                      
+                    </FormGroup>
+                  </Colxx>              
+                   
+                </Row>   
 
                 <Row>
                  

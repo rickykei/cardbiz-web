@@ -121,6 +121,16 @@ const WalletPage = ({ intl, match,currentUser }) => {
 
   const [walletImageFile, setWalletImageFile] = useState(null);
   const [displayWalletCroper, setDisplayWalletCroper] = useState(false);
+  const cropperWalletRef = useRef(null);
+
+  const onInitialized = () => {
+    const imageElement = cropperWalletRef?.current;
+    const cropper = imageElement?.cropper;
+    cropper.setCropBoxData ({
+      width: 300, // 裁剪框的宽度
+      height: 80 // 裁剪框的高度
+    }) 
+  }
   const openWalletCroper = () => {
     setDisplayWalletCroper(!displayWalletCroper);
   };
@@ -128,12 +138,11 @@ const WalletPage = ({ intl, match,currentUser }) => {
     setDisplayWalletCroper(false);
   };
 
-  const cropperWalletRef = useRef(null);
-
   const onCropWalletEnd = () => {
     const imageElement = cropperWalletRef?.current;
     const cropper = imageElement?.cropper;
     document.getElementById('previewWalletImg').src = cropper.getCroppedCanvas().toDataURL();
+    console.log(cropper.getCropBoxData());
     cropper.getCroppedCanvas().toBlob((blob) => {
       setwalletBannerFile(blob);
     })
@@ -145,6 +154,7 @@ const WalletPage = ({ intl, match,currentUser }) => {
     thumbnail: (file) => { 
       openWalletCroper();
       setWalletImageFile(file.dataURL);
+
     },
     removedfile:(file) => { handleCloseWalletCroper() } 
   }
@@ -294,11 +304,20 @@ const WalletPage = ({ intl, match,currentUser }) => {
                           <Cropper
                                 src={walletImageFile}
                                 style={{ height: 400, width: "100%" }}
-                                // Cropper.js options
-                                initialAspectRatio={16 / 9}
+                                // Cropper.js options                             
                                 guides={false}
-                                
                                 ref={cropperWalletRef}
+                                minContainerHeight={80}
+                                minContainerWidth={300}
+                                cropBoxResizable={false}
+                                background={false}
+                                viewMode={1}
+                                zoomTo={0.5}
+                                initialAspectRatio={1}
+                                autoCropArea={0}
+                                checkOrientation={false}
+                                dragMode='none'
+                                ready={onInitialized}
                               />
                           ) : null}
                           {displayWalletCroper ? (

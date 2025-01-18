@@ -205,6 +205,7 @@ const AddNewStaffModal = ({
   const apiUrlSmartCard = `${servicePath2}/smartcards/findByCompanyIdPullDown?companyId=${currentUser.companyId}`;
   const [enabled, setEnabled] = useState(true);
   const [dText, setDText] = useState('');
+  const [isQRDisabled, setIsQRDisabled] = useState(false);
 
   const addNetItem = async (e) => {
     e.preventDefault();
@@ -285,7 +286,8 @@ const AddNewStaffModal = ({
       linkedin_url: state.linkedin_url,
       youtube_url: state.youtube_url,
       twitter_url: state.twitter_url,
-      wechat_id: dText || state.wechat_id,
+      wechat_id: state.wechat_id,
+      wechat_qr_url:dText || state.wechat_qr_url,
       wechatpage_url: state.wechatpage_url, 
       tiktok_url: state.tiktok_url, 
       line_url: state.line_url,
@@ -400,8 +402,9 @@ const AddNewStaffModal = ({
  
         html5QrCode.scanFile(file, true)
         .then(decodedText => {
-         //  setState({ ...state, wechat_id: decodedText })
+         //  setState({ ...state, wechat_qr_url: decodedText })
           setDText(decodedText);
+          setIsQRDisabled(true);
           console.log(decodedText);
         })
         .catch(err => {
@@ -432,6 +435,11 @@ const AddNewStaffModal = ({
     fetchData();
     fetchSmartCardData();
   }, []);
+
+  const initValue = () => {
+    setDText('');
+    setIsQRDisabled(false);
+  };
 
   return (
 
@@ -782,7 +790,7 @@ const AddNewStaffModal = ({
                   <Colxx xxs="12" md="6" >
                     <FormGroup>
                       <Label for="home_email_label">
-                        <IntlMessages id="forms.staff-home_email_label" />
+                        <IntlMessages id="forms.staff-home_email" />
                       </Label>
                       <Row >
                       <Colxx xxs="6" md="6" className="mb-5">
@@ -1797,7 +1805,7 @@ const AddNewStaffModal = ({
                       </Label>
                       <Input
                         type="text"
-                        value={dText || state.wechat_id || ''}
+                        value={state.wechat_id || ''}
                         onChange={(val) => setState({ ...state, wechat_id: val.target.value })}
                         placeholder={messages['forms.staff-wechat_id']}
                       />
@@ -2099,7 +2107,6 @@ const AddNewStaffModal = ({
                   </Colxx>
                 </Row>
 
-
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
@@ -2144,7 +2151,31 @@ const AddNewStaffModal = ({
                   </Colxx>
                 </Row>
 
-
+                <Row>
+                    <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                        <Label for="wechat_qr_url">
+                          <IntlMessages id="forms.staff-wechat_qr_url" />
+                        </Label>
+                        <Input
+                          type="text"
+                          value={dText||state.wechat_qr_url || ''}
+                          onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
+                          placeholder={messages['forms.staff-wechat_qr_url']}
+                          disabled={isQRDisabled}
+                        />
+                        {isQRDisabled ? (
+                        <Button color="primary" className="mt-4" onClick={(e) => initValue(e)} >
+                          <IntlMessages id="forms.crop.cancel" />
+                        </Button>
+                        ) : null}
+                        <FormText color="muted">
+                          <IntlMessages id="forms.staff-wechat_qr_url-muted" />
+                        </FormText>
+                      </FormGroup>
+                    </Colxx>              
+                      
+                  </Row>   
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">

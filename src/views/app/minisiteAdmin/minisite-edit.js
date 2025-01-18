@@ -87,24 +87,13 @@ const EditClientModal = ({ intl, match, }) => {
       });
   };
 
-  const [displayColorPicker, setDisplayColorPicker] = useState(false);
-  const [myfontcolor, setColor] = useState(false);
-  const openColorBorad = () => {
-    setDisplayColorPicker(!displayColorPicker);
-  };
-  const handleClose = () => {
-    setDisplayColorPicker(false);
-  };
- 
-  const handleChange = (color) => {
-    setColor(color.hex);
-    state.font_color = color.hex;
-  };
-
   const [displayTextColorPicker, setTextColorPicker] = useState(false);
   const [myTextcolor, setColor1] = useState(false);
   const openTextColorBorad = () => {
     setTextColorPicker(!displayTextColorPicker);
+    if(state.text_color !== ''){
+      setColor1(state.text_color);
+    }
   };
   const handleTextColorClose = () => {
     setTextColorPicker(false);
@@ -119,6 +108,9 @@ const EditClientModal = ({ intl, match, }) => {
   const [mySocialBgcolor, setColor2] = useState(false);
   const openSocialBgColorBorad = () => {
     setSocialBgColorPicker(!displaySocialBgColorPicker);
+    if(state.social_icon_bg_color !== ''){
+      setColor2(state.social_icon_bg_color);
+    }
   };
   const handleSocialBgColorClose = () => {
     setSocialBgColorPicker(false);
@@ -133,6 +125,9 @@ const EditClientModal = ({ intl, match, }) => {
   const [myButtoncolor, setColor3] = useState(false);
   const openButtonColorBorad = () => {
     setButtonColorPicker(!displayButtonColorPicker);
+    if(state.button_color !== ''){
+      setColor3(state.button_color);
+    }
   };
   const handleButtonColorClose = () => {
     setButtonColorPicker(false);
@@ -147,6 +142,9 @@ const EditClientModal = ({ intl, match, }) => {
   const [myTitleTextcolor, setColor4] = useState(false);
   const openTitleTextColorBorad = () => {
     setTitleTextColorPicker(!displayTitleTextColorPicker);
+    if(state.title_text_color !== ''){
+      setColor4(state.title_text_color);
+    }
   };
   const handleTitleTextColorClose = () => {
     setTitleTextColorPicker(false);
@@ -161,6 +159,9 @@ const EditClientModal = ({ intl, match, }) => {
   const [myKeyWordingcolor, setColor5] = useState(false);
   const openKeyWordingColorBorad = () => {
     setKeyWordingColorPicker(!displayKeyWordingColorPicker);
+    if(state.key_wording_color !== ''){
+      setColor5(state.key_wording_color);
+    }
   };
   const handleKeyWordingColorClose = () => {
     setKeyWordingColorPicker(false);
@@ -175,6 +176,9 @@ const EditClientModal = ({ intl, match, }) => {
   const [myLinksHovercolor, setColor6] = useState(false);
   const openLinksHoverColorBorad = () => {
     setLinksHoverColorPicker(!displayLinksHoverColorPicker);
+    if(state.links_hover_color !== ''){
+      setColor6(state.links_hover_color);
+    }
   };
   const handleLinksHoverColorClose = () => {
     setLinksHoverColorPicker(false);
@@ -189,6 +193,9 @@ const EditClientModal = ({ intl, match, }) => {
   const [myLinksNotHovercolor, setColor7] = useState(false);
   const openLinksNotHoverColorBorad = () => {
     setLinksNotHoverColorPicker(!displayLinksNotHoverColorPicker);
+    if(state.links_not_hover_color !== ''){
+      setColor7(state.links_not_hover_color);
+    }
   };
   const handleLinksNotHoverColorClose = () => {
     setLinksNotHoverColorPicker(false);
@@ -203,6 +210,9 @@ const EditClientModal = ({ intl, match, }) => {
   const [myLinksSelectedcolor, setColor8] = useState(false);
   const openLinksSelectedColorBorad = () => {
     setLinksSelectedColorPicker(!displayLinksSelectedColorPicker);
+    if(state.links_selected_color !== ''){
+      setColor8(state.links_selected_color);
+    }
   };
   const handleLinksSelectedColorClose = () => {
     setLinksSelectedColorPicker(false);
@@ -217,6 +227,9 @@ const EditClientModal = ({ intl, match, }) => {
   const [myLeftNavBarcolor, setColor9] = useState(false);
   const openLeftNavBarColorBorad = () => {
     setLeftNavBarColorPicker(!displayLeftNavBarColorPicker);
+    if(state.left_nav_bar_color !== ''){
+      setColor9(state.left_nav_bar_color);
+    }
   };
   const handleLeftNavBarColorClose = () => {
     setLeftNavBarColorPicker(false);
@@ -231,6 +244,9 @@ const EditClientModal = ({ intl, match, }) => {
   const [myBgcolor, setColor10] = useState(false);
   const openBgColorBorad = () => {
     setBgColorPicker(!displayBgColorPicker);
+    if(state.bg_color !== ''){
+      setColor10(state.bg_color);
+    }
   };
   const handleBgColorClose = () => {
     setBgColorPicker(false);
@@ -245,6 +261,9 @@ const EditClientModal = ({ intl, match, }) => {
   const [myBioWordingcolor, setColor11] = useState(false);
   const openBioWordingColorBorad = () => {
     setBioWordingColorPicker(!displayBioWordingColorPicker);
+    if(state.bio_wording_color !== ''){
+      setColor11(state.bio_wording_color);
+    }
   };
   const handleBioWordingColorClose = () => {
     setBioWordingColorPicker(false);
@@ -259,6 +278,9 @@ const EditClientModal = ({ intl, match, }) => {
   const [mySiteBgcolor, setColor12] = useState(false);
   const openSiteBgColorBorad = () => {
     setSiteBgColorPicker(!displaySiteBgColorPicker);
+    if(state.site_bg_color !== ''){
+      setColor12(state.site_bg_color);
+    }
   };
   const handleSiteBgColorClose = () => {
     setSiteBgColorPicker(false);
@@ -288,162 +310,6 @@ const EditClientModal = ({ intl, match, }) => {
           <Row>
               <Colxx xxs="12" md="6" className="mb-5">
                 <FormGroup>
-                  <Label for="fontcolor">
-                    <IntlMessages id="forms.minisite-fontcolor" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.font_color || ''}
-                    onChange={(val) => setState({ ...state, font_color: val.target.value })}
-                    placeholder={messages['forms.minisite-fontcolor']}
-                    onClick={openColorBorad}
-                  />
-                   {displayColorPicker ? (
-                   <PhotoshopPicker  color={myfontcolor} onAccept={handleClose} onCancel={handleClose} onChangeComplete={handleChange} />
-                   ) : null}
-                  <FormText color="muted">
-                    <IntlMessages id="forms.minisite-fontcolor-muted" />
-                  </FormText>
-                </FormGroup>
-
-              </Colxx>
-              <Colxx xxs="12" md="6">
-
-
-                <FormGroup>
-                  <Label for="fontsize">
-                    <IntlMessages id="forms.minisite-fontsize" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.font_size || ''}
-                    onChange={(val) => setState({ ...state, font_size: val.target.value })}
-                    placeholder={messages['forms.minisite-fontsize']}
-                  />
-                  <FormText color="muted">
-                    <IntlMessages id="forms.minisite-fontsize-muted" />
-                  </FormText>
-                </FormGroup>
-              </Colxx>
-            </Row>
-
-            <Row>
-              <Colxx xxs="12" md="6" className="mb-5">
-                <FormGroup>
-                  <Label for="fontcolor">
-                    <IntlMessages id="forms.minisite-fontfamily" />
-                  </Label>
-                  <Select
-                        components={{ Input: CustomSelectInput }}
-                        className="react-select"
-                        classNamePrefix="react-select"
-                        name="form-minisite-fontfamily"
-                        options={fontfamilySelectData}
-                        value={fontfamilySelectData.find(obj => {
-                          return obj.value === state.font_family;
-                        })}
-                        onChange={(val) => setState({ ...state, font_family: val.value })}
-
-                      />
-
-                </FormGroup>
-
-              </Colxx>
-              <Colxx xxs="12" md="6">
-
-
-                <FormGroup>
-                  <Label for="textcolor">
-                    <IntlMessages id="forms.minisite-text-color" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.text_color || ''}
-                    onChange={(val) => setState({ ...state, text_color: val.target.value })}
-                    onClick={openTextColorBorad}
-                    placeholder={messages['forms.minisite-text-color']}
-                  />
-                  {displayTextColorPicker ? (
-                   <PhotoshopPicker  color={myTextcolor} onAccept={handleTextColorClose} onCancel={handleTextColorClose} onChangeComplete={handleTextColorChange} />
-                   ) : null}
-                  <FormText color="muted">
-                    <IntlMessages id="forms.minisite-fontcolor-muted" />
-                  </FormText>
-                </FormGroup>
-              </Colxx>
-            </Row>
-
-            <Row>
-              <Colxx xxs="12" md="6" className="mb-5">
-                <FormGroup>
-                  <Label for="titletextcolor">
-                    <IntlMessages id="forms.minisite-social-icon-bg-color" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.social_icon_bg_color || ''}
-                    onChange={(val) => setState({ ...state, social_icon_bg_color: val.target.value })}
-                    placeholder={messages['forms.minisite-social-icon-bg-color']}
-                    onClick={openSocialBgColorBorad}
-                  />
-                  {displaySocialBgColorPicker ? (
-                   <PhotoshopPicker  color={mySocialBgcolor} onAccept={handleSocialBgColorClose} onCancel={handleSocialBgColorClose} onChangeComplete={handleSocialBgColorChange} />
-                   ) : null}
-                  <FormText color="muted">
-                    <IntlMessages id="forms.minisite-fontcolor-muted" />
-                  </FormText>
-                </FormGroup>
-
-              </Colxx>
-              <Colxx xxs="12" md="6">
-
-
-                <FormGroup>
-                  <Label for="textcolor">
-                    <IntlMessages id="forms.minisite-button-color" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.button_color || ''}
-                    onChange={(val) => setState({ ...state, button_color: val.target.value })}
-                    placeholder={messages['forms.minisite-button-color']}
-                    onClick={openButtonColorBorad}
-                  />
-                  {displayButtonColorPicker ? (
-                   <PhotoshopPicker  color={myButtoncolor} onAccept={handleButtonColorClose} onCancel={handleButtonColorClose} onChangeComplete={handleButtonColorChange} />
-                   ) : null}
-                  <FormText color="muted">
-                    <IntlMessages id="forms.minisite-fontcolor-muted" />
-                  </FormText>
-                </FormGroup>
-              </Colxx>
-            </Row>
-
-            <Row>
-            <Colxx xxs="12" md="6">
-
-              <FormGroup>
-                <Label for="titleTextColor">
-                  <IntlMessages id="forms.minisite-title-text-color" />
-                </Label>
-                <Input
-                  type="text"
-                  value={state.title_text_color || ''}
-                  onChange={(val) => setState({ ...state, title_text_color: val.target.value })}
-                  placeholder={messages['forms.minisite-title-text-color']}
-                  onClick={openTitleTextColorBorad}
-                />
-                {displayTitleTextColorPicker ? (
-                   <PhotoshopPicker  color={myTitleTextcolor} onAccept={handleTitleTextColorClose} onCancel={handleTitleTextColorClose} onChangeComplete={handleTitleTextColorChange} />
-                   ) : null}
-                <FormText color="muted">
-                  <IntlMessages id="forms.minisite-fontcolor-muted" />
-                </FormText>
-              </FormGroup>
-              </Colxx>
-
-              <Colxx xxs="12" md="6" className="mb-5">
-                <FormGroup>
                   <Label for="keywordingcolor">
                     <IntlMessages id="forms.minisite-key-wording-color" />
                   </Label>
@@ -463,10 +329,181 @@ const EditClientModal = ({ intl, match, }) => {
                 </FormGroup>
 
               </Colxx>
-          
+
+              <Colxx xxs="12" md="6">
+                <FormGroup>
+                  <Label for="titleTextColor">
+                    <IntlMessages id="forms.minisite-title-text-color" />
+                  </Label>
+                  <Input
+                    type="text"
+                    value={state.title_text_color || ''}
+                    onChange={(val) => setState({ ...state, title_text_color: val.target.value })}
+                    placeholder={messages['forms.minisite-title-text-color']}
+                    onClick={openTitleTextColorBorad}
+                  />
+                  {displayTitleTextColorPicker ? (
+                    <PhotoshopPicker  color={myTitleTextcolor} onAccept={handleTitleTextColorClose} onCancel={handleTitleTextColorClose} onChangeComplete={handleTitleTextColorChange} />
+                    ) : null}
+                  <FormText color="muted">
+                    <IntlMessages id="forms.minisite-fontcolor-muted" />
+                  </FormText>
+                </FormGroup>
+              </Colxx>
             </Row>
 
             <Row>
+              <Colxx xxs="12" md="6" className="mb-5">
+                <FormGroup>
+                  <Label for="fontfamily">
+                    <IntlMessages id="forms.minisite-fontfamily" />
+                  </Label>
+                  <Select
+                        components={{ Input: CustomSelectInput }}
+                        className="react-select"
+                        classNamePrefix="react-select"
+                        name="form-minisite-fontfamily"
+                        options={fontfamilySelectData}
+                        value={fontfamilySelectData.find(obj => {
+                          return obj.value === state.font_family;
+                        })}
+                        onChange={(val) => setState({ ...state, font_family: val.value })}
+
+                      />
+
+                </FormGroup>
+
+              </Colxx>
+
+              <Colxx xxs="12" md="6">
+                <FormGroup>
+                  <Label for="fontsize">
+                    <IntlMessages id="forms.minisite-fontsize" />
+                  </Label>
+                  <Input
+                    type="text"
+                    value={state.font_size || ''}
+                    onChange={(val) => setState({ ...state, font_size: val.target.value })}
+                    placeholder={messages['forms.minisite-fontsize']}
+                  />
+                  <FormText color="muted">
+                    <IntlMessages id="forms.minisite-fontsize-muted" />
+                  </FormText>
+                </FormGroup>
+              </Colxx>
+            </Row>
+
+            <Row>
+              
+            <Colxx xxs="12" md="6">
+                <FormGroup>
+                <Label for="textcolor">
+                  <IntlMessages id="forms.minisite-left-nav-bar-color" />
+                  </Label>
+                  <Input
+                    type="text"
+                  value={state.left_nav_bar_color || ''}
+                  onChange={(val) => setState({ ...state, left_nav_bar_color: val.target.value })}
+                  placeholder={messages['forms.minisite-left-nav-bar-color']}
+                  onClick={openLeftNavBarColorBorad}
+                  />
+                {displayLeftNavBarColorPicker ? (
+                <PhotoshopPicker  color={myLeftNavBarcolor} onAccept={handleLeftNavBarColorClose} onCancel={handleLeftNavBarColorClose} onChangeComplete={handleLeftNavBarColorChange} />
+                   ) : null}
+                  <FormText color="muted">
+                    <IntlMessages id="forms.minisite-fontcolor-muted" />
+                  </FormText>
+                </FormGroup>
+              </Colxx>
+
+              <Colxx xxs="12" md="6">
+                <FormGroup>
+                  <Label for="backgroundcolor">
+                    <IntlMessages id="forms.minisite-site-bg-color" />
+                  </Label>
+                  <Input
+                    type="text"
+                    value={state.site_bg_color || ''}
+                    onChange={(val) => setState({ ...state, site_bg_color: val.target.value })}
+                    placeholder={messages['forms.minisite-site-bg-color']}
+                    onClick={openSiteBgColorBorad}
+                  />
+                  {displaySiteBgColorPicker ? (
+                  <PhotoshopPicker  color={mySiteBgcolor} onAccept={handleSiteBgColorClose} onCancel={handleSiteBgColorClose} onChangeComplete={handleSiteBgColorChange} />
+                   ) : null}
+                  <FormText color="muted">
+                    <IntlMessages id="forms.minisite-fontcolor-muted" />
+                  </FormText>
+                </FormGroup>
+              </Colxx>
+            </Row>
+
+            <Row>
+              <Colxx xxs="12" md="6" className="mb-5">
+              <FormGroup>
+                <Label for="backgroundcolor">
+                  <IntlMessages id="forms.minisite-backgroundcolor" />
+                </Label>
+                <Input
+                  type="text"
+                  value={state.bg_color || ''}
+                  onChange={(val) => setState({ ...state, bg_color: val.target.value })}
+                  placeholder={messages['forms.minisite-backgroundcolor']}
+                  onClick={openBgColorBorad}
+                />
+                {displayBgColorPicker ? (
+                <PhotoshopPicker  color={myBgcolor} onAccept={handleBgColorClose} onCancel={handleBgColorClose} onChangeComplete={handleBgColorChange} />
+                   ) : null}
+                <FormText color="muted">
+                  <IntlMessages id="forms.minisite-fontcolor-muted" />
+                </FormText>
+              </FormGroup>
+              </Colxx>
+
+              <Colxx xxs="12" md="6" className="mb-5">
+                <FormGroup>
+                  <Label for="selectedcolor">
+                    <IntlMessages id="forms.minisite-links-selected-color" />
+                  </Label>
+                  <Input
+                    type="text"
+                    value={state.links_selected_color || ''}
+                    onChange={(val) => setState({ ...state, links_selected_color: val.target.value })}
+                    placeholder={messages['forms.minisite-links-selected-color']}
+                    onClick={openLinksSelectedColorBorad}
+                  />
+                  {displayLinksSelectedColorPicker ? (
+                   <PhotoshopPicker  color={myLinksSelectedcolor} onAccept={handleLinksSelectedColorClose} onCancel={handleLinksSelectedColorClose} onChangeComplete={handleLinksSelectedColorChange} />
+                   ) : null}
+                  <FormText color="muted">
+                    <IntlMessages id="forms.minisite-fontcolor-muted" />
+                  </FormText>
+                </FormGroup>
+              </Colxx>
+            </Row>
+
+            <Row>
+              <Colxx xxs="12" md="6">
+                <FormGroup>
+                  <Label for="textcolor">
+                    <IntlMessages id="forms.minisite-links-not-hover-color" />
+                  </Label>
+                  <Input
+                    type="text"
+                    value={state.links_not_hover_color || ''}
+                    onChange={(val) => setState({ ...state, links_not_hover_color: val.target.value })}
+                    placeholder={messages['forms.minisite-links-not-hover-color']}
+                    onClick={openLinksNotHoverColorBorad}
+                  />
+                   {displayLinksNotHoverColorPicker ? (
+                   <PhotoshopPicker  color={myLinksNotHovercolor} onAccept={handleLinksNotHoverColorClose} onCancel={handleLinksNotHoverColorClose} onChangeComplete={handleLinksNotHoverColorChange} />
+                   ) : null}
+                  <FormText color="muted">
+                    <IntlMessages id="forms.minisite-fontcolor-muted" />
+                  </FormText>
+                </FormGroup>
+              </Colxx>
+
               <Colxx xxs="12" md="6" className="mb-5">
                 <FormGroup>
                   <Label for="titletextcolor">
@@ -488,92 +525,69 @@ const EditClientModal = ({ intl, match, }) => {
                 </FormGroup>
 
               </Colxx>
-              <Colxx xxs="12" md="6">
-
-
-                <FormGroup>
-                  <Label for="textcolor">
-                    <IntlMessages id="forms.minisite-links-not-hover-color" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.links_not_hover_color || ''}
-                    onChange={(val) => setState({ ...state, links_not_hover_color: val.target.value })}
-                    placeholder={messages['forms.minisite-links-not-hover-color']}
-                    onClick={openLinksNotHoverColorBorad}
-                  />
-                   {displayLinksNotHoverColorPicker ? (
-                   <PhotoshopPicker  color={myLinksNotHovercolor} onAccept={handleLinksNotHoverColorClose} onCancel={handleLinksNotHoverColorClose} onChangeComplete={handleLinksNotHoverColorChange} />
-                   ) : null}
-                  <FormText color="muted">
-                    <IntlMessages id="forms.minisite-fontcolor-muted" />
-                  </FormText>
-                </FormGroup>
-              </Colxx>
+              
             </Row>
          
             <Row>
               <Colxx xxs="12" md="6" className="mb-5">
                 <FormGroup>
                   <Label for="titletextcolor">
-                    <IntlMessages id="forms.minisite-links-selected-color" />
+                    <IntlMessages id="forms.minisite-social-icon-bg-color" />
                   </Label>
                   <Input
                     type="text"
-                    value={state.links_selected_color || ''}
-                    onChange={(val) => setState({ ...state, links_selected_color: val.target.value })}
-                    placeholder={messages['forms.minisite-links-selected-color']}
-                    onClick={openLinksSelectedColorBorad}
+                    value={state.social_icon_bg_color || ''}
+                    onChange={(val) => setState({ ...state, social_icon_bg_color: val.target.value })}
+                    placeholder={messages['forms.minisite-social-icon-bg-color']}
+                    onClick={openSocialBgColorBorad}
                   />
-                  {displayLinksSelectedColorPicker ? (
-                   <PhotoshopPicker  color={myLinksSelectedcolor} onAccept={handleLinksSelectedColorClose} onCancel={handleLinksSelectedColorClose} onChangeComplete={handleLinksSelectedColorChange} />
+                  {displaySocialBgColorPicker ? (
+                   <PhotoshopPicker  color={mySocialBgcolor} onAccept={handleSocialBgColorClose} onCancel={handleSocialBgColorClose} onChangeComplete={handleSocialBgColorChange} />
                    ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
                 </FormGroup>
-
               </Colxx>
+
               <Colxx xxs="12" md="6">
-
-
                 <FormGroup>
                   <Label for="textcolor">
-                    <IntlMessages id="forms.minisite-left-nav-bar-color" />
+                    <IntlMessages id="forms.minisite-button-color" />
                   </Label>
                   <Input
                     type="text"
-                    value={state.left_nav_bar_color || ''}
-                    onChange={(val) => setState({ ...state, left_nav_bar_color: val.target.value })}
-                    placeholder={messages['forms.minisite-left-nav-bar-color']}
-                    onClick={openLeftNavBarColorBorad}
+                    value={state.button_color || ''}
+                    onChange={(val) => setState({ ...state, button_color: val.target.value })}
+                    placeholder={messages['forms.minisite-button-color']}
+                    onClick={openButtonColorBorad}
                   />
-                  {displayLeftNavBarColorPicker ? (
-                   <PhotoshopPicker  color={myLeftNavBarcolor} onAccept={handleLeftNavBarColorClose} onCancel={handleLeftNavBarColorClose} onChangeComplete={handleLeftNavBarColorChange} />
+                  {displayButtonColorPicker ? (
+                   <PhotoshopPicker  color={myButtoncolor} onAccept={handleButtonColorClose} onCancel={handleButtonColorClose} onChangeComplete={handleButtonColorChange} />
                    ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
                 </FormGroup>
               </Colxx>
+             
             </Row>
 
             <Row>
-              <Colxx xxs="12" md="6" className="mb-5">
-
+              <Colxx xxs="12" md="6">
                 <FormGroup>
-                  <Label for="backgroundcolor">
-                    <IntlMessages id="forms.minisite-backgroundcolor" />
+                  <Label for="textcolor">
+                    <IntlMessages id="forms.minisite-text-color" />
                   </Label>
                   <Input
                     type="text"
-                    value={state.bg_color || ''}
-                    onChange={(val) => setState({ ...state, bg_color: val.target.value })}
-                    placeholder={messages['forms.minisite-backgroundcolor']}
-                    onClick={openBgColorBorad}
+                    value={state.text_color || ''}
+                    onChange={(val) => setState({ ...state, text_color: val.target.value })}
+                    onClick={openTextColorBorad}
+                    placeholder={messages['forms.minisite-text-color']}
                   />
-                   {displayBgColorPicker ? (
-                   <PhotoshopPicker  color={myBgcolor} onAccept={handleBgColorClose} onCancel={handleBgColorClose} onChangeComplete={handleBgColorChange} />
+                  {displayTextColorPicker ? (
+                   <PhotoshopPicker  color={myTextcolor} onAccept={handleTextColorClose} onCancel={handleTextColorClose} onChangeComplete={handleTextColorChange} />
                    ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
@@ -582,8 +596,6 @@ const EditClientModal = ({ intl, match, }) => {
               </Colxx>
 
               <Colxx xxs="12" md="6">
-
-
                 <FormGroup>
                   <Label for="textcolor">
                     <IntlMessages id="forms.minisite-bio-wording-color" />
@@ -597,31 +609,6 @@ const EditClientModal = ({ intl, match, }) => {
                   />
                   {displayBioWordingColorPicker ? (
                    <PhotoshopPicker  color={myBioWordingcolor} onAccept={handleBioWordingColorClose} onCancel={handleBioWordingColorClose} onChangeComplete={handleBioWordingColorChange} />
-                   ) : null}
-                  <FormText color="muted">
-                    <IntlMessages id="forms.minisite-fontcolor-muted" />
-                  </FormText>
-                </FormGroup>
-              </Colxx>
-            </Row>
-    
-            <Row>
-              <Colxx xxs="12" md="6">
-
-
-                <FormGroup>
-                  <Label for="backgroundcolor">
-                    <IntlMessages id="forms.minisite-site-bg-color" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.site_bg_color || ''}
-                    onChange={(val) => setState({ ...state, site_bg_color: val.target.value })}
-                    placeholder={messages['forms.minisite-site-bg-color']}
-                    onClick={openSiteBgColorBorad}
-                  />
-                  {displaySiteBgColorPicker ? (
-                   <PhotoshopPicker  color={mySiteBgcolor} onAccept={handleSiteBgColorClose} onCancel={handleSiteBgColorClose} onChangeComplete={handleSiteBgColorChange} />
                    ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />

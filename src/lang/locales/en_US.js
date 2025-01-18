@@ -614,9 +614,11 @@ module.exports = {
   'forms.staff-video_url': 'Video',
   'forms.staff-telegram_url': 'Telegram',
   'forms.staff-wechat_id': 'Wechat ID',
+  'forms.staff-wechat_qr_url': 'Wechat QR Url',
   'forms.staff-smartcard_uid': 'Smart Business Card ID',
   'forms.staff-note-timestamp': 'Note Timestamp',
 
+  'forms.staff-wechat_qr_url-muted': 'e.g. https://u.wechat.com/ABCDEXXXXXFFF',
   'forms.staff-work_email-muted': 'e.g. abc@gmail.com - Available for e-Profile & vcf & Vcard',
   'forms.staff-home_email-muted': 'e.g. abc@gmail.com - Available for e-Profile & vcf',
   'forms.staff-other_email-muted': 'e.g. abc@gmail.com - Available for e-Profile & vcf',

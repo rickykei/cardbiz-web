@@ -228,6 +228,14 @@ const AdminPage = ({ intl, match,currentUser }) => {
   };
 
   const cropperBannerRef = useRef(null);
+  const onInitializedBanner = () => {
+    const imageElement = cropperBannerRef?.current;
+    const cropper = imageElement?.cropper;
+    cropper.setCropBoxData ({
+      width: 1500, // 裁剪框的宽度
+      height: 500 // 裁剪框的高度
+    }) 
+  }
 
   const onCropBannerEnd = () => {
     const imageElement = cropperBannerRef?.current;
@@ -258,6 +266,14 @@ const AdminPage = ({ intl, match,currentUser }) => {
   };
 
   const cropperLogoRef = useRef(null);
+  const onInitializedLogo = () => {
+    const imageElement = cropperLogoRef?.current;
+    const cropper = imageElement?.cropper;
+    cropper.setCropBoxData ({
+      width: 300, // 裁剪框的宽度
+      height: 300 // 裁剪框的高度
+    }) 
+  }
 
   const onCropLogoEnd = () => {
     const imageElement = cropperLogoRef?.current;
@@ -288,6 +304,14 @@ const AdminPage = ({ intl, match,currentUser }) => {
   };
 
   const cropperProfileRef = useRef(null);
+  const onInitializedProfile = () => {
+    const imageElement = cropperProfileRef?.current;
+    const cropper = imageElement?.cropper;
+    cropper.setCropBoxData ({
+      width: 1000, // 裁剪框的宽度
+      height: 526 // 裁剪框的高度
+    }) 
+  }
 
   const onCropProfileEnd = () => {
     const imageElement = cropperProfileRef?.current;
@@ -834,10 +858,17 @@ const AdminPage = ({ intl, match,currentUser }) => {
                                 src={bannerImageFile}
                                 style={{ height: 400, width: "100%" }}
                                 // Cropper.js options
-                                initialAspectRatio={16 / 9}
                                 guides={false}
-                                
                                 ref={cropperBannerRef}
+                                cropBoxResizable={false}
+                                background={false}
+                                viewMode={1}
+                                zoomTo={0.5}
+                                initialAspectRatio={1}
+                                autoCropArea={0}
+                                checkOrientation={false}
+                                dragMode='none'
+                                ready={onInitializedBanner}
                               />
                           ) : null}
                           {displayBannerCroper ? (
@@ -873,10 +904,18 @@ const AdminPage = ({ intl, match,currentUser }) => {
                                 src={logoImageFile}
                                 style={{ height: 400, width: "100%" }}
                                 // Cropper.js options
-                                initialAspectRatio={16 / 9}
                                 guides={false}
                                 
                                 ref={cropperLogoRef}
+                                cropBoxResizable={false}
+                                background={false}
+                                viewMode={1}
+                                zoomTo={0.5}
+                                initialAspectRatio={1}
+                                autoCropArea={0}
+                                checkOrientation={false}
+                                dragMode='none'
+                                ready={onInitializedLogo}
                               />
                           ) : null}
                           {displayLogoCroper ? (
@@ -914,10 +953,18 @@ const AdminPage = ({ intl, match,currentUser }) => {
                                 src={profileImageFile}
                                 style={{ height: 400, width: "100%" }}
                                 // Cropper.js options
-                                initialAspectRatio={16 / 9}
                                 guides={false}
                                 
                                 ref={cropperProfileRef}
+                                cropBoxResizable={false}
+                                background={false}
+                                viewMode={1}
+                                zoomTo={0.5}
+                                initialAspectRatio={1}
+                                autoCropArea={0}
+                                checkOrientation={false}
+                                dragMode='none'
+                                ready={onInitializedProfile}
                               />
                           ) : null}
                           {displayProfileCroper ? (
