@@ -228,14 +228,6 @@ const AdminPage = ({ intl, match,currentUser }) => {
   };
 
   const cropperBannerRef = useRef(null);
-  const onInitializedBanner = () => {
-    const imageElement = cropperBannerRef?.current;
-    const cropper = imageElement?.cropper;
-    cropper.setCropBoxData ({
-      width: 1500, // 裁剪框的宽度
-      height: 500 // 裁剪框的高度
-    }) 
-  }
 
   const onCropBannerEnd = () => {
     const imageElement = cropperBannerRef?.current;
@@ -266,14 +258,6 @@ const AdminPage = ({ intl, match,currentUser }) => {
   };
 
   const cropperLogoRef = useRef(null);
-  const onInitializedLogo = () => {
-    const imageElement = cropperLogoRef?.current;
-    const cropper = imageElement?.cropper;
-    cropper.setCropBoxData ({
-      width: 300, // 裁剪框的宽度
-      height: 300 // 裁剪框的高度
-    }) 
-  }
 
   const onCropLogoEnd = () => {
     const imageElement = cropperLogoRef?.current;
@@ -304,14 +288,6 @@ const AdminPage = ({ intl, match,currentUser }) => {
   };
 
   const cropperProfileRef = useRef(null);
-  const onInitializedProfile = () => {
-    const imageElement = cropperProfileRef?.current;
-    const cropper = imageElement?.cropper;
-    cropper.setCropBoxData ({
-      width: 1000, // 裁剪框的宽度
-      height: 526 // 裁剪框的高度
-    }) 
-  }
 
   const onCropProfileEnd = () => {
     const imageElement = cropperProfileRef?.current;
@@ -856,19 +832,19 @@ const AdminPage = ({ intl, match,currentUser }) => {
                           {displayBannerCroper ? (
                           <Cropper
                                 src={bannerImageFile}
-                                style={{ height: 400, width: "100%" }}
-                                // Cropper.js options
-                                guides={false}
-                                ref={cropperBannerRef}
-                                cropBoxResizable={false}
-                                background={false}
+                                style={{ height: 500, width: "100%" }}
+                                initialAspectRatio={1500/500}
+                                aspectRatio={1500/500} // if 正方形set 1
+                                minCropBoxHeight={500}
+                                minCropBoxWidth={1500}
+                                maxCropBoxHeight={500}
+                                maxCropBoxWidth={1500}
                                 viewMode={1}
-                                zoomTo={0.5}
-                                initialAspectRatio={1}
-                                autoCropArea={0}
-                                checkOrientation={false}
                                 dragMode='none'
-                                ready={onInitializedBanner}
+                                background={0}
+                                responsive={0}
+                                ref={cropperBannerRef}
+
                               />
                           ) : null}
                           {displayBannerCroper ? (
@@ -902,20 +878,18 @@ const AdminPage = ({ intl, match,currentUser }) => {
                           {displayLogoCroper ? (
                           <Cropper
                                 src={logoImageFile}
-                                style={{ height: 400, width: "100%" }}
-                                // Cropper.js options
-                                guides={false}
-                                
-                                ref={cropperLogoRef}
-                                cropBoxResizable={false}
-                                background={false}
-                                viewMode={1}
-                                zoomTo={0.5}
+                                style={{ height: 300, width: "100%" }}
                                 initialAspectRatio={1}
-                                autoCropArea={0}
-                                checkOrientation={false}
+                                aspectRatio={1} // if 正方形set 1
+                                minCropBoxHeight={300}
+                                minCropBoxWidth={300}
+                                maxCropBoxHeight={300}
+                                maxCropBoxWidth={300}
+                                viewMode={1}
                                 dragMode='none'
-                                ready={onInitializedLogo}
+                                background={0}
+                                responsive={0}
+                                ref={cropperLogoRef}                             
                               />
                           ) : null}
                           {displayLogoCroper ? (
@@ -951,20 +925,18 @@ const AdminPage = ({ intl, match,currentUser }) => {
                         {displayProfileCroper ? (
                           <Cropper
                                 src={profileImageFile}
-                                style={{ height: 400, width: "100%" }}
-                                // Cropper.js options
-                                guides={false}
-                                
-                                ref={cropperProfileRef}
-                                cropBoxResizable={false}
-                                background={false}
+                                style={{ height: 526, width: "100%" }}
+                                initialAspectRatio={1000/526}
+                                aspectRatio={1000/526} // if 正方形set 1
+                                minCropBoxHeight={526}
+                                minCropBoxWidth={1000}
+                                maxCropBoxHeight={526}
+                                maxCropBoxWidth={1000}
                                 viewMode={1}
-                                zoomTo={0.5}
-                                initialAspectRatio={1}
-                                autoCropArea={0}
-                                checkOrientation={false}
                                 dragMode='none'
-                                ready={onInitializedProfile}
+                                background={0}
+                                responsive={0}
+                                ref={cropperProfileRef}
                               />
                           ) : null}
                           {displayProfileCroper ? (

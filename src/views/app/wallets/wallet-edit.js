@@ -123,14 +123,6 @@ const WalletPage = ({ intl, match,currentUser }) => {
   const [displayWalletCroper, setDisplayWalletCroper] = useState(false);
   const cropperWalletRef = useRef(null);
 
-  const onInitialized = () => {
-    const imageElement = cropperWalletRef?.current;
-    const cropper = imageElement?.cropper;
-    cropper.setCropBoxData ({
-      width: 300, // 裁剪框的宽度
-      height: 80 // 裁剪框的高度
-    }) 
-  }
   const openWalletCroper = () => {
     setDisplayWalletCroper(!displayWalletCroper);
   };
@@ -143,7 +135,7 @@ const WalletPage = ({ intl, match,currentUser }) => {
     const cropper = imageElement?.cropper;
     document.getElementById('previewWalletImg').src = cropper.getCroppedCanvas().toDataURL();
     console.log(cropper.getCropBoxData());
-    cropper.getCroppedCanvas().toBlob((blob) => {
+    cropper.getCroppedCanvas({width:300,height:80}).toBlob((blob) => {
       setwalletBannerFile(blob);
     })
     handleCloseWalletCroper();
@@ -303,21 +295,19 @@ const WalletPage = ({ intl, match,currentUser }) => {
                           {displayWalletCroper ? (
                           <Cropper
                                 src={walletImageFile}
-                                style={{ height: 400, width: "100%" }}
-                                // Cropper.js options                             
-                                guides={false}
-                                ref={cropperWalletRef}
-                                minContainerHeight={80}
-                                minContainerWidth={300}
-                                cropBoxResizable={false}
-                                background={false}
+                                style={{ height: 300, width: "100%" }}
+                                initialAspectRatio={300/80}
+                                aspectRatio={300/80} // if 正方形set 1
+                                minCropBoxHeight={80}
+                                minCropBoxWidth={300}
+                                maxCropBoxHeight={80}
+                                maxCropBoxWidth={300}
                                 viewMode={1}
-                                zoomTo={0.5}
-                                initialAspectRatio={1}
-                                autoCropArea={0}
-                                checkOrientation={false}
-                                dragMode='none'
-                                ready={onInitialized}
+                                dragMode='none'  
+                                background={0}
+                                responsive={0}
+                                ref={cropperWalletRef}
+                               
                               />
                           ) : null}
                           {displayWalletCroper ? (
