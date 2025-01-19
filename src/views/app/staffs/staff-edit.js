@@ -230,7 +230,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     const data = new FormData() 
   
     if(file2 !== null)
-    data.append("file",file2);
+    data.append("staff_headshot",file2);
      /* eslint-disable no-restricted-syntax */
      data.append("uid",currentUser.uid);
      console.log('add uid before update staff');

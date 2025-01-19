@@ -316,7 +316,7 @@ const AddNewStaffModal = ({
     const data = new FormData()
 
     if (file2 !== null)
-      data.append("file", file2);
+      data.append("staff_headshot", file2);
 
     if (state.qrcode_option === undefined)
       state.qrcode_option = 1;
