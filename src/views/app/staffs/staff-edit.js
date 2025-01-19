@@ -19,9 +19,9 @@ import { useParams,useHistory } from "react-router-dom";
 import { servicePath2 ,qrcodeSelectData,minisiteSelectData} from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
 import 'dropzone/dist/min/dropzone.min.css';
- import {Html5Qrcode} from "html5-qrcode";
- import Cropper from "react-cropper";
-import "cropperjs/dist/cropper.css";
+import {Html5Qrcode} from 'html5-qrcode';
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
 
 const ReactDOMServer = require('react-dom/server');
 
@@ -319,7 +319,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     const imageElement = cropperHeadshotRef?.current;
     const cropper = imageElement?.cropper;
     document.getElementById('previewHeadshotImg').src = cropper.getCroppedCanvas().toDataURL();
-    cropper.getCroppedCanvas().toBlob((blob) => {
+    cropper.getCroppedCanvas({width:300,height:300}).toBlob((blob) => {
       setFile(blob);
     })
     handleCloseHeadshotCroper();
@@ -558,11 +558,17 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                         {displayHeadshotCroper ? (
                           <Cropper
                                 src={headshotImageFile}
-                                style={{ height: 400, width: "100%" }}
-                                // Cropper.js options
-                                initialAspectRatio={16 / 9}
-                                guides={false}
-                                
+                                style={{ height: 300, width: "100%" }}
+                                initialAspectRatio={1}
+                                aspectRatio={1} // if 正方形set 1
+                                minCropBoxHeight={300}
+                                minCropBoxWidth={300}
+                                maxCropBoxHeight={300}
+                                maxCropBoxWidth={300}
+                                viewMode={1}
+                                dragMode='none'  
+                                background={0}
+                                responsive={0}
                                 ref={cropperHeadshotRef}
                               />
                           ) : null}

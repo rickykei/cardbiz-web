@@ -21,8 +21,8 @@ import CompanyDataService from 'services/CompanyService';
 import { useParams, useHistory,NavLink } from "react-router-dom";
 import 'dropzone/dist/min/dropzone.min.css';
 import UserDataService from 'services/UsersService';
-import Cropper from "react-cropper";
-import "cropperjs/dist/cropper.css";
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
 
 const ReactDOMServer = require('react-dom/server');
 
