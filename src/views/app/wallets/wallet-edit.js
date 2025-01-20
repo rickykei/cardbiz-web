@@ -134,10 +134,11 @@ const WalletPage = ({ intl, match,currentUser }) => {
     const imageElement = cropperWalletRef?.current;
     const cropper = imageElement?.cropper;
     document.getElementById('previewWalletImg').src = cropper.getCroppedCanvas().toDataURL();
-    console.log(cropper.getCropBoxData());
+    console.log(walletbannerfile);
     cropper.getCroppedCanvas({width:300,height:80}).toBlob((blob) => {
-      setwalletBannerFile(blob);
-    })
+      const newFile = new File([blob], walletbannerfile.name, { type: walletbannerfile.type });
+      setwalletBannerFile(newFile);
+    },walletbannerfile.type);
     handleCloseWalletCroper();
   };
 
@@ -146,7 +147,7 @@ const WalletPage = ({ intl, match,currentUser }) => {
     thumbnail: (file) => { 
       openWalletCroper();
       setWalletImageFile(file.dataURL);
-
+      setwalletBannerFile(file);
     },
     removedfile:(file) => { handleCloseWalletCroper() } 
   }

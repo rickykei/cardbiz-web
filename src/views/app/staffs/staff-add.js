@@ -380,8 +380,9 @@ const AddNewStaffModal = ({
     const cropper = imageElement?.cropper;
     document.getElementById('previewHeadshotImg').src = cropper.getCroppedCanvas().toDataURL();
     cropper.getCroppedCanvas({width:300,height:300}).toBlob((blob) => {
-      setFile(blob);
-    })
+      const newFile = new File([blob], file2.name, { type: file2.type });
+      setFile(newFile);
+    },file2.type)
     handleCloseHeadshotCroper();
   };
 
@@ -392,6 +393,7 @@ const AddNewStaffModal = ({
     thumbnail: (file) => { 
       openHeadshotCroper();
       setHeadshotImageFile(file.dataURL);
+      setFile(file);
     },
     removedfile:() => { handleCloseHeadshotCroper() } 
   }

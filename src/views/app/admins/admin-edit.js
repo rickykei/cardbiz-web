@@ -233,9 +233,10 @@ const AdminPage = ({ intl, match,currentUser }) => {
     const imageElement = cropperBannerRef?.current;
     const cropper = imageElement?.cropper;
     document.getElementById('previewBannerImg').src = cropper.getCroppedCanvas().toDataURL();
-    cropper.getCroppedCanvas().toBlob((blob) => {
-      setBannerFile(blob);
-    })
+    cropper.getCroppedCanvas({width:1500,height:500}).toBlob((blob) => {
+      const newFile = new File([blob], bannerfile.name, { type: bannerfile.type });
+      setBannerFile(newFile);
+    },bannerfile.type )
     handleCloseBannerCroper();
   };
 
@@ -244,6 +245,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
     thumbnail: (file) => { 
       openBannerCroper();
       setBannerImageFile(file.dataURL);
+      setBannerFile(file);
     },
     removedfile:(file) => { handleCloseBannerCroper() } 
   }
@@ -263,9 +265,10 @@ const AdminPage = ({ intl, match,currentUser }) => {
     const imageElement = cropperLogoRef?.current;
     const cropper = imageElement?.cropper;
     document.getElementById('previewLogoImg').src = cropper.getCroppedCanvas().toDataURL();
-    cropper.getCroppedCanvas().toBlob((blob) => {
-      setLogoFile(blob);
-    })
+    cropper.getCroppedCanvas({width:300,height:300}).toBlob((blob) => {
+      const newFile = new File([blob], logofile.name, { type: logofile.type });
+      setLogoFile(newFile);
+    }, logofile.type)
     handleCloseLogoCroper();
   };
 
@@ -274,6 +277,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
     thumbnail: (file) => { 
       openLogoCroper();
       setLogoImageFile(file.dataURL);
+      setLogoFile(file);
     },
     removedfile:(file) => { handleCloseLogoCroper() } 
   }
@@ -293,9 +297,10 @@ const AdminPage = ({ intl, match,currentUser }) => {
     const imageElement = cropperProfileRef?.current;
     const cropper = imageElement?.cropper;
     document.getElementById('previewProfileImg').src = cropper.getCroppedCanvas().toDataURL();
-    cropper.getCroppedCanvas().toBlob((blob) => {
-      setProfileThemeFile(blob);
-    })
+    cropper.getCroppedCanvas({width:1000,height:526}).toBlob((blob) => {
+      const newFile = new File([blob], profileThemeFile.name, { type: profileThemeFile.type });
+      setProfileThemeFile(newFile);
+    }, profileThemeFile.type);
     handleCloseProfileCroper();
   };
   
@@ -304,6 +309,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
     thumbnail: (file) => { 
       openProfileCroper();
       setProfileImageFile(file.dataURL);
+      setProfileThemeFile(file);
     },
     removedfile:(file) => { handleCloseProfileCroper() } 
   }
