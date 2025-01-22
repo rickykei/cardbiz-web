@@ -343,7 +343,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
         const html5QrCode = new Html5Qrcode( "reader"); 
           html5QrCode.scanFile(file, true)
           .then(decodedText => {
-            console.log(val);
+            console.log(decodedText);
             setDText(decodedText);
             setIsQRDisabled(true);
           })
@@ -369,7 +369,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
   }, []);
 
   const initValue = () => {
-    setDText('');
+    setDText(''); 
+    state.wechat_qr_url='';
     setIsQRDisabled(false);
   };
 
@@ -2074,7 +2075,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                         placeholder={messages['forms.staff-wechat_qr_url']}
                         disabled={isQRDisabled}
                       />
-                      {isQRDisabled ? (
+                      {state.wechat_qr_url!=='' || dText!==''? (
                       <Button color="primary" className="mt-4" onClick={(e) => initValue(e)} >
                         <IntlMessages id="forms.crop.cancel" />
                       </Button>

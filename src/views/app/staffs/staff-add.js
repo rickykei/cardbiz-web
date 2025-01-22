@@ -440,6 +440,7 @@ const AddNewStaffModal = ({
 
   const initValue = () => {
     setDText('');
+    state.wechat_qr_url='';
     setIsQRDisabled(false);
   };
 
@@ -2172,7 +2173,7 @@ const AddNewStaffModal = ({
                           placeholder={messages['forms.staff-wechat_qr_url']}
                           disabled={isQRDisabled}
                         />
-                        {isQRDisabled ? (
+                         {state.wechat_qr_url!=='' || dText!==''? (
                         <Button color="primary" className="mt-4" onClick={(e) => initValue(e)} >
                           <IntlMessages id="forms.crop.cancel" />
                         </Button>
