@@ -364,6 +364,23 @@ const WalletPage = ({ intl, match,currentUser }) => {
                       />
 
                     </FormGroup>
+
+                    <FormGroup>
+                      <Label>
+                        <IntlMessages id="forms.staff-wallet_field2_title" />
+                      </Label>
+
+                      <Input
+                        type="text"
+                        value={state.wallet_field2_title || ''}
+                        onChange={(val) => setState({ ...state, wallet_field2_title: val.target.value })}
+                        placeholder={messages['forms.staff-wallet_field2_title']}
+
+                      />
+
+                    </FormGroup>
+
+
                     <FormGroup>
                       <Label>
                         <IntlMessages id="forms.staff-wallet_field2_option" />
@@ -383,6 +400,21 @@ const WalletPage = ({ intl, match,currentUser }) => {
                       />
 
                     </FormGroup>
+                    <FormGroup>
+                      <Label>
+                        <IntlMessages id="forms.staff-wallet_field3_title" />
+                      </Label>
+
+                      <Input
+                        type="text"
+                        value={state.wallet_field3_title || ''}
+                        onChange={(val) => setState({ ...state, wallet_field3_title: val.target.value })}
+                        placeholder={messages['forms.staff-wallet_field3_title']}
+
+                      />
+
+                    </FormGroup>
+
                     <FormGroup>
                       <Label>
                         <IntlMessages id="forms.staff-wallet_field3_option" />
