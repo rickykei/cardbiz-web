@@ -161,10 +161,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     twitter_url: "",
     wechat_id: "",
     wechat_qr_url:"",
-    wechatpage_url: "",
-	  
-	  tiktok_url: "",
- 
+    wechatpage_url: "", 
+	  tiktok_url: "", 
 	  line_url: "",
 	  facebook_messenger_url: "",
 	  weibo_url: "",
@@ -176,11 +174,10 @@ const EditClientModal = ({ intl, match, currentUser}) => {
 	  googlemap_url: "",
 	  snapchat_url: "",
 	  telegram_url: "",
-	  
+	  xiaohongshu_url: "",
 	  note: "",
     note_timestamp: false,
-    smartcard_uid: "",
- 
+    smartcard_uid: "", 
     bizcard_option: true,
     dig_card_in_vcf:true,
     updatedBy:  currentUser.uid,
@@ -589,26 +586,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                         </Row>
                         </CardBody>
                     </Card>
-                    <Card className="mb-4">
-                      <CardBody>
-                        <CardTitle>
-                          <IntlMessages id="form-staff-wechat-qrCode" />
-                        </CardTitle> 
-                        <Row>
-                        <Colxx xxs="12" md="2" className="mb-5">
-                          <span id="qr_str"> </span>
-                        </Colxx> 
-                        <Colxx xxs="12" md="10">  <DropzoneComponent
-                         config={dropzoneComponentConfig}
-                         djsConfig={dropzoneConfig}
-                         eventHandlers={eventHandlersQR}  
-                         multiple={false}  
-                         />
-                         <div id="reader" style={{display : 'none' }}> My reader</div>
-                        </Colxx>
-                        </Row>
-                        </CardBody>
-                    </Card>
+                   
               
                     {(currentUser.companyId === '63142fd5b54bdbb18f556016') &&
                 <FormGroup>
@@ -1732,17 +1710,17 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   <Colxx xxs="12" md="6">
                 
                   <FormGroup>
-                      <Label for="wechat_id">
-                        <IntlMessages id="forms.staff-wechat_id" />
+                      <Label for="xiaohongshu_url">
+                        <IntlMessages id="forms.staff-xiaohongshu_url" />
                       </Label>
                       <Input
                         type="text"
-                        value={state.wechat_id || ''}
-                        onChange={(val) => setState({ ...state, wechat_id: val.target.value })}
-                        placeholder={messages['forms.staff-wechat_id']}
+                        value={state.xiaohongshu_url || ''}
+                        onChange={(val) => setState({ ...state, xiaohongshu_url: val.target.value })}
+                        placeholder={messages['forms.staff-wecxiaohongshu_urlhat_id']}
                       />
                       <FormText color="muted">
-                        <IntlMessages id="forms.staff-wechat_id-muted" />
+                        <IntlMessages id="forms.staff-xiaohongshu_url-muted" />
                       </FormText>
                     </FormGroup>
                 </Colxx>
@@ -1969,9 +1947,69 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   </Colxx>
                 </Row>   
 
-              
+                <Card className="mb-4">
+                      <CardBody>
+                        <CardTitle>
+                          <IntlMessages id="form-staff-wechat-qrCode" />
+                        </CardTitle> 
+                        <Row>
+                        <Colxx xxs="12" md="2" className="mb-5">
+                          <span id="qr_str"> </span>
+                        </Colxx> 
+                        <Colxx xxs="12" md="10">  <DropzoneComponent
+                         config={dropzoneComponentConfig}
+                         djsConfig={dropzoneConfig}
+                         eventHandlers={eventHandlersQR}  
+                         multiple={false}  
+                         />
+                         <div id="reader" style={{display : 'none' }}> My reader</div>
+                        </Colxx>
+                        </Row>
+                        </CardBody>
+                    </Card>
 
-
+                    <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                  <FormGroup>
+                      <Label for="note">
+                        <IntlMessages id="forms.staff-wechat_qr_url" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={dText||state.wechat_qr_url || ''}
+                        onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
+                        placeholder={messages['forms.staff-wechat_qr_url']}
+                        disabled={isQRDisabled}
+                      />
+                      {state.wechat_qr_url!=='' || dText!==''? (
+                      <Button color="primary" className="mt-4" onClick={(e) => initValue(e)} >
+                        <IntlMessages id="forms.crop.cancel" />
+                      </Button>
+                      ) : null}
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-wechat_qr_url-muted" />
+                      </FormText>
+                      
+                    </FormGroup>
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                  
+                  <FormGroup>
+                      <Label for="wechat_id">
+                        <IntlMessages id="forms.staff-wechat_id" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.wechat_id || ''}
+                        onChange={(val) => setState({ ...state, wechat_id: val.target.value })}
+                        placeholder={messages['forms.staff-wechat_id']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-wechat_id-muted" />
+                      </FormText>
+                    </FormGroup>
+                  </Colxx>
+                </Row>   
  
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
@@ -2062,32 +2100,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   </Colxx>
                 </Row>   
 
-                <Row>
-                  <Colxx xxs="12" md="6" className="mb-5">
-                  <FormGroup>
-                      <Label for="note">
-                        <IntlMessages id="forms.staff-wechat_qr_url" />
-                      </Label>
-                      <Input
-                        type="text"
-                        value={dText||state.wechat_qr_url || ''}
-                        onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
-                        placeholder={messages['forms.staff-wechat_qr_url']}
-                        disabled={isQRDisabled}
-                      />
-                      {state.wechat_qr_url!=='' || dText!==''? (
-                      <Button color="primary" className="mt-4" onClick={(e) => initValue(e)} >
-                        <IntlMessages id="forms.crop.cancel" />
-                      </Button>
-                      ) : null}
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-wechat_qr_url-muted" />
-                      </FormText>
-                      
-                    </FormGroup>
-                  </Colxx>              
-                   
-                </Row>   
+              
 
                 <Row>
                  

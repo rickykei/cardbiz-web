@@ -135,7 +135,7 @@ const WalletPage = ({ intl, match,currentUser }) => {
     const cropper = imageElement?.cropper;
     document.getElementById('previewWalletImg').src = cropper.getCroppedCanvas().toDataURL();
     console.log(walletbannerfile);
-    cropper.getCroppedCanvas({width:300,height:80}).toBlob((blob) => {
+    cropper.getCroppedCanvas({width:1032,height:336}).toBlob((blob) => {
       const newFile = new File([blob], walletbannerfile.name, { type: walletbannerfile.type });
       setwalletBannerFile(newFile);
     },walletbannerfile.type);
@@ -297,12 +297,12 @@ const WalletPage = ({ intl, match,currentUser }) => {
                           <Cropper
                                 src={walletImageFile}
                                 style={{ height: 300, width: "100%" }}
-                                initialAspectRatio={300/80}
-                                aspectRatio={300/80} // if 正方形set 1
-                                minCropBoxHeight={80}
-                                minCropBoxWidth={300}
-                                maxCropBoxHeight={80}
-                                maxCropBoxWidth={300}
+                                initialAspectRatio={1032/336}
+                                aspectRatio={1032/336} // if 正方形set 1
+                                minCropBoxHeight={1032}
+                                minCropBoxWidth={336}
+                                maxCropBoxHeight={1032}
+                                maxCropBoxWidth={336}
                                 viewMode={1}
                                 dragMode='none'  
                                 background={0}
@@ -336,6 +336,7 @@ const WalletPage = ({ intl, match,currentUser }) => {
                         className="react-select"
                         classNamePrefix="react-select"
                         name="form-field-wallet_logo_option"
+                        defaultValue={{"label": "None", "value": 3}}
                         options={walletHeadLogoSelectData}
                         value={walletHeadLogoSelectData.find(obj => {
                           return obj.value === state.wallet_logo_option;

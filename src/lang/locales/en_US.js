@@ -692,7 +692,7 @@ module.exports = {
   'forms.admin-update-password': 'Enter New Password',
   'forms.admin-re-type-update-password': 'Re-enter New Password',
   'input-groups.admin-staff-profile': 'Admin Profile',
-  'form-company-banner': 'Company Banner (Recommended Size: 500px x 1500px. Must be horizontal and do not include space and symbol in the filename)',
+  'form-company-banner': 'Company Banner (Recommended Size: 1052px x 2000px. Must be horizontal and do not include space and symbol in the filename)',
   'form-company-logo': 'Company Logo (Recommended Size: 300px x 300px. Must be in square and do not include space and symbol in the filename)',
   'forms.company-name': 'Company Name',
   'forms.staff-company_name-muted': 'e.g. ABC Company Ltd',
@@ -903,6 +903,8 @@ module.exports = {
     'forms.staff-address2_label-muted':'Default Setting: Address',
     'forms.staff-address3_label-muted':'Default Setting: Address',
     'forms.staff-address4_label-muted':'Default Setting: Address',
+    'forms.staff-wallet_field2_title': 'Text Area 2 - Customized Title',
+  'forms.staff-wallet_field3_title': 'Text Area 3 - Customized Title',
     
   /* 07.12.Icons */
   'icons.simplelineicons': 'Simple Line Icons',

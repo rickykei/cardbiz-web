@@ -693,7 +693,7 @@ module.exports = {
   'forms.admin-update-password': '輸入新密碼',
   'forms.admin-re-type-update-password': '重新輸入新密碼',
   'input-groups.admin-staff-profile': '管理員',
-  'form-company-banner': '封面照片 (建議尺寸: 500px x 1500px. 圖像必須是横向的，文件名中不能包含空格和符號)',
+  'form-company-banner': '封面照片 (建議尺寸: 1052px x 2000px. 圖像必須是横向的，文件名中不能包含空格和符號)',
   'form-company-logo': '公司商標 (建議尺寸: 300px x 300px. 圖像必須是正方形，文件名中不能包含空格和符號)',
   'forms.company-name': '公司名稱',
   'forms.staff-company_name-muted': '例如: ABC Company Ltd',
@@ -895,6 +895,8 @@ module.exports = {
     'forms.staff-address2_label-muted':'預設: Address',
     'forms.staff-address3_label-muted':'預設: Address',
     'forms.staff-address4_label-muted':'預設: Address',
+        'forms.staff-wallet_field2_title': '文字位置2 - 自訂標題',
+  'forms.staff-wallet_field3_title': '文字位置3 - 自訂標題',
     
     
   /* 07.12.Icons */

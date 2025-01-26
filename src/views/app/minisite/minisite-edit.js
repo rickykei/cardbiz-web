@@ -394,7 +394,7 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
 
             <Row>
               
-            <Colxx xxs="12" md="6">
+            <Colxx xxs="12" md="6" className="mb-5">
               <FormGroup>
                 <Label for="textcolor">
                   <IntlMessages id="forms.minisite-left-nav-bar-color" />
@@ -482,7 +482,7 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
             </Row>
 
             <Row>
-              <Colxx xxs="12" md="6">
+              <Colxx xxs="12" md="6" className="mb-5">
                 <FormGroup>
                   <Label for="textcolor">
                     <IntlMessages id="forms.minisite-links-not-hover-color" />
@@ -549,7 +549,7 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
                 </FormGroup>
               </Colxx>
 
-              <Colxx xxs="12" md="6">
+              <Colxx xxs="12" md="6" className="mb-5">
                 <FormGroup>
                   <Label for="textcolor">
                     <IntlMessages id="forms.minisite-button-color" />
@@ -573,7 +573,7 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
             </Row>
     
             <Row>
-              <Colxx xxs="12" md="6">
+              <Colxx xxs="12" md="6" className="mb-5">
                 <FormGroup>
                   <Label for="textcolor">
                     <IntlMessages id="forms.minisite-text-color" />
@@ -594,7 +594,7 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
                 </FormGroup>
               </Colxx>
 
-              <Colxx xxs="12" md="6">
+              <Colxx xxs="12" md="6" className="mb-5">
                 <FormGroup>
                   <Label for="textcolor">
                     <IntlMessages id="forms.minisite-bio-wording-color" />

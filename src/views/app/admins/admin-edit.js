@@ -233,7 +233,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
     const imageElement = cropperBannerRef?.current;
     const cropper = imageElement?.cropper;
     document.getElementById('previewBannerImg').src = cropper.getCroppedCanvas().toDataURL();
-    cropper.getCroppedCanvas({width:1500,height:500}).toBlob((blob) => {
+    cropper.getCroppedCanvas({width:1052,height:2000}).toBlob((blob) => {
       const newFile = new File([blob], bannerfile.name, { type: bannerfile.type });
       setBannerFile(newFile);
     },bannerfile.type )
@@ -839,12 +839,12 @@ const AdminPage = ({ intl, match,currentUser }) => {
                           <Cropper
                                 src={bannerImageFile}
                                 style={{ height: 500, width: "100%" }}
-                                initialAspectRatio={1500/500}
-                                aspectRatio={1500/500} // if 正方形set 1
-                                minCropBoxHeight={500}
-                                minCropBoxWidth={1500}
-                                maxCropBoxHeight={500}
-                                maxCropBoxWidth={1500}
+                                initialAspectRatio={1052/2000}
+                                aspectRatio={1052/2000} // if 正方形set 1
+                                minCropBoxHeight={2000}
+                                minCropBoxWidth={1052}
+                                maxCropBoxHeight={2000}
+                                maxCropBoxWidth={1052}
                                 viewMode={1}
                                 dragMode='none'
                                 background={0}
