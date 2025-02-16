@@ -825,7 +825,7 @@ module.exports = {
 'forms.download_staff_log_excel': '下載',
 'forms.download_staff_profile_excel': '下載',
 'forms.download_staff_vcf_excel': '下載',
-'form-company-profile-theme': 'E-Profile背景圖 (建議尺寸: 526px x 1000px. 圖像必須是垂直的，文件名中不能包含空格和符號)',
+'form-company-profile-theme': 'E-Profile背景圖 (建議尺寸: 1052px x 2000px. 圖像必須是垂直的，文件名中不能包含空格和符號)',
    'forms.staff-note-timestamp': '備注記錄見面時間',
              'user.verify-title': '2FA認證',
         'user.tokeninput': '6位數驗證碼',

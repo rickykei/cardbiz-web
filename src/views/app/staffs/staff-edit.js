@@ -212,7 +212,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
         console.log(state);
         setState(response.data);
         console.log('state value after get staff');
-        console.log(state);
+        console.log(response.data);
        
       })
       .catch(e => {
@@ -233,9 +233,6 @@ const EditClientModal = ({ intl, match, currentUser}) => {
      console.log('add uid before update staff');
     if (state.qrcode_option===undefined)
     state.qrcode_option=1;
-
-    if (dText !==null || dText !== undefined)
-      state.wechat_qr_url=dText;
 
     for (const [key, val] of Object.entries(state)) {
      
@@ -1974,14 +1971,24 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="note">
                         <IntlMessages id="forms.staff-wechat_qr_url" />
                       </Label>
-                      <Input
+                      {isQRDisabled? (
+                        <Input
                         type="text"
                         value={dText||state.wechat_qr_url || ''}
                         onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
                         placeholder={messages['forms.staff-wechat_qr_url']}
-                        disabled={isQRDisabled}
-                      />
-                      {state.wechat_qr_url!=='' || dText!==''? (
+                        readOnly="readOnly"
+                        />
+                      ) 
+                      : 
+                      <Input
+                      type="text"
+                      value={dText||state.wechat_qr_url || ''}
+                      onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
+                      placeholder={messages['forms.staff-wechat_qr_url']}
+                    />}
+                      
+                      {isQRDisabled? (
                       <Button color="primary" className="mt-4" onClick={(e) => initValue(e)} >
                         <IntlMessages id="forms.crop.cancel" />
                       </Button>

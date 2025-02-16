@@ -168,7 +168,7 @@ const AddNewStaffModal = ({
     twitter_url: "",
     wechat_id: "",
     wechatpage_url: "",
-
+    wechat_qr_url:"",
     tiktok_url: "",
 
     line_url: "",
@@ -211,6 +211,7 @@ const AddNewStaffModal = ({
     e.preventDefault();
     setEnabled(false);
     console.log('submitted!')
+      
     const newItem = {
       company_name_chi: state.company_name_chi,
       company_name_eng: state.company_name_eng,
@@ -338,7 +339,6 @@ const AddNewStaffModal = ({
       }
     }
 
-
     addStaffItemAction(data);
     setState(initialState);
     await delay(1000);
@@ -404,8 +404,8 @@ const AddNewStaffModal = ({
 
       html5QrCode.scanFile(file, true)
         .then(decodedText => {
-          //  setState({ ...state, wechat_qr_url: decodedText })
           setDText(decodedText);
+          setState({ ...state, wechat_qr_url: decodedText })
           setIsQRDisabled(true);
           console.log(decodedText);
         })
@@ -2079,14 +2079,21 @@ const AddNewStaffModal = ({
                       <Label for="note">
                         <IntlMessages id="forms.staff-wechat_qr_url" />
                       </Label>
-                      <Input
+                      {isQRDisabled ? (<Input
+                        type="text"
+                        value={state.wechat_qr_url || ''}
+                        onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
+                        placeholder={messages['forms.staff-wechat_qr_url']}
+                        readOnly="readOnly"
+                      />):(
+                        <Input
                         type="text"
                         value={dText || state.wechat_qr_url || ''}
                         onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
                         placeholder={messages['forms.staff-wechat_qr_url']}
-                        disabled={isQRDisabled}
                       />
-                      {state.wechat_qr_url !== '' || dText !== '' ? (
+                      )}                  
+                      {isQRDisabled ? (
                         <Button color="primary" className="mt-4" onClick={(e) => initValue(e)} >
                           <IntlMessages id="forms.crop.cancel" />
                         </Button>

@@ -837,7 +837,7 @@ module.exports = {
 'forms.download_staff_log_excel': 'Download',
 'forms.download_staff_profile_excel': 'Download',
 'forms.download_staff_vcf_excel': 'Download',
-'form-company-profile-theme': 'Background on E-Profile (Recommended Size: 526px x 1000px. Must be vertical and do not include space and symbol in the filename)',
+'form-company-profile-theme': 'Background on E-Profile (Recommended Size: 1052px x 2000px. Must be vertical and do not include space and symbol in the filename)',
 'pages.staff_no': 'Staff no.',
     'menu.': 'Setting',
         'user.verify-title': '2FA Authentication',

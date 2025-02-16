@@ -931,13 +931,13 @@ const AdminPage = ({ intl, match,currentUser }) => {
                         {displayProfileCroper ? (
                           <Cropper
                                 src={profileImageFile}
-                                style={{ height: 526, width: "100%" }}
-                                initialAspectRatio={1000/526}
-                                aspectRatio={1000/526} // if 正方形set 1
-                                minCropBoxHeight={526}
-                                minCropBoxWidth={1000}
-                                maxCropBoxHeight={526}
-                                maxCropBoxWidth={1000}
+                                style={{ height: 500, width: "100%" }}
+                                initialAspectRatio={1052/2000}
+                                aspectRatio={1052/2000} // if 正方形set 1
+                                minCropBoxHeight={2000}
+                                minCropBoxWidth={1052}
+                                maxCropBoxHeight={2000}
+                                maxCropBoxWidth={1052}
                                 viewMode={1}
                                 dragMode='none'
                                 background={0}
