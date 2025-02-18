@@ -31,7 +31,7 @@ export const minisiteSelectData = [{"label": "Digital Business Card - Original",
   {"label": "Digital Business Card - Compact (CHI -  Traditional)", "value": 4},
   {"label": "Digital Business Card - Compact (CHI -  Simplified)", "value": 5},
   {"label": "E-Invitation", "value": 2}];
-export const walletHeadLogoSelectData = [{"label": "Company Logo", "value": 1},{"label": "HeadShot", "value": 2},{"label": "None", "value": 3}];
+export const walletHeadLogoSelectData = [{"label": "None", "value": 1},{"label": "HeadShot", "value": 2},{"label": "Company Logo", "value": 3}];
 export const walletField1SelectData = [
   {"label": "First Name only", "value": 1},
   {"label": "First Name and Last Name", "value": 2},

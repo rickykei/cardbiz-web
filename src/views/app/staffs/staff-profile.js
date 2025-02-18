@@ -18,7 +18,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import ActionLogDataService from 'services/ActionLogDataService';
 import * as CryptoJS from 'crypto-js';
 import classnames from 'classnames';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 function AES_ENCRYPT(text, secretKey) {
   const encrypted = CryptoJS.AES.encrypt(text,secretKey ,{

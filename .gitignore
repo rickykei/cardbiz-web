@@ -67,3 +67,6 @@ build/
 .DS_Store
 
 .idea
+.vscode/settings.json
+yarn.lock
+*.lock
