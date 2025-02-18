@@ -405,7 +405,7 @@ const AddNewStaffModal = ({
       html5QrCode.scanFile(file, true)
         .then(decodedText => {
           setDText(decodedText);
-          setState({ ...state, wechat_qr_url: decodedText })
+          state.wechat_qr_url = decodedText;
           setIsQRDisabled(true);
           console.log(decodedText);
         })
@@ -2081,7 +2081,7 @@ const AddNewStaffModal = ({
                       </Label>
                       {isQRDisabled ? (<Input
                         type="text"
-                        value={state.wechat_qr_url || ''}
+                        value={dText || state.wechat_qr_url || ''}
                         onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
                         placeholder={messages['forms.staff-wechat_qr_url']}
                         readOnly="readOnly"
