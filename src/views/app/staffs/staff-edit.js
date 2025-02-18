@@ -234,6 +234,9 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     if (state.qrcode_option===undefined)
     state.qrcode_option=1;
 
+    if (dText!==false && dText!==undefined && dText!=='')
+    state.wechat_qr_url=dText;
+
     for (const [key, val] of Object.entries(state)) {
      
       if (val!==null&& val!==undefined ){
@@ -1974,7 +1977,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       {isQRDisabled? (
                         <Input
                         type="text"
-                        value={dText||state.wechat_qr_url || ''}
+                        value={dText || state.wechat_qr_url || ''}
                         onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
                         placeholder={messages['forms.staff-wechat_qr_url']}
                         readOnly="readOnly"
@@ -1983,7 +1986,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       : 
                       <Input
                       type="text"
-                      value={dText||state.wechat_qr_url || ''}
+                      value={dText || state.wechat_qr_url || ''}
                       onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
                       placeholder={messages['forms.staff-wechat_qr_url']}
                     />}
