@@ -63,6 +63,7 @@ const StaffProfileModal = ({ intl, match,currentUser}) => {
   const qrcodeURL5 = `${servicePath4}/?key=${encryptText}&qrtype=5`;
   const qrcodeURL6 = `${servicePath4}/?key=${encryptText}&qrtype=6`;
   const qrcodeURL7 = `${servicePath4}/?key=${encryptText}&qrtype=7`;
+  const qrcodeURL8 = `${servicePath4}/?key=${encryptText}&qrtype=9`;
  
   const qrcodeURLactual = `${servicePath4}/?key=${encryptText}&qrtype=1`;
   const qrcodeURLactual2 = `${servicePath4}/?key=${encryptText}`;
@@ -71,6 +72,7 @@ const StaffProfileModal = ({ intl, match,currentUser}) => {
   const qrcodeURLactual5 = `${servicePath4}/?key=${encryptText}&gengw=1`;
   const qrcodeURLactual6 = `${servicePath4}/?key=${encryptText}&genaw=1`;
   const qrcodeURLactual7 = `${servicePath4}/?key=${encryptText}&mobilesite=1`;
+  const qrcodeURLactual8 = `${servicePath4}/?key=${encryptText}&geniosaos=1`;
  
   const [copyQrcodeurl1Success, setcopyQrcodeurl1Success] = useState('');
   const [copyQrcodeurl2Success, setcopyQrcodeurl2Success] = useState('');
@@ -79,6 +81,7 @@ const StaffProfileModal = ({ intl, match,currentUser}) => {
   const [copyQrcodeurl5Success, setcopyQrcodeurl5Success] = useState('');
   const [copyQrcodeurl6Success, setcopyQrcodeurl6Success] = useState('');
   const [copyQrcodeurl7Success, setcopyQrcodeurl7Success] = useState('');
+  const [copyQrcodeurl8Success, setcopyQrcodeurl8Success] = useState('');
 
 
   const getStaffLog = (aa) => {
@@ -330,7 +333,7 @@ const StaffProfileModal = ({ intl, match,currentUser}) => {
                         setActiveFirstTab('5');
                       }}
                     >
-                       <IntlMessages id="cards.tab-admin-qr5" />
+                       <IntlMessages id="cards.tab-admin-qr8" />
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -345,24 +348,10 @@ const StaffProfileModal = ({ intl, match,currentUser}) => {
                         setActiveFirstTab('6');
                       }}
                     >
-                       <IntlMessages id="cards.tab-admin-qr6" />
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      to="#"
-                      location={{}}
-                      className={classnames({
-                        active: activeFirstTab === '7',
-                        'nav-link': true,
-                      })}
-                      onClick={() => {
-                        setActiveFirstTab('7');
-                      }}
-                    >
                        <IntlMessages id="cards.tab-admin-qr7" />
                     </NavLink>
                   </NavItem>
+                 
                 </Nav>
               </CardHeader>
 
@@ -434,34 +423,19 @@ const StaffProfileModal = ({ intl, match,currentUser}) => {
                     <Colxx sm="12">
                       <CardBody>
                       
-                      <img alt="qrcode" src={qrcodeURL5}  width="250" />
-                      <CopyToClipboard text={qrcodeURLactual5} onCopy={() =>setcopyQrcodeurl5Success(true)}>
+                      <img alt="qrcode" src={qrcodeURL8}  width="250" />
+                      <CopyToClipboard text={qrcodeURLactual8} onCopy={() =>setcopyQrcodeurl8Success(true)}>
                         <Button> <i className="iconsminds-file-copy" /></Button>
                       </CopyToClipboard>  
-                      {copyQrcodeurl5Success ? <span style={{color: 'red'}}>Copied.</span> : null}
+                      {copyQrcodeurl8Success ? <span style={{color: 'red'}}>Copied.</span> : null}
 
                       </CardBody>
                     </Colxx>
                   </Row>
                 </TabPane>
+               
 
                 <TabPane tabId="6">
-                  <Row>
-                    <Colxx sm="12">
-                      <CardBody>
-                      
-                      <img alt="qrcode" src={qrcodeURL6}  width="250" />
-                      <CopyToClipboard text={qrcodeURLactual6} onCopy={() =>setcopyQrcodeurl6Success(true)}>
-                        <Button> <i className="iconsminds-file-copy" /></Button>
-                      </CopyToClipboard>  
-                      {copyQrcodeurl6Success ? <span style={{color: 'red'}}>Copied.</span> : null}
-
-                      </CardBody>
-                    </Colxx>
-                  </Row>
-                </TabPane>
-
-                <TabPane tabId="7">
                   <Row>
                     <Colxx sm="12">
                       <CardBody>

@@ -84,7 +84,7 @@ const dropzoneConfigLogo = {
 const dropzoneConfigBanner = {
   autoProcessQueue: false,
   thumbnailHeight: 160,
-  maxFilesize: 1,
+  maxFilesize: 5,
   maxFiles: 1,
   acceptedFiles: ".jpeg,.jpg,.png,.gif",
   uploadMultiple: false,
@@ -135,7 +135,7 @@ const dropzoneConfigBanner = {
 const dropzoneConfigProfileTheme = {
   autoProcessQueue: false,
   thumbnailHeight: 160,
-  maxFilesize: 1,
+  maxFilesize: 5,
   maxFiles: 1,
   acceptedFiles: ".jpeg,.jpg,.png,.gif",
   uploadMultiple: false,
@@ -839,8 +839,8 @@ const AdminPage = ({ intl, match,currentUser }) => {
                           <Cropper
                                 src={bannerImageFile}
                                 style={{ height: 500, width: "100%" }}
-                                initialAspectRatio={1052/2000}
-                                aspectRatio={1052/2000} // if 正方形set 1
+                                initialAspectRatio={2000/1052}
+                                aspectRatio={2000/1052} // if 正方形set 1
                                 minCropBoxHeight={2000}
                                 minCropBoxWidth={1052}
                                 maxCropBoxHeight={2000}
