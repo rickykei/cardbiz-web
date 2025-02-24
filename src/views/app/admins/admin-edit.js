@@ -297,7 +297,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
     const imageElement = cropperProfileRef?.current;
     const cropper = imageElement?.cropper;
     document.getElementById('previewProfileImg').src = cropper.getCroppedCanvas().toDataURL();
-    cropper.getCroppedCanvas({width:1000,height:526}).toBlob((blob) => {
+    cropper.getCroppedCanvas({width:1052,height:2000}).toBlob((blob) => {
       const newFile = new File([blob], profileThemeFile.name, { type: profileThemeFile.type });
       setProfileThemeFile(newFile);
     }, profileThemeFile.type);
