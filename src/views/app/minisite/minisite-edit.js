@@ -529,28 +529,7 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
          
             <Row>
               <Colxx xxs="12" md="6" className="mb-5">
-                <FormGroup>
-                  <Label for="titletextcolor">
-                    <IntlMessages id="forms.minisite-social-icon-bg-color" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.social_icon_bg_color || ''}
-                    onChange={(val) => setState({ ...state, social_icon_bg_color: val.target.value })}
-                    placeholder={messages['forms.minisite-social-icon-bg-color']}
-                    onClick={openSocialBgColorBorad}
-                  />
-                  {displaySocialBgColorPicker ? (
-                   <PhotoshopPicker  color={mySocialBgcolor} onAccept={handleSocialBgColorClose} onCancel={handleSocialBgColorClose} onChangeComplete={handleSocialBgColorChange} />
-                   ) : null}
-                  <FormText color="muted">
-                    <IntlMessages id="forms.minisite-fontcolor-muted" />
-                  </FormText>
-                </FormGroup>
-              </Colxx>
-
-              <Colxx xxs="12" md="6" className="mb-5">
-                <FormGroup>
+              <FormGroup>
                   <Label for="textcolor">
                     <IntlMessages id="forms.minisite-button-color" />
                   </Label>
@@ -569,12 +548,9 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
                   </FormText>
                 </FormGroup>
               </Colxx>
-             
-            </Row>
-    
-            <Row>
+
               <Colxx xxs="12" md="6" className="mb-5">
-                <FormGroup>
+              <FormGroup>
                   <Label for="textcolor">
                     <IntlMessages id="forms.minisite-text-color" />
                   </Label>
@@ -593,9 +569,12 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
                   </FormText>
                 </FormGroup>
               </Colxx>
-
+             
+            </Row>
+    
+            <Row>
               <Colxx xxs="12" md="6" className="mb-5">
-                <FormGroup>
+              <FormGroup>
                   <Label for="textcolor">
                     <IntlMessages id="forms.minisite-bio-wording-color" />
                   </Label>
@@ -613,7 +592,8 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
                 </FormGroup>
-                </Colxx>
+              </Colxx>
+ 
             </Row>
                
             <Button color="primary" className="mt-4" onClick={(e) => updateCompany(e)} disabled={isDisabled}>
