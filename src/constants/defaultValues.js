@@ -28,8 +28,6 @@ export const fontfamilySelectData = [{"label": "Didot", "value": "Didot"},{"labe
 ];
 export const minisiteSelectData = [{"label": "Digital Business Card - Original", "value": 1},
   {"label": "Digital Business Card - Compact (EN)", "value": 3},
-  {"label": "Digital Business Card - Compact (CHI -  Traditional)", "value": 4},
-  {"label": "Digital Business Card - Compact (CHI -  Simplified)", "value": 5},
   {"label": "E-Invitation", "value": 2}];
 export const walletHeadLogoSelectData = [{"label": "None", "value": 1},{"label": "HeadShot", "value": 2},{"label": "Company Logo", "value": 3}];
 export const walletField1SelectData = [
