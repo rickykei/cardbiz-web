@@ -202,7 +202,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
   const [smartIdSelectData,setSmartIdSelectData] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isQRDisabled, setIsQRDisabled] = useState(false);
-  const [dText, setDText] = useState(false);
+  const [dText, setDText] = useState('');
   
 
   const getStaff = (aa) => {
