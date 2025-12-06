@@ -12,7 +12,7 @@ export const defaultMenuType = 'menu-default';
 export const subHiddenBreakpoint = 1440;
 export const menuHiddenBreakpoint = 768;
 export const defaultLocale = 'en';
-export const localeOptions = [  { id: 'en', name: 'English', direction: 'ltr' },  { id: 'zh', name: '中文', direction: 'ltr' }  ,];
+export const localeOptions = [  { id: 'en', name: 'English', direction: 'ltr' },  { id: 'zh', name: '中文', direction: 'ltr' } ];
 export const qrcodeSelectData = [{"label": "Vcard", "value": 1},{"label": "Align with Smart Card", "value": 2},{"label": "E-profile", "value": 3},{"label": "Vcf", "value": 4}];
 export const companyNameSelectData=[
 {"label":"The Bank of East Asia, Limited, 東亞銀行有限公司","logo_img_url":"/comp_log/0.png","value":0},
@@ -21,7 +21,9 @@ export const companyNameSelectData=[
 {"label":"East Asia Property Agency Company Limited, 東亞物業代理有限公司","logo_img_url":"/comp_log/3.png","value":3},
 {"label":"East Asia Facility Management Limited, 東亞設施管理有限公司","logo_img_url":"/comp_log/4.png","value":4},
 {"label":"East Asia Securities Company Limited, 東亞證券有限公司","logo_img_url":"/comp_log/5.png","value":5},
-{"label":"BEA Insurance Agency Limited, 東亞保險代理有限公司","logo_img_url":"/comp_log/6.png","value":6}];
+{"label":"BEA Insurance Agency Limited, 東亞保險代理有限公司","logo_img_url":"/comp_log/6.png","value":6},
+{"label":"BEA Global Services Centre (Guangdong) Co., Ltd, 東亞環球商業服務中心","logo_img_url":"/comp_log/7.png","value":7}];
+
 export const firebaseConfig = {
   apiKey: 'AIzaSyBBksq-Asxq2M4Ot-75X19IyrEYJqNBPcg',
   authDomain: 'gogo-react-login.firebaseapp.com',
@@ -46,9 +48,13 @@ export const adminRoot = '/app';
 export const buyUrl = ' ';
 export const searchPath = `${adminRoot}/pages/miscellaneous/search`;
 
-export const servicePath3 = 'https://ebcard.hkbea.digital';
+// export const servicePath3 = 'https://ebcard.hkbea.digital';
+
+// export const servicePath4 = 'https://ebcard.hkbea.digital';
+
+export const servicePath3 = 'https://bea.e-profile.digital';
 export const servicePath2 = `${servicePath3}/api`;
-export const servicePath4 = 'https://ebcard.hkbea.digital';
+export const servicePath4 = 'https://bea.e-profile.digital';
 
 export const servicePath = 'https://api.coloredstrategies.com';
 export const themeColorStorageKey = '__theme_selected_color';
