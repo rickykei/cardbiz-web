@@ -17,7 +17,10 @@ export const localeOptions = [
   { id: 'zh', name: '中文', direction: 'ltr' } 
  ,
 ];
-export const qrcodeSelectData = [{"label": "Vcard", "value": 1},{"label": "Align with Smart Card", "value": 2},{"label": "E-profile", "value": 3},{"label": "Vcf", "value": 4}];
+
+export const bizcardOptionSelectData = [{"label": "VCF", "value": 0},{"label": "E-profile", "value": 1},{"label": "Website", "value": 2}];  
+
+export const qrcodeSelectData = [{"label": "Vcard", "value": 1},{"label": "Align with Smart Card", "value": 2},{"label": "E-profile", "value": 3},{"label": "Vcf", "value": 4},{"label": "None", "value": 5}];
   
 export const fontfamilySelectData = [{"label": "Didot", "value": "Didot"},{"label": "Baskerville", "value": "Baskerville"},{"label": "Garamond", "value": "Garamond"},{"label": "Times New Roman", "value": "Times New Roman"},
   {"label": "New York", "value": "New York"},{"label": "Georgia", "value": "Georgia"},{"label": "Helvetica", "value": "Helvetica"},{"label": "Futura", "value": "Futura"},{"label": "Avenir", "value": "Avenir"},
@@ -26,9 +29,13 @@ export const fontfamilySelectData = [{"label": "Didot", "value": "Didot"},{"labe
   {"label": "Monaco", "value": "Monaco"},{"label": "Bradley Hand", "value": "Bradley Hand"},{"label": "Brush Script MT", "value": "Brush Script MT"},{"label": "Luminari", "value": "Luminari"},
   {"label": "Comic Sans MS", "value": "Comic Sans MS"},{"label": "Lato", "value": "Lato"},{"label": "Lora", "value": "Lora"}
 ];
-export const minisiteSelectData = [{"label": "Digital Business Card - Original", "value": 1},
-  {"label": "Digital Business Card - Compact (EN)", "value": 3},
-  {"label": "E-Invitation", "value": 2}];
+export const minisiteSelectData = [
+    {"label": "Professional", "value": 1},
+  {"label": "Minimalist", "value": 2},
+  {"label": "Elegant", "value": 3},
+  {"label": "Smart", "value": 4},
+  {"label": "Sleek", "value": 5}  
+];
 export const walletHeadLogoSelectData = [{"label": "None", "value": 1},{"label": "HeadShot", "value": 2},{"label": "Company Logo", "value": 3}];
 export const walletField1SelectData = [
   {"label": "First Name only", "value": 1},
@@ -41,7 +48,8 @@ export const walletField1SelectData = [
   {"label": "Department", "value": 8},
   {"label": "Country", "value": 9},
   {"label": "Title - position", "value": 10},
-  {"label": "None", "value": 11},
+  {"label": "Title - position (Other Lang)", "value": 11},
+  {"label": "None", "value": 12},
 ];
 export const walletField1SelectDataWithoutNone = [
   {"label": "First Name only", "value": 1},
@@ -54,6 +62,7 @@ export const walletField1SelectDataWithoutNone = [
   {"label": "Department", "value": 8},
   {"label": "Country", "value": 9},
   {"label": "Title - position", "value": 10},
+  {"label": "Title - position (Other Lang)", "value": 11},
   
 ];
 export const walletField1SelectDataLabel = ["Name","Name","Name","Name","Company","Company","Division","Department","Country","Position"," "];

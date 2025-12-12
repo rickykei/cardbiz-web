@@ -98,7 +98,7 @@ const StaffProfileModal = ({ intl, match,currentUser}) => {
 
 
   const getStaff = (aa) => {
-    StaffDataService.findByUserProfile(aa)
+    StaffDataService.findByUserProfile(aa,currentUser.companyId)
       .then(response => { 
        setState(response.data); 
        setEncryptText(encodeURIComponent(AES_ENCRYPT(response.data.id,"12345678123456781234567812345678")));

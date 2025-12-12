@@ -16,7 +16,7 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 import StaffDataService from 'services/StaffsService';
 import { connect } from 'react-redux';
 import { useParams,useHistory } from "react-router-dom";
-import { servicePath2 ,qrcodeSelectData,minisiteSelectData} from 'constants/defaultValues';
+import { servicePath2 ,qrcodeSelectData,minisiteSelectData,bizcardOptionSelectData} from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
 import 'dropzone/dist/min/dropzone.min.css';
 import {Html5Qrcode} from 'html5-qrcode';
@@ -107,6 +107,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     home_email_label: "",
     other_email_label: "",
     position: "",
+    position_other_lang: "",
     work_tel_label: "",
     work_tel2_label: "",
     work_tel3_label: "",
@@ -151,6 +152,10 @@ const EditClientModal = ({ intl, match, currentUser}) => {
     department: "",
     country: "",
     bio: "",
+         awards: "",
+	  qualifications: "",
+	  additional_address: "",
+	  achievements: "",
     company_website_url: "",
     more_info_tab_url: "",
     facebook_url: "",
@@ -178,7 +183,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
 	  note: "",
     note_timestamp: false,
     smartcard_uid: "", 
-    bizcard_option: true,
+    bizcard_option: 1,
     dig_card_in_vcf:true,
     updatedBy:  currentUser.uid,
     createdBy:  currentUser.uid,
@@ -206,7 +211,7 @@ const EditClientModal = ({ intl, match, currentUser}) => {
   
 
   const getStaff = (aa) => {
-    StaffDataService.get(aa)
+    StaffDataService.findByStaffDocID(aa,currentUser.companyId)
       .then(response => {
         console.log('state value before get staff');
         console.log(state);
@@ -785,6 +790,8 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <Label for="position">
                         <IntlMessages id="forms.staff-position" />
                       </Label>
+                      <Row>
+                       <Colxx xxs="6" md="6" className="mb-5">
                       <Input
                         type="text"
                         value={state.position || ''}
@@ -794,6 +801,20 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                       <FormText color="muted">
                         <IntlMessages id="forms.staff-position-muted" />
                       </FormText>
+                      </Colxx>
+
+                       <Colxx xxs="6" md="6" className="mb-5">
+                      <Input
+                        type="text"
+                        value={state.position_other_lang || ''}
+                        onChange={(val) => setState({ ...state, position_other_lang: val.target.value })}
+                        placeholder={messages['forms.staff-position_other_lang']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-position_other_lang-muted" />
+                      </FormText>
+                      </Colxx>
+                      </Row>
                     </FormGroup>
                     
                   </Colxx>
@@ -1581,7 +1602,78 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                 </FormGroup>
                 </Colxx>
                 </Row>
+           <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="awards">
+                        <IntlMessages id="forms.staff-awards" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.awards || ''}
+                        onChange={(val) => setState({ ...state, awards: val.target.value })}
+                        placeholder={messages['forms.staff-awards']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-awards-muted" />
+                      </FormText>
+                    </FormGroup>
 
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="qualifications">
+                        <IntlMessages id="forms.staff-qualifications" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.qualifications || ''}
+                        onChange={(val) => setState({ ...state, qualifications: val.target.value })}
+                        placeholder={messages['forms.staff-qualifications']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-qualifications-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                </Row>
+                    <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="additional_address">
+                        <IntlMessages id="forms.staff-additional_address" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.additional_address || ''}
+                        onChange={(val) => setState({ ...state, additional_address: val.target.value })}
+                        placeholder={messages['forms.staff-additional_address']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-additional_address-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="achievements">
+                        <IntlMessages id="forms.staff-achievements" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.achievements || ''}
+                        onChange={(val) => setState({ ...state, achievements: val.target.value })}
+                        placeholder={messages['forms.staff-achievements']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-achievements-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                </Row>
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5"> 
                   <FormGroup>
@@ -2119,35 +2211,21 @@ const EditClientModal = ({ intl, match, currentUser}) => {
                   <Label>
                     <IntlMessages id="forms.staff-bizcard_option" />
                   </Label>
-                  <CustomInput
-                    type="radio"
-                    id="exCustomRadio2"
-                    name="customRadio2"
-                    label={messages['forms.label.eprofile']}
-                    checked={state.bizcard_option === true}
-                    onChange={(event) =>
-                      setState({
-                        ...state,
-                        bizcard_option: event.target.value === 'on',
-                      })
-                    }
+                      
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    name="forms.label.eprofile" 
+                    options={bizcardOptionSelectData} 
+                    defaultValue={{"label": "VCF", "value": 0}}
+                     value={bizcardOptionSelectData.find(obj => {
+                      return obj.value === state.bizcard_option;
+                    })}
+                    onChange={(val) => setState({ ...state, bizcard_option: val.value })}
+                   
                   />
-
-
-                  <CustomInput
-                    type="radio"
-                    id="exCustomRadio"
-                    name="customRadio"
-                    label={messages['forms.label.vcf']}
-                    checked={state.bizcard_option === false}
-                    onChange={(event) =>
-                      setState({
-                        ...state,
-                        bizcard_option: event.target.value !== 'on',
-                      })
-                    }
-                  />
-
+                   
 
                 </FormGroup>
                   </Colxx>

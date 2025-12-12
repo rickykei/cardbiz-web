@@ -25,6 +25,7 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
     name: "",
     font_color: "",
     font_size: "",
+    title_font_size: "15",
     font_family:"",
     bg_color: "",
     text_color:"",
@@ -35,7 +36,7 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
     links_not_hover_color:"",
     links_selected_color:"",
     left_nav_bar_color:"",
-    bio_wording_color:"",
+    bio_wording_color:"#8c8c8c",
     key_wording_color:"",
     site_bg_color:"", 
   };
@@ -64,22 +65,29 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
   const bgImgUrl = `${servicePath2}/files/${state.bg_image}`;
 
   const updateCompany = () => {
-    
+     console.log('updateCompany');
     const data = new FormData(); 
 
     /* eslint-disable no-restricted-syntax */
 
 
     for (const [key, val] of Object.entries(state)) {
+      
+      if  (key==='title_font_size' && val===''){
+          data.append(key, '18');
+      }else if (key==='bio_wording_color' && val===''){
+          data.append(key,'#8c8c8c');
+      }else{
           data.append(key, val);
+      }
     }
 
-    console.log(data.get('smartcard_uid'));
+   
 
     CompanyService.updateMinisite(state.id, data)
       .then(response => {
         console.log(response.data);
-        setMessage("The minisite was updated successfully!");
+        setMessage("The minisite was updated successfully!!");
       })
       .catch(f => {
         console.log(f);
@@ -593,7 +601,22 @@ const EditMinisteModal = ({ intl, match,currentUser }) => {
                   </FormText>
                 </FormGroup>
               </Colxx>
- 
+            <Colxx xxs="12" md="6" className="mb-5">
+              <FormGroup>
+                  <Label for="title-font-size">
+                    <IntlMessages id="forms.title-font-size" /> 
+                  </Label>
+                  <Input
+                    type="text"
+                    value={state.title_font_size || ''}
+                    onChange={(val) => setState({ ...state, title_font_size: val.target.value })}
+                    placeholder={messages['forms.title-font-size']}
+                  /> 
+                  <FormText color="muted">
+                    <IntlMessages id="forms.title-font-size-muted" />
+                  </FormText>
+                </FormGroup>
+              </Colxx>
             </Row>
                
             <Button color="primary" className="mt-4" onClick={(e) => updateCompany(e)} disabled={isDisabled}>

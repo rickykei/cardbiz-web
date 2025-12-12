@@ -1,4 +1,3 @@
-
 import http from "http-common";
 
 const getAll = () => {
@@ -7,6 +6,10 @@ const getAll = () => {
 
 const get = id => {
   return http.get(`/staffs/${id}`);
+};
+
+const findByStaffDocID = (id,companyid) =>{
+  return http.get(`/staffs/findByStaffDocID?id=${id}&companyId=${companyid}`);
 };
 
 const findByUserProfile = id => {
@@ -37,6 +40,7 @@ const findByName = name => {
 const StaffsService = {
   getAll,
   get,
+  findByStaffDocID,
   create,
   update,
   remove,

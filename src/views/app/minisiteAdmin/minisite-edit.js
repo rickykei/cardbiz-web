@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
- 
+import { connect } from 'react-redux';
 import Breadcrumb from 'containers/navs/Breadcrumb';
 import { injectIntl } from 'react-intl';
 import { Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle } from 'reactstrap';
@@ -17,7 +17,7 @@ import { PhotoshopPicker } from 'react-color';
 
 const ReactDOMServer = require('react-dom/server');
 
-const EditClientModal = ({ intl, match, }) => {
+const EditMinisteModal = ({ intl, match,currentUser }) => {
 
   const { id } = useParams();
   const initialState = {
@@ -25,6 +25,7 @@ const EditClientModal = ({ intl, match, }) => {
     name: "",
     font_color: "",
     font_size: "",
+    title_font_size: "18",
     font_family:"",
     bg_color: "",
     text_color:"",
@@ -35,7 +36,7 @@ const EditClientModal = ({ intl, match, }) => {
     links_not_hover_color:"",
     links_selected_color:"",
     left_nav_bar_color:"",
-    bio_wording_color:"",
+    bio_wording_color:"#8c8c8c",
     key_wording_color:"",
     site_bg_color:"", 
   };
@@ -45,7 +46,7 @@ const EditClientModal = ({ intl, match, }) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const getCompany= (aa) => {
-    CompanyService.get(aa)
+    CompanyService.get(aa!==undefined?aa:currentUser.companyId)
       .then(response => {
         setState(response.data);
         console.log(response.data);
@@ -57,6 +58,7 @@ const EditClientModal = ({ intl, match, }) => {
   
   useEffect(() => {
     if (id)
+      console.log(id);
       getCompany(id);
   }, [id]);
 
@@ -70,7 +72,13 @@ const EditClientModal = ({ intl, match, }) => {
 
 
     for (const [key, val] of Object.entries(state)) {
+         if  (key==='title_font_size' && val===''){
+          data.append(key, '18');
+      }else if (key==='bio_wording_color' && val===''){
+          data.append(key,'#8c8c8c');
+      }else{
           data.append(key, val);
+      }
     }
 
     console.log(data.get('smartcard_uid'));
@@ -78,9 +86,7 @@ const EditClientModal = ({ intl, match, }) => {
     CompanyService.updateMinisite(state.id, data)
       .then(response => {
         console.log(response.data);
-        setMessage("The client was updated successfully!");
-        setIsDisabled(false); // <--- here
-        history.push("/app/minisiteAdmin/minisite-list");
+        setMessage("The minisite was updated successfully!");
       })
       .catch(f => {
         console.log(f);
@@ -331,7 +337,7 @@ const EditClientModal = ({ intl, match, }) => {
               </Colxx>
 
               <Colxx xxs="12" md="6">
-                <FormGroup>
+                  <FormGroup>
                   <Label for="titleTextColor">
                     <IntlMessages id="forms.minisite-title-text-color" />
                   </Label>
@@ -349,7 +355,7 @@ const EditClientModal = ({ intl, match, }) => {
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
                 </FormGroup>
-              </Colxx>
+                </Colxx>            
             </Row>
 
             <Row>
@@ -395,25 +401,25 @@ const EditClientModal = ({ intl, match, }) => {
 
             <Row>
               
-            <Colxx xxs="12" md="6">
-                <FormGroup>
+            <Colxx xxs="12" md="6" className="mb-5">
+              <FormGroup>
                 <Label for="textcolor">
                   <IntlMessages id="forms.minisite-left-nav-bar-color" />
-                  </Label>
-                  <Input
-                    type="text"
+                </Label>
+                <Input
+                  type="text"
                   value={state.left_nav_bar_color || ''}
                   onChange={(val) => setState({ ...state, left_nav_bar_color: val.target.value })}
                   placeholder={messages['forms.minisite-left-nav-bar-color']}
                   onClick={openLeftNavBarColorBorad}
-                  />
+                />
                 {displayLeftNavBarColorPicker ? (
                 <PhotoshopPicker  color={myLeftNavBarcolor} onAccept={handleLeftNavBarColorClose} onCancel={handleLeftNavBarColorClose} onChangeComplete={handleLeftNavBarColorChange} />
-                   ) : null}
-                  <FormText color="muted">
-                    <IntlMessages id="forms.minisite-fontcolor-muted" />
-                  </FormText>
-                </FormGroup>
+                ) : null}
+                <FormText color="muted">
+                  <IntlMessages id="forms.minisite-fontcolor-muted" />
+                </FormText>
+              </FormGroup>
               </Colxx>
 
               <Colxx xxs="12" md="6">
@@ -430,7 +436,7 @@ const EditClientModal = ({ intl, match, }) => {
                   />
                   {displaySiteBgColorPicker ? (
                   <PhotoshopPicker  color={mySiteBgcolor} onAccept={handleSiteBgColorClose} onCancel={handleSiteBgColorClose} onChangeComplete={handleSiteBgColorChange} />
-                   ) : null}
+                  ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
                   </FormText>
@@ -453,7 +459,7 @@ const EditClientModal = ({ intl, match, }) => {
                 />
                 {displayBgColorPicker ? (
                 <PhotoshopPicker  color={myBgcolor} onAccept={handleBgColorClose} onCancel={handleBgColorClose} onChangeComplete={handleBgColorChange} />
-                   ) : null}
+                ) : null}
                 <FormText color="muted">
                   <IntlMessages id="forms.minisite-fontcolor-muted" />
                 </FormText>
@@ -483,7 +489,7 @@ const EditClientModal = ({ intl, match, }) => {
             </Row>
 
             <Row>
-              <Colxx xxs="12" md="6">
+              <Colxx xxs="12" md="6" className="mb-5">
                 <FormGroup>
                   <Label for="textcolor">
                     <IntlMessages id="forms.minisite-links-not-hover-color" />
@@ -530,28 +536,7 @@ const EditClientModal = ({ intl, match, }) => {
          
             <Row>
               <Colxx xxs="12" md="6" className="mb-5">
-                <FormGroup>
-                  <Label for="titletextcolor">
-                    <IntlMessages id="forms.minisite-social-icon-bg-color" />
-                  </Label>
-                  <Input
-                    type="text"
-                    value={state.social_icon_bg_color || ''}
-                    onChange={(val) => setState({ ...state, social_icon_bg_color: val.target.value })}
-                    placeholder={messages['forms.minisite-social-icon-bg-color']}
-                    onClick={openSocialBgColorBorad}
-                  />
-                  {displaySocialBgColorPicker ? (
-                   <PhotoshopPicker  color={mySocialBgcolor} onAccept={handleSocialBgColorClose} onCancel={handleSocialBgColorClose} onChangeComplete={handleSocialBgColorChange} />
-                   ) : null}
-                  <FormText color="muted">
-                    <IntlMessages id="forms.minisite-fontcolor-muted" />
-                  </FormText>
-                </FormGroup>
-              </Colxx>
-
-              <Colxx xxs="12" md="6">
-                <FormGroup>
+              <FormGroup>
                   <Label for="textcolor">
                     <IntlMessages id="forms.minisite-button-color" />
                   </Label>
@@ -570,12 +555,9 @@ const EditClientModal = ({ intl, match, }) => {
                   </FormText>
                 </FormGroup>
               </Colxx>
-             
-            </Row>
 
-            <Row>
-              <Colxx xxs="12" md="6">
-                <FormGroup>
+              <Colxx xxs="12" md="6" className="mb-5">
+              <FormGroup>
                   <Label for="textcolor">
                     <IntlMessages id="forms.minisite-text-color" />
                   </Label>
@@ -594,9 +576,12 @@ const EditClientModal = ({ intl, match, }) => {
                   </FormText>
                 </FormGroup>
               </Colxx>
-
-              <Colxx xxs="12" md="6">
-                <FormGroup>
+             
+            </Row>
+    
+            <Row>
+              <Colxx xxs="12" md="6" className="mb-5">
+              <FormGroup>
                   <Label for="textcolor">
                     <IntlMessages id="forms.minisite-bio-wording-color" />
                   </Label>
@@ -608,10 +593,26 @@ const EditClientModal = ({ intl, match, }) => {
                     onClick={openBioWordingColorBorad}
                   />
                   {displayBioWordingColorPicker ? (
-                   <PhotoshopPicker  color={myBioWordingcolor} onAccept={handleBioWordingColorClose} onCancel={handleBioWordingColorClose} onChangeComplete={handleBioWordingColorChange} />
-                   ) : null}
+                  <PhotoshopPicker  color={myBioWordingcolor} onAccept={handleBioWordingColorClose} onCancel={handleBioWordingColorClose} onChangeComplete={handleBioWordingColorChange} />
+                  ) : null}
                   <FormText color="muted">
                     <IntlMessages id="forms.minisite-fontcolor-muted" />
+                  </FormText>
+                </FormGroup>
+              </Colxx>
+            <Colxx xxs="12" md="6" className="mb-5">
+              <FormGroup>
+                  <Label for="title-font-size">
+                    <IntlMessages id="forms.title-font-size" />
+                  </Label>
+                  <Input
+                    type="text"
+                    value={state.title_font_size || ''}
+                    onChange={(val) => setState({ ...state, title_font_size: val.target.value })}
+                    placeholder={messages['forms.title-font-size']}
+                  /> 
+                  <FormText color="muted">
+                    <IntlMessages id="forms.title-font-size-muted" />
                   </FormText>
                 </FormGroup>
               </Colxx>
@@ -633,4 +634,17 @@ const EditClientModal = ({ intl, match, }) => {
   );
 };
  
-export default injectIntl(EditClientModal);
+const mapStateToProps = ({ menu,authUser, settings }) => {
+  const { containerClassnames, menuClickCount, selectedMenuHasSubItems } = menu;
+  const { locale } = settings;
+  const { currentUser } = authUser;
+  return {
+    containerClassnames,
+    menuClickCount,
+    selectedMenuHasSubItems,
+    locale,
+    currentUser,
+  };
+};
+export default injectIntl(connect(mapStateToProps)(EditMinisteModal));
+

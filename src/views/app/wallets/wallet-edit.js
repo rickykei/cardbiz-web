@@ -297,12 +297,12 @@ const WalletPage = ({ intl, match,currentUser }) => {
                           <Cropper
                                 src={walletImageFile}
                                 style={{ height: 300, width: "100%" }}
-                                initialAspectRatio={1032/336}
-                                aspectRatio={1032/336} // if 正方形set 1
-                                minCropBoxHeight={1032}
-                                minCropBoxWidth={336}
-                                maxCropBoxHeight={1032}
-                                maxCropBoxWidth={336}
+                                initialAspectRatio={1125/432}
+                                aspectRatio={1125/432} // if 正方形set 1
+                                minCropBoxHeight={1125}
+                                minCropBoxWidth={432}
+                                maxCropBoxHeight={1125}
+                                maxCropBoxWidth={432}
                                 viewMode={1}
                                 dragMode='none'  
                                 background={0}

@@ -15,7 +15,7 @@ import { addStaffItem } from 'redux/actions';
 import { useHistory } from "react-router-dom";
 import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
-import { servicePath2, qrcodeSelectData, minisiteSelectData } from 'constants/defaultValues';
+import { servicePath2, qrcodeSelectData, minisiteSelectData, bizcardOptionSelectData } from 'constants/defaultValues';
 import axios from 'axios';
 import DropzoneComponent from 'react-dropzone-component';
 import { Html5Qrcode } from 'html5-qrcode';
@@ -158,6 +158,10 @@ const AddNewStaffModal = ({
     department: "",
     country: "",
     bio: "",
+    awards: "",
+    qualifications: "",
+    additional_address: "",
+    achievements: "",
     company_website_url: "",
     more_info_tab_url: "",
     facebook_url: "",
@@ -168,7 +172,7 @@ const AddNewStaffModal = ({
     twitter_url: "",
     wechat_id: "",
     wechatpage_url: "",
-    wechat_qr_url:"",
+    wechat_qr_url: "",
     tiktok_url: "",
 
     line_url: "",
@@ -186,7 +190,7 @@ const AddNewStaffModal = ({
     note: "",
     note_timestamp: false,
     smartcard_uid: "",
-    bizcard_option: true,
+    bizcard_option: 0,
     dig_card_in_vcf: true,
     updated_by: "630cf0461fa3f166eb3dee01",
     created_by: "630cf0461fa3f166eb3dee01",
@@ -211,7 +215,7 @@ const AddNewStaffModal = ({
     e.preventDefault();
     setEnabled(false);
     console.log('submitted!')
-      
+
     const newItem = {
       company_name_chi: state.company_name_chi,
       company_name_eng: state.company_name_eng,
@@ -235,6 +239,7 @@ const AddNewStaffModal = ({
       home_email_label: state.home_email_label,
       other_email_label: state.other_email_label,
       position: state.position,
+      position_other_lang: state.position_other_lang,
       work_tel: state.work_tel,
       work_tel2: state.work_tel2,
       work_tel3: state.work_tel3,
@@ -279,6 +284,10 @@ const AddNewStaffModal = ({
       department: state.department,
       country: state.country,
       bio: state.bio,
+      awards: state.awards,
+      qualifications: state.qualifications,
+      additional_address: state.additional_address,
+      achievements: state.achievements,
       company_website_url: state.company_website_url,
       more_info_tab_url: state.more_info_tab_url,
       facebook_url: state.facebook_url,
@@ -856,15 +865,31 @@ const AddNewStaffModal = ({
                       <Label for="position">
                         <IntlMessages id="forms.staff-position" />
                       </Label>
-                      <Input
-                        type="text"
-                        value={state.position || ''}
-                        onChange={(val) => setState({ ...state, position: val.target.value })}
-                        placeholder={messages['forms.staff-position']}
-                      />
-                      <FormText color="muted">
-                        <IntlMessages id="forms.staff-position-muted" />
-                      </FormText>
+                      <Row>
+                        <Colxx xxs="6" md="6" className="mb-5">
+                          <Input
+                            type="text"
+                            value={state.position || ''}
+                            onChange={(val) => setState({ ...state, position: val.target.value })}
+                            placeholder={messages['forms.staff-position']}
+                          />
+                          <FormText color="muted">
+                            <IntlMessages id="forms.staff-position-muted" />
+                          </FormText>
+                        </Colxx>
+
+                        <Colxx xxs="6" md="6" className="mb-5">
+                          <Input
+                            type="text"
+                            value={state.position_other_lang || ''}
+                            onChange={(val) => setState({ ...state, position_other_lang: val.target.value })}
+                            placeholder={messages['forms.staff-position_other_lang']}
+                          />
+                          <FormText color="muted">
+                            <IntlMessages id="forms.staff-position_other_lang-muted" />
+                          </FormText>
+                        </Colxx>
+                      </Row>
                     </FormGroup>
                   </Colxx>
                 </Row>
@@ -1656,6 +1681,78 @@ const AddNewStaffModal = ({
 
                   </Colxx>
                 </Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="awards">
+                        <IntlMessages id="forms.staff-awards" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.awards || ''}
+                        onChange={(val) => setState({ ...state, awards: val.target.value })}
+                        placeholder={messages['forms.staff-awards']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-awards-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="qualifications">
+                        <IntlMessages id="forms.staff-qualifications" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.qualifications || ''}
+                        onChange={(val) => setState({ ...state, qualifications: val.target.value })}
+                        placeholder={messages['forms.staff-qualifications']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-qualifications-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                </Row>
+                <Row>
+                  <Colxx xxs="12" md="6" className="mb-5">
+                    <FormGroup>
+                      <Label for="additional_address">
+                        <IntlMessages id="forms.staff-additional_address" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.additional_address || ''}
+                        onChange={(val) => setState({ ...state, additional_address: val.target.value })}
+                        placeholder={messages['forms.staff-additional_address']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-additional_address-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                  <Colxx xxs="12" md="6">
+                    <FormGroup>
+                      <Label for="achievements">
+                        <IntlMessages id="forms.staff-achievements" />
+                      </Label>
+                      <Input
+                        type="text"
+                        value={state.achievements || ''}
+                        onChange={(val) => setState({ ...state, achievements: val.target.value })}
+                        placeholder={messages['forms.staff-achievements']}
+                      />
+                      <FormText color="muted">
+                        <IntlMessages id="forms.staff-achievements-muted" />
+                      </FormText>
+                    </FormGroup>
+
+                  </Colxx>
+                </Row>
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
@@ -2085,14 +2182,14 @@ const AddNewStaffModal = ({
                         onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
                         placeholder={messages['forms.staff-wechat_qr_url']}
                         readOnly="readOnly"
-                      />):(
+                      />) : (
                         <Input
-                        type="text"
-                        value={dText || state.wechat_qr_url || ''}
-                        onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
-                        placeholder={messages['forms.staff-wechat_qr_url']}
-                      />
-                      )}                  
+                          type="text"
+                          value={dText || state.wechat_qr_url || ''}
+                          onChange={(val) => setState({ ...state, wechat_qr_url: val.target.value })}
+                          placeholder={messages['forms.staff-wechat_qr_url']}
+                        />
+                      )}
                       {isQRDisabled ? (
                         <Button color="primary" className="mt-4" onClick={(e) => initValue(e)} >
                           <IntlMessages id="forms.crop.cancel" />
@@ -2220,33 +2317,18 @@ const AddNewStaffModal = ({
                       <Label>
                         <IntlMessages id="forms.staff-bizcard_option" />
                       </Label>
-                      <CustomInput
-                        type="radio"
-                        id="exCustomRadio2"
-                        name="customRadio2"
-                        label="eprofile"
-                        checked={state.bizcard_option === true}
-                        onChange={(event) =>
-                          setState({
-                            ...state,
-                            bizcard_option: event.target.value === 'on',
-                          })
-                        }
-                      />
+                      <Select
+                        components={{ Input: CustomSelectInput }}
+                        className="react-select"
+                        classNamePrefix="react-select"
+                        name="forms.label.eprofile"
+                        options={bizcardOptionSelectData}
+                        defaultValue={{ "label": "VCF", "value": 0 }}
+                        value={bizcardOptionSelectData.find(obj => {
+                          return obj.value === state.bizcard_option;
+                        })}
+                        onChange={(val) => setState({ ...state, bizcard_option: val.value })}
 
-
-                      <CustomInput
-                        type="radio"
-                        id="exCustomRadio"
-                        name="customRadio"
-                        label="vcf"
-                        checked={state.bizcard_option === false}
-                        onChange={(event) =>
-                          setState({
-                            ...state,
-                            bizcard_option: event.target.value !== 'on',
-                          })
-                        }
                       />
 
 
