@@ -114,6 +114,7 @@ const AddNewStaffModal = ({
     home_email_label: "",
     other_email_label: "",
     position: "",
+    position_other_lang: "",
     work_tel: "",
     work_tel2: "",
     work_tel3: "",

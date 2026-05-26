@@ -898,6 +898,15 @@ module.exports = {
     'forms.staff-address4_label-muted':'預設: Address',
         'forms.staff-wallet_field2_title': '文字位置2 - 自訂標題',
   'forms.staff-wallet_field3_title': '文字位置3 - 自訂標題',
+     'forms.staff-position_other_lang-muted': 'e.g. 銷售經理 - 在e-Profile和vcf和Vcard出現',
+    'forms.staff-awards': '獎項',
+  'forms.staff-awards-muted': 'e.g. 2024 - 金牌資訊安全獎',
+  'forms.staff-qualifications': '資格',
+  'forms.staff-qualifications-muted': 'e.g. 醫學博士 (MD) - ABC 大學',
+  'forms.staff-additional_address': '辦公地點',
+  'forms.staff-additional_address-muted': 'e.g. 分行 1：香港ABC道123號',
+  'forms.staff-achievements': '成就',
+  'forms.staff-achievements-muted': 'e.g. 藝術開發技術顧問',
     
     
   /* 07.12.Icons */
@@ -1046,4 +1055,10 @@ module.exports = {
   'forms.minisite-links-selected-color':'側邊欄 - 活動頁面顏色',
   'forms.crop.ok':'確認',
   'forms.crop.cancel':'取消',
+          'forms.title-font-size':'主題文字大小',
+  'forms.title-font-size-muted':'16',
+    
+      /* 2025/11/06 Admin Page */
+  'forms.admin-logo_display_option':'E-Profile上的公司標誌',
+  'forms.admin-headshot_display_option':'E-Profile上的頭像',
 };

@@ -906,6 +906,15 @@ module.exports = {
     'forms.staff-address4_label-muted':'Default Setting: Address',
     'forms.staff-wallet_field2_title': 'Text Area 2 - Customized Title',
   'forms.staff-wallet_field3_title': 'Text Area 3 - Customized Title',
+    'forms.staff-position_other_lang-muted': 'e.g. 銷售經理 - Available for e-Profile & vcf & Vcard',
+    'forms.staff-awards': 'Awards',
+  'forms.staff-awards-muted': 'e.g. 2024 - Gold IT Security Award',
+  'forms.staff-qualifications': 'Qualifications',
+  'forms.staff-qualifications-muted': 'e.g. Doctor of Medicine (MD) - ABC University',
+  'forms.staff-additional_address': 'Premises',
+  'forms.staff-additional_address-muted': 'e.g. Branch 1: 123 ABC road, HK',
+  'forms.staff-achievements': 'Achievements',
+  'forms.staff-achievements-muted': 'e.g. Leader of Art Group',
     
   /* 07.12.Icons */
   'icons.simplelineicons': 'Simple Line Icons',
@@ -1053,4 +1062,12 @@ module.exports = {
   'forms.minisite-links-selected-color':'Sidebar - Active Page Color',
   'forms.crop.ok':'OK',
   'forms.crop.cancel':'Cancel',
+      'forms.title-font-size':'Title Font Size',
+  'forms.title-font-size-muted':'16',
+    
+      /* 2025/11/06 Admin Page */
+  'forms.admin-logo_display_option':'Logo on E-Profile',
+  'forms.admin-headshot_display_option':'Headshot on E-Profile',
 };
+
+  /* 2024/12/26 Admin Page */
