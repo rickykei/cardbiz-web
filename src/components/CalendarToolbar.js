@@ -3,25 +3,24 @@
 import React from 'react';
 import moment from 'moment';
 
-const CalendarToolbar = (toolbar) => {
-	
-	const {tb} = toolbar;
+const CalendarToolbar = ({ date, onNavigate }) => {
   const goToBack = () => {
-    tb.onNavigate('PREV');
+    onNavigate('PREV');
   };
+
   const goToNext = () => {
-    tb.onNavigate('NEXT');
+    onNavigate('NEXT');
   };
+
   const goToCurrent = () => {
-    tb.onNavigate('TODAY');
+    onNavigate('TODAY');
   };
 
   const label = () => {
-    const date = moment(tb.date);
+    const m = moment(date);
     return (
       <span>
-        <span>{date.format('MMMM')} </span>
-        <span> {date.format('YYYY')}</span>
+        {m.format('MMMM')} {m.format('YYYY')}
       </span>
     );
   };
@@ -33,31 +32,30 @@ const CalendarToolbar = (toolbar) => {
       </div>
 
       <div className="float-right">
-        <div>
-          <button
-            type="button"
-            className="btn btn-primary calendar-today-btn mr-2"
-            onClick={goToCurrent}
-          >
-            Today
-          </button>
-          <button
-            type="button"
-            className="btn calendar-prev-btn mr-1"
-            onClick={goToBack}
-          >
-            <span className="simple-icon-arrow-left" />
-          </button>
-          <button
-            type="button"
-            className="btn calendar-next-btn"
-            onClick={goToNext}
-          >
-            <span className="simple-icon-arrow-right" />
-          </button>
-        </div>
+        <button
+          type="button"
+          className="btn btn-primary calendar-today-btn mr-2"
+          onClick={goToCurrent}
+        >
+          Today
+        </button>
+        <button
+          type="button"
+          className="btn calendar-prev-btn mr-1"
+          onClick={goToBack}
+        >
+          <span className="simple-icon-arrow-left" />
+        </button>
+        <button
+          type="button"
+          className="btn calendar-next-btn"
+          onClick={goToNext}
+        >
+          <span className="simple-icon-arrow-right" />
+        </button>
       </div>
     </div>
   );
 };
+
 export default CalendarToolbar;

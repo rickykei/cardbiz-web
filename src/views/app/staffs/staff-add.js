@@ -198,6 +198,7 @@ const AddNewStaffModal = ({
     status: true,
     qrcode_option: 1,
     minisite_option: 1,
+    preloader: true,
 
   };
   const [state, setState] = useState(initialState);
@@ -322,6 +323,7 @@ const AddNewStaffModal = ({
       updatedBy: currentUser.uid,
       createdBy: currentUser.uid,
       status: state.status,
+      preloader: state.preloader,
       uid: currentUser.uid,
     };
     const data = new FormData()
@@ -2314,7 +2316,8 @@ const AddNewStaffModal = ({
 
                 <Row>
                   <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+
+                  <FormGroup>
                       <Label>
                         <IntlMessages id="forms.staff-bizcard_option" />
                       </Label>
@@ -2334,8 +2337,54 @@ const AddNewStaffModal = ({
 
 
                     </FormGroup>
+
+                    
                   </Colxx>
                   <Colxx xxs="12" md="6" >
+                 
+                     <FormGroup>
+                      <Label>
+                        <IntlMessages id="forms.staff-preloader" />
+                      </Label>
+                      <CustomInput
+                        type="radio"
+                        id="customRadioPreloaderOn"
+                        name="customRadioPreloaderOn"
+                        label="Active"
+                        checked={state.preloader === true}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            preloader: event.target.value === 'on',
+                          })
+                        }
+                      />
+
+
+                      <CustomInput
+                        type="radio"
+                        id="customRadioPreloaderOff"
+                        name="customRadioPreloaderOff"
+                        label="Disable"
+                        checked={state.preloader === false}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            preloader: event.target.value !== 'on',
+                          })
+                        }
+                      />
+
+
+                    </FormGroup>
+                  </Colxx>
+                </Row>
+
+                <Row>
+
+
+
+                  <Colxx xxs="12" md="6" className="mb-5">
                     <FormGroup>
                       <Label>
                         <IntlMessages id="forms.staff-dig_card_in_vcf-option" />
@@ -2371,15 +2420,10 @@ const AddNewStaffModal = ({
 
 
                     </FormGroup>
+                   
                   </Colxx>
-                </Row>
-
-                <Row>
-
-
-
-                  <Colxx xxs="12" md="6" className="mb-5">
-                    <FormGroup>
+                  <Colxx xxs="12" md="6" >
+                   <FormGroup>
                       <Label>
                         <IntlMessages id="forms.staff-status" />
                       </Label>
@@ -2414,9 +2458,14 @@ const AddNewStaffModal = ({
 
 
                     </FormGroup>
+                   
                   </Colxx>
-                  <Colxx xxs="12" md="6" >
-                    <FormGroup>
+                </Row>
+
+
+                <Row> 
+                  <Colxx xxs="12" md="6" className="mb-5">
+                   <FormGroup>
                       <Label for="note">
                         <IntlMessages id="forms.staff-note-timestamp" />
                       </Label>
@@ -2452,7 +2501,10 @@ const AddNewStaffModal = ({
 
                     </FormGroup>
                   </Colxx>
+                   
                 </Row>
+
+
                 <Button color="primary" className="mt-4" onClick={(e) => addNetItem(e)} disabled={!enabled}>
                   <IntlMessages id="forms.submit" />
                 </Button>
