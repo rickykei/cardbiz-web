@@ -2501,7 +2501,44 @@ const AddNewStaffModal = ({
 
                     </FormGroup>
                   </Colxx>
+                     <Colxx xxs="12" md="6" >
+                   <FormGroup>
+                      <Label>
+                        <IntlMessages id="forms.staff-save_contact_button" />
+                      </Label>
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio_save_contact_button_on"
+                        name="customRadio_save_contact_button"
+                        label="Active"
+                        checked={state.save_contact_button === true}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            save_contact_button: event.target.value === 'on',
+                          })
+                        }
+                      />
+
+
+                      <CustomInput
+                        type="radio"
+                        id="exCustomRadio_save_contact_button_off"
+                        name="customRadio_save_contact_button"
+                        label="Disable"
+                        checked={state.save_contact_button === false}
+                        onChange={(event) =>
+                          setState({
+                            ...state,
+                            save_contact_button: event.target.value !== 'on',
+                          })
+                        }
+                      />
+
+
+                    </FormGroup>
                    
+                  </Colxx>
                 </Row>
 
 
