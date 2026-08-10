@@ -199,6 +199,7 @@ const AddNewStaffModal = ({
     qrcode_option: 1,
     minisite_option: 1,
     preloader: true,
+    save_contact_button: true,
 
   };
   const [state, setState] = useState(initialState);
