@@ -1,17 +1,18 @@
 import axios from "axios";
 import { servicePath2 } from 'constants/defaultValues';
- 
+import authHeader from "./auth-header";
+
 const SIGNUP_API_URL = `${servicePath2}/auth/signup`;
 const SIGNIN_API_URL = `${servicePath2}/auth/signin`;
 const SIGNINWITHTOKEN_API_URL = `${servicePath2}/auth/signinWithToken`;
 const CHANGEPASSWORD_API_URL = `${servicePath2}/auth/changePassword`;
 
 const register = (username, email, password, roles) => {
-  return axios.post(SIGNUP_API_URL , {
+  return axios.post(SIGNUP_API_URL, {
     username,
     email,
     password,
-	roles,
+    roles,
   });
 };
 
@@ -30,15 +31,15 @@ const login = (username, password) => {
     });
 };
 
-const loginWithToken = (userid,token) => {
+const loginWithToken = (userid, token) => {
   return axios
     .post(SIGNINWITHTOKEN_API_URL, {
       userid,
       token
-    })
+    }, { headers: authHeader() })
     .then((response) => {
       if (response.data.accessToken) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+       localStorage.setItem("user", JSON.stringify(response.data));
       }
 
       return response.data;
@@ -55,7 +56,7 @@ const changePassword = (id, password) => {
     .post(CHANGEPASSWORD_API_URL, {
       id,
       password,
-    })
+    }, { headers: authHeader() })
     .then((response) => {
       if (response.data.accessToken) {
         localStorage.setItem("user", JSON.stringify(response.data));

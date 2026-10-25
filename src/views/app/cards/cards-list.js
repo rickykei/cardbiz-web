@@ -5,6 +5,7 @@ import ListPageHeading from 'containers/cards/ListPageHeading';
 import ListPageListing from 'containers/cards/ListPageListing';
 import useMousetrap from 'hooks/use-mousetrap';
 import { connect } from 'react-redux';
+import authHeader from "services/auth-header";
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -46,7 +47,8 @@ const DataListPages = ({ match, currentUser }) => {
   async function fetchData() {
     axios
       .get(
-        `${apiUrl}?companyId=${currentUser.companyId}&pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
+        `${apiUrl}?companyId=${currentUser.companyId}&pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`,
+        { headers: authHeader() }
       )
       .then((res) => {
         return res.data;

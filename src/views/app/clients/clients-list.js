@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
 import axios from 'axios';
-
 import { servicePath2 } from 'constants/defaultValues';
-
 import ListPageHeading from 'containers/clients/ListPageHeading';
-
 import ListPageListing from 'containers/clients/ListPageListing';
 import useMousetrap from 'hooks/use-mousetrap';
+import authHeader from 'services/auth-header';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -49,7 +46,8 @@ const DataListPages = ({ match }) => {
   async function fetchData() {
     axios
       .get(
-        `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
+        `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`,
+        { headers: authHeader() }
       )
       .then((res) => {
         return res.data;
@@ -66,11 +64,11 @@ const DataListPages = ({ match }) => {
         setIsLoaded(true);
       });
   }
-  
+
   useEffect(() => {
     fetchData();
   }, []);
-  
+
   useEffect(() => {
     fetchData();
     setCurrentPage(1);
@@ -78,7 +76,7 @@ const DataListPages = ({ match }) => {
   }, [selectedPageSize, selectedOrderOption]);
 
   useEffect(() => {
-    
+
     fetchData();
   }, [selectedPageSize, currentPage, selectedOrderOption, search]);
 
@@ -189,7 +187,7 @@ const DataListPages = ({ match }) => {
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
         />
-        
+
         <ListPageListing
           items={items}
           displayMode={displayMode}

@@ -9,8 +9,7 @@ import { servicePath2 } from 'constants/defaultValues';
 import axios from 'axios';
 import { useParams, } from "react-router-dom";
 import { AreaChart } from 'components/charts';
- 
-
+import authHeader from "services/auth-header";
 
 const VcfVisitsChartCard = ({ className = '', controls = true }) => {
   
@@ -53,7 +52,7 @@ const VcfVisitsChartCard = ({ className = '', controls = true }) => {
 
   const copyLink3 = () => {
     const expensesListResp = async () => {
-        await axios.get(`${apiUrl}`)
+        await axios.get(`${apiUrl}`, { headers: authHeader() })
           .then(
             response => setOptions(response.data))
       }
@@ -63,7 +62,7 @@ const VcfVisitsChartCard = ({ className = '', controls = true }) => {
 
   const copyLink4 = () => {
     const expensesListResp = async () => {
-        await axios.get(`${apiUrlMonthly}`)
+        await axios.get(`${apiUrlMonthly}`, { headers: authHeader() })
           .then(
             response => setOptions(response.data))
       }

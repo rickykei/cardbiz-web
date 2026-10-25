@@ -8,7 +8,7 @@ import { ThemeColors } from 'helpers/ThemeColors';
 import { servicePath2 } from 'constants/defaultValues';
 import axios from 'axios';
 import { useParams, } from "react-router-dom";
-
+import authHeader from "services/auth-header";
   
 const ProfileVisitsChartCard = ({ className = '', controls = true }) => {
 
@@ -51,7 +51,7 @@ const colors = ThemeColors();
 
   const copyLink3 = () => {
     const expensesListResp = async () => {
-        await axios.get(`${apiUrl}`)
+        await axios.get(`${apiUrl}`, { headers: authHeader() })
           .then(
             response => setOptions(response.data))
       }
@@ -60,7 +60,7 @@ const colors = ThemeColors();
     } 
     const copyLink4 = () => {
       const expensesListResp = async () => {
-          await axios.get(`${apiUrlMonthly}`)
+          await axios.get(`${apiUrlMonthly}`, { headers: authHeader() })
             .then(
               response => setOptions(response.data))
         }

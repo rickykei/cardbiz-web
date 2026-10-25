@@ -16,6 +16,8 @@ import { useHistory,Link  } from "react-router-dom";
 import BatchUploadService from 'services/BatchUploadService';
 import DropzoneComponent from 'react-dropzone-component';
 import {  servicePath2 } from 'constants/defaultValues';
+import authHeader from "services/auth-header";
+import axios from 'axios';
 
 const ReactDOMServer = require('react-dom/server');
 
@@ -73,6 +75,8 @@ const dropzoneConfig = {
   headers: { 'My-Awesome-Header': 'header value' },
 };
 
+
+
 const StaffBatchUpload = ({
   intl, match, currentUser
 }) => {
@@ -89,6 +93,32 @@ const StaffBatchUpload = ({
       setFile(file);
     }
   }
+ 
+
+   const handleDownload = async () => {
+    try {
+      const response = await axios.get(downloadstaffexcel, {
+        responseType: 'blob', headers: authHeader() // important to get binary data
+      });
+
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'staffExcelOut.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading file:', error);
+    }
+  };
+
+ 
 
   const addNetItem = () => {
 
@@ -134,14 +164,14 @@ const StaffBatchUpload = ({
       <Row>
         <Colxx xxs="12">
           <Breadcrumb heading="menu.batch.staff.upload" match={match} /><div className="text-zero top-right-button-container">
-            <a href={downloadstaffexcel}><Button
+            <Button onClick={handleDownload}
               color="primary"
               size="lg"
               className="top-right-button"
             >
               <IntlMessages id="batchupload.download.staff.excel" />
             </Button>
-            </a>
+            
             {'  '}
 
           </div>

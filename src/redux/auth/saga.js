@@ -49,13 +49,15 @@ function* loginWithEmailPassword({ payload }) {
     const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
     if (!loginUser.message) {
       // const item = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id,username: loginUser.username, logo: loginUser.logo,...currentUser };
-      const item = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id,username: loginUser.username, logo: loginUser.logo,...currentUser };
+      const item = { accessToken: loginUser.accessToken, uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id,username: loginUser.username, logo: loginUser.logo,...currentUser };
       
-      const pcitem = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id, email,  password,logo: loginUser.logo,...currentUser };
-     // setCurrentUser(item);
+      const pcitem = { accessToken: loginUser.accessToken,uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id, email,  password,logo: loginUser.logo,...currentUser };
+
+      // x-token add back 20261024
+       setCurrentUser(item);
      
       yield put(loginUserSuccess(pcitem));
-      setCurrentUser();
+     //  setCurrentUser();
       history.push("/user/verify-token");
     } else {
       yield put(loginUserError(loginUser.message));
@@ -84,7 +86,7 @@ function* loginWithToken({ payload }) {
     const loginUser = yield call(loginWithTokenAsync, userid, token);
     if (!loginUser.message) {
       const item = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id,username: loginUser.username, logo: loginUser.logo,...currentUser };
-      setCurrentUser(item);
+      // setCurrentUser(item);
       yield put(verifyTokenSuccess(item));
       history.push("/app");
     } else { 

@@ -8,7 +8,7 @@ import AddNewModal from 'containers/pages/AddNewModal';
 import useMousetrap from 'hooks/use-mousetrap';
 import { connect } from 'react-redux';
 import StaffDataService from 'services/StaffsService';
-
+import authHeader from "services/auth-header";
  
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -61,7 +61,9 @@ apiUrl = `${servicePath2}/staffs/findByCompanyId`;
   async function fetchData() {
     axios
       .get(
-        `${apiUrl}?companyId=${currentUser.companyId}&pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
+        `${apiUrl}?companyId=${currentUser.companyId}&pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`,
+          { headers: authHeader() }
+      
       )
       .then((res) => {
         return res.data;

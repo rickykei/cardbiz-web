@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { useHistory ,useParams } from "react-router-dom";
- 
+import authHeader from "services/auth-header";
 import axios from 'axios';
 import { servicePath2 } from 'constants/defaultValues';
  
@@ -13,7 +13,7 @@ const DeleteClientModal = () => {
 
   useEffect(() => {
     axios
-      .delete(apiUrl)
+      .delete(apiUrl, { headers: authHeader() })
       .then((res) => {
         if (res){
           setStatus( 'Delete successful' );

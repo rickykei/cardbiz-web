@@ -16,6 +16,7 @@ import Select from 'react-select';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import { servicePath2 } from 'constants/defaultValues';
 import axios from 'axios';
+import authHeader from "services/auth-header";
 
 const apiUrl = `${servicePath2}/companies/codelist`;
   
@@ -53,7 +54,7 @@ const AddNewUserModal = ({
   const { messages } = intl;
 
   async function fetchData() {
-    axios.get(`${apiUrl}`)
+    axios.get(`${apiUrl}`, { headers: authHeader() })
       .then(({data}) => {
         const option = data.map((item)=>({
           "value" : item.value,

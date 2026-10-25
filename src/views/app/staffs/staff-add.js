@@ -18,7 +18,7 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 import { servicePath2 } from 'constants/defaultValues';
 import axios from 'axios';
 import DropzoneComponent from 'react-dropzone-component';
-
+import authHeader from "services/auth-header";
 
 
 const apiUrl = `${servicePath2}/companies/codelist`;
@@ -221,7 +221,7 @@ const AddNewStaffModal = ({
   };
 
   async function fetchData() {
-    axios.get(`${apiUrl}`)
+    axios.get(`${apiUrl}`, { headers: authHeader() })
       .then((res) => {
         return res.data;
       })

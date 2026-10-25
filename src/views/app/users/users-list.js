@@ -3,7 +3,8 @@ import axios from 'axios';
 import { servicePath2 } from 'constants/defaultValues';
 import ListPageHeading from 'containers/users/ListPageHeading';
 import ListPageListing from 'containers/users/ListPageListing';
- 
+import authHeader from "services/auth-header";
+
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -44,7 +45,8 @@ const DataListPages = ({ match }) => {
    function fetchData() {
     axios
       .get(
-        `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
+        `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`,
+        { headers: authHeader() }
       )
       .then((res) => {
         return res.data;

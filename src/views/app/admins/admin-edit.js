@@ -11,6 +11,7 @@ import { injectIntl } from 'react-intl';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import { CustomInput, Row, Card, CardBody, Input, FormGroup, Label, Button, FormText, Form, CardTitle, InputGroup, InputGroupAddon, } from 'reactstrap';
 import axios from 'axios';
+import authHeader from "services/auth-header";
 import { servicePath2 } from 'constants/defaultValues';
 import DropzoneComponent from 'react-dropzone-component';
 import CompanyDataService from 'services/CompanyService';
@@ -125,7 +126,7 @@ const dropzoneConfigBanner = {
   headers: { 'My-Awesome-Header': 'header value' },
 };
 
-const AdminPage = ({ intl, match,currentUser }) => {
+const AdminPage = ({ intl, match, currentUser }) => {
   const initialState = {
     id: null,
     username: "",
@@ -145,18 +146,18 @@ const AdminPage = ({ intl, match,currentUser }) => {
   const [message, setMessage] = useState("");
   const [messagePassword, setMessagePassword] = useState("");
   const apiUrl = `${servicePath2}/companies/codelist`;
- 
+
   const CompanyBannerImgUrl = `${servicePath2}/files/${state.banner}`;
   const CompanyLogoImgUrl = `${servicePath2}/files/${state.logo}`;
   const { messages } = intl;
-  
+
   const eventHandlers = { addedfile: (file) => { setBannerFile(file); } }
   const eventHandlers2 = { addedfile: (file) => { setLogoFile(file); } }
   const history = useHistory();
 
   const downloadStaffLogExcel = `${servicePath2}/staff_logs/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
-  const downloadStaffProfileExcel =`${servicePath2}/profile_counter/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
-  const downloadStaffVcfExcel =`${servicePath2}/vcf_counter/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
+  const downloadStaffProfileExcel = `${servicePath2}/profile_counter/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
+  const downloadStaffVcfExcel = `${servicePath2}/vcf_counter/downloadStaffLogExcel?company_id=${currentUser.companyId}&uid=${currentUser.uid}`;
 
   const updateCompany = () => {
 
@@ -167,23 +168,23 @@ const AdminPage = ({ intl, match,currentUser }) => {
     console.log(state.company_id);
     const data = new FormData()
 
-    
+
     /* eslint-disable no-restricted-syntax */
 
 
     for (const [key, val] of Object.entries(state)) {
-      if (key!=='banner' && key!=='logo')
-      data.append(key, val);
+      if (key !== 'banner' && key !== 'logo')
+        data.append(key, val);
     }
     if (bannerfile !== null)
       data.append("banner", bannerfile);
-      if (logofile !== null)
+    if (logofile !== null)
       data.append("logo", logofile);
     CompanyDataService.update(state.id, data)
       .then(response => {
         console.log(response.data);
         setMessage("The company was updated successfully!");
-       
+
       })
       .catch(e => {
         console.log(e);
@@ -193,41 +194,41 @@ const AdminPage = ({ intl, match,currentUser }) => {
 
     console.log(state.company_id);
 
-    if (state.password === "" || state.repassword===""|| state.password.length<=3 ||state.repassword.length<=3)
-     setMessagePassword("Please enter password correctly");
-    else if(state.password !== state.repassword)
-     setMessagePassword("Two password is not match");
-    else{
+    if (state.password === "" || state.repassword === "" || state.password.length <= 3 || state.repassword.length <= 3)
+      setMessagePassword("Please enter password correctly");
+    else if (state.password !== state.repassword)
+      setMessagePassword("Two password is not match");
+    else {
 
-        if (state.company_id === undefined)
-          state.company_id = selectedOptionLO.value;
-        console.log(state.company_id);
-        const data = new FormData()
-        /* eslint-disable no-restricted-syntax */
+      if (state.company_id === undefined)
+        state.company_id = selectedOptionLO.value;
+      console.log(state.company_id);
+      const data = new FormData()
+      /* eslint-disable no-restricted-syntax */
 
-        for (const [key, val] of Object.entries(state)) {
-          data.append(key, val);
-        }
-        UserDataService.update(currentUser.uid, state)
-          .then(response => {
-            console.log(response.data);
-            setMessagePassword("Password was updated successfully!");
-             
-          })
-          .catch(e => {
-            console.log(e);
-          });
-        }
+      for (const [key, val] of Object.entries(state)) {
+        data.append(key, val);
+      }
+      UserDataService.update(currentUser.uid, state)
+        .then(response => {
+          console.log(response.data);
+          setMessagePassword("Password was updated successfully!");
+
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
   };
 
- 
+
   const fetchCompanyRecord = () => {
     console.log(currentUser.companyId);
     console.log(id);
-    CompanyDataService.get(id!==undefined?id:currentUser.companyId)
+    CompanyDataService.get(id !== undefined ? id : currentUser.companyId)
       .then(response => {
         setState(response.data);
-         
+
       })
       .catch(e => {
         console.log(e);
@@ -235,27 +236,95 @@ const AdminPage = ({ intl, match,currentUser }) => {
   };
 
   async function fetchCompanyCode() {
-    axios.get(`${apiUrl}`)
-      .then(({data}) => {
-        const option = data.map((item)=>({
-          "value" : item.value,
-          "label" : item.label,
-      }))
+    axios.get(`${apiUrl}`,{ headers: authHeader() })
+      .then(({ data }) => {
+        const option = data.map((item) => ({
+          "value": item.value,
+          "label": item.label,
+        }))
         setOptions(option);
-          
+
       })
       .catch(error => {
         console.error('Companies code error!', error);
       })
-     
+
 
   }
-  
+
+
+  const handleDownloadStaffVcfExcel = async () => {
+    try {
+      const response = await axios.get(downloadStaffVcfExcel, {
+        responseType: 'blob', headers: authHeader()  
+      });
+
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'downloadStaffVcfExcel.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading file:', error);
+    }
+  };
+  const handleDownloadStaffProfileExcel = async () => {
+    try {
+      const response = await axios.get(downloadStaffProfileExcel, {
+        responseType: 'blob', headers: authHeader() // important to get binary data
+      });
+
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'downloadStaffProfileExcel.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading file:', error);
+    }
+  };
+  const handleDownloadStaffLogExcel = async () => {
+    try {
+      const response = await axios.get(downloadStaffLogExcel, {
+        responseType: 'blob', headers: authHeader() // important to get binary data
+      });
+
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'downloadStaffLogExcel.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading file:', error);
+    }
+  };
+
   useEffect(() => {
     fetchCompanyRecord();
     fetchCompanyCode()
   }, []);
-  
+
   return (
     <>
 
@@ -319,19 +388,19 @@ const AdminPage = ({ intl, match,currentUser }) => {
 
       <Row className="mb-4">
         <Colxx xxs="12">
- 
-            <Card className="mb-4">
-              <CardBody>
-                <CardTitle>
-                  <IntlMessages id="input-groups.download_staff_log_excel" />
-                </CardTitle>
-                <a href={downloadStaffLogExcel}><Button color="primary" className="mt-4" >
-                  <IntlMessages id="forms.download_staff_log_excel" />
-                </Button></a>
-             
-              </CardBody>
-            </Card>
- 
+
+          <Card className="mb-4">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="input-groups.download_staff_log_excel" />
+              </CardTitle>
+              <Button color="primary" className="mt-4" onClick={handleDownloadStaffLogExcel}>
+                <IntlMessages id="forms.download_staff_log_excel" />
+              </Button>
+
+            </CardBody>
+          </Card>
+
 
         </Colxx>
       </Row>
@@ -339,37 +408,37 @@ const AdminPage = ({ intl, match,currentUser }) => {
 
       <Row className="mb-4">
         <Colxx xxs="12">
- 
-            <Card className="mb-4">
-              <CardBody>
-                <CardTitle>
-                  <IntlMessages id="input-groups.download_staff_profile_excel" />
-                </CardTitle>
-                <a href={downloadStaffProfileExcel}><Button color="primary" className="mt-4" >
-                  <IntlMessages id="forms.download_staff_profile_excel" />
-                </Button></a>
-             
-              </CardBody>
-            </Card>
- 
+
+          <Card className="mb-4">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="input-groups.download_staff_profile_excel" />
+              </CardTitle>
+              <Button color="primary" className="mt-4" onClick={handleDownloadStaffProfileExcel}>
+                <IntlMessages id="forms.download_staff_profile_excel" />
+              </Button>
+
+            </CardBody>
+          </Card>
+
 
         </Colxx>
       </Row>
       <Row className="mb-4">
         <Colxx xxs="12">
- 
-            <Card className="mb-4">
-              <CardBody>
-                <CardTitle>
-                  <IntlMessages id="input-groups.download_staff_vcf_excel" />
-                </CardTitle>
-                <a href={downloadStaffVcfExcel}><Button color="primary" className="mt-4" >
-                  <IntlMessages id="forms.download_staff_vcf_excel" />
-                </Button></a>
-             
-              </CardBody>
-            </Card>
- 
+
+          <Card className="mb-4">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="input-groups.download_staff_vcf_excel" />
+              </CardTitle>
+              <Button color="primary" className="mt-4" onClick={handleDownloadStaffVcfExcel}>
+                <IntlMessages id="forms.download_staff_vcf_excel" />
+              </Button>
+
+            </CardBody>
+          </Card>
+
 
         </Colxx>
       </Row>
@@ -436,7 +505,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                       </CardTitle>
                       <Row>
                         <Colxx xxs="12" md="2" className="mb-5">
-                          <img src={CompanyLogoImgUrl} alt="companyLogoImage"   width="150" />
+                          <img src={CompanyLogoImgUrl} alt="companyLogoImage" width="150" />
                         </Colxx>
                         <Colxx xxs="12" md="10">  <DropzoneComponent
                           config={dropzoneComponentConfig}
@@ -448,26 +517,26 @@ const AdminPage = ({ intl, match,currentUser }) => {
                     </FormGroup>
 
                     {currentUser.companyId === '63142fd5b54bdbb18f556016' &&
-                <FormGroup>
-                  <Label className="mt-4">
-                    <IntlMessages id="forms.user-company" />
-                  </Label>
-                  <Select
-                    components={{ Input: CustomSelectInput }}
-                    className="react-select"
-                    classNamePrefix="react-select"
-                    name="form-field-company"
-                    options={options}
-                    value={options.find(obj => {
-                      return obj.value === state.company_id;
-                    })}
-                    onChange={(val) => setState({ ...state, company_id: val.value })}
-                    
-                  />
-                </FormGroup>
-                }
-                     
-                     <Row>
+                      <FormGroup>
+                        <Label className="mt-4">
+                          <IntlMessages id="forms.user-company" />
+                        </Label>
+                        <Select
+                          components={{ Input: CustomSelectInput }}
+                          className="react-select"
+                          classNamePrefix="react-select"
+                          name="form-field-company"
+                          options={options}
+                          value={options.find(obj => {
+                            return obj.value === state.company_id;
+                          })}
+                          onChange={(val) => setState({ ...state, company_id: val.value })}
+
+                        />
+                      </FormGroup>
+                    }
+
+                    <Row>
                       <Colxx xxs="12" md="6" className="mb-5">
                         <FormGroup>
                           <Label for="company_name_eng">
@@ -504,7 +573,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
                         </FormGroup>
                       </Colxx>
                     </Row>
-                   
+
                     <Row>
                       <Colxx xxs="12" md="6" className="mb-5">
                         <FormGroup>
@@ -688,7 +757,7 @@ const AdminPage = ({ intl, match,currentUser }) => {
   );
 };
 
-const mapStateToProps = ({ menu,authUser, settings }) => {
+const mapStateToProps = ({ menu, authUser, settings }) => {
   const { containerClassnames, menuClickCount, selectedMenuHasSubItems } = menu;
   const { locale } = settings;
   const { currentUser } = authUser;
