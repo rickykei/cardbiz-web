@@ -85,8 +85,8 @@ function* loginWithToken({ payload }) {
   try {
     const loginUser = yield call(loginWithTokenAsync, userid, token);
     if (!loginUser.message) {
-      const item = { uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id,username: loginUser.username, logo: loginUser.logo,...currentUser };
-      // setCurrentUser(item);
+      const item = { accessToken: loginUser.accessToken, uid: loginUser.id, role: loginUser.role, companyId: loginUser.company_id,username: loginUser.username, logo: loginUser.logo,...currentUser };
+       setCurrentUser(item);
       yield put(verifyTokenSuccess(item));
       history.push("/app");
     } else { 
