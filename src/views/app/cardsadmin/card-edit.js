@@ -14,7 +14,7 @@ import CardDataService from 'services/CardsService';
  
 import { useParams,useHistory } from "react-router-dom";
 import { servicePath2 } from 'constants/defaultValues';
- 
+import authHeader from "services/auth-header"; 
 
 
 
@@ -73,7 +73,7 @@ const EditClientModal = ({ intl, match, }) => {
       });
   };
   async function fetchData() {
-    axios.get(`${apiUrl}`)
+    axios.get(`${apiUrl}`, { headers: authHeader() })
       .then(({data}) => {
         const option = data.map((item)=>({
           "value" : item.value,

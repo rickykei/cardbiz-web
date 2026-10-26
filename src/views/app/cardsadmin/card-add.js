@@ -16,7 +16,7 @@ import { servicePath2 } from 'constants/defaultValues';
 import axios from 'axios';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import CardDataService from 'services/CardsService';
-
+import authHeader from "services/auth-header";
 
  
 const apiUrl = `${servicePath2}/companies/codelist`;
@@ -62,7 +62,7 @@ const AddNewCardModal = ({
   const { messages } = intl;
 
   async function fetchData() {
-    axios.get(`${apiUrl}`)
+    axios.get(`${apiUrl}`, { headers: authHeader() })
       .then((res) => {
         return res.data;
       })
