@@ -1,6 +1,7 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { getDateWithFormat } from 'helpers/Utils';
 import axios from 'axios';
+import authHeader from "services/auth-header";
 import { servicePath2 } from 'constants/defaultValues';
 import clientListData from 'data/client.list.json';
 import { CLIENT_LIST_GET_LIST, CLIENT_LIST_ADD_ITEM } from '../contants';
@@ -57,7 +58,8 @@ function* addClientItem({ payload }) {
     yield call(axios.request, {
       url: apiUrl,
       method: "post",
-      data: payload
+      data: payload,
+            headers: authHeader()
     });
     const response = yield call(addClientItemRequest, payload);
     yield put(addClientItemSuccess(response));
